@@ -779,10 +779,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cccbc220e31148245ad3bc73bcb85c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notificationPrefab: {fileID: 1085227741632705750, guid: 0465c6f664b09f248947c0c4e74446a7, type: 3}
+  c_notificationPrefab: {fileID: 1085227741632705750, guid: 0465c6f664b09f248947c0c4e74446a7, type: 3}
   notificationMaxYSpawn: 350
   notificationOffset: 125
-  inventory: {fileID: 1413387288}
+  c_inventory: {fileID: 1413387288}
 --- !u!1 &1413387288
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1413387289}
   - component: {fileID: 1413387290}
+  - component: {fileID: 1413387291}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -835,7 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5b7ffe6b0ce454bbe9bf67360f8475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 44882465118496729, guid: d834c504cb8ffef4ba08ac246430faa8, type: 3}
+  c_itemPrefab: {fileID: 44882465118496729, guid: d834c504cb8ffef4ba08ac246430faa8, type: 3}
   c_totalWeightText: {fileID: 48905826}
   c_background: {fileID: 882765916}
   sizePerItem: 140
@@ -843,6 +844,18 @@ MonoBehaviour:
   starterPos: {x: -160, y: -110}
   posOffset: {x: 130, y: 140}
   maxItemPerRow: 4
+--- !u!114 &1413387291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413387288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3040676c4a5554bb81ed4b0ee3deb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1608212650
 GameObject:
   m_ObjectHideFlags: 0

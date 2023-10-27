@@ -1,17 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 public class InventoryUIController : MonoBehaviour
 {
 
-
-
     [SerializeField]
-    private GameObject itemPrefab;
+    private GameObject c_itemPrefab;
 
-    [Space, Header("UI") ,SerializeField]
+    [Space, Header("UI"), SerializeField]
     private TextMeshProUGUI c_totalWeightText;
     [SerializeField]
     private RectTransform c_background;
@@ -27,18 +23,20 @@ public class InventoryUIController : MonoBehaviour
     [SerializeField]
     private Vector2 posOffset;
 
-    [Space,SerializeField]
+    [Space, SerializeField]
     private int maxItemPerRow;
 
     private List<RectTransform> l_itemsDisplayed;
     private List<InventoryItemIconController> l_itemIcon;
     private Dictionary<ItemController.ItemType, short> l_items;
 
+    private InventorySelectedItem c_selectedItem;
 
     private void Awake()
     {
         l_itemsDisplayed = new List<RectTransform>();
         l_itemIcon = new List<InventoryItemIconController>();
+        c_selectedItem = GetComponent<InventorySelectedItem>();
     }
 
     private void FixedUpdate()
@@ -70,7 +68,7 @@ public class InventoryUIController : MonoBehaviour
             //if (item.Value >= 0)
             //    continue;
 
-            GameObject currentItem = Instantiate(itemPrefab, transform);
+            GameObject currentItem = Instantiate(c_itemPrefab, transform);
             l_itemsDisplayed.Add(currentItem.GetComponent<RectTransform>());
             l_itemIcon.Add(currentItem.GetComponent<InventoryItemIconController>());
             l_itemIcon[l_itemIcon.Count - 1].LoadItem(item.Key, item.Value);
@@ -86,9 +84,20 @@ public class InventoryUIController : MonoBehaviour
         }
     }
 
+    private void SetSelectedItem()
+    {
+        if (l_items.Count > 0)
+        {
+            c_selectedItem.SetItemList();
+
+        }
+    }
+
     private void OnEnable()
     {
         LoadItemList();
+        SetSelectedItem();
+
     }
 
     private void OnDisable()
@@ -103,6 +112,6 @@ public class InventoryUIController : MonoBehaviour
     }
 
 
-    
+
 
 }
