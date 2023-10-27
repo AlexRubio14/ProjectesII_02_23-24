@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBug : EnemyIA
+public class EnemyBug : MonoBehaviour
 {
+    [SerializeField]
+    private EnemyIA enemyIA; 
 
     [SerializeField]
     private float timeFollowing = 5.0f; 
@@ -11,14 +13,14 @@ public class EnemyBug : EnemyIA
     // Start is called before the first frame update
     void Start()
     {
-        InitEnemy(); 
+        enemyIA.InitEnemy(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement(); 
-        if(isFollowing)
+        enemyIA.Movement(); 
+        if(enemyIA.isFollowing)
         {
             Invoke("Die", timeFollowing); 
         }
@@ -27,5 +29,6 @@ public class EnemyBug : EnemyIA
     private void Die()
     {
         Debug.Log("Exploteee"); 
+        Destroy(gameObject);
     }
 }

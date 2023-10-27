@@ -687,7 +687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   agentColliderSize: 0.6
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &988590515
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +747,7 @@ GameObject:
   - component: {fileID: 1368058521}
   - component: {fileID: 1368058517}
   - component: {fileID: 1368058522}
+  - component: {fileID: 1368058523}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -861,6 +862,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8dae0e2c32b8c24c85d4f32d52e26d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyIA: {fileID: 1368058523}
+  timeFollowing: 30
+--- !u!114 &1368058523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368058515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37318c0e41d54743963784b07fba080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   l_steeringBehaviours:
   - {fileID: 964630383}
   - {fileID: 988590517}
@@ -870,8 +885,7 @@ MonoBehaviour:
   iaData: {fileID: 1368058517}
   detectionDelay: 0.05
   movementDirectionSolver: {fileID: 1445242850}
-  speed: 5
-  timeFollowing: 5
+  speed: 2.67
 --- !u!1 &1445242848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,10 +1122,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1683135498}
+  - component: {fileID: 1683135501}
   - component: {fileID: 1683135499}
   - component: {fileID: 1683135500}
   - component: {fileID: 1683135502}
-  - component: {fileID: 1683135501}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1224,6 +1238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementScale: 130
   rotationSpeed: 300
+  <health>k__BackingField: 100
 --- !u!70 &1683135502
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
