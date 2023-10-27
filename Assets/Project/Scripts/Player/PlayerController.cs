@@ -5,7 +5,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    private enum State { IDLE, MOVING, MINING};
+    private enum State { MOVING, MINING, KNOCKBACK};
+    private State currentState;
 
     private Rigidbody2D c_rb;
 
@@ -19,12 +20,12 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public float health {  get; private set; }
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -40,6 +41,21 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        switch (currentState)
+        {
+            case State.MOVING:
+                Move();
+                Rotation();
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                break;
+            default:
+                break;
+        }
+
+
         Move();
         Rotation();
     }
