@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,14 +17,26 @@ public class PlayerController : MonoBehaviour
     private float movementScale;
     [SerializeField]
     private float rotationSpeed;
+    [SerializeField]
+    private float knockbackScale;
 
     [field: SerializeField]
     public float health {  get; private set; }
+
+    public Action myActions;
+    public Action<int> intActions;
+
+    private void SayHi(int value)
+    {
+        Debug.Log("HI UwU");
+    }
 
     private void Awake()
     {
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
+
+        intActions += SayHi;
     }
     
 
@@ -54,10 +67,6 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
-
-
-        Move();
-        Rotation();
     }
 
     void GetDirectionFromInputs()
@@ -97,5 +106,63 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
 
         //SceneManager.LoadScene("HUB");
+    }
+
+    void Stunned()
+    {
+        if (c_rb.velocity.magnitude <= 0.001f)
+        {
+            ChangeState(State.MOVING);
+        }
+        else
+        {
+            Invoke("Stunned", 0.02f);
+        }
+    }
+    void Knockback(Vector2 collisionPoint)
+    {
+        ChangeState(State.KNOCKBACK);
+        Vector2 direction = (Vector2)transform.position - collisionPoint;
+        direction.Normalize();
+
+        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        Stunned();
+    }
+    void ChangeState(State state)
+    {
+        switch(currentState)
+        {
+            case State.MOVING:      
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                break;
+            default:
+                break;
+        }
+
+        switch (state)
+        {
+            case State.MOVING:
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                c_rb.velocity = Vector3.zero;
+                break;
+            default:
+                break;
+        }
+
+        currentState = state;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("Map"))
+        {
+            Knockback(collision.contacts[0].point);
+        }
     }
 }

@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 309862692}
   - component: {fileID: 309862693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,9 +370,9 @@ GameObject:
   - component: {fileID: 464687533}
   - component: {fileID: 464687532}
   - component: {fileID: 464687535}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -488,6 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementScale: 130
   rotationSpeed: 300
+  knockbackScale: 10
   <health>k__BackingField: 100
 --- !u!222 &464687535
 CanvasRenderer:
@@ -586,7 +587,7 @@ GameObject:
   - component: {fileID: 631441091}
   - component: {fileID: 631441093}
   - component: {fileID: 631441092}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
