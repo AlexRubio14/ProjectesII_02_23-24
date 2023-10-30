@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    private enum State { MOVING, MINING, KNOCKBACK};
+    public enum State { MOVING, MINING, KNOCKBACK};
     private State currentState;
 
     private Rigidbody2D c_rb;
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
         Stunned();
     }
-    void ChangeState(State state)
+    public void ChangeState(State state)
     {
         switch(currentState)
         {

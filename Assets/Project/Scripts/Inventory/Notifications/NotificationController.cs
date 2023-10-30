@@ -12,9 +12,6 @@ public class NotificationController : MonoBehaviour
     private TextMeshProUGUI c_text;
 
     [Space, SerializeField]
-    private Dictionary<ItemController.ItemType, Sprite> itemsImages;
-
-    [Space, SerializeField]
     private float timeToDisapear;
     
     private void OnEnable()
@@ -22,13 +19,13 @@ public class NotificationController : MonoBehaviour
         Invoke("DisableNotification", timeToDisapear);
     }
 
-    public void SetType(ItemController.ItemType _itemType, short _itemAmount)
+    public void SetType(ItemObject _item, short _itemAmount)
     {
-        c_itemImage.sprite = Resources.Load<Sprite>("Minerals/Textures/" + _itemType.ToString());
+        c_itemImage.sprite = _item.c_sprite;
         string currentItemAmountSign = "+"; 
         if (_itemAmount < 0)
             currentItemAmountSign = "";
-        c_text.text = currentItemAmountSign + _itemAmount + " " + _itemType.ToString();
+        c_text.text = currentItemAmountSign + _itemAmount + " " + _item.name;
 
 
     }

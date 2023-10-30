@@ -6,8 +6,6 @@ using TMPro;
 public class InventoryUIController : MonoBehaviour
 {
 
-
-
     [SerializeField]
     private GameObject itemPrefab;
 
@@ -32,7 +30,7 @@ public class InventoryUIController : MonoBehaviour
 
     private List<RectTransform> l_itemsDisplayed;
     private List<InventoryItemIconController> l_itemIcon;
-    private Dictionary<ItemController.ItemType, short> l_items;
+    private Dictionary<ItemObject, short> l_items;
 
 
     private void Awake()
@@ -43,48 +41,10 @@ public class InventoryUIController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (InventoryItemIconController item in l_itemIcon)
-        {
-            if (l_items.ContainsKey(item.GetItemType()))
-                item.RefreshItemData(l_items[item.GetItemType()]);
-        }
+        RefreshInventoryItemAmount();
+        CalculateWeight();
     }
 
-    private void LoadItemList()
-    {
-        l_items = InventoryManager.Instance.GetItems();
-
-
-
-        //Resize al background
-        c_background.sizeDelta = new Vector2(
-            sizePerItem * maxItemPerRow,
-            sizePerItem * Mathf.CeilToInt(Mathf.Clamp(l_items.Count, 1, Mathf.Infinity) / maxItemPerRow) + topOffset
-            );
-
-        //Meto todos los objetos 
-        //Y me los guardo en la lista de rect transform y otra con los scripts de cada item
-        foreach (KeyValuePair<ItemController.ItemType, short> item in l_items)
-        {
-            //Quitar los que sean 0
-            //if (item.Value >= 0)
-            //    continue;
-
-            GameObject currentItem = Instantiate(itemPrefab, transform);
-            l_itemsDisplayed.Add(currentItem.GetComponent<RectTransform>());
-            l_itemIcon.Add(currentItem.GetComponent<InventoryItemIconController>());
-            l_itemIcon[l_itemIcon.Count - 1].LoadItem(item.Key, item.Value);
-        }
-
-        //Coloco los elementos de la lista de los items que tengo
-        for (int i = 0; i < l_itemsDisplayed.Count; i++)
-        {
-            l_itemsDisplayed[i].anchoredPosition = new Vector2(
-                starterPos.x + posOffset.x * (i % maxItemPerRow),
-                starterPos.y - posOffset.y * Mathf.FloorToInt(i / maxItemPerRow)
-                );
-        }
-    }
 
     private void OnEnable()
     {
@@ -102,6 +62,62 @@ public class InventoryUIController : MonoBehaviour
         l_itemIcon.Clear();
     }
 
+
+    private void LoadItemList()
+    {
+        l_items = InventoryManager.Instance.GetRunItems();
+
+
+
+        //Resize al background
+        c_background.sizeDelta = new Vector2(
+            sizePerItem * maxItemPerRow,
+            sizePerItem * Mathf.CeilToInt(Mathf.Clamp(l_items.Count, 1, Mathf.Infinity) / maxItemPerRow) + topOffset
+            );
+
+        //Meto todos los objetos 
+        //Y me los guardo en la lista de rect transform y otra con los scripts de cada item
+        foreach (KeyValuePair<ItemObject, short> item in l_items)
+        {
+            //Quitar los que sean 0
+            if (item.Value <= 0)
+                continue;
+
+            GameObject currentItem = Instantiate(itemPrefab, transform);
+            l_itemsDisplayed.Add(currentItem.GetComponent<RectTransform>());
+            l_itemIcon.Add(currentItem.GetComponent<InventoryItemIconController>());
+            l_itemIcon[l_itemIcon.Count - 1].LoadItem(item.Key, item.Value);
+        }
+
+        //Coloco los elementos de la lista de los items que tengo
+        for (int i = 0; i < l_itemsDisplayed.Count; i++)
+        {
+            l_itemsDisplayed[i].anchoredPosition = new Vector2(
+                starterPos.x + posOffset.x * (i % maxItemPerRow),
+                starterPos.y - posOffset.y * Mathf.FloorToInt(i / maxItemPerRow)
+                );
+        }
+    }
+
+    private void RefreshInventoryItemAmount()
+    {
+        foreach (InventoryItemIconController item in l_itemIcon)
+        {
+            if (l_items.ContainsKey(item.GetItemType()))
+                item.RefreshItemData(l_items[item.GetItemType()]);
+        }
+    }
+    private void CalculateWeight()
+    {
+        float weight = 0;
+
+        foreach (KeyValuePair<ItemObject, short> item in l_items)
+        {
+            weight += item.Key.weight * item.Value;
+        }
+
+        c_totalWeightText.text = weight.ToString("F1");
+    }
 
     
 

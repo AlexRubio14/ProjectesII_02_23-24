@@ -6,23 +6,20 @@ using UnityEngine.UI;
 public class ItemNotificationController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject notificationPrefab;
-
-    [SerializeField]
-    private Dictionary<ItemController.ItemType, Sprite> itemsSprite;
+    private GameObject c_notificationPrefab;
 
     [SerializeField]
     private float notificationMaxYSpawn;
     [SerializeField]
     private float notificationOffset;
 
-    private List<RectTransform> notificationList;
+    private List<RectTransform> l_notificationList;
 
     [Space, SerializeField]
     private GameObject inventory; //ESTO NO HA DE ESTAR AQUI, ES SOLO PARA PRUEBAS
     private void Awake()
     {
-        notificationList = new List<RectTransform>();
+        l_notificationList = new List<RectTransform>();
     }
 
     private void Update()
@@ -35,10 +32,10 @@ public class ItemNotificationController : MonoBehaviour
         }
     }
 
-    private void CreateItemNotification(ItemController.ItemType _itemType, short _itemAmount)
+    private void CreateItemNotification(ItemObject _itemType, short _itemAmount)
     {
-        GameObject newItem = Instantiate(notificationPrefab, transform);
-        notificationList.Add(newItem.GetComponent<RectTransform>());
+        GameObject newItem = Instantiate(c_notificationPrefab, transform);
+        l_notificationList.Add(newItem.GetComponent<RectTransform>());
 
         NotificationController notification = newItem.GetComponent<NotificationController>();
         notification.SetType(_itemType, _itemAmount);
@@ -47,23 +44,23 @@ public class ItemNotificationController : MonoBehaviour
 
     private void PlaceListItems() 
     {
-        for (int i = 0; i < notificationList.Count; i++)
+        for (int i = 0; i < l_notificationList.Count; i++)
         {
-            if (!notificationList[i])
+            if (!l_notificationList[i])
             {
-                notificationList.RemoveAt(i);
+                l_notificationList.RemoveAt(i);
                 i--;
                 continue;
             }
 
             if (i < 3)
             {
-                notificationList[i].gameObject.SetActive(true);
-                notificationList[i].anchoredPosition = new Vector2(0, notificationMaxYSpawn - (notificationOffset * i));
+                l_notificationList[i].gameObject.SetActive(true);
+                l_notificationList[i].anchoredPosition = new Vector2(0, notificationMaxYSpawn - (notificationOffset * i));
             }
             else
             {
-                notificationList[i].gameObject.SetActive(false);
+                l_notificationList[i].gameObject.SetActive(false);
             }
         }
     }
