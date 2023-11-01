@@ -36,8 +36,12 @@ public class MineMinigameManager : MonoBehaviour
     private float maxIntegrity;
     private float progressValue;
     private float integrityValue;
+
+
+    private MineralController c_miningItem;
+
     
-    void Start()
+    void OnEnable()
     {
         integrityValue = maxIntegrity;
         c_progressBarSlider.maxValue = maxIntegrity;
@@ -45,7 +49,7 @@ public class MineMinigameManager : MonoBehaviour
         leftLaser.SetCurrentEnergyLevel(50f);
         rightLaser.SetCurrentEnergyLevel(50f);
 
-        GenerateRandomNeededEnergyLevels();
+        StartCoroutine(GenerateRandomNeededEnergyLevels());
     }
 
     // Update is called once per frame
@@ -120,8 +124,10 @@ public class MineMinigameManager : MonoBehaviour
         }
     }
 
-    private void GenerateRandomNeededEnergyLevels()
+    private IEnumerator GenerateRandomNeededEnergyLevels()
     {
+
+        yield return new WaitForEndOfFrame();
         leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(neededSizes.x, neededSizes.y));
         rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(neededSizes.x, neededSizes.y));
     }
@@ -149,8 +155,6 @@ public class MineMinigameManager : MonoBehaviour
         c_integrity.value = integrityValue;
     }
 
-
-
     private void CheckProgressEnded()
     {
         if (progressValue >= 100 || integrityValue <= 0)
@@ -164,8 +168,12 @@ public class MineMinigameManager : MonoBehaviour
     {
         GetMinerals();
 
+        c_miningItem.gameObject.SetActive(false);
+
         progressValue = 0;
         integrityValue = 0;
+
+        PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
 
         gameObject.SetActive(false);
     }
@@ -174,27 +182,34 @@ public class MineMinigameManager : MonoBehaviour
     {
         float quarterIntegrity = maxIntegrity / 4;
 
+        short itemsToReturn; 
         if (integrityValue >= quarterIntegrity * 3) //100% de minerales
         {
-            Debug.Log("100%");
+            itemsToReturn = c_miningItem.MaxItemsToReturn;
         }
         else if (integrityValue >= quarterIntegrity * 2) //75% de minerales
         {
-            Debug.Log("75%");
+            itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.75f);
         }
         else if (integrityValue >= quarterIntegrity) //50% de minerales
         {
-            Debug.Log("50%");
+            itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.5f);
         }
         else if (integrityValue > 0) //25% de minerales
         {
-            Debug.Log("25%");
-
+            itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.25f);
         }
         else // 0% de minerales
         {
-            Debug.Log("0%");
+            itemsToReturn = 0;
         }
+        
+        InventoryManager.Instance.ChangeRunItemAmount(c_miningItem.c_currentItem, itemsToReturn);
+
     }
 
+    public void SetMiningObject(MineralController _mineral)
+    {
+        c_miningItem = _mineral;
+    }
 }

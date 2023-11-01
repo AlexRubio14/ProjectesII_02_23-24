@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    private enum State { IDLE, MOVING, MINING};
+    public enum State { MOVING, MINING, KNOCKBACK};
+    private State currentState;
 
     private Rigidbody2D c_rb;
 
@@ -15,16 +17,28 @@ public class PlayerController : MonoBehaviour
     private float movementScale;
     [SerializeField]
     private float rotationSpeed;
+    [SerializeField]
+    private float knockbackScale;
 
     [field: SerializeField]
     public float health {  get; private set; }
 
+    public Action myActions;
+    public Action<int> intActions;
 
-    // Start is called before the first frame update
-    void Start()
+    private void SayHi(int value)
     {
-        c_rb = GetComponent<Rigidbody2D>();
+        Debug.Log("HI UwU");
     }
+
+    private void Awake()
+    {
+        currentState = State.MOVING;
+        c_rb = GetComponent<Rigidbody2D>();
+
+        intActions += SayHi;
+    }
+    
 
     // Update is called once per frame
     void Update()
@@ -40,8 +54,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        Rotation();
+        switch (currentState)
+        {
+            case State.MOVING:
+                Move();
+                Rotation();
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                break;
+            default:
+                break;
+        }
     }
 
     void GetDirectionFromInputs()
@@ -81,5 +106,63 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
 
         //SceneManager.LoadScene("HUB");
+    }
+
+    void Stunned()
+    {
+        if (c_rb.velocity.magnitude <= 0.001f)
+        {
+            ChangeState(State.MOVING);
+        }
+        else
+        {
+            Invoke("Stunned", 0.02f);
+        }
+    }
+    void Knockback(Vector2 collisionPoint)
+    {
+        ChangeState(State.KNOCKBACK);
+        Vector2 direction = (Vector2)transform.position - collisionPoint;
+        direction.Normalize();
+
+        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        Stunned();
+    }
+    public void ChangeState(State state)
+    {
+        switch(currentState)
+        {
+            case State.MOVING:      
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                break;
+            default:
+                break;
+        }
+
+        switch (state)
+        {
+            case State.MOVING:
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                c_rb.velocity = Vector3.zero;
+                break;
+            default:
+                break;
+        }
+
+        currentState = state;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("Map"))
+        {
+            Knockback(collision.contacts[0].point);
+        }
     }
 }
