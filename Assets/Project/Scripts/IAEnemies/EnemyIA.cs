@@ -6,26 +6,26 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyIA : MonoBehaviour
 {
     [SerializeField]
-    private List<SteeringBehaviour> l_steeringBehaviours;
+    protected List<SteeringBehaviour> l_steeringBehaviours;
 
     [SerializeField]
     private List<Detector> l_detectors;
 
     [SerializeField]
-    private IAData iaData;
+    protected IAData iaData;
 
     [SerializeField]
     private float detectionDelay = 0.05f;
 
     [SerializeField]
-    private ContextSolver movementDirectionSolver;
+    protected ContextSolver movementDirectionSolver;
 
-    public bool isFollowing { get; private set; }
+    public bool isFollowing { get; protected set; }
 
     [SerializeField]
-    private float speed = 5.0f; 
+    protected float speed = 5.0f; 
 
-    private Rigidbody2D c_rb2d; 
+    protected Rigidbody2D c_rb2d; 
 
     public void InitEnemy()
     {
@@ -43,6 +43,29 @@ public class EnemyIA : MonoBehaviour
         foreach (Detector detector in l_detectors)
         {
             detector.Detect(iaData);
+        }
+    }
+
+    public void CheckIsFollowing()
+    {
+        // Enemy AI movement based on target availability 
+        if (iaData.m_currentTarget != null)
+        {
+            // Looking at the target
+            if (isFollowing == false)
+            {
+                isFollowing = true;
+            }
+        }
+        else if (iaData.m_currentTarget == null && iaData.GetTargetsCount() > 0) // pick a target if you don't have one
+        {
+            // Target acquisition logic
+            iaData.m_currentTarget = iaData.m_targets[0];
+        }
+        else
+        {
+            isFollowing = false;
+            Debug.Log("Stopping");
         }
     }
 
