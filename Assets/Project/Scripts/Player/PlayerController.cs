@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,24 +18,19 @@ public class PlayerController : MonoBehaviour
     private float rotationSpeed;
     [SerializeField]
     private float knockbackScale;
-
+    [SerializeField]
+    private float knockbackRotation;
+    [SerializeField]
+    private bool toogleMovement;
     [field: SerializeField]
     public float health {  get; private set; }
-
-    public Action myActions;
-    public Action<int> intActions;
-
-    private void SayHi(int value)
-    {
-        Debug.Log("HI UwU");
-    }
+    [SerializeField]
+    private float damagePerHit;
 
     private void Awake()
     {
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
-
-        intActions += SayHi;
     }
     
 
@@ -48,8 +42,23 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
+            health = 0;
             Die();
         }
+        if(Input.GetKeyDown(KeyCode.R)) 
+        {
+            toogleMovement = !toogleMovement;
+            if(toogleMovement) 
+            {
+                rotationSpeed = 300;
+            }
+            else
+            {
+                rotationSpeed = 17;
+            }
+        }
+
+
     }
 
     private void FixedUpdate()
@@ -78,18 +87,34 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        c_rb.AddForce(transform.up * inputDirection.magnitude * movementScale, ForceMode2D.Force);
+        if(toogleMovement)
+        {
+            c_rb.AddForce(transform.up * inputDirection.magnitude * movementScale, ForceMode2D.Force);
+        }
+        else
+        {
+            c_rb.AddForce(transform.up * inputDirection.y * movementScale, ForceMode2D.Force);
+        }
     }
 
     void Rotation()
     {
-        if(inputDirection != Vector3.zero) 
+        if(toogleMovement)
         {
-            Quaternion toRotation = Quaternion.LookRotation(transform.forward, inputDirection);
-            Quaternion rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            if (inputDirection != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(transform.forward, inputDirection);
+                Quaternion rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-            c_rb.MoveRotation(rotation);
+                c_rb.MoveRotation(rotation);
+            }
         }
+        else
+        {
+            c_rb.AddTorque(rotationSpeed * (inputDirection.x * -1), ForceMode2D.Force);
+            
+        }
+        
     }
 
     void LoseFuel()
@@ -110,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
     void Stunned()
     {
-        if (c_rb.velocity.magnitude <= 0.001f)
+        if (c_rb.velocity.magnitude <= 0.1f)
         {
             ChangeState(State.MOVING);
         }
@@ -126,6 +151,8 @@ public class PlayerController : MonoBehaviour
         direction.Normalize();
 
         c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+
         Stunned();
     }
     void ChangeState(State state)
@@ -158,11 +185,19 @@ public class PlayerController : MonoBehaviour
         currentState = state;
     }
 
+    public void GetDamage(float value, Vector2 damagePos)
+    {
+        if(currentState != State.KNOCKBACK) 
+            health -= value;
+
+        Knockback(damagePos);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map"))
         {
-            Knockback(collision.contacts[0].point);
+            GetDamage(damagePerHit, collision.contacts[0].point);
         }
     }
 }

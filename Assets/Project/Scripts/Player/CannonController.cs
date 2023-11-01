@@ -21,12 +21,20 @@ public class CannonController : MonoBehaviour
     public UnityEvent onShoot = new UnityEvent();
     public UnityEvent<Vector2> onMoveTurret = new UnityEvent<Vector2>();
 
+    [SerializeField]
+    private Transform turretParent;
+
+    [SerializeField]
+    private float rotationSpeed;
+
     private void Awake()
     {
+     
         canShoot = true;
 
         if(camera == null)
             camera = Camera.main;
+
     }
 
     private void Update()
@@ -41,7 +49,16 @@ public class CannonController : MonoBehaviour
         }
 
         //GetTurretMovement();
+        //Movement(GetMousePosition());
         //GetShootInput();
+    }
+    private void Movement(Vector2 pointerPosition)
+    {
+        Vector3 turretDirection = (Vector3)pointerPosition - turretParent.position;
+
+        var desiredAngle = Mathf.Atan2(turretDirection.y, turretDirection.x) * Mathf.Rad2Deg;
+
+        turretParent.rotation = Quaternion.RotateTowards(turretParent.rotation, Quaternion.Euler(0, 0, desiredAngle - 90), rotationSpeed);
     }
 
     void GetShootInput()
@@ -63,6 +80,7 @@ public class CannonController : MonoBehaviour
         Vector2 mouseWoeldPosition = camera.ScreenToWorldPoint(mousePosition);
         return mouseWoeldPosition;
     }
+
     public void Shoot()
     {
         if(canShoot) 
