@@ -138,7 +138,8 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        enabled = false;
+
 
         //SceneManager.LoadScene("HUB");
     }
