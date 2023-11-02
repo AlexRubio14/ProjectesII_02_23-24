@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                rotationSpeed = 17;
+                rotationSpeed = 7;
             }
         }
 
