@@ -51,7 +51,7 @@ public class CannonController : MonoBehaviour
         if (currentDelay >= reloadDelay)
         {
             currentDelay = 0;
-            Instantiate(laserPrefab, posToSpawnBullets.position, Quaternion.identity);
+            Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
         }
     }
 }

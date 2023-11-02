@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
     {
         enabled = false;
 
+
         //SceneManager.LoadScene("HUB");
     }
 

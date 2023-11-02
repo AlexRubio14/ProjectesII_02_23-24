@@ -20,6 +20,11 @@ public class Laser : MonoBehaviour
         c_rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        Initialize();
+    }
+
     public void Initialize()
     {
         startPosition = transform.position;
@@ -30,7 +35,7 @@ public class Laser : MonoBehaviour
     {
         currentDistance = Vector2.Distance(transform.position, startPosition);
 
-        if(currentDistance < maxDistance)
+        if(currentDistance >= maxDistance)
         {
             DisableObject();
         }

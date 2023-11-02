@@ -20,7 +20,7 @@ TagManager:
   - Mineral
   - PickableItem
   - Map
-  - 
+  - Bullet
   - 
   - 
   - 
@@ -57,6 +57,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 366951877
+    locked: 0
+  - name: Bullet
+    uniqueID: 1554673025
     locked: 0
   - name: Canvas
     uniqueID: 822479611
