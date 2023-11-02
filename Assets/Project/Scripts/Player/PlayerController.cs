@@ -22,15 +22,25 @@ public class PlayerController : MonoBehaviour
     private float knockbackRotation;
     [SerializeField]
     private bool toogleMovement;
+
+    //Health
     [field: SerializeField]
     public float health {  get; private set; }
     [SerializeField]
     private float damagePerHit;
 
+    //Inventory
+    [SerializeField]
+    private int maxStorage;
+    private int currentStorage;
+
+
     private void Awake()
     {
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
+
+        maxStorage = 50;
     }
     
 
@@ -193,6 +203,22 @@ public class PlayerController : MonoBehaviour
         Knockback(damagePos);
     }
 
+    void CheckStorage()
+    {
+        if(currentStorage <= maxStorage * 0.5f)
+        {
+
+        }
+        else if(currentStorage <= maxStorage * 0.75f)
+        {
+
+        }
+        else
+        {
+
+        }
+            
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map"))

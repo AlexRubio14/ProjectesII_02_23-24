@@ -49,16 +49,13 @@ public class CannonController : MonoBehaviour
         }
 
         //GetTurretMovement();
-        //Movement(GetMousePosition());
+        Movement(GetMousePosition());
         //GetShootInput();
     }
     private void Movement(Vector2 pointerPosition)
     {
-        Vector3 turretDirection = (Vector3)pointerPosition - turretParent.position;
-
-        var desiredAngle = Mathf.Atan2(turretDirection.y, turretDirection.x) * Mathf.Rad2Deg;
-
-        turretParent.rotation = Quaternion.RotateTowards(turretParent.rotation, Quaternion.Euler(0, 0, desiredAngle - 90), rotationSpeed);
+        Quaternion rotation = Quaternion.Euler(pointerPosition.x,pointerPosition.y,0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed);
     }
 
     void GetShootInput()
@@ -75,10 +72,9 @@ public class CannonController : MonoBehaviour
 
     Vector2 GetMousePosition()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = camera.nearClipPlane;
-        Vector2 mouseWoeldPosition = camera.ScreenToWorldPoint(mousePosition);
-        return mouseWoeldPosition;
+        Vector2 mousePosition = Input.mousePosition;
+        Debug.Log(mousePosition);
+        return mousePosition;
     }
 
     public void Shoot()
