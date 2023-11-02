@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7004272045897514233
 SpriteRenderer:
@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34f928b7e9414b44858abccf1f50c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  damage: 0
-  maxDistance: 0
+  speed: 1
+  damage: 5
+  maxDistance: 1000
 --- !u!58 &8663277017481697407
 CircleCollider2D:
   m_ObjectHideFlags: 0

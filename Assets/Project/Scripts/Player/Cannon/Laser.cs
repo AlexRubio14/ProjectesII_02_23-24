@@ -29,6 +29,7 @@ public class Laser : MonoBehaviour
     private void Update()
     {
         currentDistance = Vector2.Distance(transform.position, startPosition);
+
         if(currentDistance < maxDistance)
         {
             DisableObject();
