@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Emerald
   m_EditorClassIdentifier: 
-  <type>k__BackingField: 1
   <itemName>k__BackingField: Emerald
   <weight>k__BackingField: 3.3
   <c_sprite>k__BackingField: {fileID: 21300000, guid: 1b13a0bf536f4c4419ee3442fd93362a, type: 3}
+  lightColor: {r: 0, g: 1, b: 0.3372549, a: 1}
