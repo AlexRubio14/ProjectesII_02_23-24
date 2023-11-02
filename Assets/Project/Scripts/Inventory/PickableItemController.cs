@@ -11,6 +11,7 @@ public class PickableItemController : MonoBehaviour
     private float moveSpeed;
     [SerializeField]
     private float minDistanceToGetItem;
+    private bool playerThrow;
 
     private Transform c_playerTransform;
     private Rigidbody2D c_rb2d;
@@ -32,7 +33,6 @@ public class PickableItemController : MonoBehaviour
         FollowPlayer();
     }
 
-
     private void FollowPlayer()
     {
         if (c_playerTransform)
@@ -43,7 +43,6 @@ public class PickableItemController : MonoBehaviour
             CheckGetDistance();
         }
     }
-
     private void CheckGetDistance()
     {
         if (Vector2.Distance(c_playerTransform.position, transform.position) <= minDistanceToGetItem)
@@ -52,11 +51,25 @@ public class PickableItemController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void ImpulseItem(Vector2 _dir, float _throwSpeed)
+    {
+        c_rb2d.AddForce(_dir * _throwSpeed, ForceMode2D.Impulse);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !playerThrow)
         {
             c_playerTransform = collision.transform;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (playerThrow && collision.CompareTag("Player"))
+        {
+            playerThrow = false;
         }
     }
 
