@@ -15,4 +15,5 @@ MonoBehaviour:
   <itemName>k__BackingField: Emerald
   <weight>k__BackingField: 3.3
   <c_sprite>k__BackingField: {fileID: 21300000, guid: 1b13a0bf536f4c4419ee3442fd93362a, type: 3}
+  <c_pickableSprite>k__BackingField: {fileID: 21300000, guid: b75c02ff2def55e45b3b71e5c80e5743, type: 3}
   lightColor: {r: 0, g: 1, b: 0.3372549, a: 1}

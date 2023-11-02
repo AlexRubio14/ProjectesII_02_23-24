@@ -543,6 +543,8 @@ MonoBehaviour:
   progressSpeed: 5
   breakSpeed: 2
   maxIntegrity: 100
+  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  maxThrowSpeed: 3.5
 --- !u!1 &2740209075890683257
 GameObject:
   m_ObjectHideFlags: 0

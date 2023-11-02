@@ -15,4 +15,5 @@ MonoBehaviour:
   <itemName>k__BackingField: Cooper
   <weight>k__BackingField: 1.5
   <c_sprite>k__BackingField: {fileID: 21300000, guid: adef8bd251c059249af9d1a40a014550, type: 3}
+  <c_pickableSprite>k__BackingField: {fileID: 21300000, guid: dcf800fcbf4e78849a007ab2b99d67e4, type: 3}
   lightColor: {r: 0.8113208, g: 0.46942288, b: 0.08036668, a: 1}
