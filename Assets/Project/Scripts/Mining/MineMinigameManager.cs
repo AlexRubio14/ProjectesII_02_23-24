@@ -37,6 +37,10 @@ public class MineMinigameManager : MonoBehaviour
     private float progressValue;
     private float integrityValue;
 
+    [Space, Header("Minerals"), SerializeField]
+    private GameObject c_pickableItemPrefab;
+    [SerializeField]
+    private float maxThrowSpeed;
 
     private MineralController c_miningItem;
 
@@ -166,7 +170,7 @@ public class MineMinigameManager : MonoBehaviour
 
     private void EndMining()
     {
-        GetMinerals();
+        ThrowMinerals();
 
         c_miningItem.gameObject.SetActive(false);
 
@@ -178,7 +182,7 @@ public class MineMinigameManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void GetMinerals()
+    private void ThrowMinerals()
     {
         float quarterIntegrity = maxIntegrity / 4;
 
@@ -204,7 +208,22 @@ public class MineMinigameManager : MonoBehaviour
             itemsToReturn = 0;
         }
         
-        InventoryManager.Instance.ChangeRunItemAmount(c_miningItem.c_currentItem, itemsToReturn);
+        for (int i = 0; i < itemsToReturn; i++) 
+        {
+            PickableItemController currItem = Instantiate(c_pickableItemPrefab, c_miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
+
+            currItem.c_currentItem = c_miningItem.c_currentItem;
+
+            float randomX = Random.Range(-1, 2);
+            float randomY = Random.Range(-1, 2);
+            Vector2 randomDir = new Vector2(randomX, randomY);
+            
+            randomDir.Normalize();
+
+            float throwSpeed = Random.Range(0, maxThrowSpeed);
+            currItem.ImpulseItem(randomDir, throwSpeed);
+            currItem.transform.up = randomDir;
+        }
 
     }
 
