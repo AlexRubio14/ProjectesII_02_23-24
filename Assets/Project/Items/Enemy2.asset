@@ -15,4 +15,5 @@ MonoBehaviour:
   <itemName>k__BackingField: Enemy2
   <weight>k__BackingField: 4
   <c_sprite>k__BackingField: {fileID: 21300000, guid: 1c27987d3a1617b45952442aa9975588, type: 3}
+  <c_pickableSprite>k__BackingField: {fileID: 21300000, guid: 5281b4d4e4942f6498e82e1c19241dbb, type: 3}
   lightColor: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
