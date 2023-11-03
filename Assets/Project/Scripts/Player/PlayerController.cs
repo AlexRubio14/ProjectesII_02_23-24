@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
     {
         enabled = false;
 
+        CameraController.Instance.AddHighTrauma();
 
         //SceneManager.LoadScene("HUB");
     }
@@ -198,7 +199,8 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(float value, Vector2 damagePos)
     {
-        if(currentState != State.KNOCKBACK) 
+        CameraController.Instance.AddMediumTrauma();
+        if (currentState != State.KNOCKBACK) 
             health -= value;
 
         Knockback(damagePos);

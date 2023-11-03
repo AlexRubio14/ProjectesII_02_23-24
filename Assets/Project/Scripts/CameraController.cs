@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance;
+
     [SerializeField]
     private GameObject c_objectToFollow;
 
@@ -13,6 +15,16 @@ public class CameraController : MonoBehaviour
     private float maxShakeRotation;
     private Quaternion starterRotation;
     private float traumaLevel;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+
+        Instance = this;
+
+    }
+
     private void Start()
     {
         starterRotation = transform.rotation;
