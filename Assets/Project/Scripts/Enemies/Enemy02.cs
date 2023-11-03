@@ -5,10 +5,15 @@ using UnityEngine;
 public class Enemy02 : Enemy
 {
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
+
+    [Space, Header("Enemy 2")]
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
     [SerializeField]
     private float timeFollowing = 5.0f;
+    [SerializeField]
+    private GameObject c_explosionParticles;
+
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -105,16 +110,17 @@ public class Enemy02 : Enemy
         }
     }
 
-    
+    override protected void Die()
+    {
+        Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
+        Debug.Log("Exploteee");
+        base.Die();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         BulletCollision(collision, 40);
     }
-    private void Die()
-    {
-        Debug.Log("Exploteee");
-        Destroy(gameObject);
-    }
+    
 
 }

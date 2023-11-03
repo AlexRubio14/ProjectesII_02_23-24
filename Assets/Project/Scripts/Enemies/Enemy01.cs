@@ -5,12 +5,13 @@ using UnityEngine;
 public class Enemy01 : Enemy
 {
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
+
+    [Space, Header("Enemy 1")]
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
     private void Awake()
     {
         currentHealth = maxHealth;
-
     }
     void Start()
     {
