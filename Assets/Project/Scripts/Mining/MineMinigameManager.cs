@@ -173,7 +173,7 @@ public class MineMinigameManager : MonoBehaviour
         GenerateMinerals();
 
         c_miningItem.gameObject.SetActive(false);
-
+        CameraController.Instance.AddMediumTrauma();
         progressValue = 0;
         integrityValue = 0;
 
