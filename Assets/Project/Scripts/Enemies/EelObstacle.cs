@@ -5,65 +5,54 @@ using UnityEngine;
 public class EelObstacle : MonoBehaviour
 {
     [SerializeField]
-    private GameObject attackPoint;
+    private GameObject sprite;
     [SerializeField]
     private GameObject spawnPoint; 
 
-    private Rigidbody2D rb2d;
-
-    private Transform currentPoint; 
+    [SerializeField]
+    private float attackDelay = 1.0f;
+    private bool isAttacking = false; 
 
     [SerializeField]
-    private float speed;
+    private float speed = 7.0f;
 
     [SerializeField]
     private bool drawGizmos = true; 
 
     private void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
-        currentPoint = spawnPoint.transform; 
+        sprite.transform.position = spawnPoint.transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
-            transform.GetChild(0).position = Vector2.MoveTowards(transform.GetChild(0).position, transform.GetChild(1).position, speed * Time.deltaTime);
+            Debug.Log("I'm in"); 
+            isAttacking = true;
         }
     }
 
     private void Update()
     {
-        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == spawnPoint.transform)
+        if(isAttacking)
         {
-            currentPoint = attackPoint.transform;
-        }
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == attackPoint.transform)
-        {
-            currentPoint = spawnPoint.transform;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        Vector2 point = currentPoint.position - transform.position;
-        if(currentPoint == spawnPoint.transform)
-        {
-            rb2d.velocity = new Vector2(speed, 0); 
+            sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, transform.position, speed * Time.deltaTime);
         }
         else
         {
-            rb2d.velocity = new Vector2(-speed, 0); 
+            sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, spawnPoint.transform.position, speed * Time.deltaTime);
+        }
+
+        if(Vector2.Distance(sprite.transform.position, transform.position) < 0.5f)
+        {
+            Invoke("SetAttackFalse", attackDelay);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void SetAttackFalse()
     {
-        if (collision.CompareTag("Player"))
-        {
-            transform.GetChild(0).position = Vector2.MoveTowards(transform.GetChild(0).position, transform.position, speed * Time.deltaTime);
-        }
+        isAttacking = false; 
     }
 
     private void OnDrawGizmos()
@@ -72,7 +61,7 @@ public class EelObstacle : MonoBehaviour
             return; 
 
         Gizmos.DrawWireSphere(spawnPoint.transform.position, 0.5f); 
-        Gizmos.DrawWireSphere(attackPoint.transform.position, 0.5f);
-        Gizmos.DrawLine(spawnPoint.transform.position, attackPoint.transform.position); 
+        Gizmos.DrawWireSphere(this.transform.position, 0.5f);
+        Gizmos.DrawLine(spawnPoint.transform.position, this.transform.position); 
     }
 }
