@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Map
   - FxTemporaire
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

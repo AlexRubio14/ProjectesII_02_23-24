@@ -7,17 +7,17 @@ public class EelObstacle : MonoBehaviour
     [SerializeField]
     private GameObject sprite;
     [SerializeField]
-    private GameObject spawnPoint; 
+    private GameObject spawnPoint;
 
     [SerializeField]
     private float attackDelay = 1.0f;
-    private bool isAttacking = false; 
+    private bool isAttacking = false;
 
     [SerializeField]
     private float speed = 7.0f;
 
     [SerializeField]
-    private bool drawGizmos = true; 
+    private bool drawGizmos = true;
 
     private void Start()
     {
@@ -26,16 +26,16 @@ public class EelObstacle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            Debug.Log("I'm in"); 
+            Debug.Log("I'm in");
             isAttacking = true;
         }
     }
 
     private void Update()
     {
-        if(isAttacking)
+        if (isAttacking)
         {
             sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, transform.position, speed * Time.deltaTime);
         }
@@ -44,7 +44,7 @@ public class EelObstacle : MonoBehaviour
             sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, spawnPoint.transform.position, speed * Time.deltaTime);
         }
 
-        if(Vector2.Distance(sprite.transform.position, transform.position) < 0.5f)
+        if (Vector2.Distance(sprite.transform.position, transform.position) < 0.5f)
         {
             Invoke("SetAttackFalse", attackDelay);
         }
@@ -52,16 +52,16 @@ public class EelObstacle : MonoBehaviour
 
     private void SetAttackFalse()
     {
-        isAttacking = false; 
+        isAttacking = false;
     }
 
     private void OnDrawGizmos()
     {
         if (!drawGizmos)
-            return; 
+            return;
 
-        Gizmos.DrawWireSphere(spawnPoint.transform.position, 0.5f); 
+        Gizmos.DrawWireSphere(spawnPoint.transform.position, 0.5f);
         Gizmos.DrawWireSphere(this.transform.position, 0.5f);
-        Gizmos.DrawLine(spawnPoint.transform.position, this.transform.position); 
+        Gizmos.DrawLine(spawnPoint.transform.position, this.transform.position);
     }
 }
