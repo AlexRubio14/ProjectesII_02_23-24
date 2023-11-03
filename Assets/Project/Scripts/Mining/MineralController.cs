@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class MineralController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class MineralController : MonoBehaviour
     {
         c_spriteR = GetComponent<SpriteRenderer>();
         c_spriteR.sprite = c_currentItem.c_sprite;
+        GetComponentInChildren<Light2D>().color = c_currentItem.lightColor;
     }
+
 
 }

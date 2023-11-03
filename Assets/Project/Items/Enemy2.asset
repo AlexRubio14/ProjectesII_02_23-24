@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Enemy2
   m_EditorClassIdentifier: 
-  <type>k__BackingField: 3
   <itemName>k__BackingField: Enemy2
   <weight>k__BackingField: 4
   <c_sprite>k__BackingField: {fileID: 21300000, guid: 1c27987d3a1617b45952442aa9975588, type: 3}
+  <c_pickableSprite>k__BackingField: {fileID: 21300000, guid: 5281b4d4e4942f6498e82e1c19241dbb, type: 3}
+  lightColor: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}

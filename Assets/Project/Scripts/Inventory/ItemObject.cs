@@ -16,6 +16,9 @@ public class ItemObject : ScriptableObject
     [field: SerializeField]
     public Sprite c_sprite { get; private set; }
 
-
+    [field: SerializeField]
+    public Sprite c_pickableSprite { get; private set; }
+    [field: SerializeField]
+    public Color lightColor;
 
 }
