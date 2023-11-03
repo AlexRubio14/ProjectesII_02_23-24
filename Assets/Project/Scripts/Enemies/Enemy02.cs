@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy02 : Enemy
 {
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
+
+    [Space, Header("Enemy 2")]
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
     [SerializeField]

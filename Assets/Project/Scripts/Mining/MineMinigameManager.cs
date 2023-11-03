@@ -170,7 +170,7 @@ public class MineMinigameManager : MonoBehaviour
 
     private void EndMining()
     {
-        ThrowMinerals();
+        GenerateMinerals();
 
         c_miningItem.gameObject.SetActive(false);
 
@@ -182,7 +182,7 @@ public class MineMinigameManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void ThrowMinerals()
+    private void GenerateMinerals()
     {
         float quarterIntegrity = maxIntegrity / 4;
 
@@ -207,8 +207,14 @@ public class MineMinigameManager : MonoBehaviour
         {
             itemsToReturn = 0;
         }
-        
-        for (int i = 0; i < itemsToReturn; i++) 
+
+        ThrowMinerals(itemsToReturn);
+
+    }
+
+    private void ThrowMinerals(float _itemsToReturn)
+    {
+        for (int i = 0; i < _itemsToReturn; i++)
         {
             PickableItemController currItem = Instantiate(c_pickableItemPrefab, c_miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
 
@@ -217,16 +223,14 @@ public class MineMinigameManager : MonoBehaviour
             float randomX = Random.Range(-1, 2);
             float randomY = Random.Range(-1, 2);
             Vector2 randomDir = new Vector2(randomX, randomY);
-            
+
             randomDir.Normalize();
 
             float throwSpeed = Random.Range(0, maxThrowSpeed);
             currItem.ImpulseItem(randomDir, throwSpeed);
             currItem.transform.up = randomDir;
         }
-
     }
-
     public void SetMiningObject(MineralController _mineral)
     {
         c_miningItem = _mineral;
