@@ -293,9 +293,10 @@ MonoBehaviour:
   damage: 25
   c_currentDrop: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
-  maxThrowSpeed: 5
+  maxThrowSpeed: 2
   currentState: 0
   timeFollowing: 5
+  c_explosionParticles: {fileID: 8568151849809588671, guid: 06129a86feb697948bf26773e90b9dce, type: 3}
 --- !u!50 &768391568925790214
 Rigidbody2D:
   serializedVersion: 4
@@ -424,8 +425,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 3.6, y: 3.6, z: 0}
+    m_Center: {x: -0.04000008, y: 0, z: 0}
+    m_Extent: {x: 3.1100001, y: 2.45, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

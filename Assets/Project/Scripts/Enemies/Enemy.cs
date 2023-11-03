@@ -33,7 +33,7 @@ public abstract class Enemy : EnemyIA, IHealth
             Die();
         }
     }
-    protected void Die()
+    virtual protected void Die()
     {
         if (c_currentDrop)
         {

@@ -378,8 +378,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 3.6, y: 3.6, z: 0}
+    m_Center: {x: -0.04000008, y: 0, z: 0}
+    m_Extent: {x: 3.1100001, y: 2.45, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -476,7 +476,7 @@ Transform:
   - {fileID: 3501139305257391057}
   - {fileID: 8425547812211473044}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6668970655071454642
 MonoBehaviour:
@@ -519,7 +519,7 @@ MonoBehaviour:
   damage: 10
   c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
-  maxThrowSpeed: 5
+  maxThrowSpeed: 2
   currentState: 1
 --- !u!50 &4181270967838813588
 Rigidbody2D:
