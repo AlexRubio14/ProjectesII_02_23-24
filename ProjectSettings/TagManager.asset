@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Map
   - FxTemporaire
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -54,6 +56,9 @@ TagManager:
     locked: 0
   - name: Particles
     uniqueID: 992742065
+    locked: 0
+  - name: Enemies
+    uniqueID: 1407661151
     locked: 0
   - name: Player
     uniqueID: 366951877

@@ -47,6 +47,10 @@ public class Laser : MonoBehaviour
         {
             DisableObject();
         }
+        if (collision.CompareTag("Enemy"))
+        {
+            DisableObject();
+        }
     }
 
     private void DisableObject()

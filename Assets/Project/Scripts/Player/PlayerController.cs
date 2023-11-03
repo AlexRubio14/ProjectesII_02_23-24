@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public float health {  get; private set; }
     [SerializeField]
-    private float damagePerHit;
+    private float mapDamage;
 
     //Inventory
     [SerializeField]
@@ -224,7 +224,13 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Map"))
         {
-            GetDamage(damagePerHit, collision.contacts[0].point);
+            GetDamage(mapDamage, collision.contacts[0].point);
+        }
+
+        if(collision.collider.CompareTag("Enemy"))
+        {
+            Enemy enemy = collision.collider.GetComponent<Enemy>();
+            GetDamage(enemy.GetDamage(), collision.GetContact(0).point);
         }
     }
 }

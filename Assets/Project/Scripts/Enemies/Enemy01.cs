@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy01 : Enemy, IHealth //enemigo que te persigue i ja esta
+public class Enemy01 : Enemy
 {
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+
+    }
     void Start()
     {
         InitEnemy();
@@ -101,23 +106,9 @@ public class Enemy01 : Enemy, IHealth //enemigo que te persigue i ja esta
             ChangeState(EnemyStates.PATROLLING);
         }
     }
-    // HEALTH
-    public void GetHit(int amount)
-    {
-        currentHealth -= amount;
-
-        if (currentHealth < 0)
-        {
-            isDead = true;
-            Destroy(gameObject);
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Laser"))
-        {
-            GetHit(20); 
-        }
+        BulletCollision(collision, 40);
     }
 }

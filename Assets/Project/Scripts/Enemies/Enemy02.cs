@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy02 : Enemy, IHealth
+public class Enemy02 : Enemy
 {
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
     [SerializeField]
     private float timeFollowing = 5.0f;
-
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
     void Start()
     {
         InitEnemy();
@@ -101,24 +104,12 @@ public class Enemy02 : Enemy, IHealth
             ChangeState(EnemyStates.CHASING);
         }
     }
-    // HEALTH
-    public void GetHit(int amount)
-    {
-        currentHealth -= amount;
 
-        if (currentHealth < 0)
-        {
-            isDead = true;
-            Destroy(gameObject);
-        }
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Laser"))
-        {
-            GetHit(20);
-        }
+        BulletCollision(collision, 40);
     }
     private void Die()
     {
