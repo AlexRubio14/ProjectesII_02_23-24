@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public abstract class Enemy : EnemyIA, IHealth
 {
+    public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK, EATING }
+    public EnemyStates currentState = EnemyStates.PATROLLING;
+
     [Space, Header("Base Enemy"), SerializeField]
     protected int maxHealth;
     protected int currentHealth;
@@ -20,10 +23,11 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected string BULLET_TAG = "Bullet";
 
-    protected abstract void CheckState();
     protected abstract void Behaviour();
     protected abstract void PatrollingBehaviour(); 
     protected abstract void ChaseBehaviour();
+    protected abstract void ChangeState(EnemyStates nextState);
+    protected abstract void CheckState();
     public void GetHit(int amount)
     {
         currentHealth -= amount;
@@ -66,6 +70,19 @@ public abstract class Enemy : EnemyIA, IHealth
         {
             GetHit(bulletDamage);
         }
+    }
+
+    protected void StartEating()
+    {
+        currentHealth += 20;
+        ChangeState(EnemyStates.EATING);
+        StartCoroutine(StopEating());
+    }
+    
+    IEnumerator StopEating()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ChangeState(EnemyStates.CHASING);
     }
     public float GetDamage()
     {
