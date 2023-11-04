@@ -44,6 +44,7 @@ public class CannonController : MonoBehaviour
         //Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
 
         //transform.up = direction;
+
         transform.up = iController.inputAimTurretDirection.normalized;
 
 
