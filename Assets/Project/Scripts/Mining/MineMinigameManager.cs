@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 public class MineMinigameManager : MonoBehaviour
 {
     [Space, SerializeField]
@@ -17,12 +19,20 @@ public class MineMinigameManager : MonoBehaviour
     [SerializeField]
     private Color wrongEnergyColor = Color.grey;
 
+    [Space, SerializeField]
+    private float laserSliderSpeed;
+
     [Space, Header("Left Laser"), SerializeField]
     private MinigameBarController leftLaser;
     private bool chargingLeftLaser;
+    [SerializeField]
+    private Slider leftLaserSlider;
     [Space, Header("Right Laser"), SerializeField]
     private MinigameBarController rightLaser;
     private bool chargingRightLaser;
+    [SerializeField]
+    private Slider rightLaserSlider;
+
 
     [Space, Header("Mine"), SerializeField]
     private Slider c_progressBarSlider;
@@ -43,8 +53,10 @@ public class MineMinigameManager : MonoBehaviour
     private float maxThrowSpeed;
 
     private MineralController c_miningItem;
-
-    
+    [SerializeField]
+    private TextMeshProUGUI[] percentText;
+    [SerializeField]
+    private Image[] mineralTypeImages;
     void OnEnable()
     {
         integrityValue = maxIntegrity;
@@ -53,7 +65,11 @@ public class MineMinigameManager : MonoBehaviour
         leftLaser.SetCurrentEnergyLevel(50f);
         rightLaser.SetCurrentEnergyLevel(50f);
 
+        SetupQuantityText();
+        SetupMineralTypeImages();
+
         StartCoroutine(GenerateRandomNeededEnergyLevels());
+
     }
 
     // Update is called once per frame
@@ -103,11 +119,11 @@ public class MineMinigameManager : MonoBehaviour
 
     private void CheckLasersEnergy()
     {
-        CheckCurrentLaserEnergy(leftLaser);   
-        CheckCurrentLaserEnergy(rightLaser);   
+        CheckCurrentLaserEnergy(leftLaser, leftLaserSlider);   
+        CheckCurrentLaserEnergy(rightLaser, rightLaserSlider);   
     }
 
-    private void CheckCurrentLaserEnergy(MinigameBarController _currentLaser)
+    private void CheckCurrentLaserEnergy(MinigameBarController _currentLaser, Slider _currentLaserSlider)
     {
         float currentEnergy = _currentLaser.GetCurrentEnergy();
         float currentNeededEnergy = _currentLaser.GetNeedEnergy();
@@ -119,12 +135,15 @@ public class MineMinigameManager : MonoBehaviour
             //Tiene la energia necesaria
             _currentLaser.SetCurrentEnergyPointerColor(correctEnergyColor);
             _currentLaser.CorrectEnergy = true;
+            _currentLaserSlider.value += Time.deltaTime * laserSliderSpeed;
         }
         else
         {
             //No tiene la energia necesaria
             _currentLaser.SetCurrentEnergyPointerColor(wrongEnergyColor);
             _currentLaser.CorrectEnergy = false;
+            _currentLaserSlider.value -= Time.deltaTime * laserSliderSpeed;
+
         }
     }
 
@@ -170,7 +189,7 @@ public class MineMinigameManager : MonoBehaviour
 
     private void EndMining()
     {
-        GenerateMinerals();
+        ThrowMinerals(CalculateMinerals(integrityValue));
 
         c_miningItem.gameObject.SetActive(false);
         CameraController.Instance.AddMediumTrauma();
@@ -182,24 +201,24 @@ public class MineMinigameManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void GenerateMinerals()
+    private short CalculateMinerals(float _currentIntegrity)
     {
         float quarterIntegrity = maxIntegrity / 4;
 
         short itemsToReturn; 
-        if (integrityValue >= quarterIntegrity * 3) //100% de minerales
+        if (_currentIntegrity >= quarterIntegrity * 3) //100% de minerales
         {
             itemsToReturn = c_miningItem.MaxItemsToReturn;
         }
-        else if (integrityValue >= quarterIntegrity * 2) //75% de minerales
+        else if (_currentIntegrity >= quarterIntegrity * 2) //75% de minerales
         {
             itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.75f);
         }
-        else if (integrityValue >= quarterIntegrity) //50% de minerales
+        else if (_currentIntegrity >= quarterIntegrity) //50% de minerales
         {
             itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.5f);
         }
-        else if (integrityValue > 0) //25% de minerales
+        else if (_currentIntegrity > 0) //25% de minerales
         {
             itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.25f);
         }
@@ -208,7 +227,8 @@ public class MineMinigameManager : MonoBehaviour
             itemsToReturn = 0;
         }
 
-        ThrowMinerals(itemsToReturn);
+
+        return itemsToReturn;
 
     }
 
@@ -234,5 +254,20 @@ public class MineMinigameManager : MonoBehaviour
     public void SetMiningObject(MineralController _mineral)
     {
         c_miningItem = _mineral;
+    }
+
+    private void SetupQuantityText()
+    {
+        for (int i = 0; i < percentText.Length; i++)
+        {
+            percentText[i].text =  "x" + CalculateMinerals(100 - ( 26 * i)).ToString();
+        }
+    }
+    private void SetupMineralTypeImages()
+    {
+        for (int i = 0; i < mineralTypeImages.Length; i++)
+        {
+            mineralTypeImages[i].sprite = c_miningItem.c_currentItem.c_pickableSprite;
+        }
     }
 }

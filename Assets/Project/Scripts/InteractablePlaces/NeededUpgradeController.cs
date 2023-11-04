@@ -18,7 +18,7 @@ public class NeededUpgradeController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-
+            c_playerUpgrade.ShowNeededUpgrade(c_upgradeNeeded);
         }
     }
 
@@ -26,7 +26,7 @@ public class NeededUpgradeController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-
+            c_playerUpgrade.HideNeededUpgrade();
         }
     }
 }
