@@ -63,3 +63,7 @@ crashlytics-build.properties
 
 
 UserSettings/
+
+Assets/Plugins/CodeAssist/
+
+Assets/Plugins/CodeAssist.meta

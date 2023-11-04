@@ -18,6 +18,12 @@ public class CannonController : MonoBehaviour
     private float reloadDelay;
     private float currentDelay;
 
+    private InputController iController;
+
+    private void Awake()
+    {
+        iController = GetComponentInParent<InputController>();
+    }
     private void Update()
     {
         Movement(GetMousePosition());
@@ -35,8 +41,12 @@ public class CannonController : MonoBehaviour
 
     private void Movement(Vector2 pointerPosition)
     {
-        Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
-        transform.up = direction;
+        //Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
+
+        //transform.up = direction;
+        transform.up = iController.inputAimTurretDirection.normalized;
+
+
     }
 
     Vector2 GetMousePosition()
