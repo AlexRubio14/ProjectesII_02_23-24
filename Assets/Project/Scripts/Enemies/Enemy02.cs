@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Enemy02 : Enemy
 {
-    public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
-
-    [Space, Header("Enemy 2")]
-    public EnemyStates currentState = EnemyStates.PATROLLING;
+    //[Space, Header("Enemy 2")]
 
     [SerializeField]
     private float timeFollowing = 5.0f;
@@ -64,7 +61,7 @@ public class Enemy02 : Enemy
         transform.rotation = Quaternion.Euler(Vector3.forward * angle);
 
     }
-    protected void ChangeState(EnemyStates nextState)
+    override protected void ChangeState(EnemyStates nextState)
     {
         if (currentState == nextState)
             return;
@@ -121,6 +118,13 @@ public class Enemy02 : Enemy
     {
         BulletCollision(collision, 40);
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("Player"))
+        {
+            Die();
+        }
+    }
 
 }

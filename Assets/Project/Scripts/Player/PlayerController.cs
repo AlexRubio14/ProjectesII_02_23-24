@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { MOVING, MINING, KNOCKBACK};
+    public enum State { MOVING, MINING, KNOCKBACK, INVENCIBILITY};
     private State currentState;
 
     private Rigidbody2D c_rb;

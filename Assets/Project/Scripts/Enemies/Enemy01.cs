@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Enemy01 : Enemy
 {
-    public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK}
+    
 
-    [Space, Header("Enemy 1")]
-    public EnemyStates currentState = EnemyStates.PATROLLING;
+    //[Space, Header("Enemy 1")]
+    
 
     private void Awake()
     {
@@ -38,7 +38,8 @@ public class Enemy01 : Enemy
                 ChaseBehaviour(); 
                 break;
             case EnemyStates.KNOCKBACK:
-                // ... 
+            // ... 
+            case EnemyStates.EATING:
                 break; 
             default:
                 break;
@@ -59,10 +60,10 @@ public class Enemy01 : Enemy
         transform.rotation = Quaternion.Euler(Vector3.forward * angle);
 
     }
-    protected void ChangeState(EnemyStates nextState)
+    override protected void ChangeState(EnemyStates nextState)
     {
         if (currentState == nextState)
-            return; 
+            return;
 
         // EXIT ACTUAL STATE
         switch (currentState)
@@ -74,9 +75,9 @@ public class Enemy01 : Enemy
             case EnemyStates.KNOCKBACK:
                 break;
             default:
-                break; 
+                break;
         }
-        currentState = nextState; 
+        currentState = nextState;
 
         // INIT NEW STATE
         switch (currentState)
@@ -110,6 +111,18 @@ public class Enemy01 : Enemy
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        BulletCollision(collision, 40);
+        if(collision.CompareTag(BULLET_TAG))
+        {
+          BulletCollision(collision, 40);
+        }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("Player"))
+        {
+            StartEating();
+        }
+    }
+
 }
