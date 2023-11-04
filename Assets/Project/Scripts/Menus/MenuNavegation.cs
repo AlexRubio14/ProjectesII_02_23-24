@@ -5,9 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class MenuNavegation : MonoBehaviour
 {
-    public void Play()
+    public void GoToHub()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
+        SceneManager.LoadScene("ShopScene"); 
+    }
+
+    public void GoToTitleScreen()
+    {
+        SceneManager.LoadScene("TitleScreen");
+    }
+
+    public void GoToGame()
+    {
+        SceneManager.LoadScene("PlayableMapScene");
     }
 
     public void Exit()
