@@ -27,6 +27,11 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    public void ObtainUpgrade(UpgradeObject _currentUpgrade)
+    {
+        UpgradeObtained[_currentUpgrade] = true;
+    }
+
 
 
 

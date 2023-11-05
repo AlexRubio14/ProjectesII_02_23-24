@@ -113,7 +113,7 @@ public class InventoryUIController : MonoBehaviour
 
         foreach (KeyValuePair<ItemObject, short> item in l_items)
         {
-            weight += item.Key.weight * item.Value;
+            weight += item.Key.Weight * item.Value;
         }
 
         c_totalWeightText.text = weight.ToString("F1");

@@ -21,7 +21,7 @@ public class NotificationController : MonoBehaviour
 
     public void SetType(ItemObject _item, short _itemAmount)
     {
-        c_itemImage.sprite = _item.c_sprite;
+        c_itemImage.sprite = _item.c_PickableSprite;
         string currentItemAmountSign = "+"; 
         if (_itemAmount < 0)
             currentItemAmountSign = "";

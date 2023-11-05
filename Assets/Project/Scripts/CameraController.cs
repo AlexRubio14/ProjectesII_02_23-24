@@ -32,20 +32,6 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AddLowTrauma();
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            AddMediumTrauma();
-
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            AddHighTrauma();
-        }
-
         traumaLevel -= Time.deltaTime / 1.5f;
 
         traumaLevel = Mathf.Clamp01(traumaLevel);
@@ -96,13 +82,16 @@ public class CameraController : MonoBehaviour
     public void AddLowTrauma()
     {
         traumaLevel += 0.4f;
+        traumaLevel = Mathf.Clamp01(traumaLevel);
     }
     public void AddMediumTrauma()
     {
         traumaLevel += 0.6f;
+        traumaLevel = Mathf.Clamp01(traumaLevel);
     }
     public void AddHighTrauma()
     {
         traumaLevel += 1f;
+        traumaLevel = Mathf.Clamp01(traumaLevel);
     }
 }

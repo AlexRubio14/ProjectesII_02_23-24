@@ -6,6 +6,8 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
+    [SerializeField]
+    private ItemObject[] allExistingItems;
     private Dictionary<ItemObject, short> allItems;
     private Dictionary<ItemObject, short> runItems;
 
@@ -18,6 +20,10 @@ public class InventoryManager : MonoBehaviour
         DontDestroyOnLoad(Instance);
 
         allItems = new Dictionary<ItemObject, short>();
+        foreach (ItemObject item in allExistingItems)
+        {
+            allItems.Add(item, 0);
+        }
         runItems = new Dictionary<ItemObject, short>();
     }
 
@@ -49,9 +55,8 @@ public class InventoryManager : MonoBehaviour
         }
         return true;
     }
-    /* 
-     * ANTES DE LLAMAR A ESTA FUNCION SE HA DE CALCULAR QUE SE TENGAN LOS MATERIALES NECESARIOS
-     */
+
+    /* ANTES DE LLAMAR A ESTA FUNCION SE HA DE CALCULAR QUE SE TENGAN LOS MATERIALES NECESARIOS */
     public void BuyUpgrade(Dictionary<ItemObject, short> _upgradePrize)
     {
         foreach (KeyValuePair<ItemObject, short> item in _upgradePrize)
@@ -65,7 +70,6 @@ public class InventoryManager : MonoBehaviour
     {
         return allItems;
     }
-    
     public Dictionary<ItemObject, short> GetRunItems()
     {
         return runItems;
@@ -77,7 +81,14 @@ public class InventoryManager : MonoBehaviour
         {
             foreach (KeyValuePair<ItemObject, short> item in runItems)
             {
-                allItems[item.Key] += item.Value;
+                if (item.Key.PowerUp == PowerUpManager.PowerUpType.NONE )
+                {
+                    allItems[item.Key] += item.Value;
+                }
+                else
+                {
+                    PowerUpManager.Instance.PowerUpObtained(item.Key.PowerUp);
+                }
             }
         }
 
