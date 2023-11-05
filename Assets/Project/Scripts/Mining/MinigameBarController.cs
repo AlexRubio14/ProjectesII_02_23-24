@@ -21,7 +21,7 @@ public class MinigameBarController : MonoBehaviour
     [HideInInspector]
     public bool CorrectEnergy;
 
-    private void Start()
+    private void Awake()
     {
         c_miningBarSlider = GetComponent<Slider>();
         c_currentEnergyImage = c_currentEnergyLevelPointer.GetComponent<Image>();

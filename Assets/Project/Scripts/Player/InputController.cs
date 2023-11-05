@@ -6,17 +6,17 @@ using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
     [SerializeField]
-    InputActionReference moveAction;
-
+    private InputActionReference moveAction;
     [SerializeField]
-    InputActionReference aimTurretAction;
-
+    private InputActionReference aimTurretAction;
     [SerializeField]
-    InputActionReference shootAction;
+    private InputActionReference shootAction;
+    [SerializeField]
+    private InputActionReference interactAction;
 
-    PlayerController playerController;
-
-    CannonController cannonController;
+    private PlayerController playerController;
+    private CannonController cannonController;
+    private MapInteractPlayer c_interactionController;
 
     public Vector2 inputMovementDirection { get; private set; }
     public Vector2 inputAimTurretDirection { get; private set; }
@@ -24,6 +24,7 @@ public class InputController : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        c_interactionController = GetComponent<MapInteractPlayer>();
         cannonController = GetComponentInChildren<CannonController>();
     }
     private void OnEnable()
@@ -38,6 +39,8 @@ public class InputController : MonoBehaviour
 
         shootAction.action.started += ShootAction;
         shootAction.action.canceled += ShootAction;
+
+        interactAction.action.started += InteractAction;
     }
 
     private void OnDisable()
@@ -52,6 +55,8 @@ public class InputController : MonoBehaviour
 
         shootAction.action.started -= ShootAction;
         shootAction.action.canceled -= ShootAction;
+
+        interactAction.action.started -= InteractAction;
     }
 
     private void MoveAction(InputAction.CallbackContext obj)
@@ -76,5 +81,8 @@ public class InputController : MonoBehaviour
         }
     }
 
-    
+    private void InteractAction(InputAction.CallbackContext obj)
+    {
+        c_interactionController.InteractNearObject();
+    }
 }
