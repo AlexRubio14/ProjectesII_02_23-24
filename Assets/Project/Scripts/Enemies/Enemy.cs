@@ -7,8 +7,8 @@ public abstract class Enemy : EnemyIA, IHealth
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
     [Space, Header("Base Enemy"), SerializeField]
-    protected int maxHealth;
-    protected int currentHealth;
+    protected float maxHealth;
+    protected float currentHealth;
 
     protected bool isDead;
     [SerializeField]
@@ -23,14 +23,33 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected string BULLET_TAG = "Bullet";
 
+    #region Behaviours Functions
     protected abstract void Behaviour();
     protected abstract void PatrollingBehaviour(); 
     protected abstract void ChaseBehaviour();
+    #endregion
+
+    #region States Functions
     protected abstract void ChangeState(EnemyStates nextState);
     protected abstract void CheckState();
-    public void GetHit(int amount)
+    protected void StartEating()
     {
-        currentHealth -= amount;
+        currentHealth += 20;
+        ChangeState(EnemyStates.EATING);
+        StartCoroutine(StopEating());
+    }
+
+    IEnumerator StopEating()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ChangeState(EnemyStates.CHASING);
+    }
+    #endregion
+
+    #region Damage Functions
+    public void GetHit(float _damageAmount)
+    {
+        currentHealth -= _damageAmount;
 
         if (currentHealth <= 0)
         {
@@ -63,29 +82,20 @@ public abstract class Enemy : EnemyIA, IHealth
         currItem.ImpulseItem(randomDir, throwSpeed);
         currItem.transform.up = randomDir;
     }
-
-    protected void BulletCollision(Collider2D collision, int bulletDamage)
-    {
-        if (collision.CompareTag(BULLET_TAG))
-        {
-            GetHit(bulletDamage);
-        }
-    }
-
-    protected void StartEating()
-    {
-        currentHealth += 20;
-        ChangeState(EnemyStates.EATING);
-        StartCoroutine(StopEating());
-    }
-    
-    IEnumerator StopEating()
-    {
-        yield return new WaitForSeconds(1.5f);
-        ChangeState(EnemyStates.CHASING);
-    }
     public float GetDamage()
     {
         return damage;
     }
+    #endregion
+
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(BULLET_TAG))
+        {
+            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
+            GetHit(bulletDamage); ;
+        }
+    }
+
 }

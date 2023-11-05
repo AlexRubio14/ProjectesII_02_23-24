@@ -22,14 +22,10 @@ public class Laser : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
-    }
-
-    public void Initialize()
-    {
         startPosition = transform.position;
         c_rb.velocity = transform.up * speed;
     }
+
 
     private void Update()
     {
@@ -39,6 +35,16 @@ public class Laser : MonoBehaviour
         {
             DisableObject();
         }
+    }
+
+    public float GetBulletDamage()
+    {
+        return damage * PowerUpManager.Instance.Damage;
+    }
+    private void DisableObject()
+    {
+        c_rb.velocity = Vector2.zero;
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,9 +59,5 @@ public class Laser : MonoBehaviour
         }
     }
 
-    private void DisableObject()
-    {
-        c_rb.velocity = Vector2.zero;
-        gameObject.SetActive(false);
-    }
+    
 }

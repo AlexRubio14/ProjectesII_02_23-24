@@ -11,9 +11,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D c_rb;
 
     [Space, Header("Movement"), SerializeField]
-    private Vector3 inputDirection;
-    [SerializeField]
     private float movementScale;
+    //private Vector3 inputDirection;
 
     [Header("Rotation")]
     private float currentRotationSpeed;
@@ -28,8 +27,9 @@ public class PlayerController : MonoBehaviour
     private float knockbackRotation;
 
     //[Header("Health"), SerializeField]
-    [field: SerializeField]
-    public float health {  get; private set; }
+    [SerializeField]
+    private float baseFuel;
+    public float Fuel { get; private set; }
     [SerializeField]
     private float mapDamage;
 
@@ -50,9 +50,13 @@ public class PlayerController : MonoBehaviour
         iController = GetComponentInParent<InputController>();
     }
     
+    private void Start()
+    {
+        Fuel = baseFuel + PowerUpManager.Instance.Fuel;
+    }
+
     void Update()
     {
-        GetDirectionFromInputs();
         LoseFuel();
         RotationAcceleration();
     }
@@ -74,21 +78,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void GetDirectionFromInputs()
-    {
-        inputDirection.x = Input.GetAxisRaw("Horizontal");
-        inputDirection.y = Input.GetAxisRaw("Vertical");
-        inputDirection.Normalize();
-    }
-
     void Move()
     {
-        c_rb.AddForce(transform.up * inputDirection.y * movementScale, ForceMode2D.Force);
+        c_rb.AddForce(transform.up * iController.inputMovementDirection.y * movementScale, ForceMode2D.Force);
     }
 
     void Rotation()
     {
-        c_rb.AddTorque(currentRotationSpeed * (inputDirection.x * -1), ForceMode2D.Force); 
+        c_rb.AddTorque(currentRotationSpeed * (iController.inputMovementDirection.x * -1), ForceMode2D.Force); 
     }
 
     void RotationAcceleration()
@@ -116,11 +113,11 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 if(iController.inputMovementDirection == Vector2.zero)
                 {
-                    health -= Time.deltaTime / 3;
+                    Fuel -= Time.deltaTime / 3;
                 }
                 else
                 {
-                    health -= Time.deltaTime;
+                    Fuel -= Time.deltaTime;
                 }
                 break;
             case State.MINING:
@@ -134,18 +131,18 @@ public class PlayerController : MonoBehaviour
         }
         if(Time.deltaTime / 3 == 0)
         {
-            health -= Time.deltaTime;
+            Fuel -= Time.deltaTime;
         }
     }
     public float GetHealth()
     {
-        return health;
+        return Fuel;
     }
     private void CheckIfPlayerDies()
     {
-        if (health <= 0)
+        if (Fuel <= 0)
         {
-            health = 0;
+            Fuel = 0;
             Die();
         }
     }
@@ -213,7 +210,7 @@ public class PlayerController : MonoBehaviour
     {
         CameraController.Instance.AddMediumTrauma();
         if (currentState != State.KNOCKBACK) 
-            health -= value;
+            Fuel -= value / PowerUpManager.Instance.Armor;
 
         CheckIfPlayerDies();
         Knockback(damagePos);
@@ -238,8 +235,9 @@ public class PlayerController : MonoBehaviour
 
     public void SubstractHealth(float value)
     {
-        health -= value;
+        Fuel -= value;
     }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map"))
