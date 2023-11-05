@@ -11,19 +11,23 @@ public class InputController : MonoBehaviour
     [SerializeField]
     InputActionReference aimTurretAction;
 
-    PlayerController pController;
+    [SerializeField]
+    InputActionReference shootAction;
+
+    PlayerController playerController;
+
+    CannonController cannonController;
 
     public Vector2 inputMovementDirection { get; private set; }
     public Vector2 inputAimTurretDirection { get; private set; }
 
     private void Awake()
     {
-        pController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerController>();
+        cannonController = GetComponentInChildren<CannonController>();
     }
     private void OnEnable()
     {
-        pController = GetComponent<PlayerController>();
-
         moveAction.action.started += MoveAction;
         moveAction.action.performed += MoveAction;
         moveAction.action.canceled += MoveAction;
@@ -32,7 +36,8 @@ public class InputController : MonoBehaviour
         aimTurretAction.action.performed += AimTurretAction;
         aimTurretAction.action.canceled += AimTurretAction;
 
-
+        shootAction.action.started += ShootAction;
+        shootAction.action.canceled += ShootAction;
     }
 
     private void OnDisable()
@@ -41,9 +46,12 @@ public class InputController : MonoBehaviour
         moveAction.action.performed -= MoveAction;
         moveAction.action.canceled -= MoveAction;
 
-        aimTurretAction.action.started += AimTurretAction;
-        aimTurretAction.action.performed += AimTurretAction;
-        aimTurretAction.action.canceled += AimTurretAction;
+        aimTurretAction.action.started -= AimTurretAction;
+        aimTurretAction.action.performed -= AimTurretAction;
+        aimTurretAction.action.canceled -= AimTurretAction;
+
+        shootAction.action.started -= ShootAction;
+        shootAction.action.canceled -= ShootAction;
     }
 
     private void MoveAction(InputAction.CallbackContext obj)
@@ -55,4 +63,18 @@ public class InputController : MonoBehaviour
     {
         inputAimTurretDirection = aimTurretAction.action.ReadValue<Vector2>();
     }
+
+    private void ShootAction(InputAction.CallbackContext obj)
+    {
+        if(obj.started)
+        {
+            cannonController.canShoot = true;
+        }
+        else
+        {
+            cannonController.canShoot = false;
+        }
+    }
+
+    
 }
