@@ -16,8 +16,8 @@ public class MineralController : MonoBehaviour
     private void Awake()
     {
         c_spriteR = GetComponent<SpriteRenderer>();
-        c_spriteR.sprite = c_currentItem.c_sprite;
-        GetComponentInChildren<Light2D>().color = c_currentItem.lightColor;
+        c_spriteR.sprite = c_currentItem.c_MapSprite;
+        GetComponentInChildren<Light2D>().color = c_currentItem.LightColor;
     }
 
 

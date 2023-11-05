@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <itemName>k__BackingField: Enemy1
   <weight>k__BackingField: 2.5
-  <c_sprite>k__BackingField: {fileID: 21300000, guid: e858e3fb347c71c4ba8147393036a533, type: 3}
-  <c_pickableSprite>k__BackingField: {fileID: 21300000, guid: 3917786bff66b194fbc9ee9e592ab14d, type: 3}
-  lightColor: {r: 0.8773585, g: 0, b: 0.55481434, a: 1}
+  <c_MapSprite>k__BackingField: {fileID: 0}
+  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 3917786bff66b194fbc9ee9e592ab14d, type: 3}
+  <LightColor>k__BackingField: {r: 1, g: 0.11022433, b: 0, a: 1}
+  <PowerUp>k__BackingField: 0

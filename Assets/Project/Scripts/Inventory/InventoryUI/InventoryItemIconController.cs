@@ -16,7 +16,7 @@ public class InventoryItemIconController : MonoBehaviour
     public void LoadItem(ItemObject _itemType, short _amount)
     {
         c_item = _itemType;
-        c_spriteImage.sprite = c_item.c_sprite;
+        c_spriteImage.sprite = c_item.c_PickableSprite;
         RefreshItemData(_amount);
     }
 

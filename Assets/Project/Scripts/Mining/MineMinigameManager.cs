@@ -267,7 +267,7 @@ public class MineMinigameManager : MonoBehaviour
     {
         for (int i = 0; i < mineralTypeImages.Length; i++)
         {
-            mineralTypeImages[i].sprite = c_miningItem.c_currentItem.c_pickableSprite;
+            mineralTypeImages[i].sprite = c_miningItem.c_currentItem.c_PickableSprite;
         }
     }
 }
