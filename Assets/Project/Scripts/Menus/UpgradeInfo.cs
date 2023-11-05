@@ -25,20 +25,32 @@ public class UpgradeInfo : MonoBehaviour
 
     private void Start()
     {
+        SetUpgradeLayout(); 
+    }
+
+    private void SetUpgradeLayout()
+    {
         Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
 
         upgradeImage.sprite = currentUpgrade.c_UpgradeSprite;
         upgradeText.text = currentUpgrade.UpgradeName;
 
-        currentUpgrade.Awake(); 
+        currentUpgrade.Awake();
 
         foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
         {
-            Instantiate(upgradeImagePrefab, layoutUpgrade.transform).GetComponent<Image>().sprite = item.Key.c_pickableSprite;
-            Instantiate(upgradeTextPrefab, layoutUpgrade.transform).GetComponent<TextMeshProUGUI>().text =/* inventoryMap[item.Key] +*/ " / " + item.Value; 
+            Instantiate(upgradeImagePrefab, layoutUpgrade.transform).GetComponent<Image>().sprite = item.Key.c_PickableSprite;
+            Instantiate(upgradeTextPrefab, layoutUpgrade.transform).GetComponent<TextMeshProUGUI>().text = inventoryMap[item.Key] + " / " + item.Value;
         }
     }
 
-
+    public void BuyUpgrade(UpgradeObject _upgradeObject)
+    {
+        if (InventoryManager.Instance.CanBuy(_upgradeObject.prize))
+        {
+            InventoryManager.Instance.BuyUpgrade(_upgradeObject.prize);
+            // UpgradeManager.Instance.
+        }
+    }
 
 }

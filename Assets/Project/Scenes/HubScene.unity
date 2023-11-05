@@ -258,7 +258,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 70, y: 70}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 4
@@ -442,7 +442,6 @@ GameObject:
   - component: {fileID: 226249116}
   - component: {fileID: 226249115}
   - component: {fileID: 226249119}
-  - component: {fileID: 226249120}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -548,30 +547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c67c74a8a4e0b4c9c0baed8a6f94e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &226249120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226249114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5454f6e425357d742a55ec3c3e8b9c84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  images:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  texts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &321921116
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,7 +707,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 226249120}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DisplayShop, Assembly-CSharp
         m_MethodName: BuyUpgrade
         m_Mode: 2
@@ -1156,7 +1131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &488163781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1708,7 +1683,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 226249120}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DisplayShop, Assembly-CSharp
         m_MethodName: BuyUpgrade
         m_Mode: 2
@@ -2205,7 +2180,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 226249120}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DisplayShop, Assembly-CSharp
         m_MethodName: BuyUpgrade
         m_Mode: 2
@@ -3298,7 +3273,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 70, y: 70}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 2
@@ -4228,7 +4203,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 70, y: 70}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 2
