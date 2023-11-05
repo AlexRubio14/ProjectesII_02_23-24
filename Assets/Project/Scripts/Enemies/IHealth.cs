@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHealth
 {
-    public void GetHit(int amount); 
+    public void GetHit(float amount); 
 }

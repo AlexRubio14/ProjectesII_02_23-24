@@ -114,11 +114,6 @@ public class Enemy02 : Enemy
         base.Die();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        BulletCollision(collision, 40);
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))

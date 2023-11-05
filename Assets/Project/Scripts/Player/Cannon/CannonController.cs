@@ -34,16 +34,16 @@ public class CannonController : MonoBehaviour
     }
     private void Update()
     {
-        Movement(GetMousePosition());
 
         currentDelay += Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
+        RotateCanon();
         Shoot();
     }
-    private void Movement(Vector2 pointerPosition)
+    private void RotateCanon()
     {
         //Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
 

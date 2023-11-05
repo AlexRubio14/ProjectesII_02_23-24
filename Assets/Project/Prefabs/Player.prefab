@@ -124,7 +124,7 @@ Transform:
   - {fileID: 713839581992212542}
   - {fileID: 2888034062527476590}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4194747130575803385
 Rigidbody2D:
@@ -264,7 +264,7 @@ MonoBehaviour:
   maxRotationSpeed: 5
   knockbackScale: 10
   knockbackRotation: 1
-  <health>k__BackingField: 100
+  baseFuel: 150
   mapDamage: 10
   maxStorage: 50
 --- !u!114 &697992122945508969
