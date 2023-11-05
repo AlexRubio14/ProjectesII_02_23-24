@@ -22,7 +22,7 @@ public class UpgradeObject : ScriptableObject
 
     public Dictionary<ItemObject, short> prize { get; private set; }
 
-    private void Awake()
+    public void Awake()
     {
         prize = new Dictionary<ItemObject, short>();
         for (int i = 0; i < itemToUpgrade.Count; i++)
