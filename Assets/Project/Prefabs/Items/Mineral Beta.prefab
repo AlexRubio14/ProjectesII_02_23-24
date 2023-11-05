@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7220782329502496194}
   m_Layer: 10
   m_Name: Mineral Beta
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 6945728315678261388}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7745456955625772872
 SpriteRenderer:

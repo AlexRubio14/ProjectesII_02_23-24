@@ -18,25 +18,44 @@ public class CannonController : MonoBehaviour
     private float reloadDelay;
     private float currentDelay;
 
+    [SerializeField]
+    private float shootFuel;
+
+    public bool canShoot { get; set; }
+
+    private InputController iController;
+    private PlayerController playerController;
+
+    private void Awake()
+    {
+        iController = GetComponentInParent<InputController>();
+        playerController = GetComponentInParent<PlayerController>();
+        canShoot = false;
+    }
     private void Update()
     {
         Movement(GetMousePosition());
 
         currentDelay += Time.deltaTime;
-
-
-        if (Input.GetButton("Fire1"))
-        {
-           
-            Shoot();        
-        }
     }
 
-
+    private void FixedUpdate()
+    {
+        Shoot();
+    }
     private void Movement(Vector2 pointerPosition)
     {
-        Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
-        transform.up = direction;
+        //Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
+
+        //transform.up = direction;
+        
+        if(iController.inputAimTurretDirection.normalized == Vector2.zero)
+        {
+            return;
+        }
+        transform.up = iController.inputAimTurretDirection.normalized;
+
+
     }
 
     Vector2 GetMousePosition()
@@ -46,13 +65,16 @@ public class CannonController : MonoBehaviour
         return mousePosition;
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        if (currentDelay >= reloadDelay)
+        if (currentDelay >= reloadDelay && canShoot)
         {
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();
+            playerController.SubstractHealth(shootFuel);
         }
     }
+
+    
 }

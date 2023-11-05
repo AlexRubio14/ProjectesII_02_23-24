@@ -5,34 +5,39 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { MOVING, MINING, KNOCKBACK, INVENCIBILITY};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY};
     private State currentState;
 
     private Rigidbody2D c_rb;
 
-    //Movement
+    [Space, Header("Movement"), SerializeField]
     private Vector3 inputDirection;
     [SerializeField]
     private float movementScale;
+
+    [Header("Rotation")]
+    private float currentRotationSpeed;
     [SerializeField]
-    private float rotationSpeed;
+    private float minRotationSpeed;
     [SerializeField]
+    private float maxRotationSpeed;
+
+    [Header("Knockback"), SerializeField]
     private float knockbackScale;
     [SerializeField]
     private float knockbackRotation;
-    [SerializeField]
-    private bool toogleMovement;
 
-    //Health
+    //[Header("Health"), SerializeField]
     [field: SerializeField]
     public float health {  get; private set; }
     [SerializeField]
     private float mapDamage;
 
-    //Inventory
-    [SerializeField]
+    [Header("Storage"), SerializeField]
     private int maxStorage;
     private int currentStorage;
+
+    private InputController iController;
 
 
     private void Awake()
@@ -40,35 +45,16 @@ public class PlayerController : MonoBehaviour
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
 
-        maxStorage = 50;
+        currentRotationSpeed = minRotationSpeed;
+
+        iController = GetComponentInParent<InputController>();
     }
     
-
-    // Update is called once per frame
     void Update()
     {
         GetDirectionFromInputs();
         LoseFuel();
-
-        if (health <= 0)
-        {
-            health = 0;
-            Die();
-        }
-        if(Input.GetKeyDown(KeyCode.R)) 
-        {
-            toogleMovement = !toogleMovement;
-            if(toogleMovement) 
-            {
-                rotationSpeed = 300;
-            }
-            else
-            {
-                rotationSpeed = 7;
-            }
-        }
-
-
+        RotationAcceleration();
     }
 
     private void FixedUpdate()
@@ -97,45 +83,72 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        if(toogleMovement)
-        {
-            c_rb.AddForce(transform.up * inputDirection.magnitude * movementScale, ForceMode2D.Force);
-        }
-        else
-        {
-            c_rb.AddForce(transform.up * inputDirection.y * movementScale, ForceMode2D.Force);
-        }
+        c_rb.AddForce(transform.up * inputDirection.y * movementScale, ForceMode2D.Force);
     }
 
     void Rotation()
     {
-        if(toogleMovement)
-        {
-            if (inputDirection != Vector3.zero)
-            {
-                Quaternion toRotation = Quaternion.LookRotation(transform.forward, inputDirection);
-                Quaternion rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        c_rb.AddTorque(currentRotationSpeed * (inputDirection.x * -1), ForceMode2D.Force); 
+    }
 
-                c_rb.MoveRotation(rotation);
+    void RotationAcceleration()
+    {
+        if (iController.inputMovementDirection.x != 0)
+        {
+            if (currentRotationSpeed <= maxRotationSpeed)
+            {
+                currentRotationSpeed += Time.deltaTime;
             }
+            
         }
         else
         {
-            c_rb.AddTorque(rotationSpeed * (inputDirection.x * -1), ForceMode2D.Force);
-            
+            if(currentRotationSpeed >= minRotationSpeed)
+            {
+                currentRotationSpeed -= Time.deltaTime;
+            }
         }
-        
     }
-
     void LoseFuel()
     {
-        health -= Time.deltaTime;
+        switch (currentState)
+        {
+            case State.MOVING:
+                if(iController.inputMovementDirection == Vector2.zero)
+                {
+                    health -= Time.deltaTime / 3;
+                }
+                else
+                {
+                    health -= Time.deltaTime;
+                }
+                break;
+            case State.MINING:
+                break;
+            case State.KNOCKBACK:
+                break;
+            case State.INVENCIBILITY:
+                break;
+            default:
+                break;
+        }
+        if(Time.deltaTime / 3 == 0)
+        {
+            health -= Time.deltaTime;
+        }
     }
     public float GetHealth()
     {
         return health;
     }
-
+    private void CheckIfPlayerDies()
+    {
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
+    }
     void Die()
     {
         enabled = false;
@@ -193,7 +206,6 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
-
         currentState = state;
     }
 
@@ -203,6 +215,7 @@ public class PlayerController : MonoBehaviour
         if (currentState != State.KNOCKBACK) 
             health -= value;
 
+        CheckIfPlayerDies();
         Knockback(damagePos);
     }
 
@@ -221,6 +234,11 @@ public class PlayerController : MonoBehaviour
 
         }
             
+    }
+
+    public void SubstractHealth(float value)
+    {
+        health -= value;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
