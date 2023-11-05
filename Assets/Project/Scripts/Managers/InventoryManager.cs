@@ -37,12 +37,24 @@ public class InventoryManager : MonoBehaviour
         EventManager.CallOnItemChange(_itemType, _itemsToAdd);
     }
 
+
+    public bool CanBuy(Dictionary<ItemObject, short> _upgradePrize)
+    {
+        foreach (KeyValuePair<ItemObject, short> item in _upgradePrize)
+        {
+            if (allItems[item.Key] - item.Value < 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     /* 
      * ANTES DE LLAMAR A ESTA FUNCION SE HA DE CALCULAR QUE SE TENGAN LOS MATERIALES NECESARIOS
      */
-    public void BuyUpgrade(Dictionary<ItemObject, short> _itemsUsetToBought)
+    public void BuyUpgrade(Dictionary<ItemObject, short> _upgradePrize)
     {
-        foreach (KeyValuePair<ItemObject, short> item in _itemsUsetToBought)
+        foreach (KeyValuePair<ItemObject, short> item in _upgradePrize)
         {
             allItems[item.Key] -= item.Value;
         }
