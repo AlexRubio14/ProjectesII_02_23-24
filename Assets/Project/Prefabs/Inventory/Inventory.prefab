@@ -391,8 +391,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 822479611
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8536399770163214815
 MonoBehaviour:
@@ -449,7 +449,6 @@ MonoBehaviour:
   c_notificationPrefab: {fileID: 1085227741632705750, guid: 0465c6f664b09f248947c0c4e74446a7, type: 3}
   notificationMaxYSpawn: 350
   notificationOffset: 125
-  inventory: {fileID: 6467192887258412694}
 --- !u!1 &8189196626110839002
 GameObject:
   m_ObjectHideFlags: 0

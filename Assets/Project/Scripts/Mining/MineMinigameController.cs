@@ -24,12 +24,12 @@ public class MineMinigameController : MonoBehaviour
 
     [Space, Header("Left Laser"), SerializeField]
     private MinigameBarController leftLaser;
-    private bool chargingLeftLaser;
+    public bool chargingLeftLaser { set; get; }
     [SerializeField]
     private Slider leftLaserSlider;
     [Space, Header("Right Laser"), SerializeField]
     private MinigameBarController rightLaser;
-    private bool chargingRightLaser;
+    public bool chargingRightLaser { set; get; }
     [SerializeField]
     private Slider rightLaserSlider;
 
@@ -75,7 +75,6 @@ public class MineMinigameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ManageInputs();
         SetLasersValue();
         CheckLasersEnergy();
         CheckAdvanceProgress();
@@ -86,13 +85,6 @@ public class MineMinigameController : MonoBehaviour
             //Acabar de minar
             EndMining();
         }
-    }
-
-    
-    private void ManageInputs() 
-    {
-        chargingLeftLaser = Input.GetButton("Fire1");
-        chargingRightLaser = Input.GetButton("Fire2");
     }
 
     private void SetLasersValue() 

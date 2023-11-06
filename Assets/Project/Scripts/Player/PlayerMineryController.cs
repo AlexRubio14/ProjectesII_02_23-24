@@ -14,7 +14,16 @@ public class PlayerMineryController : MonoBehaviour
         c_playerController = GetComponent<PlayerController>();
     }
 
-    public void CheckMineralNear(MineralController _mineral)
+    public void SetRightLaserValue(bool _value)
+    {
+        c_miningMinigame.chargingRightLaser = _value;
+    }
+    public void SetLeftLaserValue(bool _value)
+    {
+        c_miningMinigame.chargingLeftLaser = _value;
+    }
+
+    public void StartMinery(MineralController _mineral)
     {
         c_playerController.ChangeState(PlayerController.State.MINING);
         c_miningMinigame.SetMiningObject(_mineral);

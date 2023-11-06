@@ -184,6 +184,8 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:      
                 break;
             case State.MINING:
+                //Cambiar al mapa de acciones normal del player
+                iController.ChangeActionMap("Player");
                 break;
             case State.KNOCKBACK:
                 break;
@@ -196,6 +198,8 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 break;
             case State.MINING:
+                //Cambiar al mapa de acciones de minar
+                iController.ChangeActionMap("MinigameMinery");
                 break;
             case State.KNOCKBACK:
                 c_rb.velocity = Vector3.zero;
@@ -208,12 +212,13 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(float value, Vector2 damagePos)
     {
-        CameraController.Instance.AddMediumTrauma();
-        if (currentState != State.KNOCKBACK) 
-            Fuel -= value / PowerUpManager.Instance.Armor;
+        if (currentState == State.MINING || currentState == State.INVENCIBILITY || currentState == State.KNOCKBACK)
+            return;
 
-        CheckIfPlayerDies();
+        CameraController.Instance.AddMediumTrauma();
         Knockback(damagePos);
+        Fuel -= value / PowerUpManager.Instance.Armor;
+        CheckIfPlayerDies();
     }
 
     void CheckStorage()
