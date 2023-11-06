@@ -28,6 +28,7 @@ public class PlayerMineryController : MonoBehaviour
         c_playerController.ChangeState(PlayerController.State.MINING);
         c_miningMinigame.SetMiningObject(_mineral);
         c_miningMinigame.gameObject.SetActive(true);
+        
 
     }
 }

@@ -24,7 +24,7 @@ public class InputController : MonoBehaviour
     private PlayerInput c_playerInput;
     private PlayerController c_playerController;
     private CannonController c_cannonController;
-    private MapInteractPlayer c_interactionController;
+    private PlayerMapInteraction c_interactionController;
     private PlayerMineryController c_mineryController;
     private PlayerInventoryController c_inventoryController;
 
@@ -35,7 +35,7 @@ public class InputController : MonoBehaviour
     {
         c_playerInput = GetComponent<PlayerInput>();
         c_playerController = GetComponent<PlayerController>();
-        c_interactionController = GetComponent<MapInteractPlayer>();
+        c_interactionController = GetComponent<PlayerMapInteraction>();
         c_cannonController = GetComponentInChildren<CannonController>();
         c_mineryController = GetComponent<PlayerMineryController>();
         c_inventoryController = GetComponent<PlayerInventoryController>();
