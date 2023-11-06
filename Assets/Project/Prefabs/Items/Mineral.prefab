@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 2130453288018243982}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7257688421934806813
 SpriteRenderer:
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb1e9c97328df54c93b862ee615f2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <c_upgradeNeeded>k__BackingField: {fileID: 0}
   <c_currentItem>k__BackingField: {fileID: 0}
   <MaxItemsToReturn>k__BackingField: 0
 --- !u!61 &3422622027868929553
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Intensity: 2.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 0000000061b9d2a4e364dc67a78d474db10a2c3bc53ddf15fb0a0631
+  m_ApplyToSortingLayers: 0000000061b9d2a4e364dc67a78d474db10a2c3b61b9d2a4c53ddf155f34e753
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -207,7 +208,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensityEnabled: 1
   m_ShadowIntensity: 0.75
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
