@@ -16,7 +16,11 @@ public class PowerUpManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null && Instance != this)
+        {
+            enabled = false;
             Destroy(this);
+            return;
+        }
 
         Instance = this;
         DontDestroyOnLoad(Instance);

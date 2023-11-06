@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <c_upgradeNeeded>k__BackingField: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
+  glowUpSpeed: 3
+  timeToChangeScene: 4
 --- !u!1 &7359500315424215698
 GameObject:
   m_ObjectHideFlags: 0

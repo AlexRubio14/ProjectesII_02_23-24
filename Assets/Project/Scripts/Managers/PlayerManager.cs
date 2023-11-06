@@ -11,8 +11,19 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (player == null)
+        {
+            enabled = false;
             Destroy(this);
+            return;
+
+            
+        }else if (Instance != null && Instance != this)
+        {
+            Instance.enabled = false;
+            Destroy(Instance);
+            return;
+        }
 
         Instance = this;
     }

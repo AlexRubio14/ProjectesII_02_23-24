@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, TP, DEAD};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
             case State.KNOCKBACK:
             case State.INVENCIBILITY:
-            case State.TP:
+            case State.FREEZE:
                 return;
             case State.DEAD:
                 knockbackScale *= 2;
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.KNOCKBACK:
                 break;
-            case State.TP:
+            case State.FREEZE:
             case State.DEAD:
                 return;
             default:
@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviour
             case State.KNOCKBACK:
                 c_rb.velocity = Vector2.zero;
                 break;
-            case State.TP:
+            case State.FREEZE:
                 c_rb.velocity = Vector2.zero;
                 break;
             case State.DEAD:
