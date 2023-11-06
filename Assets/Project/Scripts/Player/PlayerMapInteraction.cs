@@ -62,7 +62,7 @@ public class PlayerMapInteraction : MonoBehaviour
             c_itemToShowCanvas.SetActive(true);
         }
 
-        if (nearestObject.c_upgradeNeeded && ! UpgradeManager.Instance.UpgradeObtained[nearestObject.c_upgradeNeeded])
+        if (nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
         {
             c_itemToShowImage.sprite = nearestObject.c_upgradeNeeded.c_UpgradeSprite;
             c_lockedUpgradeImage.SetActive(true);
@@ -77,7 +77,7 @@ public class PlayerMapInteraction : MonoBehaviour
 
     public void InteractNearObject()
     {
-        if (!nearestObject)
+        if (!nearestObject || nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
             return;
 
         nearestObject.Interact();
