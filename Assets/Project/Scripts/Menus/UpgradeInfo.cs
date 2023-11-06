@@ -23,7 +23,7 @@ public class UpgradeInfo : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI upgradeText;
 
-    private void Start()
+    private void OnEnable()
     {
         SetUpgradeLayout(); 
     }

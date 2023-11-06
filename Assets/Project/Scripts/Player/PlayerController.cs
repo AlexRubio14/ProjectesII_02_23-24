@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, DEAD};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, TP, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private InputController iController;
     private SpriteRenderer spriteRenderer;
-
+    private PlayerMapInteraction c_mapInteraction;
     private void Awake()
     {
         currentState = State.MOVING;
@@ -57,9 +57,10 @@ public class PlayerController : MonoBehaviour
         currentRotationSpeed = minRotationSpeed;
 
         iController = GetComponentInParent<InputController>();
-
+        c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
+
     }
     
     private void Start()
@@ -84,8 +85,6 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
                 break;
             case State.KNOCKBACK:
-                break;
-            case State.DEAD:
                 break;
             default:
                 break;
@@ -205,6 +204,7 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
             case State.KNOCKBACK:
             case State.INVENCIBILITY:
+            case State.TP:
                 return;
             case State.DEAD:
                 knockbackScale *= 2;
@@ -261,9 +261,11 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
                 iController.ChangeActionMap("Player");
+                c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
                 break;
+            case State.TP:
             case State.DEAD:
                 return;
             default:
@@ -277,9 +279,13 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
                 iController.ChangeActionMap("MinigameMinery");
+                c_mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
-                c_rb.velocity = Vector3.zero;
+                c_rb.velocity = Vector2.zero;
+                break;
+            case State.TP:
+                c_rb.velocity = Vector2.zero;
                 break;
             case State.DEAD:
                 break;

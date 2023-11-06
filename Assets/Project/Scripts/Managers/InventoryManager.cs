@@ -14,7 +14,10 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null && Instance != this)
-            Destroy(this);
+        {
+            enabled = false;
+            return;
+        }
 
         Instance = this;
         DontDestroyOnLoad(Instance);
@@ -94,6 +97,5 @@ public class InventoryManager : MonoBehaviour
 
         runItems.Clear();
     }
-
-       
+   
 }

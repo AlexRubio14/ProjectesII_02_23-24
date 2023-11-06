@@ -61,7 +61,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensityEnabled: 1
   m_ShadowIntensity: 0.5
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 175316033160939834}
   - component: {fileID: 6238695941823710928}
   - component: {fileID: 6928186059841258854}
-  - component: {fileID: 2660104435498477009}
+  - component: {fileID: 4196185413055272076}
   - component: {fileID: 697992122945508969}
   - component: {fileID: 2962702871224298752}
   m_Layer: 7
@@ -238,6 +238,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 55010fe5-8e95-4cd5-978e-e2d82a02158e
     m_ActionName: MinigameMinery/LeftLaser[/DualSenseGamepadHID/leftTrigger,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 72993bb4-0b88-40ff-a0c9-fd3aa72eab58
+    m_ActionName: Player/OpenInventory[/Keyboard/i,/DualSenseGamepadHID/buttonNorth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -286,7 +290,7 @@ MonoBehaviour:
   timeToReturnHub: 3
   engineParticles: {fileID: 4361300617207404308}
   maxStorage: 50
---- !u!114 &2660104435498477009
+--- !u!114 &4196185413055272076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,7 +299,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4270609692860242859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c3a8025fae6e944a97533303d0fb18, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b070c92c62c4db44b8d965dbc48eac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   checkRadius: 2
