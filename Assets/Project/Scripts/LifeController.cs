@@ -16,7 +16,7 @@ public class LifeController : MonoBehaviour
 
     private void Awake()
     {
-        health = playerController.GetHealth();
+        health = playerController.GetFuel();
         c_textToPrint.text = health.ToString("0");
         
     }
@@ -26,7 +26,7 @@ public class LifeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        health = playerController.GetHealth();
+        health = playerController.GetFuel();
         c_textToPrint.text = health.ToString("0");
     }
 }
