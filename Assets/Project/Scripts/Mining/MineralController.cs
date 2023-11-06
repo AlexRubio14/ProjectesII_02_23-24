@@ -26,7 +26,7 @@ public class MineralController : InteractableObject
     }
     public override void Interact()
     {
-        player.CheckMineralNear(this);
+        player.StartMinery(this);
     }
 
 }

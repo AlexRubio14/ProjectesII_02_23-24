@@ -15,8 +15,6 @@ public class ItemNotificationController : MonoBehaviour
 
     private List<RectTransform> l_notificationList;
 
-    [Space, SerializeField]
-    private GameObject inventory; //ESTO NO HA DE ESTAR AQUI, ES SOLO PARA PRUEBAS
     private void Awake()
     {
         l_notificationList = new List<RectTransform>();
@@ -25,11 +23,6 @@ public class ItemNotificationController : MonoBehaviour
     private void Update()
     {
         PlaceListItems();
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            inventory.SetActive(!inventory.activeInHierarchy);
-        }
     }
 
     private void CreateItemNotification(ItemObject _itemType, short _itemAmount)
