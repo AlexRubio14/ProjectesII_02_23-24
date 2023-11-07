@@ -10,4 +10,8 @@ public class IAData : MonoBehaviour
     public Transform m_currentTarget;
 
     public int GetTargetsCount() => m_targets == null ? 0 : m_targets.Count;
+    public void RemoveCurrentTarget()
+    {
+        m_currentTarget = null;
+    }
 }

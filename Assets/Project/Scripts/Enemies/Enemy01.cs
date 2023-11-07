@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Enemy01 : Enemy
 {
-    
 
-    //[Space, Header("Enemy 1")]
-    
+
+    [Space, Header("Enemy 1")]
+    [Header("Knockback"), SerializeField]
+    private float knockbackScale;
+    [SerializeField]
+    private float knockbackRotation;
+
+    [Header("Eating"), SerializeField]
+    private float TimeEating;
+    private float currentTimeEating;
+
+    Rigidbody2D c_rb;
 
     private void Awake()
     {
+        c_rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        currentTimeEating = 0;
     }
     void Start()
     {
@@ -19,7 +30,7 @@ public class Enemy01 : Enemy
     }
     private void Update()
     {
-        CheckState();
+        //CheckState();
     }
     private void FixedUpdate()
     {
@@ -40,6 +51,7 @@ public class Enemy01 : Enemy
             case EnemyStates.KNOCKBACK:
             // ... 
             case EnemyStates.EATING:
+                EatingBehaviour();
                 break; 
             default:
                 break;
@@ -60,6 +72,29 @@ public class Enemy01 : Enemy
         transform.rotation = Quaternion.Euler(Vector3.forward * angle);
 
     }
+
+    void Knockback(Vector2 collisionPoint)
+    {
+        ChangeState(EnemyStates.KNOCKBACK);
+        Vector2 direction = (Vector2)transform.position - collisionPoint;
+        direction.Normalize();
+
+        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+        ChangeState(EnemyStates.EATING);
+    }
+
+    protected void EatingBehaviour()
+    {
+        currentTimeEating += Time.deltaTime;
+
+        if(currentTimeEating >= TimeEating)
+        {
+            currentTimeEating = 0;
+            ChangeState(EnemyStates.CHASING);
+        }
+    }
+
     override protected void ChangeState(EnemyStates nextState)
     {
         if (currentState == nextState)
@@ -94,28 +129,27 @@ public class Enemy01 : Enemy
     }
     override protected void CheckState()
     {
-        CheckIsFollowing(); 
+    //    CheckIsFollowing();
 
-        if (currentState == EnemyStates.KNOCKBACK)
-            return; 
+    //    if (currentState == EnemyStates.KNOCKBACK || currentState == EnemyStates.EATING)
+    //        return;
 
-        if(isFollowing)
-        {
-            ChangeState(EnemyStates.CHASING);
-        }
-        else
-        {
-            ChangeState(EnemyStates.PATROLLING);
-        }
+    //    if (isFollowing && currentState != EnemyStates.EATING)
+    //    {
+    //        ChangeState(EnemyStates.CHASING);
+    //    }
+    //    else
+    //    {
+    //        ChangeState(EnemyStates.PATROLLING);
+    //    }
     }
-
-    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))
         {
-            StartEating();
+            Knockback(collision.GetContact(0).point);
+            currentHealth += 20;
         }
     }
 

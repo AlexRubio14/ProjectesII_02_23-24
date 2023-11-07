@@ -20,7 +20,6 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     protected float maxThrowSpeed;
 
-
     protected string BULLET_TAG = "Bullet";
 
     #region Behaviours Functions
@@ -32,17 +31,10 @@ public abstract class Enemy : EnemyIA, IHealth
     #region States Functions
     protected abstract void ChangeState(EnemyStates nextState);
     protected abstract void CheckState();
-    protected void StartEating()
-    {
-        currentHealth += 20;
-        ChangeState(EnemyStates.EATING);
-        StartCoroutine(StopEating());
-    }
 
-    IEnumerator StopEating()
+    public EnemyStates GetState()
     {
-        yield return new WaitForSeconds(1.5f);
-        ChangeState(EnemyStates.CHASING);
+        return currentState;
     }
     #endregion
 
@@ -97,5 +89,4 @@ public abstract class Enemy : EnemyIA, IHealth
             GetHit(bulletDamage); ;
         }
     }
-
 }

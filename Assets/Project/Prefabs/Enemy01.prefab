@@ -476,7 +476,7 @@ Transform:
   - {fileID: 3501139305257391057}
   - {fileID: 8425547812211473044}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6668970655071454642
 MonoBehaviour:
@@ -515,12 +515,15 @@ MonoBehaviour:
   detectionDelay: 0.05
   movementDirectionSolver: {fileID: 8942317131287401040}
   speed: 20
+  currentState: 1
   maxHealth: 100
   damage: 10
   c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 2
-  currentState: 1
+  knockbackScale: 10
+  knockbackRotation: 1
+  TimeEating: 0.7
 --- !u!50 &4181270967838813588
 Rigidbody2D:
   serializedVersion: 4
