@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada7edbc5a9db54db362bec2980c7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementScale: 80
+  movementScale: 70
   minRotationSpeed: 2
   maxRotationSpeed: 5
   knockbackScale: 10
