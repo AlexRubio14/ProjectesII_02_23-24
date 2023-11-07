@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class Enemy01 : Enemy
 {
-    
 
-    //[Space, Header("Enemy 1")]
-    
+
+    [Space, Header("Enemy 1")]
+    [Header("Knockback"), SerializeField]
+    private float knockbackScale;
+    [SerializeField]
+    private float knockbackRotation;
+
+    Rigidbody2D c_rb;
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        c_rb = GetComponent<Rigidbody2D>();
     }
     void Start()
     {
@@ -60,6 +66,33 @@ public class Enemy01 : Enemy
         transform.rotation = Quaternion.Euler(Vector3.forward * angle);
 
     }
+
+    void Knockback(Vector2 collisionPoint)
+    {
+        isFollowing = false;
+        Vector2 direction = (Vector2)transform.position - collisionPoint;
+        direction.Normalize();
+
+        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+
+        StartEating();
+    }
+
+    protected void StartEating()
+    {
+        currentHealth += 20;
+        ChangeState(EnemyStates.EATING);
+        StartCoroutine(StopEating());
+    }
+
+    IEnumerator StopEating()
+    {
+        yield return new WaitForSeconds(1.5f);
+        isFollowing = true;
+        ChangeState(EnemyStates.CHASING);
+    }
+
     override protected void ChangeState(EnemyStates nextState)
     {
         if (currentState == nextState)
@@ -98,8 +131,8 @@ public class Enemy01 : Enemy
 
         if (currentState == EnemyStates.KNOCKBACK)
             return; 
-
-        if(isFollowing)
+        
+        if(isFollowing && currentState != EnemyStates.EATING)
         {
             ChangeState(EnemyStates.CHASING);
         }
@@ -109,13 +142,11 @@ public class Enemy01 : Enemy
         }
     }
 
-    
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))
         {
-            StartEating();
+            Knockback(collision.GetContact(0).point);
         }
     }
 

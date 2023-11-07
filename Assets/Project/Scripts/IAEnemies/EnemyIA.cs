@@ -25,13 +25,16 @@ public class EnemyIA : MonoBehaviour
     [SerializeField]
     protected float speed = 5.0f; 
 
-    protected Rigidbody2D c_rb2d; 
+    protected Rigidbody2D c_rb2d;
+
+    Enemy enemy;
 
     public void InitEnemy()
     {
         c_rb2d = GetComponent<Rigidbody2D>();
 
         isFollowing = false; 
+        enemy = GetComponent<Enemy>();
 
         // Detecting player and obstacles around
         InvokeRepeating("PerformDetection", 0, detectionDelay); 

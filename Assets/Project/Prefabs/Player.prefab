@@ -124,7 +124,7 @@ Transform:
   - {fileID: 713839581992212542}
   - {fileID: 2888034062527476590}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4194747130575803385
 Rigidbody2D:
@@ -225,6 +225,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5fb1af69-d4de-47cc-b96f-ceeb17e3e5f3
     m_ActionName: Player/Shoot[/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a1fec55f-672f-4972-927f-455bf5eb3820
+    m_ActionName: Player/Interact[/Keyboard/e,/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -258,10 +262,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada7edbc5a9db54db362bec2980c7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputDirection: {x: 0, y: 0, z: 0}
   movementScale: 80
-  minRotationSpeed: 2
-  maxRotationSpeed: 5
+  minRotationSpeed: 3
+  maxRotationSpeed: 7
   knockbackScale: 10
   knockbackRotation: 1
   baseFuel: 150
