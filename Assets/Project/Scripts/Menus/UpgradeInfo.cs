@@ -23,13 +23,28 @@ public class UpgradeInfo : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI upgradeText;
 
-    private void OnEnable()
+    [SerializeField]
+    private Button buyButton;
+    private TextMeshProUGUI buttonText;
+
+    private List<Image> prizeImages;
+    private List<TextMeshProUGUI> prizeTexts;
+
+    private void Awake()
     {
-        SetUpgradeLayout(); 
+        buttonText = buyButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void SetUpgradeLayout()
+
+
+    private void SetUpLayout()
     {
+        if (prizeImages != null || prizeTexts != null)
+            return;
+
+        prizeImages = new List<Image>();
+        prizeTexts = new List<TextMeshProUGUI>();
+
         Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
 
         upgradeImage.sprite = currentUpgrade.c_UpgradeSprite;
@@ -37,20 +52,112 @@ public class UpgradeInfo : MonoBehaviour
 
         currentUpgrade.Awake();
 
+        for (int i = 0; i < currentUpgrade.prize.Count; i++)
+        {
+            Image newImage = Instantiate(upgradeImagePrefab, layoutUpgrade.transform).GetComponent<Image>();
+            prizeImages.Add(newImage);
+
+            TextMeshProUGUI newText = Instantiate(upgradeTextPrefab, layoutUpgrade.transform).GetComponent<TextMeshProUGUI>();
+            prizeTexts.Add(newText);
+        }
+
+        UpdatePrizeValues();
+
+    }
+
+    private void UpdatePrizeValues()
+    {
+        Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
+        int index = 0;
+
         foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
         {
-            Instantiate(upgradeImagePrefab, layoutUpgrade.transform).GetComponent<Image>().sprite = item.Key.c_PickableSprite;
-            Instantiate(upgradeTextPrefab, layoutUpgrade.transform).GetComponent<TextMeshProUGUI>().text = inventoryMap[item.Key] + " / " + item.Value;
+            prizeImages[index].sprite = item.Key.c_PickableSprite;
+
+            prizeTexts[index].text = inventoryMap[item.Key] + " / " + item.Value;
+
+            index++;
         }
     }
 
-    public void BuyUpgrade(UpgradeObject _upgradeObject)
+    private void SetButtonValues()
     {
-        if (InventoryManager.Instance.CanBuy(_upgradeObject.prize))
+        //Si tenemos la mejora desactivamos el boton y ponemos Sold
+        //Si no la tenemos nos pondra Buy y agregamos la funcion en el boton
+        if (UpgradeManager.Instance.CheckObtainedUpgrade(currentUpgrade))
         {
-            InventoryManager.Instance.BuyUpgrade(_upgradeObject.prize);
-            // UpgradeManager.Instance.
+            buyButton.interactable = false;
+            buttonText.text = "Sold";
+        }
+        else
+        {
+            buyButton.onClick.AddListener(BuyUpgrade);
+            buttonText.text = "Buy";
         }
     }
+
+    public void BuyUpgrade()
+    {
+        if (InventoryManager.Instance.CanBuy(currentUpgrade.prize))
+        {
+            InventoryManager.Instance.BuyUpgrade(currentUpgrade.prize);
+            UpgradeManager.Instance.ObtainUpgrade(currentUpgrade);
+        }
+        else
+        {
+            SetPrizesRed();
+        }
+
+        SetButtonValues();
+        UpdatePrizeValues();
+    }
+
+    private void SetPrizesRed()
+    {
+        Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
+
+        foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
+        {
+            if (item.Value > inventoryMap[item.Key])
+            {
+                for (int i = 0; i < prizeTexts.Count; i++)
+                {
+                    if (item.Key.c_PickableSprite == prizeImages[i].sprite)
+                    {
+                        prizeImages[i].color = Color.red;
+                        prizeTexts[i].color = Color.red;
+                    }
+                    
+                }
+            }
+        }
+
+        
+
+
+        Invoke("SetPrizesNormalColor", 1.5f);
+    }
+
+    private void SetPrizesNormalColor()
+    {
+        for (int i = 0; i < prizeTexts.Count; i++)
+        {
+            prizeImages[i].color = Color.white;
+            prizeTexts[i].color = Color.white;
+        }
+    }
+
+
+    private void OnEnable()
+    {
+        SetUpLayout();
+        SetButtonValues();
+    }
+    private void OnDisable()
+    {
+        buyButton.onClick.RemoveAllListeners();
+    }
+
+
 
 }

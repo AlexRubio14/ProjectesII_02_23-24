@@ -1022,8 +1022,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: uwu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 062f4f062fe0acd4d92717192b5f18a8, type: 2}
-  m_sharedMaterial: {fileID: -1848280338714428778, guid: 062f4f062fe0acd4d92717192b5f18a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.65
+  m_fontSize: 64.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1313,8 +1313,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: uwu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 062f4f062fe0acd4d92717192b5f18a8, type: 2}
-  m_sharedMaterial: {fileID: -1848280338714428778, guid: 062f4f062fe0acd4d92717192b5f18a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.65
+  m_fontSize: 64.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1448,8 +1448,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: buy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
-  m_sharedMaterial: {fileID: 3615089643816218397, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 44.95
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1583,8 +1583,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: uwu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 062f4f062fe0acd4d92717192b5f18a8, type: 2}
-  m_sharedMaterial: {fileID: -1848280338714428778, guid: 062f4f062fe0acd4d92717192b5f18a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1608,7 +1608,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.65
+  m_fontSize: 64.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1741,19 +1741,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 586811062}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DisplayShop, Assembly-CSharp
-        m_MethodName: BuyUpgrade
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UpgradeObject, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &586811062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2501,6 +2489,7 @@ MonoBehaviour:
   currentUpgrade: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
   upgradeImage: {fileID: 1713167033}
   upgradeText: {fileID: 499221689}
+  buyButton: {fileID: 847078186}
 --- !u!1 &1149026308
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,6 +2626,7 @@ MonoBehaviour:
   currentUpgrade: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
   upgradeImage: {fileID: 800128716}
   upgradeText: {fileID: 425231213}
+  buyButton: {fileID: 358367898}
 --- !u!1 &1262458706
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,6 +2687,7 @@ MonoBehaviour:
   currentUpgrade: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
   upgradeImage: {fileID: 2030962885}
   upgradeText: {fileID: 558408744}
+  buyButton: {fileID: 586811061}
 --- !u!1 &1316310168
 GameObject:
   m_ObjectHideFlags: 0
@@ -2914,8 +2905,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: back
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
-  m_sharedMaterial: {fileID: 3615089643816218397, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3049,8 +3040,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: back to menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
-  m_sharedMaterial: {fileID: 3615089643816218397, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3518,8 +3509,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: buy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
-  m_sharedMaterial: {fileID: 3615089643816218397, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3543,7 +3534,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 44.95
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3653,8 +3644,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: buy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
-  m_sharedMaterial: {fileID: 3615089643816218397, guid: f12e9ef30548a3841aeaf4cae26d6102, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3678,7 +3669,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 44.95
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
