@@ -1,45 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
 
-    [Space, Header("Movement"), SerializeField]
+    [Header("Movement"), SerializeField]
     private float movementScale;
     //private Vector3 inputDirection;
 
-    [Header("Rotation")]
+    [Space, Header("Rotation")]
     private float currentRotationSpeed;
     [SerializeField]
     private float minRotationSpeed;
     [SerializeField]
     private float maxRotationSpeed;
 
-    [Header("Knockback"), SerializeField]
+    [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
     [SerializeField]
     private float knockbackRotation;
 
-    //[Header("Health"), SerializeField]
-    [SerializeField]
+    [Space, Header("Health"), SerializeField]
     private float baseFuel;
     public float Fuel { get; private set; }
     [SerializeField]
     private float mapDamage;
+    [Header("Death"), SerializeField]
+    private GameObject explosionParticles;
+    [SerializeField]
+    private float timeToExploteShip;
+    [SerializeField]
+    private float timeToReturnHub;
+    private Light2D shipLight;
+    [SerializeField]
+    private ParticleSystem engineParticles;
 
-    [Header("Storage"), SerializeField]
+    [Space, Header("Storage"), SerializeField]
     private int maxStorage;
     private int currentStorage;
 
     private InputController iController;
-
-
+    private SpriteRenderer spriteRenderer;
+    private PlayerMapInteraction c_mapInteraction;
     private void Awake()
     {
         currentState = State.MOVING;
@@ -48,6 +57,10 @@ public class PlayerController : MonoBehaviour
         currentRotationSpeed = minRotationSpeed;
 
         iController = GetComponentInParent<InputController>();
+        c_mapInteraction = GetComponent<PlayerMapInteraction>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        shipLight = GetComponentInChildren<Light2D>();
+
     }
     
     private void Start()
@@ -78,17 +91,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Move()
+    #region Movement
+    private void Move()
     {
         c_rb.AddForce(transform.up * iController.inputMovementDirection.y * movementScale, ForceMode2D.Force);
     }
-
-    void Rotation()
+    private void Rotation()
     {
         c_rb.AddTorque(currentRotationSpeed * (iController.inputMovementDirection.x * -1), ForceMode2D.Force); 
     }
-
-    void RotationAcceleration()
+    private void RotationAcceleration()
     {
         if (iController.inputMovementDirection.x != 0)
         {
@@ -106,6 +118,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Ship Health & Fuel
     void LoseFuel()
     {
         switch (currentState)
@@ -114,10 +129,18 @@ public class PlayerController : MonoBehaviour
                 if(iController.inputMovementDirection == Vector2.zero)
                 {
                     Fuel -= Time.deltaTime / 3;
+                    
+                    if(engineParticles.isPlaying)
+                        engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
                 }
                 else
                 {
                     Fuel -= Time.deltaTime;
+
+                    if (engineParticles.isStopped)
+                        engineParticles.Play(true);
+
                 }
                 break;
             case State.MINING:
@@ -129,33 +152,84 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
         if(Time.deltaTime / 3 == 0)
         {
             Fuel -= Time.deltaTime;
         }
-    }
-    public float GetHealth()
-    {
-        return Fuel;
+
+        CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
     {
-        if (Fuel <= 0)
+        if (Fuel <= 0 && currentState != State.DEAD)
         {
             Fuel = 0;
             Die();
         }
     }
-    void Die()
+    private void Die()
     {
-        enabled = false;
-
+        ChangeState(State.DEAD);
         CameraController.Instance.AddHighTrauma();
+        Invoke("ExploteShip", timeToExploteShip);
 
-        //SceneManager.LoadScene("HUB");
+        c_rb.drag /= 4;
+        c_rb.angularDrag /= 4;
+
+        shipLight.intensity /= 3;
+        shipLight.pointLightInnerRadius /= 2;
+        shipLight.pointLightOuterRadius /= 4;
+
+        engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+    }
+    private void ExploteShip()
+    {
+        spriteRenderer.enabled = false;
+        CameraController.Instance.AddHighTrauma();
+        Instantiate(explosionParticles, transform.position, Quaternion.identity);
+        InventoryManager.Instance.EndRun(false);
+        shipLight.intensity = 0;
+        Invoke("ReturnToHub", timeToReturnHub);
+    }
+    private void ReturnToHub()
+    {
+        SceneManager.LoadScene("HubScene");
     }
 
-    void Stunned()
+    public void GetDamage(float value, Vector2 damagePos)
+    {
+        switch (currentState)
+        {
+            case State.MINING:
+            case State.KNOCKBACK:
+            case State.INVENCIBILITY:
+            case State.FREEZE:
+                return;
+            case State.DEAD:
+                knockbackScale *= 2;
+                break;
+            default:
+                break;
+        }
+
+        CameraController.Instance.AddMediumTrauma();
+        Knockback(damagePos);
+        Fuel -= value / PowerUpManager.Instance.Armor;
+    }
+    public void SubstractHealth(float value)
+    {
+        Fuel -= value;
+    }
+    public float GetFuel()
+    {
+        return Fuel;
+    }
+
+    #endregion
+
+    #region States
+    private void Stunned()
     {
         if (c_rb.velocity.magnitude <= 0.1f)
         {
@@ -166,7 +240,7 @@ public class PlayerController : MonoBehaviour
             Invoke("Stunned", 0.02f);
         }
     }
-    void Knockback(Vector2 collisionPoint)
+    private void Knockback(Vector2 collisionPoint)
     {
         ChangeState(State.KNOCKBACK);
         Vector2 direction = (Vector2)transform.position - collisionPoint;
@@ -177,16 +251,23 @@ public class PlayerController : MonoBehaviour
 
         Stunned();
     }
+
     public void ChangeState(State state)
     {
-        switch(currentState)
+        switch (currentState)
         {
-            case State.MOVING:      
+            case State.MOVING:
                 break;
             case State.MINING:
+                //Cambiar al mapa de acciones normal del player
+                iController.ChangeActionMap("Player");
+                c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
                 break;
+            case State.FREEZE:
+            case State.DEAD:
+                return;
             default:
                 break;
         }
@@ -196,9 +277,17 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 break;
             case State.MINING:
+                //Cambiar al mapa de acciones de minar
+                iController.ChangeActionMap("MinigameMinery");
+                c_mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
-                c_rb.velocity = Vector3.zero;
+                c_rb.velocity = Vector2.zero;
+                break;
+            case State.FREEZE:
+                c_rb.velocity = Vector2.zero;
+                break;
+            case State.DEAD:
                 break;
             default:
                 break;
@@ -206,17 +295,14 @@ public class PlayerController : MonoBehaviour
         currentState = state;
     }
 
-    public void GetDamage(float value, Vector2 damagePos)
-    {
-        CameraController.Instance.AddMediumTrauma();
-        if (currentState != State.KNOCKBACK) 
-            Fuel -= value / PowerUpManager.Instance.Armor;
+    #endregion
 
-        CheckIfPlayerDies();
-        Knockback(damagePos);
-    }
+    #region Getters & Setters
+   
 
-    void CheckStorage()
+    #endregion
+
+    private void CheckStorage()
     {
         if(currentStorage <= maxStorage * 0.5f)
         {
@@ -233,10 +319,6 @@ public class PlayerController : MonoBehaviour
             
     }
 
-    public void SubstractHealth(float value)
-    {
-        Fuel -= value;
-    }
     
     private void OnCollisionEnter2D(Collision2D collision)
     {

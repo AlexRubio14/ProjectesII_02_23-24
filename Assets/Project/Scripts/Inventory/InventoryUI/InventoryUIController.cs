@@ -118,7 +118,6 @@ public class InventoryUIController : MonoBehaviour
 
         c_totalWeightText.text = weight.ToString("F1");
     }
-
     
 
 }
