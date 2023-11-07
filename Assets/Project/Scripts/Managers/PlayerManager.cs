@@ -22,7 +22,6 @@ public class PlayerManager : MonoBehaviour
         {
             Instance.enabled = false;
             Destroy(Instance);
-            return;
         }
 
         Instance = this;
