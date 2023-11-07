@@ -7,6 +7,6 @@ public class BreakableWallsController : InteractableObject
     public override void Interact()
     {
         //Romper el muro
-        throw new System.NotImplementedException();
+        Destroy(gameObject);
     }
 }

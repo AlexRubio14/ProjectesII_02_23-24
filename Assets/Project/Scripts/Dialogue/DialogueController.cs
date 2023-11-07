@@ -29,7 +29,17 @@ public class DialogueController : MonoBehaviour
 
     private void Start()
     {
-        dialogueObject.SetActive(false);
+
+        if (!FirstDialogueManager.Instance.firstDialogue)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+            StartDialogue();
+        FirstDialogueManager.Instance.firstDialogue = false;
+
+
+
     }
 
     private void Update()
@@ -83,7 +93,7 @@ public class DialogueController : MonoBehaviour
             //Si no hay mas dialogos
             showingText = false;
             displayingDialogue = false;
-            dialogueObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
     private void DisplayLetters()
