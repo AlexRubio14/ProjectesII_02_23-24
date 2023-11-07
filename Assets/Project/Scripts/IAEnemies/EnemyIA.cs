@@ -71,38 +71,4 @@ public class EnemyIA : MonoBehaviour
             Debug.Log("Stopping");
         }
     }
-
-    public void Movement()
-    {
-        // Enemy AI movement based on target availability 
-        if(iaData.m_currentTarget != null)
-        {
-            // Looking at the target
-            if(isFollowing == false)
-            {
-                isFollowing = true;
-            }
-        }
-        else if(iaData.m_currentTarget == null && iaData.GetTargetsCount() > 0) // pick a target if you don't have one
-        {
-            // Target acquisition logic
-            iaData.m_currentTarget = iaData.m_targets[0]; 
-        }
-        else
-        {
-            isFollowing = false;
-            Debug.Log("Stopping"); 
-        }
-
-        if(isFollowing)
-        {
-            Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
-
-            c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
-
-            // ROTATION OF THE ENENMY WHILE FOLLOWING
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(Vector3.forward * angle);
-        }
-    }
 }

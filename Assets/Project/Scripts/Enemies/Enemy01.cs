@@ -12,12 +12,17 @@ public class Enemy01 : Enemy
     [SerializeField]
     private float knockbackRotation;
 
+    [Header("Eating"), SerializeField]
+    private float TimeEating;
+    private float currentTimeEating;
+
     Rigidbody2D c_rb;
 
     private void Awake()
     {
-        currentHealth = maxHealth;
         c_rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
+        currentTimeEating = 0;
     }
     void Start()
     {
@@ -25,7 +30,7 @@ public class Enemy01 : Enemy
     }
     private void Update()
     {
-        CheckState();
+        //CheckState();
     }
     private void FixedUpdate()
     {
@@ -46,6 +51,7 @@ public class Enemy01 : Enemy
             case EnemyStates.KNOCKBACK:
             // ... 
             case EnemyStates.EATING:
+                EatingBehaviour();
                 break; 
             default:
                 break;
@@ -69,28 +75,24 @@ public class Enemy01 : Enemy
 
     void Knockback(Vector2 collisionPoint)
     {
-        isFollowing = false;
+        ChangeState(EnemyStates.KNOCKBACK);
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
         c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
         c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
-
-        StartEating();
-    }
-
-    protected void StartEating()
-    {
-        currentHealth += 20;
         ChangeState(EnemyStates.EATING);
-        StartCoroutine(StopEating());
     }
 
-    IEnumerator StopEating()
+    protected void EatingBehaviour()
     {
-        yield return new WaitForSeconds(1.5f);
-        isFollowing = true;
-        ChangeState(EnemyStates.CHASING);
+        currentTimeEating += Time.deltaTime;
+
+        if(currentTimeEating >= TimeEating)
+        {
+            currentTimeEating = 0;
+            ChangeState(EnemyStates.CHASING);
+        }
     }
 
     override protected void ChangeState(EnemyStates nextState)
@@ -127,19 +129,19 @@ public class Enemy01 : Enemy
     }
     override protected void CheckState()
     {
-        CheckIsFollowing(); 
+    //    CheckIsFollowing();
 
-        if (currentState == EnemyStates.KNOCKBACK)
-            return; 
-        
-        if(isFollowing && currentState != EnemyStates.EATING)
-        {
-            ChangeState(EnemyStates.CHASING);
-        }
-        else
-        {
-            ChangeState(EnemyStates.PATROLLING);
-        }
+    //    if (currentState == EnemyStates.KNOCKBACK || currentState == EnemyStates.EATING)
+    //        return;
+
+    //    if (isFollowing && currentState != EnemyStates.EATING)
+    //    {
+    //        ChangeState(EnemyStates.CHASING);
+    //    }
+    //    else
+    //    {
+    //        ChangeState(EnemyStates.PATROLLING);
+    //    }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -147,6 +149,7 @@ public class Enemy01 : Enemy
         if(collision.collider.CompareTag("Player"))
         {
             Knockback(collision.GetContact(0).point);
+            currentHealth += 20;
         }
     }
 

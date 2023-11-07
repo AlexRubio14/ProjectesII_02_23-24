@@ -523,6 +523,7 @@ MonoBehaviour:
   maxThrowSpeed: 2
   knockbackScale: 10
   knockbackRotation: 1
+  TimeEating: 0.7
 --- !u!50 &4181270967838813588
 Rigidbody2D:
   serializedVersion: 4
