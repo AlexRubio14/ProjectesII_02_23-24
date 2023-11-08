@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private InputController iController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
+
     private void Awake()
     {
         currentState = State.MOVING;
@@ -72,6 +73,8 @@ public class PlayerController : MonoBehaviour
     {
         LoseFuel();
         RotationAcceleration();
+
+        Fuel = Mathf.Clamp(Fuel, 0, Mathf.Infinity);
     }
 
     private void FixedUpdate()
@@ -206,9 +209,6 @@ public class PlayerController : MonoBehaviour
             case State.INVENCIBILITY:
             case State.FREEZE:
                 return;
-            case State.DEAD:
-                knockbackScale *= 2;
-                break;
             default:
                 break;
         }
@@ -288,6 +288,7 @@ public class PlayerController : MonoBehaviour
                 c_rb.velocity = Vector2.zero;
                 break;
             case State.DEAD:
+                knockbackScale *= 2;
                 break;
             default:
                 break;
@@ -299,7 +300,10 @@ public class PlayerController : MonoBehaviour
 
     #region Getters & Setters
    
-
+    public State GetState()
+    {
+        return currentState;
+    }
     #endregion
 
     private void CheckStorage()

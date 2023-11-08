@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 4317250945880009246}
   - component: {fileID: 8771014360255911276}
   - component: {fileID: 4518868386219893085}
+  - component: {fileID: 5921203346656270682}
   m_Layer: 11
   m_Name: PickableItem
   m_TagString: Untagged
@@ -247,3 +248,38 @@ MonoBehaviour:
   c_currentItem: {fileID: 0}
   moveSpeed: 4.5
   minDistanceToGetItem: 1.3
+--- !u!58 &5921203346656270682
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5688611432231651215}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

@@ -139,9 +139,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
-  m_LinearDrag: 7
-  m_AngularDrag: 10
+  m_Mass: 6
+  m_LinearDrag: 2
+  m_AngularDrag: 7
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -152,7 +152,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!70 &9020778034400104454
 CapsuleCollider2D:
@@ -278,9 +278,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada7edbc5a9db54db362bec2980c7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementScale: 70
-  minRotationSpeed: 2
-  maxRotationSpeed: 5
+  movementScale: 50
+  minRotationSpeed: 5
+  maxRotationSpeed: 10
   knockbackScale: 10
   knockbackRotation: 1
   baseFuel: 100
@@ -5386,7 +5386,7 @@ MonoBehaviour:
   posToSpawnBullets: {fileID: 4204113142784814922}
   laserPrefab: {fileID: 1805159943047549904, guid: b6480ce03b4600c42b61c93f23ce547d, type: 3}
   reloadDelay: 0.5
-  shootFuel: 0
+  shootFuel: 2
 --- !u!1 &7686264573825968600
 GameObject:
   m_ObjectHideFlags: 0

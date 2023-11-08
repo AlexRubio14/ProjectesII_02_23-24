@@ -41,7 +41,14 @@ public class CannonController : MonoBehaviour
     private void FixedUpdate()
     {
         RotateCanon();
-        Shoot();
+
+        if(    playerController.GetState() == PlayerController.State.MOVING 
+            || playerController.GetState() == PlayerController.State.IDLE
+            || playerController.GetState() == PlayerController.State.INVENCIBILITY
+            || playerController.GetState() == PlayerController.State.KNOCKBACK)
+        {
+            Shoot();
+        }
     }
     private void RotateCanon()
     {

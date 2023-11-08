@@ -514,7 +514,7 @@ MonoBehaviour:
   iaData: {fileID: 6668970655071454642}
   detectionDelay: 0.05
   movementDirectionSolver: {fileID: 8942317131287401040}
-  speed: 20
+  speed: 15
   currentState: 1
   maxHealth: 100
   damage: 10
