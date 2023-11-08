@@ -18,13 +18,10 @@ public class LifeController : MonoBehaviour
     {
         health = playerController.GetFuel();
         c_textToPrint.text = health.ToString("0");
-        
     }
-    
-
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         health = playerController.GetFuel();
         c_textToPrint.text = health.ToString("0");

@@ -251,7 +251,7 @@ MonoBehaviour:
   sprite: {fileID: 79454002512212090}
   spawnPoint: {fileID: 7885689027391368827}
   attackDelay: 1
-  speed: 7
+  speed: 4
   drawGizmos: 1
 --- !u!1 &6544951543249451501
 GameObject:
