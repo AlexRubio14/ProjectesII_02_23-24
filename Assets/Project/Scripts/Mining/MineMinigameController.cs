@@ -11,7 +11,7 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private float laserDischargeSpeed;
 
-    [ SerializeField]
+    [SerializeField]
     private Vector2 neededSizes;
     
     [SerializeField]
@@ -27,12 +27,16 @@ public class MineMinigameController : MonoBehaviour
     public bool chargingLeftLaser { set; get; }
     [SerializeField]
     private Slider leftLaserSlider;
+    [SerializeField]
+    private ParticleSystem leftLaserParticles;
+
     [Space, Header("Right Laser"), SerializeField]
     private MinigameBarController rightLaser;
     public bool chargingRightLaser { set; get; }
     [SerializeField]
     private Slider rightLaserSlider;
-
+    [SerializeField]
+    private ParticleSystem rightLaserParticles;
 
     [Space, Header("Mine"), SerializeField]
     private Slider c_progressBarSlider;
@@ -67,6 +71,7 @@ public class MineMinigameController : MonoBehaviour
 
         SetupQuantityText();
         SetupMineralTypeImages();
+
 
         StartCoroutine(GenerateRandomNeededEnergyLevels());
 
@@ -111,11 +116,11 @@ public class MineMinigameController : MonoBehaviour
 
     private void CheckLasersEnergy()
     {
-        CheckCurrentLaserEnergy(leftLaser, leftLaserSlider);   
-        CheckCurrentLaserEnergy(rightLaser, rightLaserSlider);   
+        CheckCurrentLaserEnergy(leftLaser, leftLaserSlider, leftLaserParticles);   
+        CheckCurrentLaserEnergy(rightLaser, rightLaserSlider, rightLaserParticles);   
     }
 
-    private void CheckCurrentLaserEnergy(MinigameBarController _currentLaser, Slider _currentLaserSlider)
+    private void CheckCurrentLaserEnergy(MinigameBarController _currentLaser, Slider _currentLaserSlider, ParticleSystem _currentParticles)
     {
         float currentEnergy = _currentLaser.GetCurrentEnergy();
         float currentNeededEnergy = _currentLaser.GetNeedEnergy();
@@ -135,8 +140,17 @@ public class MineMinigameController : MonoBehaviour
             _currentLaser.SetCurrentEnergyPointerColor(wrongEnergyColor);
             _currentLaser.CorrectEnergy = false;
             _currentLaserSlider.value -= Time.deltaTime * laserSliderSpeed;
-
         }
+
+        if (_currentLaserSlider.value >= 0.9f && _currentParticles.isStopped)
+        {
+            _currentParticles.Play(true);
+        }
+        else if (_currentLaserSlider.value < 0.9f && _currentParticles.isPlaying)
+        {
+            _currentParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+
     }
 
     private IEnumerator GenerateRandomNeededEnergyLevels()
