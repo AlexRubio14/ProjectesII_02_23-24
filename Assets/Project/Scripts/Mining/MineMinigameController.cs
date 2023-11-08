@@ -11,7 +11,7 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private float laserDischargeSpeed;
 
-    [ SerializeField]
+    [SerializeField]
     private Vector2 neededSizes;
     
     [SerializeField]
@@ -27,12 +27,14 @@ public class MineMinigameController : MonoBehaviour
     public bool chargingLeftLaser { set; get; }
     [SerializeField]
     private Slider leftLaserSlider;
+    [SerializeField]
+    private ParticleSystem leftLaserParticles;
     [Space, Header("Right Laser"), SerializeField]
     private MinigameBarController rightLaser;
     public bool chargingRightLaser { set; get; }
     [SerializeField]
     private Slider rightLaserSlider;
-
+    private ParticleSystem rightLaserParticles;
 
     [Space, Header("Mine"), SerializeField]
     private Slider c_progressBarSlider;
