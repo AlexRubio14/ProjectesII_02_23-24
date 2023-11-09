@@ -75,6 +75,10 @@ public class PlayerController : MonoBehaviour
         RotationAcceleration();
 
         Fuel = Mathf.Clamp(Fuel, 0, Mathf.Infinity);
+        if(Input.GetKey(KeyCode.L))
+        {
+            Fuel += 50;
+        }
     }
 
     private void FixedUpdate()
