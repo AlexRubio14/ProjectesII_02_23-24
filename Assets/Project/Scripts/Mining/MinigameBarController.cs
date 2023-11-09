@@ -40,7 +40,8 @@ public class MinigameBarController : MonoBehaviour
     public void SetCurrentEnergyLevel(float _nextCurrentEnergy)
     {
         currentEnergyValue = _nextCurrentEnergy;
-        c_miningBarSlider.value = currentEnergyValue;
+        if(c_miningBarSlider)
+            c_miningBarSlider.value = currentEnergyValue;
     }
     private void SetNeedEnergySize(float _nextEnergyNeedSize)
     {

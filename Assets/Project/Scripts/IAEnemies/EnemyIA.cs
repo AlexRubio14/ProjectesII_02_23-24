@@ -5,33 +5,36 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyIA : MonoBehaviour
 {
-    [SerializeField]
-    private List<SteeringBehaviour> l_steeringBehaviours;
+    [Header("IA"), SerializeField]
+    protected List<SteeringBehaviour> l_steeringBehaviours;
 
     [SerializeField]
     private List<Detector> l_detectors;
 
     [SerializeField]
-    private IAData iaData;
+    protected IAData iaData;
 
     [SerializeField]
     private float detectionDelay = 0.05f;
 
     [SerializeField]
-    private ContextSolver movementDirectionSolver;
+    protected ContextSolver movementDirectionSolver;
 
-    public bool isFollowing { get; private set; }
+    public bool isFollowing { get; protected set; }
 
     [SerializeField]
-    private float speed = 5.0f; 
+    protected float speed = 5.0f; 
 
-    private Rigidbody2D c_rb2d; 
+    protected Rigidbody2D c_rb2d;
+
+    Enemy enemy;
 
     public void InitEnemy()
     {
         c_rb2d = GetComponent<Rigidbody2D>();
 
         isFollowing = false; 
+        enemy = GetComponent<Enemy>();
 
         // Detecting player and obstacles around
         InvokeRepeating("PerformDetection", 0, detectionDelay); 
@@ -46,37 +49,26 @@ public class EnemyIA : MonoBehaviour
         }
     }
 
-    public void Movement()
+    public void CheckIsFollowing()
     {
         // Enemy AI movement based on target availability 
-        if(iaData.m_currentTarget != null)
+        if (iaData.m_currentTarget != null)
         {
             // Looking at the target
-            if(isFollowing == false)
+            if (isFollowing == false)
             {
                 isFollowing = true;
             }
         }
-        else if(iaData.m_currentTarget == null && iaData.GetTargetsCount() > 0) // pick a target if you don't have one
+        else if (iaData.m_currentTarget == null && iaData.GetTargetsCount() > 0) // pick a target if you don't have one
         {
             // Target acquisition logic
-            iaData.m_currentTarget = iaData.m_targets[0]; 
+            iaData.m_currentTarget = iaData.m_targets[0];
         }
         else
         {
             isFollowing = false;
-            Debug.Log("Stopping"); 
-        }
-
-        if(isFollowing)
-        {
-            Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
-
-            c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
-
-            // ROTATION OF THE ENENMY WHILE FOLLOWING
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+            Debug.Log("Stopping");
         }
     }
 }

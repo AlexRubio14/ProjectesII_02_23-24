@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Map
+  - FxTemporaire
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -16,10 +19,10 @@ TagManager:
   - Player
   - Obstacle
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - InteractableObject
+  - PickableItem
+  - Map
+  - Bullet
   - 
   - 
   - 
@@ -41,4 +44,31 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2765273441
+    locked: 0
+  - name: Items
+    uniqueID: 1742496995
+    locked: 0
+  - name: Map
+    uniqueID: 1296534951
+    locked: 0
+  - name: Back Particles
+    uniqueID: 992742065
+    locked: 0
+  - name: Enemies
+    uniqueID: 1407661151
+    locked: 0
+  - name: Player
+    uniqueID: 366951877
+    locked: 0
+  - name: Bullet
+    uniqueID: 1554673025
+    locked: 0
+  - name: Front Particles
+    uniqueID: 1249371403
+    locked: 0
+  - name: Canvas
+    uniqueID: 822479611
     locked: 0

@@ -11,16 +11,13 @@ public class InventoryItemIconController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI c_totalItemsText;
 
-    private ItemController.ItemType type;
+    private ItemObject c_item;
 
-    public void LoadItem(ItemController.ItemType _itemType, short _amount)
+    public void LoadItem(ItemObject _itemType, short _amount)
     {
-        //Cargar el sprite que toque
-        c_spriteImage.sprite = Resources.Load<Sprite>("Minerals/Textures/" + _itemType.ToString());
-        type = _itemType;
-
+        c_item = _itemType;
+        c_spriteImage.sprite = c_item.c_PickableSprite;
         RefreshItemData(_amount);
-
     }
 
     public void RefreshItemData(short _amount)
@@ -36,8 +33,9 @@ public class InventoryItemIconController : MonoBehaviour
         {
             c_spriteImage.color = Color.white;
         }
+
     }
 
+    public ItemObject GetItemType() { return c_item; }
 
-    public ItemController.ItemType GetItemType() { return type; }
 }
