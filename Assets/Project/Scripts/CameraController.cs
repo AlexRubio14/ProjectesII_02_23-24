@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
     private float maxShakeRotation;
     private Quaternion starterRotation;
     private float traumaLevel;
+    [SerializeField]
+    private float maxTraumaLevel;
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class CameraController : MonoBehaviour
     {
         traumaLevel -= Time.deltaTime / 1.5f;
 
-        traumaLevel = Mathf.Clamp01(traumaLevel);
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
 
     }
     private void LateUpdate()
@@ -65,7 +67,6 @@ public class CameraController : MonoBehaviour
 
     private void SetRandomTraumaRotation()
     {
-        //Genera un float random entre -1 y 1 (los unicos resultados son -1 y 1) 
         float rotation = Mathf.PerlinNoise(2, Time.fixedTime);
         float rotationShake = Random.Range(-maxShakeRotation, maxShakeRotation);
 
