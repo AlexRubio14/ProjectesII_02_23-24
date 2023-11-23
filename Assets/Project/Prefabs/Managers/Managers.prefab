@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2712434369159525489}
   - component: {fileID: 6156072001507450111}
   - component: {fileID: 2747886138116719545}
+  - component: {fileID: 99130520360442118}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8992415094662957168
 MonoBehaviour:
@@ -48,12 +49,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469131b331d35d7458068c790831ed44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allExistingItems:
-  - {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-  - {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-  - {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-  - {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-  - {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+  allItems:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+      Value: 0
+    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
+      Value: 0
+    - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
+      Value: 0
+    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
+      Value: 0
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 0
 --- !u!114 &8071133064694627335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +114,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7351355c992c94f966f336f009f132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &99130520360442118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581171576067583087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3198feefb92a04eabe53da446933a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentQuest: {fileID: 11400000, guid: 6cbed1bff522bae4aa640c36e75fb700, type: 2}

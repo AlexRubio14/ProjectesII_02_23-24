@@ -6,9 +6,8 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    [SerializeField]
-    private ItemObject[] allExistingItems;
-    private Dictionary<ItemObject, short> allItems;
+    [SerializeField, AYellowpaper.SerializedCollections.SerializedDictionary("Item", "Amount")]
+    private AYellowpaper.SerializedCollections.SerializedDictionary<ItemObject, short> allItems;
     private Dictionary<ItemObject, short> runItems;
 
     private void Awake()
@@ -23,11 +22,6 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(Instance);
 
-        allItems = new Dictionary<ItemObject, short>();
-        foreach (ItemObject item in allExistingItems)
-        {
-            allItems.Add(item, 0);
-        }
         runItems = new Dictionary<ItemObject, short>();
     }
 
@@ -61,7 +55,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     /* ANTES DE LLAMAR A ESTA FUNCION SE HA DE CALCULAR QUE SE TENGAN LOS MATERIALES NECESARIOS */
-    public void BuyUpgrade(Dictionary<ItemObject, short> _upgradePrize)
+    public void Buy(Dictionary<ItemObject, short> _upgradePrize)
     {
         foreach (KeyValuePair<ItemObject, short> item in _upgradePrize)
         {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5236510690437113404}
   - component: {fileID: 2281622087192475539}
   m_Layer: 5
-  m_Name: UpgradeImage
+  m_Name: MenuImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
