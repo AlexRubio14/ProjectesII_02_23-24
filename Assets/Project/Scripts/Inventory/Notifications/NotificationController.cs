@@ -13,26 +13,51 @@ public class NotificationController : MonoBehaviour
 
     [Space, SerializeField]
     private float timeToDisapear;
-    
-    private void OnEnable()
+    private float timeToDesapearWaited = 0;
+
+    private ItemObject notificationType;
+    private short currentAmount;
+
+
+    private void Update()
     {
-        Invoke("DisableNotification", timeToDisapear);
+        timeToDesapearWaited += Time.deltaTime;
+        if (timeToDesapearWaited >= timeToDisapear)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetType(ItemObject _item, short _itemAmount)
     {
-        c_itemImage.sprite = _item.c_PickableSprite;
+        notificationType = _item;
+        currentAmount = _itemAmount;
+
+        c_itemImage.sprite = notificationType.c_PickableSprite;
         string currentItemAmountSign = "+"; 
-        if (_itemAmount < 0)
+        if (currentAmount <= 0)
             currentItemAmountSign = "";
-        c_text.text = currentItemAmountSign + _itemAmount + " " + _item.name;
+        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.name;
 
 
     }
 
-    private void DisableNotification()
+    public ItemObject GetItemType()
     {
-        Destroy(gameObject);
+        return notificationType;
     }
+
+    public void AddItemAmount(short _itemAmount)
+    {
+        currentAmount += _itemAmount;
+        timeToDesapearWaited = 0;
+
+        string currentItemAmountSign = "+";
+        if (currentAmount <= 0)
+            currentItemAmountSign = "";
+
+        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.name;
+    }
+
 }
 

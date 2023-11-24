@@ -19,3 +19,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
   - {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
   itemPrize: 0a000600
+  prize:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+      Value: 10
+    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
+      Value: 6
