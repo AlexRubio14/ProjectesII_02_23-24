@@ -6,7 +6,7 @@
             "id": "68ed6851-ec17-41a5-b30d-0711993a1aec",
             "actions": [
                 {
-                    "name": "MovementKeyboard",
+                    "name": "Movement",
                     "type": "Value",
                     "id": "dae76a6e-5063-41bd-87c8-134b16a5e4cb",
                     "expectedControlType": "Vector2",
@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Rotation",
-                    "type": "Value",
-                    "id": "2ce9caaa-27d6-43c1-9537-b66aea92ca02",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Accelerate",
                     "type": "Value",
                     "id": "ab08045c-31ed-4e2a-9632-6314b22f666b",
@@ -86,7 +77,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovementKeyboard",
+                    "action": "Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -97,7 +88,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovementKeyboard",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -108,7 +99,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovementKeyboard",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -119,7 +110,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovementKeyboard",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -130,9 +121,20 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MovementKeyboard",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b6fbfe98-4b77-40d1-80e8-c1e0032298a3",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -159,7 +161,7 @@
                 {
                     "name": "",
                     "id": "3c796de7-e515-49ee-adee-24c8cfb9d50b",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -224,21 +226,10 @@
                 },
                 {
                     "name": "",
-                    "id": "19ad36a0-e087-4450-a4bf-f98ecf2a74e5",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b1c66b1a-7050-42f0-9afc-81b9238b9b47",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone(min=1.401298E-45,max=0.6)",
                     "groups": "",
                     "action": "Accelerate",
                     "isComposite": false,
@@ -247,9 +238,9 @@
                 {
                     "name": "",
                     "id": "cdfb0e1f-119c-4678-8c38-932c6c2fd22f",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert",
                     "groups": "",
                     "action": "Brake",
                     "isComposite": false,

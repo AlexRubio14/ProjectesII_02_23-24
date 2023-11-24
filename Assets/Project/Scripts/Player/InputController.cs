@@ -15,7 +15,13 @@ public class InputController : MonoBehaviour
     private InputActionReference interactAction;
     [SerializeField]
     private InputActionReference inventoryAction;
-    
+
+    [SerializeField]
+    private InputActionReference accelerateAction;
+
+    [SerializeField]
+    private InputActionReference brakeAction;
+
     [Space, Header("Minigame Actions"), SerializeField]
     private InputActionReference chargeRightLaserAction;
     [SerializeField]
@@ -30,6 +36,9 @@ public class InputController : MonoBehaviour
 
     public Vector2 inputMovementDirection { get; private set; }
     public Vector2 inputAimTurretDirection { get; private set; }
+
+    public float accelerationValue { get; private set; }
+    public float brakeValue { get; private set; }
 
     private void Awake()
     {
@@ -59,6 +68,13 @@ public class InputController : MonoBehaviour
 
         inventoryAction.action.started += InventoryAction;
 
+        accelerateAction.action.started += AccelerateAction;
+        accelerateAction.action.performed += AccelerateAction;
+        accelerateAction.action.canceled += AccelerateAction;
+
+        brakeAction.action.started += BrakeAction;
+        brakeAction.action.performed += BrakeAction;
+        brakeAction.action.canceled += BrakeAction;
 
         chargeRightLaserAction.action.started += ChargeRightLaserAction;
         chargeRightLaserAction.action.canceled += ChargeRightLaserAction;
@@ -84,7 +100,13 @@ public class InputController : MonoBehaviour
 
         inventoryAction.action.started -= InventoryAction;
 
+        accelerateAction.action.started -= AccelerateAction;
+        accelerateAction.action.performed -= AccelerateAction;
+        accelerateAction.action.canceled -= AccelerateAction;
 
+        brakeAction.action.started -= BrakeAction;
+        brakeAction.action.performed -= BrakeAction;
+        brakeAction.action.canceled -= BrakeAction;
 
         chargeRightLaserAction.action.started -= ChargeRightLaserAction;
         chargeRightLaserAction.action.canceled -= ChargeRightLaserAction;
@@ -104,6 +126,15 @@ public class InputController : MonoBehaviour
         inputAimTurretDirection = aimTurretAction.action.ReadValue<Vector2>();
     }
 
+    private void AccelerateAction(InputAction.CallbackContext obj)
+    {
+        accelerationValue = obj.ReadValue<float>();
+    }
+
+    private void BrakeAction(InputAction.CallbackContext obj)
+    {
+        brakeValue = obj.ReadValue<float>();
+    }
     private void ShootAction(InputAction.CallbackContext obj)
     {
         if(obj.started)

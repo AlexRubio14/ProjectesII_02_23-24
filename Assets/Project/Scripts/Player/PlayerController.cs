@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement"), SerializeField]
     private float movementScale;
-    //private Vector3 inputDirection;
+    [SerializeField]
+    private float brakeScale;
 
     [Space, Header("Rotation")]
     private float currentRotationSpeed;
@@ -101,11 +102,20 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        c_rb.AddForce(transform.up * iController.inputMovementDirection.y * movementScale, ForceMode2D.Force);
+        Vector2 acceleration = transform.up * iController.accelerationValue * movementScale;
+        Vector2 brake = transform.up * iController.brakeValue * brakeScale;
+
+        c_rb.AddForce(acceleration + brake, ForceMode2D.Force);
     }
+ 
     private void Rotation()
     {
-        c_rb.AddTorque(currentRotationSpeed * (iController.inputMovementDirection.x * -1), ForceMode2D.Force); 
+        Vector2 normalizedInputDirection = iController.inputMovementDirection.normalized;
+
+        float angle = Vector2.Angle(normalizedInputDirection, transform.up);
+        transform.up = Vector2.Lerp(transform.up, normalizedInputDirection, currentRotationSpeed * Time.fixedDeltaTime);
+
+
     }
     private void RotationAcceleration()
     {
