@@ -31,6 +31,11 @@ public class QuestCanvasController : MonoBehaviour
     {
         QuestObject quest = QuestManager.Instance.GetCurrentQuest();
 
+        if (!quest)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         questTitleText.text = quest.questName;
 
         for (int i = 0; i < quest.neededItems.Count; i++)
