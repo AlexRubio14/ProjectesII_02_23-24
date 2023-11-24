@@ -31,12 +31,22 @@ public class QuestInfo : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        SetInfoValues(QuestManager.Instance.GetCurrentQuest());
+        QuestObject quest = QuestManager.Instance.GetCurrentQuest();
+        if (!quest)
+        {
+            nextQuestMenu.SetActive(true);
+            gameObject.SetActive(false);
+            return;
+        }
+        SetInfoValues(quest);
 
     }
 
     private void OnDisable()
     {
+        if (!QuestManager.Instance.GetCurrentQuest())
+            return;
+
         foreach (Image item in prizeImages)
         {
             Destroy(item.gameObject);
@@ -93,7 +103,7 @@ public class QuestInfo : MonoBehaviour
 
 
         currentQuest = QuestManager.Instance.GetCurrentQuest();
-        if (InventoryManager.Instance.CanBuy(currentQuest.neededItems))
+        if (currentQuest && InventoryManager.Instance.CanBuy(currentQuest.neededItems))
         {
             yesButton.interactable = true;
         }
