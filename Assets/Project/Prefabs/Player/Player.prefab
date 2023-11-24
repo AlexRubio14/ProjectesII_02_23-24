@@ -92,13 +92,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8472911716521364800}
   - component: {fileID: 4194747130575803385}
-  - component: {fileID: 9020778034400104454}
   - component: {fileID: 175316033160939834}
   - component: {fileID: 6238695941823710928}
   - component: {fileID: 6928186059841258854}
   - component: {fileID: 4196185413055272076}
   - component: {fileID: 697992122945508969}
   - component: {fileID: 2962702871224298752}
+  - component: {fileID: 4773334804256877578}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -154,41 +154,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!70 &9020778034400104454
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4270609692860242859}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.08568442}
-  m_Size: {x: 0.3, y: 1.2231467}
-  m_Direction: 0
 --- !u!114 &175316033160939834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +207,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 72993bb4-0b88-40ff-a0c9-fd3aa72eab58
     m_ActionName: Player/OpenInventory[/Keyboard/i,/DualSenseGamepadHID/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ab08045c-31ed-4e2a-9632-6314b22f666b
+    m_ActionName: Player/Accelerate[/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3081cb01-6ea6-4b3c-a60a-3a297884ecc0
+    m_ActionName: Player/Brake[/XInputControllerWindows/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -264,6 +237,7 @@ MonoBehaviour:
   shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   interactAction: {fileID: -4293622716152061987, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   inventoryAction: {fileID: 7104173710378125520, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  accelerateAction: {fileID: 0}
   chargeRightLaserAction: {fileID: 2389276025789361315, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeLeftLaserAction: {fileID: 6815837080457322733, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
 --- !u!114 &6928186059841258854
@@ -281,6 +255,7 @@ MonoBehaviour:
   movementScale: 50
   minRotationSpeed: 5
   maxRotationSpeed: 10
+  anglesPerSecond: 0
   knockbackScale: 10
   knockbackRotation: 1
   baseFuel: 100
@@ -336,6 +311,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <inventory>k__BackingField: {fileID: 0}
+--- !u!70 &4773334804256877578
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.2, y: 0.3}
+  m_Direction: 1
 --- !u!1 &4329926445472445026
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +372,7 @@ Transform:
   m_GameObject: {fileID: 4329926445472445026}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.5, y: 1.7, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8472911716521364800}
@@ -5361,7 +5371,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7564754186488038013}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
@@ -5369,7 +5379,7 @@ Transform:
   - {fileID: 3241196548388471080}
   m_Father: {fileID: 8472911716521364800}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &7209009184898719526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5486,11 +5496,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2637768772824432722, guid: e13057f037c05694c961b4c908f462d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.012
+      value: -0.678
       objectReference: {fileID: 0}
     - target: {fileID: 2637768772824432722, guid: e13057f037c05694c961b4c908f462d3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.678
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2637768772824432722, guid: e13057f037c05694c961b4c908f462d3, type: 3}
       propertyPath: m_LocalPosition.z

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,8 +14,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement"), SerializeField]
     private float movementScale;
-    [SerializeField]
-    private float brakeScale;
 
     [Space, Header("Rotation")]
     private float currentRotationSpeed;
@@ -22,6 +21,13 @@ public class PlayerController : MonoBehaviour
     private float minRotationSpeed;
     [SerializeField]
     private float maxRotationSpeed;
+    private float targetAngle;
+    [SerializeField]
+    private float anglesPerSecond;
+    private float angleThreshold = 1.0f;
+    private float angleSign = 0.0f;
+    private bool rotating = false;
+    private Vector2 lastRotationInput = Vector2.zero;
 
     [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
@@ -56,13 +62,10 @@ public class PlayerController : MonoBehaviour
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
 
-        currentRotationSpeed = minRotationSpeed;
-
         iController = GetComponentInParent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
-
     }
     
     private void Start()
@@ -73,8 +76,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         LoseFuel();
-        RotationAcceleration();
-
+        
         Fuel = Mathf.Clamp(Fuel, 0, Mathf.Infinity);
         if(Input.GetKey(KeyCode.L))
         {
@@ -102,38 +104,28 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        Vector2 acceleration = transform.up * iController.accelerationValue * movementScale;
-        Vector2 brake = transform.up * iController.brakeValue * brakeScale;
+        Vector2 acceleration = transform.right * iController.accelerationValue * movementScale;
 
-        c_rb.AddForce(acceleration + brake, ForceMode2D.Force);
+        c_rb.AddForce(acceleration, ForceMode2D.Force);
     }
  
     private void Rotation()
     {
+        if (iController.inputMovementDirection.sqrMagnitude < 0.001f)
+        {
+            return;
+        }
+
         Vector2 normalizedInputDirection = iController.inputMovementDirection.normalized;
 
-        float angle = Vector2.Angle(normalizedInputDirection, transform.up);
-        transform.up = Vector2.Lerp(transform.up, normalizedInputDirection, currentRotationSpeed * Time.fixedDeltaTime);
+        Quaternion targetRotation = Quaternion.AngleAxis(
+            Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -anglesPerSecond * Time.deltaTime, anglesPerSecond * Time.deltaTime)
+            , Vector3.forward);
 
 
-    }
-    private void RotationAcceleration()
-    {
-        if (iController.inputMovementDirection.x != 0)
-        {
-            if (currentRotationSpeed <= maxRotationSpeed)
-            {
-                currentRotationSpeed += Time.deltaTime;
-            }
-            
-        }
-        else
-        {
-            if(currentRotationSpeed >= minRotationSpeed)
-            {
-                currentRotationSpeed -= Time.deltaTime;
-            }
-        }
+        Debug.Log(targetRotation.eulerAngles);
+        Debug.Log("------");
+        c_rb.SetRotation(transform.rotation * targetRotation);
     }
     #endregion
 
@@ -278,6 +270,7 @@ public class PlayerController : MonoBehaviour
                 c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
+                c_rb.angularVelocity = 0;
                 break;
             case State.FREEZE:
             case State.DEAD:

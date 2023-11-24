@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Brake",
-                    "type": "Value",
-                    "id": "3081cb01-6ea6-4b3c-a60a-3a297884ecc0",
-                    "expectedControlType": "Analog",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -161,7 +152,7 @@
                 {
                     "name": "",
                     "id": "3c796de7-e515-49ee-adee-24c8cfb9d50b",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -232,17 +223,6 @@
                     "processors": "AxisDeadzone(min=1.401298E-45,max=0.6)",
                     "groups": "",
                     "action": "Accelerate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cdfb0e1f-119c-4678-8c38-932c6c2fd22f",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "Invert",
-                    "groups": "",
-                    "action": "Brake",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
