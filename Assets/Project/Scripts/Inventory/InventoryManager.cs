@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField, AYellowpaper.SerializedCollections.SerializedDictionary("Item", "Amount")]
     private AYellowpaper.SerializedCollections.SerializedDictionary<ItemObject, short> allItems;
     private Dictionary<ItemObject, short> runItems;
-
+    public Action<ItemObject, short> obtainItemAction;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,7 +39,7 @@ public class InventoryManager : MonoBehaviour
                 runItems[_itemType] = 0;
         }
 
-        EventManager.CallOnItemChange(_itemType, _itemsToAdd);
+        obtainItemAction(_itemType, _itemsToAdd);
     }
 
 
@@ -71,6 +72,16 @@ public class InventoryManager : MonoBehaviour
     public Dictionary<ItemObject, short> GetRunItems()
     {
         return runItems;
+    }
+    public short GetTotalItemAmount(ItemObject _item)
+    {
+        short totalItemAmount = 0;
+
+        totalItemAmount += allItems[_item];
+        if (runItems.ContainsKey(_item))
+            totalItemAmount += runItems[_item];
+
+        return totalItemAmount;
     }
 
     public void EndRun(bool _alive)

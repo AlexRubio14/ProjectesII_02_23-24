@@ -9,64 +9,55 @@ public class ItemNotificationController : MonoBehaviour
     private GameObject c_notificationPrefab;
 
     [SerializeField]
-    private float notificationMaxYSpawn;
-    [SerializeField]
-    private float notificationOffset;
+    private LayoutGroup notificationLayout;
 
-    private List<RectTransform> l_notificationList;
+    private List<NotificationController> l_notificationList;
 
     private void Awake()
     {
-        l_notificationList = new List<RectTransform>();
+        l_notificationList = new List<NotificationController>();
     }
 
-    private void Update()
+    private void AddNewItem(ItemObject _itemType, short _itemAmount)
     {
-        PlaceListItems();
-    }
 
-    private void CreateItemNotification(ItemObject _itemType, short _itemAmount)
-    {
-        GameObject newItem = Instantiate(c_notificationPrefab, transform);
-        l_notificationList.Add(newItem.GetComponent<RectTransform>());
-
-        NotificationController notification = newItem.GetComponent<NotificationController>();
-        notification.SetType(_itemType, _itemAmount);
-
-    }
-
-    private void PlaceListItems() 
-    {
-        for (int i = 0; i < l_notificationList.Count; i++)
+        foreach (NotificationController item in l_notificationList)
         {
-            if (!l_notificationList[i])
+            if (!item)
             {
-                l_notificationList.RemoveAt(i);
-                i--;
-                continue;
-            }
-
-            if (i < 3)
+                l_notificationList.Remove(item);
+                AddNewItem(_itemType, _itemAmount);
+                return;
+            }else if (item.GetItemType() == _itemType)
             {
-                l_notificationList[i].gameObject.SetActive(true);
-                l_notificationList[i].anchoredPosition = new Vector2(0, notificationMaxYSpawn - (notificationOffset * i));
-            }
-            else
-            {
-                l_notificationList[i].gameObject.SetActive(false);
+                item.AddItemAmount(_itemAmount);
+                return;
             }
         }
+
+        CreateItemNotification(_itemType, _itemAmount);
+
     }
+    private void CreateItemNotification(ItemObject _itemType, short _itemAmount)
+    {
+        NotificationController newItem = Instantiate(c_notificationPrefab, notificationLayout.transform).GetComponent<NotificationController>();
+        l_notificationList.Add(newItem.GetComponent<NotificationController>());
+
+        newItem.SetType(_itemType, _itemAmount);
+
+    }
+
+    
 
     private void OnEnable()
     {
-        EventManager.onItemChange += CreateItemNotification;
+        InventoryManager.Instance.obtainItemAction += AddNewItem;
     }
 
 
     private void OnDisable()
     {
-        EventManager.onItemChange -= CreateItemNotification;
+        InventoryManager.Instance.obtainItemAction -= AddNewItem;
     }
 
 

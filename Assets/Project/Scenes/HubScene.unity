@@ -5116,7 +5116,7 @@ GameObject:
   - component: {fileID: 1747533467}
   - component: {fileID: 1747533466}
   m_Layer: 5
-  m_Name: LayoutUpgrade
+  m_Name: LayoutQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
