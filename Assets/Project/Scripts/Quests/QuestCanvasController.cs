@@ -71,7 +71,6 @@ public class QuestCanvasController : MonoBehaviour
             index++;
         }
 
-        Debug.Log("LLamadica tontorrona");
     }
 
     private void OnEnable()

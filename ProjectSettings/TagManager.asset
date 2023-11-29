@@ -23,7 +23,7 @@ TagManager:
   - PickableItem
   - Map
   - Bullet
-  - 
+  - BreakableWall
   - 
   - 
   - 
