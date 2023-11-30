@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: BreakableWall
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 7482667652216324306, guid: c993d865e464ce74a942ef4ba28481be, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: b8d1163bb3bdc8e48a5ecebdc8cd1b55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

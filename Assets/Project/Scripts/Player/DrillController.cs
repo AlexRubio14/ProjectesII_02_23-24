@@ -18,43 +18,42 @@ public class DrillController : MonoBehaviour
     
     [SerializeField]
     private LayerMask breakableWallLayer;
+
+    List<RaycastHit2D> hits;
+
+    private void Start()
+    {
+        hits = new List<RaycastHit2D>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        
         for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
         {
+            float range = drillDistance - (i / 70); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, drillDistance, breakableWallLayer));
-            direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, drillDistance, breakableWallLayer));
+            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, range, breakableWallLayer));
+            if (i != 0)
+            {
+                direction = transform.rotation * Quaternion.Euler(0, 0, -i);
+                hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, range, breakableWallLayer));
+            }
         }
 
-        hits.ForEach(hit =>
+
+        foreach (RaycastHit2D hit in hits)
         {
             if (hit)
             {
                 Vector3Int tilePos = grid.LocalToCell(hit.centroid);
-                if (tilemap.GetTile(tilePos) == null)
-                {
-                    if (tilePos.x - hit.centroid.x > 0.7f 
-                    || tilePos.x - hit.centroid.x < -0.7f)
-                    {
-                        tilePos.x--;
-                    }
-
-                    if (tilePos.y - hit.centroid.y > 0.7f
-                    || tilePos.y - hit.centroid.y < -0.7f)
-                    {
-                        tilePos.y--;
-                    }
-
-                }
-
                 tilemap.SetTile(tilePos, null);
             }
-        });
+        }
 
+
+        hits.Clear();
     }
 
     private void OnDrawGizmos()
@@ -62,12 +61,12 @@ public class DrillController : MonoBehaviour
         Gizmos.color = Color.magenta;
         for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
         {
-
+            float range = drillDistance - (i / 70); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * drillDistance);
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
 
             direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * drillDistance);
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
         }
     }
 }
