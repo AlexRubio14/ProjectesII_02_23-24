@@ -68,7 +68,6 @@ public class EnemyIA : MonoBehaviour
         else
         {
             isFollowing = false;
-            Debug.Log("Stopping");
         }
     }
 }
