@@ -237,7 +237,7 @@ MonoBehaviour:
   shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   interactAction: {fileID: -4293622716152061987, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   inventoryAction: {fileID: 7104173710378125520, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  accelerateAction: {fileID: 0}
+  accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeRightLaserAction: {fileID: 2389276025789361315, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeLeftLaserAction: {fileID: 6815837080457322733, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
 --- !u!114 &6928186059841258854
@@ -264,7 +264,12 @@ MonoBehaviour:
   timeToExploteShip: 3
   timeToReturnHub: 3
   engineParticles: {fileID: 4361300617207404308}
+  drillMovementScale: 0
+  drillSprite: {fileID: 0}
   maxStorage: 50
+  leftDistance: 0
+  rightDistance: 0
+  autoHelp: 0
 --- !u!114 &4196185413055272076
 MonoBehaviour:
   m_ObjectHideFlags: 0

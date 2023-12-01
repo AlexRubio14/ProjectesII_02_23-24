@@ -135,7 +135,6 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        c_rb.AddForce(transform.up * iController.inputMovementDirection.y * currentMovementScale, ForceMode2D.Force);
         Vector2 acceleration = transform.right * iController.accelerationValue * movementScale;
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
@@ -156,7 +155,6 @@ public class PlayerController : MonoBehaviour
 
 
         Debug.Log(targetRotation.eulerAngles);
-        Debug.Log("------");
         c_rb.SetRotation(transform.rotation * targetRotation);
     }
 
