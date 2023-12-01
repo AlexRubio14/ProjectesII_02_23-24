@@ -21,13 +21,9 @@ public class PlayerController : MonoBehaviour
     private float minRotationSpeed;
     [SerializeField]
     private float maxRotationSpeed;
-    private float targetAngle;
     [SerializeField]
     private float anglesPerSecond;
-    private float angleThreshold = 1.0f;
-    private float angleSign = 0.0f;
-    private bool rotating = false;
-    private Vector2 lastRotationInput = Vector2.zero;
+
 
     [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
