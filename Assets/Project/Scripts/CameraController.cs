@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     private Quaternion starterRotation;
     private float traumaLevel;
     [SerializeField]
-    private float maxTraumaLevel;
+    private float maxTraumaLevel = 1;
 
     private void Awake()
     {

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Plant
   m_EditorClassIdentifier: 
-  <itemName>k__BackingField: Plant
-  <weight>k__BackingField: 4.5
+  <ItemName>k__BackingField: ' '
+  <Weight>k__BackingField: 0
   <c_MapSprite>k__BackingField: {fileID: 21300000, guid: b5fac7acf4f898245b28a33b37e8087f, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 91fb54392ab5b444c81f8e46a790cd0d, type: 3}
   <LightColor>k__BackingField: {r: 0, g: 1, b: 0.38447714, a: 1}

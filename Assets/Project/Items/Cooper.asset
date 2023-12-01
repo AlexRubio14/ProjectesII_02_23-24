@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Cooper
   m_EditorClassIdentifier: 
-  <itemName>k__BackingField: Cooper
-  <weight>k__BackingField: 1.5
+  <ItemName>k__BackingField: Cooper
+  <Weight>k__BackingField: 0
   <c_MapSprite>k__BackingField: {fileID: 21300000, guid: adef8bd251c059249af9d1a40a014550, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: dcf800fcbf4e78849a007ab2b99d67e4, type: 3}
   <LightColor>k__BackingField: {r: 0.9339623, g: 0.4287011, b: 0.030838395, a: 1}

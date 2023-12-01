@@ -7,13 +7,14 @@ using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, DRILL, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
 
     [Header("Movement"), SerializeField]
     private float movementScale;
+    private float currentMovementScale;
 
     [Space, Header("Rotation")]
     private float currentRotationSpeed;
@@ -45,6 +46,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem engineParticles;
 
+    [Space, Header("Drill"), SerializeField]
+    private float drillMovementScale;
+    [SerializeField]
+    private GameObject drillSprite;
+    private DrillController drillController;
+
     [Space, Header("Storage"), SerializeField]
     private int maxStorage;
     private int currentStorage;
@@ -61,12 +68,14 @@ public class PlayerController : MonoBehaviour
         iController = GetComponentInParent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        drillController = GetComponent<DrillController>();
         shipLight = GetComponentInChildren<Light2D>();
     }
     
     private void Start()
     {
         Fuel = baseFuel + PowerUpManager.Instance.Fuel;
+        currentMovementScale = movementScale;
     }
 
     void Update()
@@ -77,6 +86,17 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.L))
         {
             Fuel += 50;
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (currentState == State.DRILL)
+            {
+                ChangeState(State.MOVING);
+            }else if (currentState == State.MOVING)
+            {
+                ChangeState(State.DRILL);
+            }
         }
     }
 
@@ -92,6 +112,10 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.KNOCKBACK:
                 break;
+            case State.DRILL:
+                Move();
+                Rotation();
+                break;
             default:
                 break;
         }
@@ -100,6 +124,7 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
+        c_rb.AddForce(transform.up * iController.inputMovementDirection.y * currentMovementScale, ForceMode2D.Force);
         Vector2 acceleration = transform.right * iController.accelerationValue * movementScale;
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
@@ -266,6 +291,11 @@ public class PlayerController : MonoBehaviour
                 c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
+                break; 
+            case State.DRILL:
+                currentMovementScale = movementScale;
+                drillController.enabled = false;
+                drillSprite.SetActive(false);
                 c_rb.angularVelocity = 0;
                 break;
             case State.FREEZE:
@@ -286,6 +316,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.KNOCKBACK:
                 c_rb.velocity = Vector2.zero;
+                break;
+            case State.DRILL:
+                currentMovementScale = drillMovementScale;
+                drillController.enabled = true;
+                drillSprite.SetActive(true);
+
                 break;
             case State.FREEZE:
                 c_rb.velocity = Vector2.zero;
