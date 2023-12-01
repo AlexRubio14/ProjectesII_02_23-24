@@ -60,6 +60,15 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
 
+    [Space, Header("Raycasts"), SerializeField]
+    private float leftDistance;
+    [SerializeField]
+    private float rightDistance;
+
+    [Space, Header("AutoHelp"), SerializeField]
+    private float autoHelp;
+
+
     private void Awake()
     {
         currentState = State.MOVING;
@@ -70,6 +79,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         drillController = GetComponent<DrillController>();
         shipLight = GetComponentInChildren<Light2D>();
+        
     }
     
     private void Start()
@@ -107,6 +117,7 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 Move();
                 Rotation();
+                AutoHelpDirection();
                 break;
             case State.MINING:
                 break;
@@ -147,6 +158,32 @@ public class PlayerController : MonoBehaviour
         Debug.Log(targetRotation.eulerAngles);
         Debug.Log("------");
         c_rb.SetRotation(transform.rotation * targetRotation);
+    }
+
+    void AutoHelpDirection()
+    {
+        //RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.up, leftDistance);
+
+        //if (leftHit)
+        //{
+        //    Debug.Log("He colisionado Raycast");
+        //    Vector2 collisionPoint = leftHit.collider.ClosestPoint(transform.position);
+        //    Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
+        //    c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
+
+        //}
+
+        //RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.down, rightDistance);
+
+        //if (rightHit)
+
+        //{
+        //    Debug.Log("He colisionado Raycast");
+        //    Vector2 collisionPoint = leftHit.collider.ClosestPoint(transform.position);
+        //    Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
+
+        //    c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        //}
     }
     #endregion
 
