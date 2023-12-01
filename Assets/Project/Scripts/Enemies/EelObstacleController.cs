@@ -10,8 +10,15 @@ public class EelObstacle : MonoBehaviour
     private GameObject spawnPoint;
 
     [SerializeField]
+    private GameObject player; 
+
+    [SerializeField]
     private float attackDelay = 1.0f;
+    private bool isWatching = false;
+
+    private Vector2 attackPoint; 
     private bool isAttacking = false;
+    private bool isInSpawnPoint = false;
 
     [SerializeField]
     private float speed = 7.0f;
@@ -24,35 +31,51 @@ public class EelObstacle : MonoBehaviour
         sprite.transform.position = spawnPoint.transform.position;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("I'm in");
-            isAttacking = true;
+            if(!isAttacking && isInSpawnPoint)
+            {
+                Invoke("SetWatchFalse", attackDelay);
+                isWatching = true;
+            }
         }
     }
 
     private void Update()
     {
-        if (isAttacking)
+        if (isWatching)
         {
-            sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, transform.position, speed * Time.deltaTime);
+            Vector2 direction = sprite.transform.position - player.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            sprite.transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        }
+        if(isAttacking)
+        {
+            sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, attackPoint, speed * Time.deltaTime);
+            if (Vector2.Distance(sprite.transform.position, attackPoint) < 0.5f)
+            {
+                isAttacking = false; 
+            }
         }
         else
         {
             sprite.transform.position = Vector2.MoveTowards(sprite.transform.position, spawnPoint.transform.position, speed * Time.deltaTime);
+            if (Vector2.Distance(sprite.transform.position, spawnPoint.transform.position) < 0.5f)
+            {
+                isInSpawnPoint = true;
+            }
         }
-
-        if (Vector2.Distance(sprite.transform.position, transform.position) < 0.5f)
-        {
-            Invoke("SetAttackFalse", attackDelay);
-        }
+        
     }
 
-    private void SetAttackFalse()
+    private void SetWatchFalse()
     {
-        isAttacking = false;
+        isWatching = false;
+        attackPoint = player.transform.position; 
+        isAttacking = true;
+        isInSpawnPoint = false; 
     }
 
     private void OnDrawGizmos()
