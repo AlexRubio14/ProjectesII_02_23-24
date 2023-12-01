@@ -28,7 +28,6 @@ public class EelObstacle : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("I'm in");
             isAttacking = true;
         }
     }

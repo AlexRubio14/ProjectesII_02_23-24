@@ -17,13 +17,12 @@ public class PlayerController : MonoBehaviour
     private float currentMovementScale;
 
     [Space, Header("Rotation")]
-    private float currentRotationSpeed;
     [SerializeField]
     private float minRotationSpeed;
     [SerializeField]
     private float maxRotationSpeed;
     [SerializeField]
-    private float anglesPerSecond;
+    private float rotationSpeed;
 
 
     [Space, Header("Knockback"), SerializeField]
@@ -64,9 +63,13 @@ public class PlayerController : MonoBehaviour
     private float leftDistance;
     [SerializeField]
     private float rightDistance;
+    [SerializeField]
+    private float frontDistance;
 
     [Space, Header("AutoHelp"), SerializeField]
     private float autoHelp;
+    [SerializeField]
+    private LayerMask mapLayer;
 
 
     private void Awake()
@@ -120,8 +123,10 @@ public class PlayerController : MonoBehaviour
                 AutoHelpDirection();
                 break;
             case State.MINING:
+                AutoHelpDirection();
                 break;
             case State.KNOCKBACK:
+                AutoHelpDirection();
                 break;
             case State.DRILL:
                 Move();
@@ -150,7 +155,7 @@ public class PlayerController : MonoBehaviour
         Vector2 normalizedInputDirection = iController.inputMovementDirection.normalized;
 
         Quaternion targetRotation = Quaternion.AngleAxis(
-            Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -anglesPerSecond * Time.deltaTime, anglesPerSecond * Time.deltaTime)
+            Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime)
             , Vector3.forward);
 
 
@@ -160,28 +165,28 @@ public class PlayerController : MonoBehaviour
 
     void AutoHelpDirection()
     {
-        //RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.up, leftDistance);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, transform.up, leftDistance, mapLayer);
 
-        //if (leftHit)
-        //{
-        //    Debug.Log("He colisionado Raycast");
-        //    Vector2 collisionPoint = leftHit.collider.ClosestPoint(transform.position);
-        //    Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
-        //    c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        ApplyAutoHelp(leftHit);
 
-        //}
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, -transform.up, rightDistance, mapLayer);
 
-        //RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.down, rightDistance);
+        ApplyAutoHelp(rightHit);
 
-        //if (rightHit)
+        RaycastHit2D frontHit = Physics2D.Raycast(transform.position, transform.right, frontDistance, mapLayer);
 
-        //{
-        //    Debug.Log("He colisionado Raycast");
-        //    Vector2 collisionPoint = leftHit.collider.ClosestPoint(transform.position);
-        //    Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
+        ApplyAutoHelp(frontHit);
+    }
 
-        //    c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        //}
+    void ApplyAutoHelp(RaycastHit2D raycast)
+    {
+        if (raycast)
+        {
+            Vector2 collisionPoint = raycast.collider.ClosestPoint(transform.position);
+            Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
+
+            c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        }
     }
     #endregion
 
@@ -410,5 +415,14 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.GetDamage(), collision.GetContact(0).point);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawLine(transform.position, transform.position + transform.up * leftDistance);
+        Gizmos.DrawLine(transform.position, transform.position + -transform.up * rightDistance);
+        Gizmos.DrawLine(transform.position, transform.position + transform.right * frontDistance);
     }
 }

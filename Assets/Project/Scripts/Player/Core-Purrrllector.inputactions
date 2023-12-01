@@ -141,7 +141,7 @@
                 {
                     "name": "",
                     "id": "3903f60f-b48c-42e6-9d30-c638bf1f6db1",
-                    "path": "<Mouse>/position",
+                    "path": "<VirtualMouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -221,6 +221,17 @@
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "AxisDeadzone(min=1.401298E-45,max=0.6)",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3b8d130-fb9c-4225-9233-c5fd0d3031d3",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
                     "groups": "",
                     "action": "Accelerate",
                     "isComposite": false,
