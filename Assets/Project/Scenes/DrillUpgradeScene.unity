@@ -62589,8 +62589,8 @@ MonoBehaviour:
     m_Bits: 16384
   baseTile: {fileID: 11400000, guid: 7c0343178b625dc40ad933d4df82b932, type: 2}
   aloneTile: {fileID: 11400000, guid: 3fe535b130327bf42a9d45eb23120fc1, type: 2}
-  oneSideTileUp: {fileID: 11400000, guid: 31f9cae5e4de6264984bc7c3e3f087aa, type: 2}
-  oneSideTileDown: {fileID: 11400000, guid: af8246b0cf75082468e58ba8d083b317, type: 2}
+  oneSideTileUp: {fileID: 11400000, guid: af8246b0cf75082468e58ba8d083b317, type: 2}
+  oneSideTileDown: {fileID: 11400000, guid: 31f9cae5e4de6264984bc7c3e3f087aa, type: 2}
   oneSideTileRight: {fileID: 11400000, guid: eaa0f8c059d8f744c933ee78f8116694, type: 2}
   oneSideTileLeft: {fileID: 11400000, guid: 5d16b4f5b54f608459483acee593f745, type: 2}
   twoSideTileDownLeft: {fileID: 11400000, guid: a15c1af3b32b3dd458cbb5523932fc73, type: 2}

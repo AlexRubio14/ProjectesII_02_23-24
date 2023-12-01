@@ -90,6 +90,7 @@ public class DrillController : MonoBehaviour
                 UpdateSideTile(new Vector3Int(tilePos.x, tilePos.y + 1));
                 UpdateSideTile(new Vector3Int(tilePos.x, tilePos.y - 1));
                 Debug.Log(tilePos);
+
             }
         }
 
@@ -171,12 +172,12 @@ public class DrillController : MonoBehaviour
         else if (!haveTileUp && !haveTileDown && haveTileRight && haveTileLeft)
         {
             //LE FALTAN LOS DE ARRIBA Y ABAJO
-            currentTile = twoSideTileUpDown;
+            currentTile = twoSideTileRightLeft;
         }
         else if (haveTileUp && haveTileDown && !haveTileRight && !haveTileLeft)
         {
             //LE FALTAN LOS DE IZQUIERDA Y DERECHA
-            currentTile = twoSideTileRightLeft;
+            currentTile = twoSideTileUpDown;
         }
         else if (!haveTileUp && haveTileDown && !haveTileRight && haveTileLeft)
         {
@@ -204,22 +205,22 @@ public class DrillController : MonoBehaviour
         else if (haveTileUp && !haveTileDown && !haveTileRight && !haveTileLeft)
         {
             //LE FALTAN LOS DE ABAJO, DERECHA Y IZQUIERDA
-            currentTile = oneSideTileUp;
+            currentTile = oneSideTileDown;
         }
         else if (!haveTileUp && haveTileDown && !haveTileRight && !haveTileLeft)
         {
             //LE FALTAN LOS DE ARRIBA, DERECHA Y IZQUIERDA
-            currentTile = oneSideTileDown;
+            currentTile = oneSideTileUp;
         }
         else if (!haveTileUp && !haveTileDown && haveTileRight && !haveTileLeft)
         {
             //LE FALTAN LOS DE ARRIBA, ABAJO Y IZQUIERDA
-            currentTile = oneSideTileRight;
+            currentTile = oneSideTileLeft;
         }
         else if (!haveTileUp && !haveTileDown && !haveTileRight && haveTileLeft)
         {
             //LE FALTAN LOS DE ARRIBA, ABAJO Y DERECHA
-            currentTile = oneSideTileLeft;
+            currentTile = oneSideTileRight;
         }
         else if (!haveTileUp && !haveTileDown && !haveTileRight && !haveTileLeft)
         {
@@ -234,16 +235,24 @@ public class DrillController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.magenta;
         for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
         {
+            Gizmos.color = Color.magenta;
             float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
             Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
 
+            Gizmos.color = Color.magenta;
             direction = transform.rotation * Quaternion.Euler(0, 0, -i);
             Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
+
+
         }
+
+       
+
     }
+
+    
 }
 
