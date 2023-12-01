@@ -22,6 +22,8 @@ public class DrillController : MonoBehaviour
     List<RaycastHit2D> hits;
 
     [Space, SerializeField]
+    private TileBase baseTile;
+    [SerializeField]
     private TileBase aloneTile;
     [SerializeField]
     private TileBase oneSideTileUp;
@@ -87,6 +89,7 @@ public class DrillController : MonoBehaviour
                 UpdateSideTile(new Vector3Int(tilePos.x - 1, tilePos.y));
                 UpdateSideTile(new Vector3Int(tilePos.x, tilePos.y + 1));
                 UpdateSideTile(new Vector3Int(tilePos.x, tilePos.y - 1));
+                Debug.Log(tilePos);
             }
         }
 
@@ -97,8 +100,11 @@ public class DrillController : MonoBehaviour
 
     void UpdateSideTile(Vector3Int _tilePos)
     {
+        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y)) == null)
+            return;
+
         bool haveTileUp;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x + 1, _tilePos.y) ) != null)
+        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y - 1) ) != null)
         {
             haveTileUp = true;
         }
@@ -108,7 +114,7 @@ public class DrillController : MonoBehaviour
         }
 
         bool haveTileDown;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x - 1, _tilePos.y)) != null)
+        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y + 1)) != null)
         {
             haveTileDown = true;
         }
@@ -117,7 +123,7 @@ public class DrillController : MonoBehaviour
             haveTileDown = false;
         }
         bool haveTileRight;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y + 1)) != null)
+        if (tilemap.GetTile(new Vector3Int(_tilePos.x - 1, _tilePos.y)) != null)
         {
             haveTileRight = true;
         }
@@ -126,7 +132,7 @@ public class DrillController : MonoBehaviour
             haveTileRight = false;
         }
         bool haveTileLeft;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y - 1)) != null)
+        if (tilemap.GetTile(new Vector3Int(_tilePos.x + 1, _tilePos.y)) != null)
         {
             haveTileLeft = true;
         }
@@ -135,45 +141,98 @@ public class DrillController : MonoBehaviour
             haveTileLeft = false;
         }
 
-
+        TileBase currentTile = null;
 
         if (haveTileUp && haveTileDown && haveTileRight && haveTileLeft)
         {
             //LOS TIENE TODOS
+            currentTile = baseTile;
         }
         else if (!haveTileUp && haveTileDown && haveTileRight && haveTileLeft)
         {
             //LE FALTA EL DE ARRIBA
+            currentTile = threeSideTileDown;
         }
         else if (haveTileUp && !haveTileDown && haveTileRight && haveTileLeft)
         {
             //LE FALTA EL DE ABAJO
-
+            currentTile = threeSideTileUp;
         }
         else if (haveTileUp && haveTileDown && !haveTileRight && haveTileLeft)
         {
             //LE FALTA EL DE LA DERECHA
-
+            currentTile = threeSideTileLeft;
         }
         else if (haveTileUp && haveTileDown && haveTileRight && !haveTileLeft)
         {
             //LE FALTA EL DE LA IZQUIERDA
-
+            currentTile = threeSideTileRight;
         }
         else if (!haveTileUp && !haveTileDown && haveTileRight && haveTileLeft)
         {
             //LE FALTAN LOS DE ARRIBA Y ABAJO
-
+            currentTile = twoSideTileUpDown;
         }
         else if (haveTileUp && haveTileDown && !haveTileRight && !haveTileLeft)
         {
             //LE FALTAN LOS DE IZQUIERDA Y DERECHA
+            currentTile = twoSideTileRightLeft;
         }
+        else if (!haveTileUp && haveTileDown && !haveTileRight && haveTileLeft)
+        {
+            //LE FALTAN LOS DE ARRIBA Y DERECHA
+            currentTile = twoSideTileUpRight;
+
+        }
+        else if (!haveTileUp && haveTileDown && haveTileRight && !haveTileLeft)
+        {
+            //LE FALTAN LOS DE ARRIBA Y IZQUIERDA
+            currentTile = twoSideTileUpLeft;
+
+        }
+        else if (haveTileUp && !haveTileDown && !haveTileRight && haveTileLeft)
+        {
+            //LE FALTAN LOS DE ABAJO Y DERECHA
+            currentTile = twoSideTileDownRight;
+
+        }
+        else if (haveTileUp && !haveTileDown && haveTileRight && !haveTileLeft)
+        {
+            //LE FALTAN LOS DE ABAJO Y IZQUIERDA
+            currentTile = twoSideTileDownLeft;
+        }
+        else if (haveTileUp && !haveTileDown && !haveTileRight && !haveTileLeft)
+        {
+            //LE FALTAN LOS DE ABAJO, DERECHA Y IZQUIERDA
+            currentTile = oneSideTileUp;
+        }
+        else if (!haveTileUp && haveTileDown && !haveTileRight && !haveTileLeft)
+        {
+            //LE FALTAN LOS DE ARRIBA, DERECHA Y IZQUIERDA
+            currentTile = oneSideTileDown;
+        }
+        else if (!haveTileUp && !haveTileDown && haveTileRight && !haveTileLeft)
+        {
+            //LE FALTAN LOS DE ARRIBA, ABAJO Y IZQUIERDA
+            currentTile = oneSideTileRight;
+        }
+        else if (!haveTileUp && !haveTileDown && !haveTileRight && haveTileLeft)
+        {
+            //LE FALTAN LOS DE ARRIBA, ABAJO Y DERECHA
+            currentTile = oneSideTileLeft;
+        }
+        else if (!haveTileUp && !haveTileDown && !haveTileRight && !haveTileLeft)
+        {
+            //LE FALTAN TODOS
+            currentTile = aloneTile;
+        }
+
+        tilemap.SetTile(_tilePos, currentTile);
 
     }
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
         for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
