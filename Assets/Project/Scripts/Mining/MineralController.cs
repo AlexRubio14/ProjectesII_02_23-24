@@ -5,11 +5,13 @@ using UnityEngine.Rendering.Universal;
 
 public class MineralController : InteractableObject
 {
-    [field : SerializeField]
+    [field: Space, Header("Mineral"), SerializeField]
     public ItemObject c_currentItem { private set; get; }
 
     [field : SerializeField]
     public short MaxItemsToReturn { private set; get; }
+
+    private Light2D currentLight;
 
     private PlayerMineryController player;
 
@@ -18,15 +20,32 @@ public class MineralController : InteractableObject
     {
         c_spriteR = GetComponent<SpriteRenderer>();
         c_spriteR.sprite = c_currentItem.c_MapSprite;
-        GetComponentInChildren<Light2D>().color = c_currentItem.LightColor;
+        currentLight = GetComponentInChildren<Light2D>();
+        currentLight.color = c_currentItem.LightColor;
     }
     private void Start()
     {
         player = PlayerManager.Instance.player.gameObject.GetComponent<PlayerMineryController>();
+
+        if (isHide)
+        {
+            currentLight.enabled = false;
+            isInteractable = false;
+        }
+
     }
+
     public override void Interact()
     {
         player.StartMinery(this);
     }
+    public override void UnHide()
+    {
+        Vector3Int cellPos = grid.LocalToCell(transform.position);
+        tilemap.SetTile(cellPos, null);
+        currentLight.enabled = true;
 
+        isInteractable = true;
+        isHide = false;
+    }
 }

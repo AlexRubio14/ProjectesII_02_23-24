@@ -365,7 +365,7 @@ public class PlayerController : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.CompareTag("Map"))
+        if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
             GetDamage(mapDamage, collision.contacts[0].point);
         }

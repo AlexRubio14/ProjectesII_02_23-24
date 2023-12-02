@@ -7,11 +7,12 @@ using UnityEngine.Rendering.Universal;
 
 public class CoreController : InteractableObject
 {
-    private bool glowUp = false;
-    [SerializeField]
+    [Space, Header("Core Collector"), SerializeField]
     private float glowUpSpeed;
     [SerializeField]
     private float timeToChangeScene;
+
+    private bool glowUp = false;
 
     private Light2D coreLight;
 
@@ -27,7 +28,7 @@ public class CoreController : InteractableObject
             coreLight.pointLightInnerRadius += Time.deltaTime * glowUpSpeed;
         }
     }
-    override public void Interact()
+    public override void Interact()
     {
         //Acabar el game
         InventoryManager.Instance.EndRun(true);
@@ -35,6 +36,10 @@ public class CoreController : InteractableObject
         PlayerManager.Instance.player.GetComponent<PlayerMapInteraction>().showCanvas = false;
         glowUp = true;
         Invoke("EndGame", timeToChangeScene);
+    }
+    public override void UnHide()
+    {
+        Debug.LogWarning("El Core no se puede esconder");
     }
 
     private void EndGame()
