@@ -50,6 +50,16 @@ public class MineMinigameController : MonoBehaviour
     private float maxIntegrity;
     private float progressValue;
     private float integrityValue;
+    [SerializeField]
+    private float maxMultiplierSpeed;
+    private float currentMultiplierSpeed;
+    [SerializeField]
+    private float multiplierUpSpeed;
+    [SerializeField]
+    private float multipliersDownSpeed;
+    [SerializeField]
+    private TextMeshProUGUI multiplierText;
+
 
     [Space, Header("Minerals"), SerializeField]
     private GameObject c_pickableItemPrefab;
@@ -65,6 +75,8 @@ public class MineMinigameController : MonoBehaviour
     {
         integrityValue = maxIntegrity;
         c_progressBarSlider.maxValue = maxIntegrity;
+
+        currentMultiplierSpeed = 1;
 
         leftLaser.SetCurrentEnergyLevel(50f);
         rightLaser.SetCurrentEnergyLevel(50f);
@@ -132,6 +144,7 @@ public class MineMinigameController : MonoBehaviour
             //Tiene la energia necesaria
             _currentLaser.SetCurrentEnergyPointerColor(correctEnergyColor);
             _currentLaser.CorrectEnergy = true;
+
             _currentLaserSlider.value += Time.deltaTime * laserSliderSpeed;
         }
         else
@@ -140,6 +153,7 @@ public class MineMinigameController : MonoBehaviour
             _currentLaser.SetCurrentEnergyPointerColor(wrongEnergyColor);
             _currentLaser.CorrectEnergy = false;
             _currentLaserSlider.value -= Time.deltaTime * laserSliderSpeed;
+
         }
 
         if (_currentLaserSlider.value >= 0.9f && _currentParticles.isStopped)
@@ -150,6 +164,7 @@ public class MineMinigameController : MonoBehaviour
         {
             _currentParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
+
 
     }
 
@@ -166,19 +181,30 @@ public class MineMinigameController : MonoBehaviour
         if (rightLaser.CorrectEnergy && leftLaser.CorrectEnergy)
         {
             //++
-            progressValue += (progressSpeed * 2) * Time.deltaTime;
+            currentMultiplierSpeed += multiplierUpSpeed * Time.deltaTime;
+            currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
+            progressValue += (progressSpeed * 2 * currentMultiplierSpeed) * Time.deltaTime;
+
         }
         else if(rightLaser.CorrectEnergy || leftLaser.CorrectEnergy)
         {
             //+-
-            progressValue += progressSpeed * Time.deltaTime;
+            currentMultiplierSpeed -= multipliersDownSpeed * Time.deltaTime;
+            currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
+            progressValue += (progressSpeed * currentMultiplierSpeed) * Time.deltaTime;
             integrityValue -= breakSpeed * Time.deltaTime;
         }
         else
         {
             //--
+            currentMultiplierSpeed -= multipliersDownSpeed * Time.deltaTime;
+            currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
             integrityValue -= (breakSpeed * 2) * Time.deltaTime;
         }
+        
+        Debug.Log(currentMultiplierSpeed);
+
+        multiplierText.text = "x " + (int)currentMultiplierSpeed;
 
         c_progressBarSlider.value = progressValue;
         c_integrity.value = integrityValue;
