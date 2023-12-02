@@ -50,7 +50,8 @@ public class MineMinigameController : MonoBehaviour
     private float maxIntegrity;
     private float progressValue;
     private float integrityValue;
-    [SerializeField]
+
+    [Space, Header("Multiplier"), SerializeField]
     private float maxMultiplierSpeed;
     private float currentMultiplierSpeed;
     [SerializeField]
@@ -59,7 +60,21 @@ public class MineMinigameController : MonoBehaviour
     private float multipliersDownSpeed;
     [SerializeField]
     private TextMeshProUGUI multiplierText;
-
+    [Header("Multiplier Shake"), SerializeField]
+    private float shakeMagnitude;
+    [SerializeField]
+    private GameObject oreBox;
+    private Vector2 startPos;
+    [Header("Multiplier Lasers"), SerializeField]
+    private GameObject rightLaserPivot;
+    [SerializeField]
+    private GameObject leftLaserPivot;
+    [SerializeField]
+    private float maxAngleRotation;
+    private Quaternion starterRotationRightLaser;
+    private Quaternion starterRotationLeftLaser;
+    private Quaternion endRotationRightLaser;
+    private Quaternion endRotationLeftLaser;
 
     [Space, Header("Minerals"), SerializeField]
     private GameObject c_pickableItemPrefab;
@@ -71,6 +86,19 @@ public class MineMinigameController : MonoBehaviour
     private TextMeshProUGUI[] percentText;
     [SerializeField]
     private Image[] mineralTypeImages;
+
+    private void Start()
+    {
+        startPos = oreBox.transform.localPosition;
+        starterRotationRightLaser = rightLaserPivot.transform.rotation;
+        starterRotationLeftLaser = leftLaserPivot.transform.rotation;
+
+        endRotationRightLaser = rightLaserPivot.transform.rotation * Quaternion.Euler(0, 0, maxAngleRotation);
+        endRotationLeftLaser = leftLaserPivot.transform.rotation * Quaternion.Euler(0, 0, -maxAngleRotation);
+
+
+    }
+
     void OnEnable()
     {
         integrityValue = maxIntegrity;
@@ -201,13 +229,32 @@ public class MineMinigameController : MonoBehaviour
             currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
             integrityValue -= (breakSpeed * 2) * Time.deltaTime;
         }
-        
+
+        c_progressBarSlider.value = progressValue;
+        c_integrity.value = integrityValue;
+
+        MultiplierFeedback();
+
+    }
+
+    private void MultiplierFeedback()
+    {
         Debug.Log(currentMultiplierSpeed);
 
         multiplierText.text = "x " + (int)currentMultiplierSpeed;
 
-        c_progressBarSlider.value = progressValue;
-        c_integrity.value = integrityValue;
+        //Hacemos que tiemble con un random, este segun mas alto el multiplicador mas temblara
+        oreBox.transform.localPosition = startPos + (new Vector2(
+            Random.Range(-shakeMagnitude, shakeMagnitude) * (currentMultiplierSpeed - 1),
+            Random.Range(-shakeMagnitude, shakeMagnitude) * (currentMultiplierSpeed - 1)));
+
+
+        //Ponemos los rayos en la posicion que les toca
+        float process = (currentMultiplierSpeed - 1) / 3;
+        rightLaserPivot.transform.rotation = Quaternion.Lerp(starterRotationRightLaser, endRotationRightLaser, process);
+        leftLaserPivot.transform.rotation = Quaternion.Lerp(starterRotationLeftLaser, endRotationLeftLaser, process);
+
+
     }
 
     private void CheckProgressEnded()
