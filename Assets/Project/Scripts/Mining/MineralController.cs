@@ -11,6 +11,9 @@ public class MineralController : InteractableObject
     [field : SerializeField]
     public short MaxItemsToReturn { private set; get; }
 
+    [SerializeField]
+    private bool isBeta;
+
     private Light2D currentLight;
 
     private PlayerMineryController player;
@@ -31,6 +34,7 @@ public class MineralController : InteractableObject
         {
             currentLight.enabled = false;
             isInteractable = false;
+            SetupHiddenParticles();
         }
 
     }
@@ -41,11 +45,37 @@ public class MineralController : InteractableObject
     }
     public override void UnHide()
     {
-        Vector3Int cellPos = grid.LocalToCell(transform.position);
-        tilemap.SetTile(cellPos, null);
-        currentLight.enabled = true;
+        if (!isBeta)
+        {
+            //Borrar solo el del centro
+            Vector3Int cellPos = grid.LocalToCell(transform.position);
+            tilemap.SetTile(cellPos, null);
+        }
+        else
+        {
+            //Borrar los que estan en cada extremo del mineral
+            BoxCollider2D box = GetComponent<BoxCollider2D>();
+            Vector3Int cellPos;
+
+            cellPos = grid.LocalToCell(new Vector2(box.bounds.min.x, box.bounds.min.y));
+            tilemap.SetTile(cellPos, null);
+
+            cellPos = grid.LocalToCell(new Vector2(box.bounds.max.x, box.bounds.min.y));
+            tilemap.SetTile(cellPos, null);
+
+            cellPos = grid.LocalToCell(new Vector2(box.bounds.min.x, box.bounds.max.y));
+            tilemap.SetTile(cellPos, null);
+
+            cellPos = grid.LocalToCell(new Vector2(box.bounds.max.x, box.bounds.max.y));
+            tilemap.SetTile(cellPos, null);
+        }
+
 
         isInteractable = true;
         isHide = false;
+
+        currentLight.enabled = true;
+        currentHiddenParticles.Stop();
+
     }
 }

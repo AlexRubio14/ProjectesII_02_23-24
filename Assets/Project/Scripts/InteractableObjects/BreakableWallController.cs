@@ -14,6 +14,10 @@ public class BreakableWallController : InteractableObject
         breakableWallGrid = GetComponentInParent<Grid>();
         breakableWallTilemap = GetComponent<Tilemap>();
     }
+    private void Start()
+    {
+        SetupHiddenParticles();
+    }
 
     public override void Interact()
     {
@@ -42,6 +46,8 @@ public class BreakableWallController : InteractableObject
                 
             }
         }
+
+        currentHiddenParticles.Stop();
     }
 
 

@@ -17,7 +17,27 @@ abstract public class InteractableObject : MonoBehaviour
     protected Grid grid;
     [SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
     protected Tilemap tilemap;
+    [SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
+    protected GameObject hiddenParticlesPrefab;
+    protected ParticleSystem currentHiddenParticles;
+    [SerializeField]
+    protected Vector2 hiddenParticlesSize;
+    [SerializeField]
+    protected Vector2 hiddenParticlesPosition;
+    [SerializeField]
+    protected float hiddenParticlesRateOverTime;
 
     abstract public void Interact();
     abstract public void UnHide();
+
+    protected void SetupHiddenParticles()
+    {
+        currentHiddenParticles = Instantiate(hiddenParticlesPrefab, transform).GetComponent<ParticleSystem>();
+        ParticleSystem.ShapeModule shape = currentHiddenParticles.shape;
+        shape.scale = hiddenParticlesSize;
+        shape.position = hiddenParticlesPosition;
+        Debug.Log(currentHiddenParticles.shape.scale);
+        ParticleSystem.EmissionModule emission = currentHiddenParticles.emission;
+        emission.rateOverTime = hiddenParticlesRateOverTime;
+    }
 }
