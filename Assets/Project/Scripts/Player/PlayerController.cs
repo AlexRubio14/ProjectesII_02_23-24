@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        Vector2 acceleration = transform.right * iController.accelerationValue * movementScale;
+        Vector2 acceleration = transform.right * iController.accelerationValue * currentMovementScale;
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
     }
@@ -194,13 +194,12 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case State.MOVING:
-                if(iController.inputMovementDirection == Vector2.zero)
+                if(iController.accelerationValue == 0)
                 {
                     Fuel -= Time.deltaTime / 3;
                     
                     if(engineParticles.isPlaying)
                         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-
                 }
                 else
                 {
@@ -208,7 +207,6 @@ public class PlayerController : MonoBehaviour
 
                     if (engineParticles.isStopped)
                         engineParticles.Play(true);
-
                 }
                 break;
             case State.MINING:

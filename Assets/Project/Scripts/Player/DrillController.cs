@@ -55,11 +55,6 @@ public class DrillController : MonoBehaviour
 
     private BreakableWallController breakableWallController;
 
-    private void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -83,11 +78,11 @@ public class DrillController : MonoBehaviour
         {
             float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, range, breakableWallLayer));
+            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
             if (i != 0)
             {
                 direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-                hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, range, breakableWallLayer));
+                hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
             }
         }
 
@@ -100,7 +95,7 @@ public class DrillController : MonoBehaviour
         int totalHits = 0;
         foreach (RaycastHit2D hit in _hits)
         {
-            if (hit && hit.rigidbody.CompareTag("BreakableWall"))
+            if (hit && hit.collider.CompareTag("BreakableWall"))
             {
                 if (!breakableWallController)
                 {
@@ -128,6 +123,10 @@ public class DrillController : MonoBehaviour
         if (totalHits == 0)
         {
             breakableWallController = null;
+        }
+        else
+        {
+            CameraController.Instance.AddMediumTrauma();
         }
     }
 
@@ -274,11 +273,11 @@ public class DrillController : MonoBehaviour
             Gizmos.color = Color.magenta;
             float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * range);
 
             Gizmos.color = Color.magenta;
             direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * range);
 
         }
 
