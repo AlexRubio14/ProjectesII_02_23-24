@@ -119,10 +119,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 891768667410726803}
+  - {fileID: 713839581992212542}
   - {fileID: 3116680573375851223}
   - {fileID: 87604119488062362}
   - {fileID: 3209348645100294616}
-  - {fileID: 713839581992212542}
   - {fileID: 2888034062527476590}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -289,6 +289,8 @@ MonoBehaviour:
   timeToExploteShip: 3
   timeToReturnHub: 3
   engineParticles: {fileID: 4361300617207404308}
+  drillMovementScale: 0
+  drillSprite: {fileID: 0}
   maxStorage: 50
 --- !u!114 &4196185413055272076
 MonoBehaviour:

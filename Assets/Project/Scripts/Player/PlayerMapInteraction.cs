@@ -52,7 +52,7 @@ public class PlayerMapInteraction : MonoBehaviour
     private void ShowNeededUpgrade()
     {
 
-        if (!nearestObject || !showCanvas)
+        if (!nearestObject || !showCanvas || !nearestObject.isInteractable || nearestObject.isHide)
         {
             c_itemToShowCanvas.SetActive(false);
             return;
@@ -77,7 +77,10 @@ public class PlayerMapInteraction : MonoBehaviour
 
     public void InteractNearObject()
     {
-        if (!nearestObject || nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
+        if (!nearestObject ||
+            !nearestObject.isInteractable ||
+            nearestObject.isHide ||
+            nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
             return;
 
         nearestObject.Interact();
@@ -87,7 +90,7 @@ public class PlayerMapInteraction : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 }

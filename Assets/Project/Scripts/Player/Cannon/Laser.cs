@@ -49,7 +49,7 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Map"))
+        if (collision.CompareTag("Map") || collision.CompareTag("BreakableWall"))
         {
             DisableObject();
         }

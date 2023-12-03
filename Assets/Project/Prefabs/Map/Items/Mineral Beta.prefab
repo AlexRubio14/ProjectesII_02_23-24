@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7745456955625772872}
   - component: {fileID: 8727225879098024080}
   - component: {fileID: 7220782329502496194}
+  - component: {fileID: 8761210342464215935}
   m_Layer: 10
   m_Name: Mineral Beta
   m_TagString: Map
@@ -99,9 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb1e9c97328df54c93b862ee615f2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteractable: 1
+  <isHide>k__BackingField: 1
   <c_upgradeNeeded>k__BackingField: {fileID: 0}
+  grid: {fileID: 0}
+  tilemap: {fileID: 0}
+  hiddenParticlesPrefab: {fileID: 4364354964670000192, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+  hiddenParticlesSize: {x: 2, y: 2}
+  hiddenParticlesPosition: {x: 0, y: 0}
+  hiddenParticlesRateOverTime: 20
   <c_currentItem>k__BackingField: {fileID: 0}
   <MaxItemsToReturn>k__BackingField: 0
+  isBeta: 1
 --- !u!61 &7220782329502496194
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -145,8 +155,38 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
+--- !u!114 &8761210342464215935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508551060324315368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 0000000061b9d2a4e364dc67a78d474db10a2c3b5f34e753c53ddf15816daa5c0be5774afb0a0631
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 126328
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0}
 --- !u!1 &6694830406389801536
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +226,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6694830406389801536}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -209,7 +249,7 @@ MonoBehaviour:
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
   m_ShadowIntensityEnabled: 1
-  m_ShadowIntensity: 0.75
+  m_ShadowIntensity: 0.95
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
