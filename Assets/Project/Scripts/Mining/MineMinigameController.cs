@@ -58,8 +58,6 @@ public class MineMinigameController : MonoBehaviour
     private float multiplierUpSpeed;
     [SerializeField]
     private float multipliersDownSpeed;
-    [SerializeField]
-    private TextMeshProUGUI multiplierText;
     [Header("Multiplier Shake"), SerializeField]
     private float shakeMagnitude;
     [SerializeField]
@@ -239,10 +237,6 @@ public class MineMinigameController : MonoBehaviour
 
     private void MultiplierFeedback()
     {
-        Debug.Log(currentMultiplierSpeed);
-
-        multiplierText.text = "x " + (int)currentMultiplierSpeed;
-
         //Hacemos que tiemble con un random, este segun mas alto el multiplicador mas temblara
         oreBox.transform.localPosition = startPos + (new Vector2(
             Random.Range(-shakeMagnitude, shakeMagnitude) * (currentMultiplierSpeed - 1),
