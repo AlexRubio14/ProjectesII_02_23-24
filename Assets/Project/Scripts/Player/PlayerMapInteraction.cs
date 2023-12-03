@@ -78,8 +78,8 @@ public class PlayerMapInteraction : MonoBehaviour
     public void InteractNearObject()
     {
         if (!nearestObject ||
-            nearestObject.isInteractable ||
-            !nearestObject.isHide ||
+            !nearestObject.isInteractable ||
+            nearestObject.isHide ||
             nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
             return;
 

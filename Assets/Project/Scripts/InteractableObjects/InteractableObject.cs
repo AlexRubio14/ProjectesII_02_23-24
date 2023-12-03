@@ -36,7 +36,6 @@ abstract public class InteractableObject : MonoBehaviour
         ParticleSystem.ShapeModule shape = currentHiddenParticles.shape;
         shape.scale = hiddenParticlesSize;
         shape.position = hiddenParticlesPosition;
-        Debug.Log(currentHiddenParticles.shape.scale);
         ParticleSystem.EmissionModule emission = currentHiddenParticles.emission;
         emission.rateOverTime = hiddenParticlesRateOverTime;
     }

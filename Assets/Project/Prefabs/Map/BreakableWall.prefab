@@ -280,3 +280,7 @@ MonoBehaviour:
   <c_upgradeNeeded>k__BackingField: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
   grid: {fileID: 0}
   tilemap: {fileID: 0}
+  hiddenParticlesPrefab: {fileID: 4364354964670000192, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+  hiddenParticlesSize: {x: 0, y: 0}
+  hiddenParticlesPosition: {x: 0, y: 0}
+  hiddenParticlesRateOverTime: 0
