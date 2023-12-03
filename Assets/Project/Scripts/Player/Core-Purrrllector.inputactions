@@ -49,20 +49,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Accelerate",
+                    "type": "Value",
+                    "id": "ab08045c-31ed-4e2a-9632-6314b22f666b",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "8cc39df1-4f32-4325-9bb2-9f25b3e0916b",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "979d65c1-ca8c-43f0-b05e-5b819e85df96",
@@ -120,6 +118,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b6fbfe98-4b77-40d1-80e8-c1e0032298a3",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "19c9db67-7a4e-43ec-8b62-5f090c1a460c",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -132,7 +141,7 @@
                 {
                     "name": "",
                     "id": "3903f60f-b48c-42e6-9d30-c638bf1f6db1",
-                    "path": "<Mouse>/position",
+                    "path": "<VirtualMouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -143,7 +152,7 @@
                 {
                     "name": "",
                     "id": "3c796de7-e515-49ee-adee-24c8cfb9d50b",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -203,6 +212,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1c66b1a-7050-42f0-9afc-81b9238b9b47",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "AxisDeadzone(min=1.401298E-45,max=0.6)",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3b8d130-fb9c-4225-9233-c5fd0d3031d3",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

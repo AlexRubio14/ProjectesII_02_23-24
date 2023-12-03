@@ -110,7 +110,6 @@ public class Enemy02 : Enemy
     override protected void Die()
     {
         Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
-        Debug.Log("Exploteee");
         base.Die();
     }
 
