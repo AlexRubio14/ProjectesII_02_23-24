@@ -158,8 +158,6 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime)
             , Vector3.forward);
 
-
-        Debug.Log(targetRotation.eulerAngles);
         c_rb.SetRotation(transform.rotation * targetRotation);
     }
 
