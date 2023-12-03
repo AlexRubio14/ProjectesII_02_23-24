@@ -20,7 +20,6 @@ public class CannonController : MonoBehaviour
 
     [SerializeField]
     private float shootFuel;
-
     public bool canShoot { get; set; }
 
     private InputController iController;
@@ -52,17 +51,20 @@ public class CannonController : MonoBehaviour
     }
     private void RotateCanon()
     {
-        //Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
-
-        //transform.up = direction;
-        
-        if(iController.inputAimTurretDirection.normalized == Vector2.zero)
+        if(iController.controllerType == InputController.ControllerType.KEYBOARD) 
         {
-            return;
+            Vector2 direction = (GetMousePosition() - (Vector2)transform.position).normalized;
+
+            transform.up = direction;
         }
-        transform.up = iController.inputAimTurretDirection.normalized;
-
-
+        else
+        {
+            if (iController.inputAimTurretDirection.normalized == Vector2.zero)
+            {
+                return;
+            }
+            transform.up = iController.inputAimTurretDirection.normalized;
+        }
     }
 
     Vector2 GetMousePosition()

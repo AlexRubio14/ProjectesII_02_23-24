@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static InputController;
 
 public class InputController : MonoBehaviour
 {
+    public enum ControllerType { KEYBOARD, GAMEPAD }
+
     [Header("Ingame Actions"), SerializeField]
     private InputActionReference moveAction;
     [SerializeField]
@@ -15,7 +18,10 @@ public class InputController : MonoBehaviour
     private InputActionReference interactAction;
     [SerializeField]
     private InputActionReference inventoryAction;
-    
+
+    [SerializeField]
+    private InputActionReference accelerateAction;
+
     [Space, Header("Minigame Actions"), SerializeField]
     private InputActionReference chargeRightLaserAction;
     [SerializeField]
@@ -30,6 +36,10 @@ public class InputController : MonoBehaviour
 
     public Vector2 inputMovementDirection { get; private set; }
     public Vector2 inputAimTurretDirection { get; private set; }
+
+    public float accelerationValue { get; private set; }
+
+    public ControllerType controllerType { get; private set; }  
 
     private void Awake()
     {
@@ -59,6 +69,9 @@ public class InputController : MonoBehaviour
 
         inventoryAction.action.started += InventoryAction;
 
+        accelerateAction.action.started += AccelerateAction;
+        accelerateAction.action.performed += AccelerateAction;
+        accelerateAction.action.canceled += AccelerateAction;
 
         chargeRightLaserAction.action.started += ChargeRightLaserAction;
         chargeRightLaserAction.action.canceled += ChargeRightLaserAction;
@@ -84,7 +97,9 @@ public class InputController : MonoBehaviour
 
         inventoryAction.action.started -= InventoryAction;
 
-
+        accelerateAction.action.started -= AccelerateAction;
+        accelerateAction.action.performed -= AccelerateAction;
+        accelerateAction.action.canceled -= AccelerateAction;
 
         chargeRightLaserAction.action.started -= ChargeRightLaserAction;
         chargeRightLaserAction.action.canceled -= ChargeRightLaserAction;
@@ -92,6 +107,11 @@ public class InputController : MonoBehaviour
         chargeLeftLaserAction.action.started -= ChargeLeftLaserAction;
         chargeLeftLaserAction.action.canceled -= ChargeLeftLaserAction;
 
+    }
+
+    private void Update()
+    {
+        CheckCurrentGamePad();
     }
 
     private void MoveAction(InputAction.CallbackContext obj)
@@ -104,6 +124,10 @@ public class InputController : MonoBehaviour
         inputAimTurretDirection = aimTurretAction.action.ReadValue<Vector2>();
     }
 
+    private void AccelerateAction(InputAction.CallbackContext obj)
+    {
+        accelerationValue = obj.ReadValue<float>();
+    }
     private void ShootAction(InputAction.CallbackContext obj)
     {
         if(obj.started)
@@ -153,4 +177,22 @@ public class InputController : MonoBehaviour
         c_playerInput.SwitchCurrentActionMap(_nextActionMap);
     }
 
+    private void CheckCurrentGamePad()
+    {
+
+        if (Gamepad.current == null)
+        {
+            Debug.Log("Mouse");
+            controllerType = ControllerType.KEYBOARD;
+        }
+        else
+        {
+            Debug.Log("GamePad");
+            controllerType = ControllerType.GAMEPAD;
+        }
+    }
+
 }
+
+
+

@@ -30,7 +30,10 @@ public class HubTpController : InteractableObject
         c_playerMapInteraction.showCanvas = false;
         Invoke("StopParticles", timeToGoHub);
     }
-
+    public override void UnHide()
+    {
+        Debug.LogWarning("No hay ninguna interaccion");
+    }
     private void StopParticles()
     {
         InventoryManager.Instance.EndRun(true);

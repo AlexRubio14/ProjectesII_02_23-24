@@ -8,6 +8,7 @@ TagManager:
   - FxTemporaire
   - Enemy
   - Bullet
+  - BreakableWall
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - PickableItem
   - Map
   - Bullet
-  - BreakableWall
   - 
+  - LightDetector
   - 
   - 
   - 

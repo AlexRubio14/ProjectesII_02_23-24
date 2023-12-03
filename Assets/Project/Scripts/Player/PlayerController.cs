@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,14 +15,15 @@ public class PlayerController : MonoBehaviour
     [Header("Movement"), SerializeField]
     private float movementScale;
     private float currentMovementScale;
-    //private Vector3 inputDirection;
 
     [Space, Header("Rotation")]
-    private float currentRotationSpeed;
     [SerializeField]
     private float minRotationSpeed;
     [SerializeField]
     private float maxRotationSpeed;
+    [SerializeField]
+    private float rotationSpeed;
+
 
     [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
@@ -57,19 +59,30 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
 
+    [Space, Header("Raycasts"), SerializeField]
+    private float leftDistance;
+    [SerializeField]
+    private float rightDistance;
+    [SerializeField]
+    private float frontDistance;
+
+    [Space, Header("AutoHelp"), SerializeField]
+    private float autoHelp;
+    [SerializeField]
+    private LayerMask mapLayer;
+
+
     private void Awake()
     {
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
-
-        currentRotationSpeed = minRotationSpeed;
 
         iController = GetComponentInParent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         drillController = GetComponent<DrillController>();
         shipLight = GetComponentInChildren<Light2D>();
-
+        
     }
     
     private void Start()
@@ -81,8 +94,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         LoseFuel();
-        RotationAcceleration();
-
+        
         Fuel = Mathf.Clamp(Fuel, 0, Mathf.Infinity);
         if(Input.GetKey(KeyCode.L))
         {
@@ -108,10 +120,13 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 Move();
                 Rotation();
+                AutoHelpDirection();
                 break;
             case State.MINING:
+                AutoHelpDirection();
                 break;
             case State.KNOCKBACK:
+                AutoHelpDirection();
                 break;
             case State.DRILL:
                 Move();
@@ -125,28 +140,50 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        c_rb.AddForce(transform.up * iController.inputMovementDirection.y * currentMovementScale, ForceMode2D.Force);
+        Vector2 acceleration = transform.right * iController.accelerationValue * currentMovementScale;
+
+        c_rb.AddForce(acceleration, ForceMode2D.Force);
     }
+ 
     private void Rotation()
     {
-        c_rb.AddTorque(currentRotationSpeed * (iController.inputMovementDirection.x * -1), ForceMode2D.Force); 
-    }
-    private void RotationAcceleration()
-    {
-        if (iController.inputMovementDirection.x != 0)
+        if (iController.inputMovementDirection.sqrMagnitude < 0.001f)
         {
-            if (currentRotationSpeed <= maxRotationSpeed)
-            {
-                currentRotationSpeed += Time.deltaTime;
-            }
-            
+            return;
         }
-        else
+
+        Vector2 normalizedInputDirection = iController.inputMovementDirection.normalized;
+
+        Quaternion targetRotation = Quaternion.AngleAxis(
+            Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime)
+            , Vector3.forward);
+
+        c_rb.SetRotation(transform.rotation * targetRotation);
+    }
+
+    void AutoHelpDirection()
+    {
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, transform.up, leftDistance, mapLayer);
+
+        ApplyAutoHelp(leftHit);
+
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, -transform.up, rightDistance, mapLayer);
+
+        ApplyAutoHelp(rightHit);
+
+        RaycastHit2D frontHit = Physics2D.Raycast(transform.position, transform.right, frontDistance, mapLayer);
+
+        ApplyAutoHelp(frontHit);
+    }
+
+    void ApplyAutoHelp(RaycastHit2D raycast)
+    {
+        if (raycast)
         {
-            if(currentRotationSpeed >= minRotationSpeed)
-            {
-                currentRotationSpeed -= Time.deltaTime;
-            }
+            Vector2 collisionPoint = raycast.collider.ClosestPoint(transform.position);
+            Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
+
+            c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
         }
     }
     #endregion
@@ -157,13 +194,12 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case State.MOVING:
-                if(iController.inputMovementDirection == Vector2.zero)
+                if(iController.accelerationValue == 0)
                 {
                     Fuel -= Time.deltaTime / 3;
                     
                     if(engineParticles.isPlaying)
                         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-
                 }
                 else
                 {
@@ -171,7 +207,6 @@ public class PlayerController : MonoBehaviour
 
                     if (engineParticles.isStopped)
                         engineParticles.Play(true);
-
                 }
                 break;
             case State.MINING:
@@ -297,6 +332,7 @@ public class PlayerController : MonoBehaviour
                 currentMovementScale = movementScale;
                 drillController.enabled = false;
                 drillSprite.SetActive(false);
+                c_rb.angularVelocity = 0;
                 break;
             case State.FREEZE:
             case State.DEAD:
@@ -365,7 +401,7 @@ public class PlayerController : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.CompareTag("Map"))
+        if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
             GetDamage(mapDamage, collision.contacts[0].point);
         }
@@ -375,5 +411,14 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.GetDamage(), collision.GetContact(0).point);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawLine(transform.position, transform.position + transform.up * leftDistance);
+        Gizmos.DrawLine(transform.position, transform.position + -transform.up * rightDistance);
+        Gizmos.DrawLine(transform.position, transform.position + transform.right * frontDistance);
     }
 }

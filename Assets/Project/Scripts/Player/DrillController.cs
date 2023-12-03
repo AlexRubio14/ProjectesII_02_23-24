@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class DrillController : MonoBehaviour
 {
-    [SerializeField]
-    private Tilemap tilemap;
-    [SerializeField]
-    private Grid grid;
+    //[SerializeField]
+    //private Tilemap tilemap;
+    //[SerializeField]
+    //private Grid grid;
 
     [SerializeField]
     private float drillDistance;
@@ -19,7 +19,6 @@ public class DrillController : MonoBehaviour
     [SerializeField]
     private LayerMask breakableWallLayer;
 
-    List<RaycastHit2D> hits;
 
     [Space, SerializeField]
     private TileBase baseTile;
@@ -54,58 +53,92 @@ public class DrillController : MonoBehaviour
     [SerializeField]
     private TileBase threeSideTileLeft;
 
-
-    private void Start()
-    {
-        hits = new List<RaycastHit2D>();
-
-    }
+    private BreakableWallController breakableWallController;
 
     // Update is called once per frame
     void Update()
     {
-        
-        for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
-        {
-            float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
-            Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, range, breakableWallLayer));
-            if (i != 0)
-            {
-                direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-                hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.up).normalized, range, breakableWallLayer));
-            }
-        }
+        Drill();        
+    }
 
+    private void Drill()
+    {
 
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit)
-            {
-                Vector3Int tilePos = grid.LocalToCell(hit.centroid);
-                tilemap.SetTile(tilePos, null);
+        List<RaycastHit2D> hits = CheckSomethingToDrill();
 
-                UpdateSideTile(new Vector3Int(tilePos.x + 1, tilePos.y));
-                UpdateSideTile(new Vector3Int(tilePos.x - 1, tilePos.y));
-                UpdateSideTile(new Vector3Int(tilePos.x, tilePos.y + 1));
-                UpdateSideTile(new Vector3Int(tilePos.x, tilePos.y - 1));
-                Debug.Log(tilePos);
-
-            }
-        }
-
+        DrillWalls(hits);
 
         hits.Clear();
     }
 
-
-    void UpdateSideTile(Vector3Int _tilePos)
+    private List<RaycastHit2D> CheckSomethingToDrill()
     {
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y)) == null)
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
+        {
+            float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
+            Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
+            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
+            if (i != 0)
+            {
+                direction = transform.rotation * Quaternion.Euler(0, 0, -i);
+                hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
+            }
+        }
+
+        return hits;
+    }
+    private void DrillWalls(List<RaycastHit2D> _hits)
+    {
+        
+
+        int totalHits = 0;
+        foreach (RaycastHit2D hit in _hits)
+        {
+            if (hit && hit.collider.CompareTag("BreakableWall"))
+            {
+                if (!breakableWallController)
+                {
+                    breakableWallController = hit.rigidbody.GetComponent<BreakableWallController>();
+                    if (breakableWallController.isHide)
+                    {
+                        breakableWallController = null;
+                        return;
+                    }
+                }
+
+                breakableWallController.ChangeTileContent(hit.centroid, null);
+
+                Vector2 gridOffset = breakableWallController.GetGridOffset();
+                Vector2 tilePos = hit.centroid;
+                UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y));
+                UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y));
+                UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y));
+                UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y));
+
+                totalHits++;
+            }
+        }
+
+        if (totalHits == 0)
+        {
+            breakableWallController = null;
+        }
+        else
+        {
+            CameraController.Instance.AddMediumTrauma();
+        }
+    }
+
+    void UpdateSideTile(Vector2 _tilePos)
+    {
+        Vector2 gridOffset = breakableWallController.GetGridOffset();
+
+        if (breakableWallController.GetTileContent(_tilePos) == null)
             return;
 
         bool haveTileUp;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y - 1) ) != null)
+        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x, _tilePos.y - gridOffset.y)) != null)
         {
             haveTileUp = true;
         }
@@ -115,7 +148,7 @@ public class DrillController : MonoBehaviour
         }
 
         bool haveTileDown;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x, _tilePos.y + 1)) != null)
+        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x, _tilePos.y + gridOffset.y)) != null)
         {
             haveTileDown = true;
         }
@@ -124,7 +157,7 @@ public class DrillController : MonoBehaviour
             haveTileDown = false;
         }
         bool haveTileRight;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x - 1, _tilePos.y)) != null)
+        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x - gridOffset.x, _tilePos.y )) != null)
         {
             haveTileRight = true;
         }
@@ -133,7 +166,7 @@ public class DrillController : MonoBehaviour
             haveTileRight = false;
         }
         bool haveTileLeft;
-        if (tilemap.GetTile(new Vector3Int(_tilePos.x + 1, _tilePos.y)) != null)
+        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x + gridOffset.x, _tilePos.y)) != null)
         {
             haveTileLeft = true;
         }
@@ -228,7 +261,7 @@ public class DrillController : MonoBehaviour
             currentTile = aloneTile;
         }
 
-        tilemap.SetTile(_tilePos, currentTile);
+        breakableWallController.ChangeTileContent(_tilePos, currentTile);
 
     }
 
@@ -240,16 +273,13 @@ public class DrillController : MonoBehaviour
             Gizmos.color = Color.magenta;
             float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * range);
 
             Gizmos.color = Color.magenta;
             direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.up) * range);
-
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * range);
 
         }
-
-       
 
     }
 
