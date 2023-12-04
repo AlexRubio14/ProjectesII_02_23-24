@@ -48,6 +48,8 @@ public class BreakableWallController : InteractableObject
         }
 
         currentHiddenParticles.Stop();
+
+        isHide = false;
     }
 
 
