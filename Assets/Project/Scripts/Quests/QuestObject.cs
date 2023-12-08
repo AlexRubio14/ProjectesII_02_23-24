@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AYellowpaper.SerializedCollections;
 
 [CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObjects/Quest")]
 public class QuestObject : ScriptableObject
@@ -11,8 +12,8 @@ public class QuestObject : ScriptableObject
     [field: TextArea, SerializeField]
     public string questIntroduction { private set; get; }
 
-    [AYellowpaper.SerializedCollections.SerializedDictionary("Item", "Amount")]
-    public AYellowpaper.SerializedCollections.SerializedDictionary<ItemObject, short> neededItems;
+    [SerializedDictionary("Item", "Amount")]
+    public SerializedDictionary<ItemObject, short> neededItems;
 
     [field: SerializeField]
     public QuestObject nextQuest { private set; get; }
