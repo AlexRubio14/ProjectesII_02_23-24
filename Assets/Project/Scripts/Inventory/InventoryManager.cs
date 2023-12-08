@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AYellowpaper.SerializedCollections;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    [SerializeField, AYellowpaper.SerializedCollections.SerializedDictionary("Item", "Amount")]
-    private AYellowpaper.SerializedCollections.SerializedDictionary<ItemObject, short> allItems;
+    [SerializeField, SerializedDictionary("Item", "Amount")]
+    private SerializedDictionary<ItemObject, short> allItems;
     private Dictionary<ItemObject, short> runItems;
     public Action<ItemObject, short> obtainItemAction;
     private void Awake()

@@ -1,12 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using AYellowpaper.SerializedCollections;
+
 
 public class UpgradeSelector : MonoBehaviour
 {
+    [Header("Input"), SerializeField]
+    private InputActionReference upUpgradeAction;
+    [SerializeField]
+    private InputActionReference downUpgradeAction;
+    [SerializeField]
+    private InputActionReference leftUpgradeAction;
+    [SerializeField]
+    private InputActionReference rightUpgradeAction;
+
     public enum Position { UP, DOWN, RIGHT, LEFT }
-    public enum Type { BOOST, LIGHT, DRILL, CORE_COLLECTOR }
 
     [Header("Backgrounds"), SerializeField]
     private Sprite unselectedBackground;
@@ -22,10 +33,8 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private Image leftBackGround;
 
-    [Space, Header("Upgrades"), AYellowpaper.SerializedCollections.SerializedDictionary("Upgrade", "Position")]
-    public AYellowpaper.SerializedCollections.SerializedDictionary<Position, UpgradeObject> upgradePositions;
-    [AYellowpaper.SerializedCollections.SerializedDictionary("Upgrade", "Type")]
-    public AYellowpaper.SerializedCollections.SerializedDictionary<UpgradeObject, Type> upgradeTypes;
+    [Space, Header("Upgrades"), SerializedDictionary("Upgrade", "Position")]
+    public SerializedDictionary<Position, UpgradeObject> upgradePositions;
 
     [SerializeField]
     private Image upUpgradeImage;
@@ -72,46 +81,38 @@ public class UpgradeSelector : MonoBehaviour
         }
     }
 
-
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ToggleUpgrade(Position.UP);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ToggleUpgrade(Position.LEFT);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ToggleUpgrade(Position.RIGHT);
+        upUpgradeAction.action.started += _ => ToggleUpgrade(Position.UP);
+        downUpgradeAction.action.started += _ => ToggleUpgrade(Position.DOWN);
+        rightUpgradeAction.action.started += _ => ToggleUpgrade(Position.RIGHT);
+        leftUpgradeAction.action.started += _ => ToggleUpgrade(Position.LEFT);
+    }
 
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ToggleUpgrade(Position.DOWN);
-        }
+
+    private void OnDisable()
+    {
+        upUpgradeAction.action.started -= _ => ToggleUpgrade(Position.UP);
+        downUpgradeAction.action.started -= _ => ToggleUpgrade(Position.DOWN);
+        rightUpgradeAction.action.started -= _ => ToggleUpgrade(Position.RIGHT);
+        leftUpgradeAction.action.started -= _ => ToggleUpgrade(Position.LEFT);
     }
 
 
     private void ToggleUpgrade(Position _pos)
     {
-        UpgradeObject currUpgrade = upgradePositions[_pos];
-        Type upgradeType = upgradeTypes[currUpgrade];
-
-        switch (upgradeType)
+        switch (upgradePositions[_pos].type)
         {
-            case Type.BOOST:
+            case UpgradeObject.UpgradeType.BOOST:
                 ToggleBoost(_pos);
                 break;
-            case Type.LIGHT:
+            case UpgradeObject.UpgradeType.LIGHT:
                 ToggleLight(_pos);
                 break;
-            case Type.DRILL:
+            case UpgradeObject.UpgradeType.DRILL:
                 ToggleDrill(_pos);
                 break;
-            case Type.CORE_COLLECTOR:
+            case UpgradeObject.UpgradeType.CORE_COLLECTOR:
                 ToggleCoreCollector(_pos);
                 break;
             default:

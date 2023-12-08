@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7670600492b05834ba69b03d6f707fdd, type: 3}
   m_Name: LightUpgrade
   m_EditorClassIdentifier: 
+  <type>k__BackingField: 1
   <UpgradeName>k__BackingField: Light Upgrade
   <UpgradeDescription>k__BackingField: Permite encender una luz que permiten ver
     elementos ocultos en el mapa
