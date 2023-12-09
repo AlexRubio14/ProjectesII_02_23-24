@@ -387,6 +387,7 @@ MonoBehaviour:
   rotationSpeed: 110
   knockbackScale: 10
   knockbackRotation: 1
+  knockbackTime: 0.3
   baseFuel: 100
   mapDamage: 10
   explosionParticles: {fileID: 8568151849809588671, guid: 06129a86feb697948bf26773e90b9dce, type: 3}
