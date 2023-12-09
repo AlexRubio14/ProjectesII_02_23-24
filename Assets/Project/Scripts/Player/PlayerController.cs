@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     private float knockbackScale;
     [SerializeField]
     private float knockbackRotation;
+    [SerializeField]
+    private float knockbackTime;
 
     [Space, Header("Health"), SerializeField]
     private float baseFuel;
@@ -285,17 +287,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region States
-    private void Stunned()
+    private void WaitForKnockbackTime()
     {
-        if (c_rb.velocity.magnitude <= 0.1f)
-        {
-            ChangeState(State.MOVING);
-        }
-        else
-        {
-            Invoke("Stunned", 0.02f);
-        }
+        ChangeState(State.MOVING);
     }
+
     private void Knockback(Vector2 collisionPoint)
     {
         ChangeState(State.KNOCKBACK);
@@ -305,7 +301,7 @@ public class PlayerController : MonoBehaviour
         c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
         c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
 
-        Stunned();
+        Invoke("WaitForKnockbackTime", knockbackTime);
     }
     public void ChangeState(State state)
     {
