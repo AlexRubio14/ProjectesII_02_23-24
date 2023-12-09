@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerMapInteraction : MonoBehaviour
 {
-    private InteractableObject nearestObject;
 
+    [Header("Input"), SerializeField]
+    private InputActionReference interactAction;
+
+    private InteractableObject nearestObject;
 
     [Header("Interact Detection"), SerializeField]
     private float checkRadius;
@@ -22,11 +26,21 @@ public class PlayerMapInteraction : MonoBehaviour
     [SerializeField]
     private Sprite interactKeySprite;
 
-    public bool showCanvas { get; set; }
+    public bool showCanvas;
 
     private void Start()
     {
         showCanvas = true;
+    }
+
+    private void OnEnable()
+    {
+        interactAction.action.started += InteractAction;
+    }
+
+    private void OnDisable()
+    {
+        interactAction.action.started -= InteractAction;
     }
 
     private void FixedUpdate()
@@ -77,20 +91,30 @@ public class PlayerMapInteraction : MonoBehaviour
 
     public void InteractNearObject()
     {
-        if (!nearestObject ||
-            !nearestObject.isInteractable ||
-            nearestObject.isHide ||
-            nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
-            return;
+        if (nearestObject || //Si existe un objeto cercano
+            nearestObject.isInteractable || //Si se puede interactuar con el
+            !nearestObject.isHide || //Si no esta oculto
+            nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded)
+            )//Si necesita una mejora y la tiene
+        {
+            nearestObject.Interact(); //Interactua con el objeto
+        }
 
-        nearestObject.Interact();
-        
     }
 
+
+    #region Input
+    private void InteractAction(InputAction.CallbackContext obj)
+    {
+        InteractNearObject();
+    }
+
+    #endregion
 
     private void OnDrawGizmosSelected()
     {
         //Gizmos.color = Color.yellow;
         //Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
+
 }

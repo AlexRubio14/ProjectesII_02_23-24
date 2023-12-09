@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class MineMinigameController : MonoBehaviour
 {
-    [Space, SerializeField]
+    [Header("Input"), SerializeField]
+    private InputActionReference chargeRightLaserAction;
+    [SerializeField]
+    private InputActionReference chargeLeftLaserAction;
+
+    [Space, Header(""), SerializeField]
     private float laserChargeSpeed;
     [SerializeField]
     private float laserDischargeSpeed;
@@ -113,6 +119,21 @@ public class MineMinigameController : MonoBehaviour
 
         StartCoroutine(GenerateRandomNeededEnergyLevels());
 
+
+        chargeRightLaserAction.action.started += ChargeRightLaserAction;
+        chargeRightLaserAction.action.canceled += ChargeRightLaserAction;
+
+        chargeLeftLaserAction.action.started += ChargeLeftLaserAction;
+        chargeLeftLaserAction.action.canceled += ChargeLeftLaserAction;
+
+    }
+    private void OnDisable()
+    {
+        chargeRightLaserAction.action.started -= ChargeRightLaserAction;
+        chargeRightLaserAction.action.canceled -= ChargeRightLaserAction;
+
+        chargeLeftLaserAction.action.started -= ChargeLeftLaserAction;
+        chargeLeftLaserAction.action.canceled -= ChargeLeftLaserAction;
     }
 
     // Update is called once per frame
@@ -343,4 +364,31 @@ public class MineMinigameController : MonoBehaviour
             mineralTypeImages[i].sprite = c_miningItem.c_currentItem.c_PickableSprite;
         }
     }
+
+
+    #region Input 
+    private void ChargeRightLaserAction(InputAction.CallbackContext obj)
+    {
+        if (obj.canceled)
+        {
+            chargingRightLaser = false;
+        }
+        else
+        {
+            chargingRightLaser = true;
+        }
+    }
+    private void ChargeLeftLaserAction(InputAction.CallbackContext obj)
+    {
+        if (obj.canceled)
+        {
+            chargingLeftLaser = false;
+        }
+        else
+        {
+            chargingLeftLaser = true;
+        }
+    }
+    #endregion
+
 }

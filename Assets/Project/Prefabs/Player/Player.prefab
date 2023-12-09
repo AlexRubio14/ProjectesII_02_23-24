@@ -176,14 +176,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8472911716521364800}
   - component: {fileID: 4194747130575803385}
+  - component: {fileID: 4773334804256877578}
   - component: {fileID: 175316033160939834}
   - component: {fileID: 6238695941823710928}
   - component: {fileID: 6928186059841258854}
   - component: {fileID: 4196185413055272076}
   - component: {fileID: 697992122945508969}
-  - component: {fileID: 2962702871224298752}
-  - component: {fileID: 4773334804256877578}
   - component: {fileID: 6481009307194174785}
+  - component: {fileID: 6238323751129512243}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -212,7 +212,7 @@ Transform:
   - {fileID: 7750820820870471885}
   - {fileID: 3554370719058673432}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4194747130575803385
 Rigidbody2D:
@@ -241,6 +241,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!70 &4773334804256877578
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.2, y: 0.3}
+  m_Direction: 1
 --- !u!114 &175316033160939834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,8 +335,20 @@ MonoBehaviour:
     m_ActionName: Player/Accelerate[/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 3081cb01-6ea6-4b3c-a60a-3a297884ecc0
-    m_ActionName: Player/Brake[/XInputControllerWindows/leftTrigger]
+    m_ActionId: 9a889920-01a5-4836-bb1c-22649b7643b2
+    m_ActionName: Player/UpUpgradeSelected[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6bd93ffc-99b0-47ae-b0fe-e2c52743f85f
+    m_ActionName: Player/DownUpgradeSelected[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 312436f4-ed07-4ee7-bda6-bc811f89d750
+    m_ActionName: Player/RightUpgradeSelected[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7b67fe2-62c2-4070-9cd4-f318ce6c679f
+    m_ActionName: Player/LeftUpgradeSelected[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -319,12 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f5446b9a173604cb052aa5836ad5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAction: {fileID: 8648923338690527996, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  aimTurretAction: {fileID: 7774272305282626994, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  interactAction: {fileID: -4293622716152061987, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  inventoryAction: {fileID: 7104173710378125520, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeRightLaserAction: {fileID: 2389276025789361315, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeLeftLaserAction: {fileID: 6815837080457322733, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
 --- !u!114 &6928186059841258854
@@ -339,6 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada7edbc5a9db54db362bec2980c7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveAction: {fileID: 8648923338690527996, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   movementScale: 50
   minRotationSpeed: 1
   maxRotationSpeed: 3
@@ -373,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b070c92c62c4db44b8d965dbc48eac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactAction: {fileID: -4293622716152061987, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   checkRadius: 2
   interactableLayer:
     serializedVersion: 2
@@ -381,6 +425,7 @@ MonoBehaviour:
   c_itemToShowImage: {fileID: 0}
   c_lockedUpgradeImage: {fileID: 0}
   interactKeySprite: {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+  showCanvas: 0
 --- !u!114 &697992122945508969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,54 +439,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   c_miningMinigame: {fileID: 0}
---- !u!114 &2962702871224298752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4270609692860242859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 677e21d18a2582245bda586085fbd9fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <inventory>k__BackingField: {fileID: 0}
---- !u!70 &4773334804256877578
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4270609692860242859}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.2, y: 0.3}
-  m_Direction: 1
 --- !u!114 &6481009307194174785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +473,43 @@ MonoBehaviour:
   threeSideTileDown: {fileID: 11400000, guid: 192c96603cf271b4e89c661abda11ff2, type: 2}
   threeSideTileRight: {fileID: 11400000, guid: 66affec7bfe66eb45a271571265cc987, type: 2}
   threeSideTileLeft: {fileID: 11400000, guid: 7653edc87985f0c4099c51aeb34c500b, type: 2}
+--- !u!114 &6238323751129512243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824b6010a5ae8144ea8edd4761cef39c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upUpgradeAction: {fileID: -1279617228163947423, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  downUpgradeAction: {fileID: -7893445427389807243, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  leftUpgradeAction: {fileID: -5749262144971248650, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  rightUpgradeAction: {fileID: -1784829170732850432, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  unselectedBackground: {fileID: 21300000, guid: 1dd94391b7a2cb449ace593a53acb46a, type: 3}
+  selectedBackground: {fileID: 21300000, guid: c9fba170e503d774991290bb242676cc, type: 3}
+  upBackGround: {fileID: 0}
+  downBackGround: {fileID: 0}
+  rightBackGround: {fileID: 0}
+  leftBackGround: {fileID: 0}
+  upgradePositions:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
+    - Key: 1
+      Value: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
+    - Key: 2
+      Value: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
+  upUpgradeImage: {fileID: 0}
+  downUpgradeImage: {fileID: 0}
+  rightUpgradeImage: {fileID: 0}
+  leftUpgradeImage: {fileID: 0}
+  lightUpgrade: {fileID: 9096134186405275553}
 --- !u!1 &4329926445472445026
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,11 +5556,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac313606fcd29e4f9611b3642890424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  l_lasers: []
+  aimTurretAction: {fileID: 7774272305282626994, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   posToSpawnBullets: {fileID: 4204113142784814922}
   laserPrefab: {fileID: 1805159943047549904, guid: b6480ce03b4600c42b61c93f23ce547d, type: 3}
   reloadDelay: 0.5
-  shootFuel: 2
+  fuelConsume: 2
+  canShootStates: 000000000100000005000000
 --- !u!1 &7686264573825968600
 GameObject:
   m_ObjectHideFlags: 0
@@ -5630,7 +5666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7750820820870471885
 Transform:
   m_ObjectHideFlags: 0

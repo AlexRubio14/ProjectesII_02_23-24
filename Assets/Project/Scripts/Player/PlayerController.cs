@@ -4,17 +4,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, DRILL, INVENCIBILITY, FREEZE, DEAD};
+    
+    [Header("Inputs"), SerializeField]
+    private InputActionReference moveAction;
+    [SerializeField]
+    private InputActionReference accelerateAction;
+
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, DRILL, INVENCIBILITY, FREEZE, DEAD };
     private State currentState;
 
     private Rigidbody2D c_rb;
-
-    [Header("Movement"), SerializeField]
+    [Space, Header("Movement"), SerializeField]
     private float movementScale;
     private float currentMovementScale;
+    private float accelerationValue;
+    private Vector2 movementDirection;
 
     [Space, Header("Rotation")]
     [SerializeField]
@@ -35,7 +43,8 @@ public class PlayerController : MonoBehaviour
     public float Fuel { get; private set; }
     [SerializeField]
     private float mapDamage;
-    [Header("Death"), SerializeField]
+
+    [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
     [SerializeField]
     private float timeToExploteShip;
@@ -55,7 +64,7 @@ public class PlayerController : MonoBehaviour
     private int maxStorage;
     private int currentStorage;
 
-    private InputController iController;
+    private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
 
@@ -77,7 +86,7 @@ public class PlayerController : MonoBehaviour
         currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
 
-        iController = GetComponentInParent<InputController>();
+        inputController = GetComponent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         drillController = GetComponent<DrillController>();
@@ -89,6 +98,29 @@ public class PlayerController : MonoBehaviour
     {
         Fuel = baseFuel + PowerUpManager.Instance.Fuel;
         currentMovementScale = movementScale;
+    }
+
+    private void OnEnable()
+    {
+        moveAction.action.started += MoveAction;
+        moveAction.action.performed += MoveAction;
+        moveAction.action.canceled += MoveAction;
+
+        accelerateAction.action.started += AccelerateAction;
+        accelerateAction.action.performed += AccelerateAction;
+        accelerateAction.action.canceled += AccelerateAction;
+
+    }
+
+    private void OnDisable()
+    {
+        moveAction.action.started -= MoveAction;
+        moveAction.action.performed -= MoveAction;
+        moveAction.action.canceled -= MoveAction;
+
+        accelerateAction.action.started -= AccelerateAction;
+        accelerateAction.action.performed -= AccelerateAction;
+        accelerateAction.action.canceled -= AccelerateAction;
     }
 
     void Update()
@@ -140,19 +172,19 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        Vector2 acceleration = transform.right * iController.accelerationValue * currentMovementScale;
+        Vector2 acceleration = transform.right * accelerationValue * currentMovementScale;
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
     }
  
     private void Rotation()
     {
-        if (iController.inputMovementDirection.sqrMagnitude < 0.001f)
+        if (movementDirection.sqrMagnitude < 0.001f)
         {
             return;
         }
 
-        Vector2 normalizedInputDirection = iController.inputMovementDirection.normalized;
+        Vector2 normalizedInputDirection = movementDirection.normalized;
 
         Quaternion targetRotation = Quaternion.AngleAxis(
             Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime)
@@ -194,7 +226,7 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case State.MOVING:
-                if(iController.accelerationValue == 0)
+                if(accelerationValue == 0)
                 {
                     Fuel -= Time.deltaTime / 3;
                     
@@ -314,7 +346,6 @@ public class PlayerController : MonoBehaviour
 
         Stunned();
     }
-
     public void ChangeState(State state)
     {
         switch (currentState)
@@ -323,7 +354,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
-                iController.ChangeActionMap("Player");
+                inputController.ChangeActionMap("Player");
                 c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
@@ -347,7 +378,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
-                iController.ChangeActionMap("MinigameMinery");
+                inputController.ChangeActionMap("MinigameMinery");
                 c_mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
@@ -370,35 +401,24 @@ public class PlayerController : MonoBehaviour
         }
         currentState = state;
     }
-
-    #endregion
-
-    #region Getters & Setters
-   
     public State GetState()
     {
         return currentState;
     }
+
     #endregion
 
-    private void CheckStorage()
+    #region Input
+    private void MoveAction(InputAction.CallbackContext obj)
     {
-        if(currentStorage <= maxStorage * 0.5f)
-        {
-
-        }
-        else if(currentStorage <= maxStorage * 0.75f)
-        {
-
-        }
-        else
-        {
-
-        }
-            
+        movementDirection = obj.action.ReadValue<Vector2>();
     }
+    private void AccelerateAction(InputAction.CallbackContext obj)
+    {
+        accelerationValue = obj.ReadValue<float>();
+    }
+    #endregion
 
-    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
