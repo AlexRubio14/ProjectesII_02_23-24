@@ -182,12 +182,10 @@ public class InputController : MonoBehaviour
 
         if (Gamepad.current == null)
         {
-            Debug.Log("Mouse");
             controllerType = ControllerType.KEYBOARD;
         }
         else
         {
-            Debug.Log("GamePad");
             controllerType = ControllerType.GAMEPAD;
         }
     }

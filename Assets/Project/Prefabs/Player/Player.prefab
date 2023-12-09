@@ -62,7 +62,7 @@ MonoBehaviour:
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
   m_ShadowIntensityEnabled: 1
-  m_ShadowIntensity: 0.5
+  m_ShadowIntensity: 0.8
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8472911716521364800}
   - component: {fileID: 4194747130575803385}
+  - component: {fileID: 4067706332501867131}
   - component: {fileID: 175316033160939834}
   - component: {fileID: 6238695941823710928}
   - component: {fileID: 6928186059841258854}
@@ -241,6 +242,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &4067706332501867131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cdda5b3170a11744b922e4159fe2b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 1
+  autoHelpMagnitude: 1.5
+  mapLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  maxDegree: 360
+  degreeJump: 40
 --- !u!114 &175316033160939834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,10 +318,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ab08045c-31ed-4e2a-9632-6314b22f666b
     m_ActionName: Player/Accelerate[/XInputControllerWindows/rightTrigger]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3081cb01-6ea6-4b3c-a60a-3a297884ecc0
-    m_ActionName: Player/Brake[/XInputControllerWindows/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -354,13 +370,6 @@ MonoBehaviour:
   drillMovementScale: 20
   drillSprite: {fileID: 3698819587768263416}
   maxStorage: 50
-  leftDistance: 2
-  rightDistance: 2
-  frontDistance: 2
-  autoHelp: 8
-  mapLayer:
-    serializedVersion: 2
-    m_Bits: 4096
 --- !u!114 &4196185413055272076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5722,9 +5731,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.25
+  m_FalloffIntensity: 0.014
   m_Color: {r: 1, g: 0, b: 1, a: 1}
-  m_Intensity: 1.6
+  m_Intensity: 4
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc6761b9d2a4fb0a06315f34e753b10a2c3b
@@ -5743,7 +5752,7 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 18.873787
+  m_PointLightInnerAngle: 41.242718
   m_PointLightOuterAngle: 66.40777
   m_PointLightInnerRadius: 5.3262844
   m_PointLightOuterRadius: 8.04
