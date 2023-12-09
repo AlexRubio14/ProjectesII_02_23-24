@@ -8,8 +8,8 @@ public class EnemyIA : MonoBehaviour
     [Header("IA"), SerializeField]
     protected List<SteeringBehaviour> l_steeringBehaviours;
 
-    [SerializeField]
-    private List<Detector> l_detectors;
+    [SerializeField] 
+    protected List<Detector> l_detectors;
 
     [SerializeField]
     protected IAData iaData;
@@ -37,10 +37,10 @@ public class EnemyIA : MonoBehaviour
         enemy = GetComponent<Enemy>();
 
         // Detecting player and obstacles around
-        InvokeRepeating("PerformDetection", 0, detectionDelay); 
+        //InvokeRepeating("PerformDetection", 0, detectionDelay); 
     }
 
-    private void PerformDetection()
+    protected void PerformDetection()
     {
         // DETECTORS
         foreach (Detector detector in l_detectors)

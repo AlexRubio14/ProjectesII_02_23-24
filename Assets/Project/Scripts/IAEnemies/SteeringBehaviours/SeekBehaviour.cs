@@ -23,21 +23,23 @@ public class SeekBehaviour : SteeringBehaviour
         // else... set a new target
         if (reachedLastTarget)
         {
-            if (_iaData.m_targets == null || _iaData.m_targets.Count <= 0) // if not targets => interest will be nothing
-            {
-                _iaData.m_currentTarget = null;
+            if(_iaData.m_currentTarget == null)
                 return (_danger, _interest);
-            }
-            else
-            {
-                reachedLastTarget = false;
-                // Take the more close target and set as current target
-                _iaData.m_currentTarget = _iaData.m_targets.OrderBy(target => Vector2.Distance(target.position, transform.position)).FirstOrDefault(); 
-            }
+            //if (_iaData.m_targets == null || _iaData.m_targets.Count <= 0) // if not targets => interest will be nothing
+            //{
+            //    _iaData.m_currentTarget = null;
+            //    return (_danger, _interest);
+            //}
+            //else
+            //{
+            //    reachedLastTarget = false;
+            //    // Take the more close target and set as current target
+            //    _iaData.m_currentTarget = _iaData.m_targets.OrderBy(target => Vector2.Distance(target.position, transform.position)).FirstOrDefault();
+            //}
         }
 
         // Cache the last position only if we still see the target (if the targets collection is not empty)
-        if (_iaData.m_currentTarget != null && _iaData.m_targets != null && _iaData.m_targets.Contains(_iaData.m_currentTarget))
+        if (_iaData.m_currentTarget != null && _iaData.canSeeTarget /* && _iaData.m_targets != null && _iaData.m_targets.Contains(_iaData.m_currentTarget)*/)
         {
             targetPositionCached = _iaData.m_currentTarget.position;
         }

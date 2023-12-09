@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Enemy01 : Enemy
 {
-
-
     [Space, Header("Enemy 1")]
     [Header("Knockback"), SerializeField]
     private float knockbackScale;
@@ -26,10 +24,14 @@ public class Enemy01 : Enemy
     }
     void Start()
     {
+        AssignMoveSpot();
+        iaData.m_currentTarget = moveSpots[randomSpot];
+        //moveSpot.position = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY));
         InitEnemy();
     }
     private void Update()
     {
+
         //CheckState();
     }
     private void FixedUpdate()
@@ -40,12 +42,15 @@ public class Enemy01 : Enemy
     // ENEMY
     override protected void Behaviour()
     {
+
         switch (currentState)
         {
             case EnemyStates.PATROLLING:
+                PerformDetection();
                 PatrollingBehaviour(); 
                 break;
             case EnemyStates.CHASING:
+                PerformDetection();
                 ChaseBehaviour(); 
                 break;
             case EnemyStates.KNOCKBACK:
@@ -57,12 +62,46 @@ public class Enemy01 : Enemy
                 break;
         }
     }
+
     override protected void PatrollingBehaviour()
     {
-        // ...
+        if(iaData.m_currentTarget == null)
+        {
+            AssignMoveSpot();
+            iaData.m_currentTarget = moveSpots[randomSpot]; 
+        }
+
+        Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
+
+        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
+
+        // ROTATION OF THE ENENMY WHILE FOLLOWING
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        //Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
+        ////Vector2 direction = transform.position - moveSpots[randomSpot].position; 
+        //transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, 2 * Time.deltaTime);
+
+        //if(Vector2.Distance(transform.position, moveSpot.position) < 0.2f)
+        //{
+        //    moveSpot.position = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY));
+        //}
+        //if (iaData.GetTargetsCount() != 0)
+        //{
+        //    currentState = EnemyStates.CHASING;
+        //}
+
+        //// ROTATION OF THE ENENMY WHILE FOLLOWING
+        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //transform.rotation = Quaternion.Euler(Vector3.forward * angle);
     }
     override protected void ChaseBehaviour()
     {
+        if(iaData.m_currentTarget == null)
+        {
+            currentState = EnemyStates.PATROLLING;
+            return; 
+        }
         Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
 
         c_rb2d.AddForce(direction * speed, ForceMode2D.Force);

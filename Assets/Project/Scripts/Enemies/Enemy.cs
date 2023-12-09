@@ -6,13 +6,16 @@ public abstract class Enemy : EnemyIA, IHealth
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK, EATING }
     public EnemyStates currentState = EnemyStates.PATROLLING;
 
+    protected bool isDead;
+
     [Space, Header("Base Enemy"), SerializeField]
     protected float maxHealth;
     protected float currentHealth;
 
-    protected bool isDead;
+    protected string BULLET_TAG = "Bullet";
     [SerializeField]
     protected float damage;
+
     [Header("Drop"), SerializeField]
     protected ItemObject c_currentDrop;
     [SerializeField]
@@ -20,11 +23,24 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     protected float maxThrowSpeed;
 
-    protected string BULLET_TAG = "Bullet";
+    [Header("Patrol"), SerializeField] 
+    protected Transform[] moveSpots;
+    protected int randomSpot;
 
     #region Behaviours Functions
     protected abstract void Behaviour();
-    protected abstract void PatrollingBehaviour(); 
+    protected abstract void PatrollingBehaviour();
+
+    protected void AssignMoveSpot()
+    {
+        int randomValue = Random.Range(0, moveSpots.Length);
+        if(randomValue == randomSpot) 
+        { 
+            AssignMoveSpot();
+            return; 
+        }
+        randomSpot = randomValue; 
+    }
     protected abstract void ChaseBehaviour();
     #endregion
 
@@ -44,16 +60,12 @@ public abstract class Enemy : EnemyIA, IHealth
         currentHealth -= _damageAmount;
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
     virtual protected void Die()
     {
         if (c_currentDrop)
-        {
             DropItem();
-        }
 
         isDead = true;
         Destroy(gameObject);
@@ -79,7 +91,6 @@ public abstract class Enemy : EnemyIA, IHealth
         return damage;
     }
     #endregion
-
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
