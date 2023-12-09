@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 697992122945508969}
   - component: {fileID: 6481009307194174785}
   - component: {fileID: 6238323751129512243}
+  - component: {fileID: 670545847217739927}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -212,7 +213,7 @@ Transform:
   - {fileID: 7750820820870471885}
   - {fileID: 3554370719058673432}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4194747130575803385
 Rigidbody2D:
@@ -366,8 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f5446b9a173604cb052aa5836ad5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeRightLaserAction: {fileID: 2389276025789361315, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  chargeLeftLaserAction: {fileID: 6815837080457322733, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
 --- !u!114 &6928186059841258854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,6 +502,25 @@ MonoBehaviour:
   rightUpgradeImage: {fileID: 0}
   leftUpgradeImage: {fileID: 0}
   lightUpgrade: {fileID: 9096134186405275553}
+--- !u!114 &670545847217739927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cdda5b3170a11744b922e4159fe2b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 1
+  autoHelpMagnitude: 1.5
+  mapLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  maxDegree: 360
+  degreeJump: 40
 --- !u!1 &4329926445472445026
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,13 +23,14 @@ public class InputController : MonoBehaviour
     public ControllerType GetCurrentControllerType()
     {
         ControllerType currentType;
+
         if (Gamepad.current == null)
         {
-            controllerType = ControllerType.KEYBOARD;
+            currentType = ControllerType.KEYBOARD;
         }
         else
         {
-            controllerType = ControllerType.GAMEPAD;
+            currentType = ControllerType.GAMEPAD;
         }
 
         return currentType;
