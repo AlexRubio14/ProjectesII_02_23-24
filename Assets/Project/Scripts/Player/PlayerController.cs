@@ -68,18 +68,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
 
-    [Space, Header("Raycasts"), SerializeField]
-    private float leftDistance;
-    [SerializeField]
-    private float rightDistance;
-    [SerializeField]
-    private float frontDistance;
-
-    [Space, Header("AutoHelp"), SerializeField]
-    private float autoHelp;
-    [SerializeField]
-    private LayerMask mapLayer;
-
 
     private void Awake()
     {
@@ -152,13 +140,10 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 Move();
                 Rotation();
-                AutoHelpDirection();
                 break;
             case State.MINING:
-                AutoHelpDirection();
                 break;
             case State.KNOCKBACK:
-                AutoHelpDirection();
                 break;
             case State.DRILL:
                 Move();
@@ -193,31 +178,7 @@ public class PlayerController : MonoBehaviour
         c_rb.SetRotation(transform.rotation * targetRotation);
     }
 
-    void AutoHelpDirection()
-    {
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, transform.up, leftDistance, mapLayer);
-
-        ApplyAutoHelp(leftHit);
-
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, -transform.up, rightDistance, mapLayer);
-
-        ApplyAutoHelp(rightHit);
-
-        RaycastHit2D frontHit = Physics2D.Raycast(transform.position, transform.right, frontDistance, mapLayer);
-
-        ApplyAutoHelp(frontHit);
-    }
-
-    void ApplyAutoHelp(RaycastHit2D raycast)
-    {
-        if (raycast)
-        {
-            Vector2 collisionPoint = raycast.collider.ClosestPoint(transform.position);
-            Vector2 AutoHelpVector = transform.position - (Vector3)collisionPoint;
-
-            c_rb.AddForce(AutoHelpVector * autoHelp * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        }
-    }
+   
     #endregion
 
     #region Ship Health & Fuel
@@ -431,14 +392,5 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.GetDamage(), collision.GetContact(0).point);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * leftDistance);
-        Gizmos.DrawLine(transform.position, transform.position + -transform.up * rightDistance);
-        Gizmos.DrawLine(transform.position, transform.position + transform.right * frontDistance);
     }
 }
