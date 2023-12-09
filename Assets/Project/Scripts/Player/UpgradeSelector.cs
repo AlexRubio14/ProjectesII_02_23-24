@@ -122,7 +122,7 @@ public class UpgradeSelector : MonoBehaviour
     }
     private void ToggleBoost(Position _pos)
     {
-        Debug.LogWarning("Boost no implementado");
+        playerController.ChangeState(PlayerController.State.BOOST);
     }
 
     private void ToggleLight(Position _pos)

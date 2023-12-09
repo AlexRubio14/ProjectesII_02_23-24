@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InputActionReference accelerateAction;
 
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, DRILL, INVENCIBILITY, FREEZE, DEAD };
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, DRILL, INVENCIBILITY, FREEZE, BOOST, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject drillSprite;
     private DrillController drillController;
+
+    [Space, Header("Drill"), SerializeField]
+    private float boostMovementScale;
 
     [Space, Header("Storage"), SerializeField]
     private int maxStorage;
@@ -323,6 +326,10 @@ public class PlayerController : MonoBehaviour
                 c_rb.angularVelocity = 0;
                 break;
             case State.FREEZE:
+                break;
+            case State.BOOST:
+                currentMovementScale = movementScale;
+                break;
             case State.DEAD:
                 return;
             default:
@@ -353,6 +360,9 @@ public class PlayerController : MonoBehaviour
             case State.DEAD:
                 knockbackScale *= 2;
                 break;
+                case State.BOOST:
+                currentMovementScale = boostMovementScale;
+                break;
             default:
                 break;
         }
@@ -361,6 +371,11 @@ public class PlayerController : MonoBehaviour
     public State GetState()
     {
         return currentState;
+    }
+
+    public void SetSpeed(float value)
+    {
+        currentMovementScale = value;
     }
 
     #endregion
