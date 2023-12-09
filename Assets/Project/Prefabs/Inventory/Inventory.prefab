@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 8833279068468192429}
   - component: {fileID: 8536399770163214815}
   - component: {fileID: 8166512613017127804}
+  - component: {fileID: 807311784726522507}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -363,7 +364,7 @@ RectTransform:
   m_Children:
   - {fileID: 2300097574793095410}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -379,7 +380,7 @@ Canvas:
   m_GameObject: {fileID: 7293565658452680750}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -433,6 +434,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &807311784726522507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293565658452680750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677e21d18a2582245bda586085fbd9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 6467192887258412694}
+  inventoryAction: {fileID: 7104173710378125520, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
 --- !u!1 &8189196626110839002
 GameObject:
   m_ObjectHideFlags: 0
