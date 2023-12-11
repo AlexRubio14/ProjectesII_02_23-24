@@ -122,14 +122,25 @@ public class UpgradeSelector : MonoBehaviour
     }
     private void ToggleBoost(Position _pos)
     {
-        playerController.ChangeState(PlayerController.State.BOOST);
+        switch (playerController.GetState())
+        {
+            case PlayerController.State.MOVING:
+                playerController.ChangeState(PlayerController.State.BOOST);
+                ChangeBackground(_pos, true);
+                break;
+            case PlayerController.State.BOOST:
+                playerController.ChangeState(PlayerController.State.MOVING);
+                ChangeBackground(_pos, false);
+                break;
+            default:
+                break;
+        }
     }
 
     private void ToggleLight(Position _pos)
     {
         lightUpgrade.SetActive(!lightUpgrade.activeInHierarchy);
         ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
-
     }
 
     private void ToggleDrill(Position _pos)
