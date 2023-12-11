@@ -396,6 +396,7 @@ MonoBehaviour:
   engineParticles: {fileID: 4361300617207404308}
   drillMovementScale: 20
   drillSprite: {fileID: 3698819587768263416}
+  boostMovementScale: 150
   maxStorage: 50
 --- !u!114 &4196185413055272076
 MonoBehaviour:

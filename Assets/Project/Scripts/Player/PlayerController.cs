@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     private GameObject drillSprite;
     private DrillController drillController;
 
-    [Space, Header("Drill"), SerializeField]
+    [Space, Header("Boost"), SerializeField]
     private float boostMovementScale;
 
     [Space, Header("Storage"), SerializeField]
@@ -151,6 +151,10 @@ public class PlayerController : MonoBehaviour
             case State.KNOCKBACK:
                 break;
             case State.DRILL:
+                Move();
+                Rotation();
+                break;
+            case State.BOOST:
                 Move();
                 Rotation();
                 break;
