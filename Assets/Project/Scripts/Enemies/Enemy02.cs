@@ -4,43 +4,34 @@ using UnityEngine;
 
 public class Enemy02 : Enemy
 {
-    //[Space, Header("Enemy 2")]
-
-    [SerializeField]
+    [Space, Header("Enemy 2"), SerializeField]
     private float timeFollowing = 5.0f;
     [SerializeField]
     private GameObject c_explosionParticles;
 
-    private void Awake()
-    {
-        currentHealth = maxHealth;
-    }
-    void Start()
+    void Awake()
     {
         InitEnemy();
-    }
-    private void Update()
-    {
-        CheckState();
     }
     private void FixedUpdate()
     {
         Behaviour();
     }
 
-    // ENEMY
     override protected void Behaviour()
     {
         switch (currentState)
         {
             case EnemyStates.PATROLLING:
+                PerformDetection();
                 PatrollingBehaviour();
                 break;
             case EnemyStates.CHASING:
+                PerformDetection();
                 ChaseBehaviour();
                 break;
             case EnemyStates.KNOCKBACK:
-                // ... 
+                KnockbackBehaviour();
                 break;
             default:
                 break;
@@ -48,20 +39,24 @@ public class Enemy02 : Enemy
     }
     override protected void PatrollingBehaviour()
     {
-        // ...
+        if (iaData.m_currentTarget == null)
+        {
+            AssignMoveSpot();
+            iaData.m_currentTarget = moveSpots[randomSpot];
+        }
+        MoveToTarget();
     }
     override protected void ChaseBehaviour()
     {
-        Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
-
-        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
-
-        // ROTATION OF THE ENENMY WHILE FOLLOWING
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        if (iaData.m_currentTarget == null)
+        {
+            ChangeState(EnemyStates.PATROLLING);
+            return;
+        }
+        MoveToTarget();
 
     }
-    override protected void ChangeState(EnemyStates nextState)
+    override public void ChangeState(EnemyStates nextState)
     {
         if (currentState == nextState)
             return;
@@ -94,18 +89,6 @@ public class Enemy02 : Enemy
                 break;
         }
     }
-    override protected void CheckState()
-    {
-        CheckIsFollowing();
-
-        if (currentState == EnemyStates.KNOCKBACK)
-            return;
-
-        if (isFollowing)
-        {
-            ChangeState(EnemyStates.CHASING);
-        }
-    }
 
     override protected void Die()
     {
@@ -121,4 +104,13 @@ public class Enemy02 : Enemy
         }
     }
 
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(BULLET_TAG))
+        {
+            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
+            GetHit(bulletDamage);
+            StartKnockback(collision.transform.position);
+        }
+    }
 }

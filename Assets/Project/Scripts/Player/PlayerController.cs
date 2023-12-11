@@ -405,7 +405,7 @@ public class PlayerController : MonoBehaviour
         if(collision.collider.CompareTag("Enemy"))
         {
             Enemy enemy = collision.collider.GetComponent<Enemy>();
-            GetDamage(enemy.GetDamage(), collision.GetContact(0).point);
+            GetDamage(enemy.damage, collision.GetContact(0).point);
         }
     }
 }
