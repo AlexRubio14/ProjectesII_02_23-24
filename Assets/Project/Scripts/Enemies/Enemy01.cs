@@ -4,45 +4,18 @@ using UnityEngine;
 
 public class Enemy01 : Enemy
 {
-    [Space, Header("Enemy 1")]
-    [Header("Knockback"), SerializeField]
-    private float knockbackScale;
-    [SerializeField]
-    private float knockbackRotation;
-
-    [Header("Eating"), SerializeField]
-    private float TimeEating;
-    private float currentTimeEating;
-
-    Rigidbody2D c_rb;
-
-    private void Awake()
+    void Awake()
     {
-        c_rb = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
-        currentTimeEating = 0;
-    }
-    void Start()
-    {
-        AssignMoveSpot();
-        iaData.m_currentTarget = moveSpots[randomSpot];
-        //moveSpot.position = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY));
         InitEnemy();
     }
-    private void Update()
-    {
 
-        //CheckState();
-    }
     private void FixedUpdate()
     {
         Behaviour(); 
     }
 
-    // ENEMY
     override protected void Behaviour()
     {
-
         switch (currentState)
         {
             case EnemyStates.PATROLLING:
@@ -54,9 +27,7 @@ public class Enemy01 : Enemy
                 ChaseBehaviour(); 
                 break;
             case EnemyStates.KNOCKBACK:
-            // ... 
-            case EnemyStates.EATING:
-                EatingBehaviour();
+                KnockbackBehaviour(); 
                 break; 
             default:
                 break;
@@ -70,71 +41,33 @@ public class Enemy01 : Enemy
             AssignMoveSpot();
             iaData.m_currentTarget = moveSpots[randomSpot]; 
         }
-
-        Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
-
-        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
-
-        // ROTATION OF THE ENENMY WHILE FOLLOWING
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
-        //Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
-        ////Vector2 direction = transform.position - moveSpots[randomSpot].position; 
-        //transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, 2 * Time.deltaTime);
-
-        //if(Vector2.Distance(transform.position, moveSpot.position) < 0.2f)
-        //{
-        //    moveSpot.position = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        //}
-        //if (iaData.GetTargetsCount() != 0)
-        //{
-        //    currentState = EnemyStates.CHASING;
-        //}
-
-        //// ROTATION OF THE ENENMY WHILE FOLLOWING
-        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        MoveToTarget(); 
     }
     override protected void ChaseBehaviour()
     {
         if(iaData.m_currentTarget == null)
         {
-            currentState = EnemyStates.PATROLLING;
+            ChangeState(EnemyStates.PATROLLING);
             return; 
         }
-        Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
-
-        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
-
-        // ROTATION OF THE ENENMY WHILE FOLLOWING
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
-
+        MoveToTarget(); 
     }
 
-    void Knockback(Vector2 collisionPoint)
+    protected void StopEating()
     {
-        ChangeState(EnemyStates.KNOCKBACK);
-        Vector2 direction = (Vector2)transform.position - collisionPoint;
-        direction.Normalize();
-
-        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
-        c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
-        ChangeState(EnemyStates.EATING);
+        currentHealth += 20;
+        ChangeState(EnemyStates.CHASING);
+        
     }
-
-    protected void EatingBehaviour()
+    private void StartEating(Vector2 collisionPoint)
     {
-        currentTimeEating += Time.deltaTime;
-
-        if(currentTimeEating >= TimeEating)
-        {
-            currentTimeEating = 0;
-            ChangeState(EnemyStates.CHASING);
-        }
+        StartKnockback(collisionPoint);
+        ChangeState(EnemyStates.EXTRA);
+        Invoke("StopEating", 0); 
     }
 
-    override protected void ChangeState(EnemyStates nextState)
+
+    override public void ChangeState(EnemyStates nextState)
     {
         if (currentState == nextState)
             return;
@@ -166,30 +99,22 @@ public class Enemy01 : Enemy
                 break;
         }
     }
-    override protected void CheckState()
-    {
-    //    CheckIsFollowing();
-
-    //    if (currentState == EnemyStates.KNOCKBACK || currentState == EnemyStates.EATING)
-    //        return;
-
-    //    if (isFollowing && currentState != EnemyStates.EATING)
-    //    {
-    //        ChangeState(EnemyStates.CHASING);
-    //    }
-    //    else
-    //    {
-    //        ChangeState(EnemyStates.PATROLLING);
-    //    }
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))
         {
-            Knockback(collision.GetContact(0).point);
-            currentHealth += 20;
+            StartEating(collision.contacts[0].point); 
         }
     }
 
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
+        {
+            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
+            GetHit(bulletDamage);
+            StartKnockback(collision.transform.position); 
+        }
+    }
 }

@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 public abstract class Enemy : EnemyIA, IHealth
 {
-    public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK, EATING }
-    public EnemyStates currentState = EnemyStates.PATROLLING;
+    public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK, EXTRA }
+    public EnemyStates currentState { get; protected set; }
 
-    protected bool isDead;
+    protected Rigidbody2D c_rb2d;
 
     [Space, Header("Base Enemy"), SerializeField]
     protected float maxHealth;
     protected float currentHealth;
-
-    protected string BULLET_TAG = "Bullet";
     [SerializeField]
-    protected float damage;
+    protected float speed;
+
+    [SerializeField]
+    public float damage { get; protected set; }
+    protected string BULLET_TAG = "Bullet";
+
+    [Header("Patrol"), SerializeField]
+    protected Transform[] moveSpots;
+    protected int randomSpot;
+
+    [Header("Knockback"), SerializeField]
+    protected float knockbackScale;
+    [SerializeField]
+    protected float knockbackRotation;
+    [SerializeField]
+    private float knockbackDuration;
+    private float knockbackWaited;
 
     [Header("Drop"), SerializeField]
     protected ItemObject c_currentDrop;
@@ -23,36 +37,61 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     protected float maxThrowSpeed;
 
-    [Header("Patrol"), SerializeField] 
-    protected Transform[] moveSpots;
-    protected int randomSpot;
+    public void InitEnemy()
+    {
+        c_rb2d = GetComponent<Rigidbody2D>();
+        ChangeState(EnemyStates.PATROLLING);
+        currentHealth = maxHealth;
+    }
+
 
     #region Behaviours Functions
     protected abstract void Behaviour();
     protected abstract void PatrollingBehaviour();
+    protected abstract void ChaseBehaviour();
+    protected void KnockbackBehaviour()
+    {
+        knockbackWaited += Time.fixedDeltaTime; 
+        if(knockbackWaited > knockbackDuration)
+            ChangeState(EnemyStates.CHASING);
+    }
+
+    protected void StartKnockback(Vector2 collisionPoint)
+    {
+        ChangeState(EnemyStates.KNOCKBACK);
+        knockbackWaited = 0.0f; 
+
+        Vector2 direction = (Vector2)transform.position - collisionPoint;
+        direction.Normalize();
+
+        c_rb2d.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb2d.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+    }
+
+    protected void MoveToTarget()
+    {
+        Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
+
+        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
+
+        // ROTATION OF THE ENENMY WHILE FOLLOWING
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+    }
 
     protected void AssignMoveSpot()
     {
         int randomValue = Random.Range(0, moveSpots.Length);
-        if(randomValue == randomSpot) 
-        { 
+        if (randomValue == randomSpot)
+        {
             AssignMoveSpot();
-            return; 
+            return;
         }
-        randomSpot = randomValue; 
-    }
-    protected abstract void ChaseBehaviour();
-    #endregion
-
-    #region States Functions
-    protected abstract void ChangeState(EnemyStates nextState);
-    protected abstract void CheckState();
-
-    public EnemyStates GetState()
-    {
-        return currentState;
+        randomSpot = randomValue;
     }
     #endregion
+
+    public abstract void ChangeState(EnemyStates nextState);
 
     #region Damage Functions
     public void GetHit(float _damageAmount)
@@ -67,7 +106,6 @@ public abstract class Enemy : EnemyIA, IHealth
         if (c_currentDrop)
             DropItem();
 
-        isDead = true;
         Destroy(gameObject);
     }
     protected void DropItem()
@@ -86,18 +124,5 @@ public abstract class Enemy : EnemyIA, IHealth
         currItem.ImpulseItem(randomDir, throwSpeed);
         currItem.transform.up = randomDir;
     }
-    public float GetDamage()
-    {
-        return damage;
-    }
     #endregion
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(BULLET_TAG))
-        {
-            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
-            GetHit(bulletDamage); ;
-        }
-    }
 }

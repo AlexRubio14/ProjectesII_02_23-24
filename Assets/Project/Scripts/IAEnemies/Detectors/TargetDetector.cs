@@ -25,9 +25,10 @@ public class TargetDetector : Detector
 
     public override void Detect(IAData _iaData)
     {
-        switch (currentEnemy.GetState())
+        switch (currentEnemy.currentState)
         {
             case EnemyStates.PATROLLING:
+                _iaData.canSeeTarget = true;
                 CheckIfPlayerArround(_iaData); 
                 break;
             case EnemyStates.CHASING:
@@ -46,21 +47,27 @@ public class TargetDetector : Detector
 
         if (playerCollider != null)
         {
-            currentEnemy.currentState = Enemy.EnemyStates.CHASING;
+            Vector2 direction = (playerCollider.transform.position - transform.position).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, rangeVision, collidersLayer);
 
-            _iaData.m_currentTarget = playerCollider.transform;
+            // Check if the collider we see is on the "Player" layer
+            if (hit.collider != null && (playerLayer & (1 << hit.collider.gameObject.layer)) != 0
+                /* detect that we found a player not an obstacle*/)
+            {
+                currentEnemy.ChangeState(EnemyStates.CHASING);
+
+                _iaData.canSeeTarget = true;
+                _iaData.m_currentTarget = playerCollider.transform;
+            }
         }
-        //else
-        //{
-        //    colliders = null;
-        //}
-
-        //_iaData.m_targets = colliders; 
     }
 
     private void CheckIfSeeTarget(IAData _iaData)
     {
         // Check if enemy sees the player
+        if (_iaData.m_currentTarget == null)
+            return; 
+
         Vector2 direction = (_iaData.m_currentTarget.position - transform.position).normalized;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, rangeVision, collidersLayer);
 
@@ -69,16 +76,12 @@ public class TargetDetector : Detector
             /* detect that we found a player not an obstacle*/)
         {
             _iaData.canSeeTarget = true;
-            //colliders = new List<Transform>() { playerCollider.transform };
             Debug.DrawRay(transform.position, direction * rangeVision, Color.magenta);
         }
         else
         {
             _iaData.canSeeTarget = false;
-            //_iaData.m_currentTarget = null; 
-            //colliders = null;
         }
-        //_iaData.m_targets = colliders;
     }
 
     //DEBUG
