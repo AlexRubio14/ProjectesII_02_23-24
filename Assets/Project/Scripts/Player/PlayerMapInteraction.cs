@@ -91,9 +91,9 @@ public class PlayerMapInteraction : MonoBehaviour
 
     public void InteractNearObject()
     {
-        if (nearestObject || //Si existe un objeto cercano
-            nearestObject.isInteractable || //Si se puede interactuar con el
-            !nearestObject.isHide || //Si no esta oculto
+        if (nearestObject && //Si existe un objeto cercano
+            nearestObject.isInteractable && //Si se puede interactuar con el
+            !nearestObject.isHide && //Si no esta oculto
             nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded)
             )//Si necesita una mejora y la tiene
         {
