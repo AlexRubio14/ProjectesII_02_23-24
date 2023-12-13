@@ -499,10 +499,17 @@ MonoBehaviour:
       Value: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
     - Key: 3
       Value: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
-  upUpgradeImage: {fileID: 0}
-  downUpgradeImage: {fileID: 0}
-  rightUpgradeImage: {fileID: 0}
-  leftUpgradeImage: {fileID: 0}
+  upgradeImagePositions:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 0}
+    - Key: 1
+      Value: {fileID: 0}
+    - Key: 2
+      Value: {fileID: 0}
+    - Key: 3
+      Value: {fileID: 0}
+  locketUpgradeSprite: {fileID: 0}
   lightUpgrade: {fileID: 9096134186405275553}
 --- !u!114 &670545847217739927
 MonoBehaviour:

@@ -124,7 +124,7 @@ public class QuestInfo : MonoBehaviour
 
     public void NoButton()
     {
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
     

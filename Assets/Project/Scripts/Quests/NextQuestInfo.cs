@@ -26,6 +26,6 @@ public class NextQuestInfo : MonoBehaviour
 
     public void CloseButton()
     {
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 }

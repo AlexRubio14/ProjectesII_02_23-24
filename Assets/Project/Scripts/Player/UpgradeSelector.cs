@@ -33,17 +33,12 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private Image leftBackGround;
 
-    [Space, Header("Upgrades"), SerializedDictionary("Upgrade", "Position")]
+    [Space, Header("Upgrades"), SerializedDictionary("Position", "Upgrade")]
     public SerializedDictionary<Position, UpgradeObject> upgradePositions;
-
+    [Space(height: 10), SerializedDictionary("Position", "Image")]
+    public SerializedDictionary<Position, Image> upgradeImagePositions;
     [SerializeField]
-    private Image upUpgradeImage;
-    [SerializeField]
-    private Image downUpgradeImage;
-    [SerializeField]
-    private Image rightUpgradeImage;
-    [SerializeField]
-    private Image leftUpgradeImage;
+    private Sprite locketUpgradeSprite;
 
 
     [Space, Header("Light"), SerializeField]
@@ -59,26 +54,29 @@ public class UpgradeSelector : MonoBehaviour
 
     private void Start()
     {
+        List<Position> notObtainedUpgrades = new List<Position>();
+
         foreach (KeyValuePair<Position, UpgradeObject> item in upgradePositions)
         {
-            switch (item.Key)
+            Sprite currentSprite;
+            if (UpgradeManager.Instance.CheckObtainedUpgrade(item.Value))
             {
-                case Position.UP:
-                    upUpgradeImage.sprite = item.Value.c_UpgradeSprite;
-                    break;
-                case Position.DOWN:
-                    downUpgradeImage.sprite = item.Value.c_UpgradeSprite;
-                    break;
-                case Position.RIGHT:
-                    rightUpgradeImage.sprite = item.Value.c_UpgradeSprite;
-                    break;
-                case Position.LEFT:
-                    leftUpgradeImage.sprite = item.Value.c_UpgradeSprite;
-                    break;
-                default:
-                    break;
+                currentSprite = item.Value.c_UpgradeSprite;
             }
+            else
+            {
+                currentSprite = locketUpgradeSprite;
+                notObtainedUpgrades.Add(item.Key);
+            }
+
+            upgradeImagePositions[item.Key].sprite = currentSprite;
         }
+
+        foreach (Position item in notObtainedUpgrades)
+        {
+            upgradePositions[item] = null;
+        }
+
     }
 
     private void OnEnable()
@@ -101,6 +99,10 @@ public class UpgradeSelector : MonoBehaviour
 
     private void ToggleUpgrade(Position _pos)
     {
+        if (!upgradePositions[_pos])
+            return;
+        
+
         switch (upgradePositions[_pos].type)
         {
             case UpgradeObject.UpgradeType.BOOST:
