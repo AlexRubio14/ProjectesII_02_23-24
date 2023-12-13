@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2438612229382598180}
   - component: {fileID: 8250807549292774234}
   - component: {fileID: 6824204765675086956}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hub Tp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e764ab0b4d12349adc3cf09038c13c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteractable: 1
+  <isHide>k__BackingField: 0
   <c_upgradeNeeded>k__BackingField: {fileID: 0}
+  grid: {fileID: 0}
+  tilemap: {fileID: 0}
+  hiddenParticlesPrefab: {fileID: 0}
+  hiddenParticlesSize: {x: 0, y: 0}
+  hiddenParticlesPosition: {x: 0, y: 0}
+  hiddenParticlesRateOverTime: 0
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
   timeToGoHub: 3
 --- !u!61 &6824204765675086956
