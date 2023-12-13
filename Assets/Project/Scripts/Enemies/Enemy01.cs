@@ -38,8 +38,15 @@ public class Enemy01 : Enemy
     {
         if(iaData.m_currentTarget == null)
         {
-            AssignMoveSpot();
-            iaData.m_currentTarget = moveSpots[randomSpot]; 
+            if(moveSpots.Length > 0)
+            {
+                AssignMoveSpot();
+                iaData.m_currentTarget = moveSpots[randomSpot];
+            }
+            else
+            {
+                iaData.m_currentTarget = transform;
+            }
         }
         MoveToTarget(); 
     }

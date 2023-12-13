@@ -8,7 +8,7 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected Rigidbody2D c_rb2d;
 
-    [Space, Header("Base Enemy"), SerializeField]
+    [Space, Header("--- BASE ENEMY"), SerializeField]
     protected float maxHealth;
     protected float currentHealth;
     [SerializeField]
@@ -18,11 +18,11 @@ public abstract class Enemy : EnemyIA, IHealth
     public float damage { get; protected set; }
     protected string BULLET_TAG = "Bullet";
 
-    [Header("Patrol"), SerializeField]
+    [Header("--- PATROL"), SerializeField]
     protected Transform[] moveSpots;
     protected int randomSpot;
 
-    [Header("Knockback"), SerializeField]
+    [Header("--- KNOCKBACK"), SerializeField]
     protected float knockbackScale;
     [SerializeField]
     protected float knockbackRotation;
@@ -30,12 +30,16 @@ public abstract class Enemy : EnemyIA, IHealth
     private float knockbackDuration;
     private float knockbackWaited;
 
-    [Header("Drop"), SerializeField]
+    [Header("--- DROP"), SerializeField]
     protected ItemObject c_currentDrop;
     [SerializeField]
     protected GameObject c_pickableItemPrefab;
     [SerializeField]
     protected float maxThrowSpeed;
+
+    //DEBUG
+    [SerializeField]
+    private bool showGizmos = true;
 
     public void InitEnemy()
     {
@@ -125,4 +129,17 @@ public abstract class Enemy : EnemyIA, IHealth
         currItem.transform.up = randomDir;
     }
     #endregion
+
+
+    private void OnDrawGizmos()
+    {
+        if (showGizmos == false)
+            return;
+
+        foreach (Transform spot in moveSpots)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(spot.position, 0.2f);
+        }
+    }
 }

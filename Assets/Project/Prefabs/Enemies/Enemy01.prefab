@@ -448,10 +448,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6161894378625804264}
-  - component: {fileID: 6668970655071454642}
-  - component: {fileID: 2529801683766751785}
   - component: {fileID: 4181270967838813588}
   - component: {fileID: 8757612903827436750}
+  - component: {fileID: 6668970655071454642}
+  - component: {fileID: 2529801683766751785}
   m_Layer: 9
   m_Name: Enemy01
   m_TagString: Enemy
@@ -478,52 +478,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6668970655071454642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8189760236160603026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be62a5f2f72e0c8408bca91c4cfee095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_targets: []
-  m_obstacles: []
-  m_currentTarget: {fileID: 0}
---- !u!114 &2529801683766751785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8189760236160603026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a3786dd6d433274abb4e48b11c2afa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  l_steeringBehaviours:
-  - {fileID: 3024556263979690734}
-  - {fileID: 1181596179253775783}
-  l_detectors:
-  - {fileID: 5997103419151096230}
-  - {fileID: 2450130724856854608}
-  iaData: {fileID: 6668970655071454642}
-  detectionDelay: 0.05
-  movementDirectionSolver: {fileID: 8942317131287401040}
-  speed: 15
-  currentState: 1
-  maxHealth: 100
-  damage: 10
-  c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
-  maxThrowSpeed: 2
-  knockbackScale: 10
-  knockbackRotation: 1
-  TimeEating: 0.7
 --- !u!50 &4181270967838813588
 Rigidbody2D:
   serializedVersion: 4
@@ -586,6 +540,52 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
+--- !u!114 &6668970655071454642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189760236160603026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be62a5f2f72e0c8408bca91c4cfee095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_obstacles: []
+  m_currentTarget: {fileID: 0}
+  canSeeTarget: 0
+--- !u!114 &2529801683766751785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189760236160603026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3786dd6d433274abb4e48b11c2afa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  l_steeringBehaviours:
+  - {fileID: 3024556263979690734}
+  - {fileID: 1181596179253775783}
+  l_detectors:
+  - {fileID: 5997103419151096230}
+  - {fileID: 2450130724856854608}
+  iaData: {fileID: 6668970655071454642}
+  detectionDelay: 0.05
+  movementDirectionSolver: {fileID: 8942317131287401040}
+  maxHealth: 100
+  speed: 15
+  moveSpots: []
+  knockbackScale: 10
+  knockbackRotation: 1
+  knockbackDuration: 0
+  c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
+  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  maxThrowSpeed: 2
+  showGizmos: 1
 --- !u!1 &9114009146373791086
 GameObject:
   m_ObjectHideFlags: 0

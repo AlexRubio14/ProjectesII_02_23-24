@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy02 : Enemy
 {
-    [Space, Header("Enemy 2"), SerializeField]
+    [Space, Header("--- ENEMY 02"), SerializeField]
     private float timeFollowing = 5.0f;
     [SerializeField]
     private GameObject c_explosionParticles;
@@ -41,8 +41,15 @@ public class Enemy02 : Enemy
     {
         if (iaData.m_currentTarget == null)
         {
-            AssignMoveSpot();
-            iaData.m_currentTarget = moveSpots[randomSpot];
+            if (moveSpots.Length > 0)
+            { 
+                AssignMoveSpot();
+                iaData.m_currentTarget = moveSpots[randomSpot];
+            }
+            else
+            {
+                iaData.m_currentTarget = transform;
+            }
         }
         MoveToTarget();
     }
