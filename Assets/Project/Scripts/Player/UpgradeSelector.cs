@@ -44,12 +44,22 @@ public class UpgradeSelector : MonoBehaviour
     [Space, Header("Light"), SerializeField]
     private GameObject lightUpgrade;
 
+    [Space, Header("Fuel Intake"), SerializeField]
+    private float boostIntake;
+    [SerializeField]
+    private float drillIntake;
+    [SerializeField]
+    private float lightIntake;
+
 
     private PlayerController playerController;
 
+    private WebController webController;
+
     private void Awake()
     {
-        playerController = GetComponent<PlayerController>();    
+        playerController = GetComponent<PlayerController>();   
+        webController = GetComponent<WebController>();
     }
 
     private void Start()
@@ -128,6 +138,8 @@ public class UpgradeSelector : MonoBehaviour
         {
             case PlayerController.State.MOVING:
                 playerController.ChangeState(PlayerController.State.BOOST);
+                webController.EraseAllWebs();
+                playerController.SubstractHealth(boostIntake);
                 ChangeBackground(_pos, true);
                 break;
             case PlayerController.State.BOOST:
@@ -142,6 +154,7 @@ public class UpgradeSelector : MonoBehaviour
     private void ToggleLight(Position _pos)
     {
         lightUpgrade.SetActive(!lightUpgrade.activeInHierarchy);
+        playerController.SubstractHealth(lightIntake);
         ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
     }
 
@@ -153,6 +166,7 @@ public class UpgradeSelector : MonoBehaviour
             case PlayerController.State.MOVING:
             case PlayerController.State.INVENCIBILITY:
                 playerController.ChangeState(PlayerController.State.DRILL);
+                playerController.SubstractHealth(drillIntake);
                 ChangeBackground(_pos, true);
                 break;
             case PlayerController.State.DRILL:
