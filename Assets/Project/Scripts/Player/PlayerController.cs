@@ -314,7 +314,10 @@ public class PlayerController : MonoBehaviour
     {
         return fuel;
     }
-
+    public float GetBaseFuel()
+    {
+        return baseFuel;
+    }
     #endregion
 
     #region States

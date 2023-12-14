@@ -101,10 +101,8 @@ public class PlayerMapInteraction : MonoBehaviour
                 nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
             {
                 nearestObject.Interact(); //Interactua con el objeto
-
             }
         }
-
     }
 
 

@@ -1,12 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class NextQuestInfo : MonoBehaviour
 {
+    [SerializeField]
+    private Button firstSelectedButton;
+
     [SerializeField]
     private TextMeshProUGUI nextQuestText;
 
     private void OnEnable()
     {
+        firstSelectedButton.Select();
+
         SetNextQuestText(QuestManager.Instance.GetCurrentQuest());
     }
 

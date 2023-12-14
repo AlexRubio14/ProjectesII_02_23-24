@@ -8,6 +8,8 @@ public class QuestInfo : MonoBehaviour
 {
 
     [SerializeField]
+    private Button firstSelectedButton;
+    [Space, SerializeField]
     private GameObject needImagePrefab;
     [SerializeField]
     private GameObject needTextPrefab;
@@ -31,6 +33,9 @@ public class QuestInfo : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        firstSelectedButton.Select();
+
+
         QuestObject quest = QuestManager.Instance.GetCurrentQuest();
         if (!quest)
         {
