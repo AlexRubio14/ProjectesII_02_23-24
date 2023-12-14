@@ -130,7 +130,7 @@ public abstract class Enemy : EnemyIA, IHealth
     #endregion
 
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (showGizmos == false)
             return;
