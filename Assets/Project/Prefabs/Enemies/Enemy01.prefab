@@ -209,13 +209,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777b6d11e1883224babaac0a17269776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeVision: 10
+  rangeVision: 6.33
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 5248
   showGizmos: 0
 --- !u!1 &1302204989104934714
 GameObject:
@@ -310,7 +310,7 @@ MonoBehaviour:
   detectionRange: 2
   layerToAvoid:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 5120
   showGizmos: 0
 --- !u!1 &4232757249334839429
 GameObject:
@@ -466,7 +466,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8189760236160603026}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.59, y: -1.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -578,14 +578,23 @@ MonoBehaviour:
   movementDirectionSolver: {fileID: 8942317131287401040}
   maxHealth: 100
   speed: 15
-  moveSpots: []
-  knockbackScale: 10
+  <damage>k__BackingField: 10
+  moveSpots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  knockbackForce: 3
   knockbackRotation: 1
-  knockbackDuration: 0
+  knockbackDuration: 0.05
   c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 2
   showGizmos: 1
+  eatingDuration: 1
+  eatingForce: 10
+  eatingHeal: 40
 --- !u!1 &9114009146373791086
 GameObject:
   m_ObjectHideFlags: 0

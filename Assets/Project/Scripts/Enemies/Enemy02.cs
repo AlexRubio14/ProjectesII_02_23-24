@@ -76,6 +76,7 @@ public class Enemy02 : Enemy
             case EnemyStates.CHASING:
                 break;
             case EnemyStates.KNOCKBACK:
+                c_rb2d.velocity = Vector2.zero;
                 break;
             default:
                 break;
@@ -97,7 +98,7 @@ public class Enemy02 : Enemy
         }
     }
 
-    override protected void Die()
+    override public void Die()
     {
         Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
         base.Die();
@@ -117,7 +118,8 @@ public class Enemy02 : Enemy
         {
             float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);
-            StartKnockback(collision.transform.position);
+            ChangeState(EnemyStates.KNOCKBACK);
+            StartKnockback(collision.transform.position, knockbackForce);
         }
     }
 }

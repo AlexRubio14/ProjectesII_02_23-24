@@ -14,7 +14,7 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     protected float speed;
 
-    [SerializeField]
+    [field: SerializeField]
     public float damage { get; protected set; }
     protected string BULLET_TAG = "Bullet";
 
@@ -23,7 +23,7 @@ public abstract class Enemy : EnemyIA, IHealth
     protected int randomSpot;
 
     [Header("--- KNOCKBACK"), SerializeField]
-    protected float knockbackScale;
+    protected float knockbackForce;
     [SerializeField]
     protected float knockbackRotation;
     [SerializeField]
@@ -60,15 +60,14 @@ public abstract class Enemy : EnemyIA, IHealth
             ChangeState(EnemyStates.CHASING);
     }
 
-    protected void StartKnockback(Vector2 collisionPoint)
+    protected void StartKnockback(Vector2 collisionPoint, float force)
     {
-        ChangeState(EnemyStates.KNOCKBACK);
         knockbackWaited = 0.0f; 
 
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
-        c_rb2d.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb2d.AddForce(direction * force, ForceMode2D.Impulse);
         c_rb2d.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
     }
 
@@ -105,7 +104,7 @@ public abstract class Enemy : EnemyIA, IHealth
         if (currentHealth <= 0)
             Die();
     }
-    virtual protected void Die()
+    virtual public void Die()
     {
         if (c_currentDrop)
             DropItem();
@@ -131,7 +130,7 @@ public abstract class Enemy : EnemyIA, IHealth
     #endregion
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (showGizmos == false)
             return;
