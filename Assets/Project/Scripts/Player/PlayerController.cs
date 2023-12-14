@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     [Space, Header("Health"), SerializeField]
     private float baseFuel;
-    public float Fuel { get; private set; }
+    public float fuel { get; private set; }
     [SerializeField]
     private float mapDamage;
 
@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
 
     [Space, Header("Boost"), SerializeField]
     private float boostMovementScale;
+    [SerializeField]
+    private float boostMovementWithoutAcceleration;
 
     [Space, Header("Storage"), SerializeField]
     private int maxStorage;
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
     private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
+    private WebController webController;
 
 
     private void Awake()
@@ -84,12 +87,12 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         drillController = GetComponent<DrillController>();
         shipLight = GetComponentInChildren<Light2D>();
-        
+        webController = GetComponent<WebController>();
     }
     
     private void Start()
     {
-        Fuel = baseFuel + PowerUpManager.Instance.Fuel;
+        fuel = baseFuel + PowerUpManager.Instance.Fuel;
         currentMovementScale = movementScale;
     }
 
@@ -120,10 +123,10 @@ public class PlayerController : MonoBehaviour
     {
         LoseFuel();
         
-        Fuel = Mathf.Clamp(Fuel, 0, Mathf.Infinity);
+        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
         if(Input.GetKey(KeyCode.L))
         {
-            Fuel += 50;
+            fuel += 50;
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -155,7 +158,7 @@ public class PlayerController : MonoBehaviour
                 Rotation();
                 break;
             case State.BOOST:
-                Move();
+                BoostMove();
                 Rotation();
                 break;
             default:
@@ -166,9 +169,21 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        Vector2 acceleration = transform.right * accelerationValue * currentMovementScale;
+        Vector2 acceleration = transform.right * accelerationValue * currentMovementScale * webController.webDecrease;
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
+    }
+
+    private void BoostMove()
+    {
+        if(movementDirection == Vector2.zero)
+        {
+            c_rb.AddForce(transform.right * boostMovementWithoutAcceleration, ForceMode2D.Force);
+        }
+        else
+        {
+            Move();
+        }
     }
  
     private void Rotation()
@@ -186,7 +201,6 @@ public class PlayerController : MonoBehaviour
 
         c_rb.SetRotation(transform.rotation * targetRotation);
     }
-
    
     #endregion
 
@@ -198,14 +212,14 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
                 if(accelerationValue == 0)
                 {
-                    Fuel -= Time.deltaTime / 3;
+                    fuel -= Time.deltaTime / 3;
                     
                     if(engineParticles.isPlaying)
                         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 }
                 else
                 {
-                    Fuel -= Time.deltaTime;
+                    fuel -= Time.deltaTime;
 
                     if (engineParticles.isStopped)
                         engineParticles.Play(true);
@@ -217,22 +231,32 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.INVENCIBILITY:
                 break;
+            case State.BOOST:
+                if(accelerationValue == 0)
+                {
+                    fuel -= Time.deltaTime;
+                }
+                else
+                {
+                    fuel -= Time.deltaTime * 2;
+                }
+                break;
             default:
                 break;
         }
 
         if(Time.deltaTime / 3 == 0)
         {
-            Fuel -= Time.deltaTime;
+            fuel -= Time.deltaTime;
         }
 
         CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
     {
-        if (Fuel <= 0 && currentState != State.DEAD)
+        if (fuel <= 0 && currentState != State.DEAD)
         {
-            Fuel = 0;
+            fuel = 0;
             Die();
         }
     }
@@ -280,15 +304,15 @@ public class PlayerController : MonoBehaviour
 
         CameraController.Instance.AddMediumTrauma();
         Knockback(damagePos);
-        Fuel -= value / PowerUpManager.Instance.Armor;
+        fuel -= value / PowerUpManager.Instance.Armor;
     }
     public void SubstractHealth(float value)
     {
-        Fuel -= value;
+        fuel -= value;
     }
     public float GetFuel()
     {
-        return Fuel;
+        return fuel;
     }
 
     #endregion
@@ -375,6 +399,11 @@ public class PlayerController : MonoBehaviour
     public State GetState()
     {
         return currentState;
+    }
+
+    public float GetSpeed()
+    {
+        return movementScale;
     }
 
     public void SetSpeed(float value)
