@@ -23,6 +23,5 @@ public class PlayerInventoryController : MonoBehaviour
     private void InventoryAction(InputAction.CallbackContext obj)
     {
         inventory.SetActive(!inventory.activeInHierarchy);
-        Debug.Log("sexo");
     }
 }
