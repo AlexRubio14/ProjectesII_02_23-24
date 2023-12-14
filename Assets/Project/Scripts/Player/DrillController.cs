@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class DrillController : MonoBehaviour
 {
-    //[SerializeField]
-    //private Tilemap tilemap;
-    //[SerializeField]
-    //private Grid grid;
 
     [SerializeField]
     private float drillDistance;
@@ -126,7 +122,7 @@ public class DrillController : MonoBehaviour
         }
         else
         {
-            CameraController.Instance.AddMediumTrauma();
+            CameraController.Instance.SetTrauma(0.5f);
         }
     }
 
