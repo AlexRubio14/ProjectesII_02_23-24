@@ -509,7 +509,7 @@ MonoBehaviour:
       Value: {fileID: 0}
     - Key: 3
       Value: {fileID: 0}
-  locketUpgradeSprite: {fileID: 0}
+  locketUpgradeSprite: {fileID: 21300000, guid: ad3edb4bfe23c734da74e1a4f9c8decb, type: 3}
   lightUpgrade: {fileID: 9096134186405275553}
 --- !u!114 &670545847217739927
 MonoBehaviour:
