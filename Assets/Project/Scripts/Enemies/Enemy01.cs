@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Enemy01 : Enemy
 {
+    [Space, Header("--- ENEMY 01"), SerializeField]
+    public float eatingDuration;
+    [SerializeField]
+    public float eatingForce; 
+    [SerializeField]
+    public int eatingHeal; 
+
     void Awake()
     {
         InitEnemy();
@@ -38,8 +45,15 @@ public class Enemy01 : Enemy
     {
         if(iaData.m_currentTarget == null)
         {
-            AssignMoveSpot();
-            iaData.m_currentTarget = moveSpots[randomSpot]; 
+            if(moveSpots.Length > 0)
+            {
+                AssignMoveSpot();
+                iaData.m_currentTarget = moveSpots[randomSpot];
+            }
+            else
+            {
+                iaData.m_currentTarget = transform;
+            }
         }
         MoveToTarget(); 
     }
@@ -55,15 +69,15 @@ public class Enemy01 : Enemy
 
     protected void StopEating()
     {
-        currentHealth += 20;
+        currentHealth += eatingHeal;
         ChangeState(EnemyStates.CHASING);
         
     }
     private void StartEating(Vector2 collisionPoint)
     {
-        StartKnockback(collisionPoint);
+        StartKnockback(collisionPoint, eatingForce);
         ChangeState(EnemyStates.EXTRA);
-        Invoke("StopEating", 0); 
+        Invoke("StopEating", eatingDuration); 
     }
 
 
@@ -80,6 +94,7 @@ public class Enemy01 : Enemy
             case EnemyStates.CHASING:
                 break;
             case EnemyStates.KNOCKBACK:
+                c_rb2d.velocity = Vector2.zero;
                 break;
             default:
                 break;
@@ -114,7 +129,8 @@ public class Enemy01 : Enemy
         {
             float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);
-            StartKnockback(collision.transform.position); 
+            ChangeState(EnemyStates.KNOCKBACK);
+            StartKnockback(collision.transform.position, knockbackForce); 
         }
     }
 }

@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyIA : MonoBehaviour
 {
-    [Header("IA"), SerializeField]
+    [Header("--- IA"), SerializeField]
     protected List<SteeringBehaviour> l_steeringBehaviours;
 
     [SerializeField] 

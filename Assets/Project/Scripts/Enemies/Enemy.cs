@@ -8,34 +8,38 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected Rigidbody2D c_rb2d;
 
-    [Space, Header("Base Enemy"), SerializeField]
+    [Space, Header("--- BASE ENEMY"), SerializeField]
     protected float maxHealth;
     protected float currentHealth;
     [SerializeField]
     protected float speed;
 
-    [SerializeField]
+    [field: SerializeField]
     public float damage { get; protected set; }
     protected string BULLET_TAG = "Bullet";
 
-    [Header("Patrol"), SerializeField]
+    [Header("--- PATROL"), SerializeField]
     protected Transform[] moveSpots;
     protected int randomSpot;
 
-    [Header("Knockback"), SerializeField]
-    protected float knockbackScale;
+    [Header("--- KNOCKBACK"), SerializeField]
+    protected float knockbackForce;
     [SerializeField]
     protected float knockbackRotation;
     [SerializeField]
     private float knockbackDuration;
     private float knockbackWaited;
 
-    [Header("Drop"), SerializeField]
+    [Header("--- DROP"), SerializeField]
     protected ItemObject c_currentDrop;
     [SerializeField]
     protected GameObject c_pickableItemPrefab;
     [SerializeField]
     protected float maxThrowSpeed;
+
+    //DEBUG
+    [SerializeField]
+    private bool showGizmos = true;
 
     public void InitEnemy()
     {
@@ -56,15 +60,14 @@ public abstract class Enemy : EnemyIA, IHealth
             ChangeState(EnemyStates.CHASING);
     }
 
-    protected void StartKnockback(Vector2 collisionPoint)
+    protected void StartKnockback(Vector2 collisionPoint, float force)
     {
-        ChangeState(EnemyStates.KNOCKBACK);
         knockbackWaited = 0.0f; 
 
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
-        c_rb2d.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb2d.AddForce(direction * force, ForceMode2D.Impulse);
         c_rb2d.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
     }
 
@@ -101,7 +104,7 @@ public abstract class Enemy : EnemyIA, IHealth
         if (currentHealth <= 0)
             Die();
     }
-    virtual protected void Die()
+    virtual public void Die()
     {
         if (c_currentDrop)
             DropItem();
@@ -125,4 +128,17 @@ public abstract class Enemy : EnemyIA, IHealth
         currItem.transform.up = randomDir;
     }
     #endregion
+
+
+    private void OnDrawGizmosSelected()
+    {
+        if (showGizmos == false)
+            return;
+
+        foreach (Transform spot in moveSpots)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(spot.position, 0.2f);
+        }
+    }
 }

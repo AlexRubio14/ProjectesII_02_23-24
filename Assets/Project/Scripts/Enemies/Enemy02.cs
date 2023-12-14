@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy02 : Enemy
 {
-    [Space, Header("Enemy 2"), SerializeField]
+    [Space, Header("--- ENEMY 02"), SerializeField]
     private float timeFollowing = 5.0f;
     [SerializeField]
     private GameObject c_explosionParticles;
@@ -41,8 +41,15 @@ public class Enemy02 : Enemy
     {
         if (iaData.m_currentTarget == null)
         {
-            AssignMoveSpot();
-            iaData.m_currentTarget = moveSpots[randomSpot];
+            if (moveSpots.Length > 0)
+            { 
+                AssignMoveSpot();
+                iaData.m_currentTarget = moveSpots[randomSpot];
+            }
+            else
+            {
+                iaData.m_currentTarget = transform;
+            }
         }
         MoveToTarget();
     }
@@ -69,6 +76,7 @@ public class Enemy02 : Enemy
             case EnemyStates.CHASING:
                 break;
             case EnemyStates.KNOCKBACK:
+                c_rb2d.velocity = Vector2.zero;
                 break;
             default:
                 break;
@@ -90,7 +98,7 @@ public class Enemy02 : Enemy
         }
     }
 
-    override protected void Die()
+    override public void Die()
     {
         Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
         base.Die();
@@ -110,7 +118,8 @@ public class Enemy02 : Enemy
         {
             float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);
-            StartKnockback(collision.transform.position);
+            ChangeState(EnemyStates.KNOCKBACK);
+            StartKnockback(collision.transform.position, knockbackForce);
         }
     }
 }
