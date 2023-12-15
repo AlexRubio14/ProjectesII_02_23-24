@@ -5602,8 +5602,8 @@ MonoBehaviour:
   posToSpawnBullets: {fileID: 4204113142784814922}
   laserPrefab: {fileID: 1805159943047549904, guid: b6480ce03b4600c42b61c93f23ce547d, type: 3}
   reloadDelay: 0.5
-  fuelConsume: 2
-  canShootStates: 000000000100000005000000
+  fuelConsume: 0.5
+  canShootStates: 00000000010000000500000007000000
 --- !u!1 &7686264573825968600
 GameObject:
   m_ObjectHideFlags: 0

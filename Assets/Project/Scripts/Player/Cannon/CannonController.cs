@@ -115,7 +115,7 @@ public class CannonController : MonoBehaviour
     }
     private void ShootAction(InputAction.CallbackContext obj)
     {
-        isShooting = obj.action.IsPressed();
+        isShooting = obj.action.IsInProgress();
     }
 
     Vector2 GetMousePosition()

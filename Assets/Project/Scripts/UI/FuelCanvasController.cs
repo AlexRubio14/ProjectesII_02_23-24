@@ -39,7 +39,7 @@ public class FuelCanvasController : MonoBehaviour
 
     private void Start()
     {
-        float maxFuel = playerController.GetBaseFuel();
+        float maxFuel = playerController.GetMaxFuel();
         starterFuel.text = maxFuel.ToString("0") + "L";
         fuelSlider.maxValue = maxFuel;
 

@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7670600492b05834ba69b03d6f707fdd, type: 3}
   m_Name: EngineUpgrade
   m_EditorClassIdentifier: 
+  <type>k__BackingField: 0
   <UpgradeName>k__BackingField: Engine Upgrade
   <UpgradeDescription>k__BackingField: SUPER MAMADA GALAXIAL
   <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: ea255ba0a5e28a2448252d18b76d4dcb, type: 3}
-  itemToUpgrade:
-  - {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-  - {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-  itemPrize: 0a000600
   prize:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+      Value: 15
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
       Value: 10
-    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-      Value: 6
+    - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
+      Value: 5

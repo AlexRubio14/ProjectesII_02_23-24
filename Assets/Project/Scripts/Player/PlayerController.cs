@@ -314,9 +314,9 @@ public class PlayerController : MonoBehaviour
     {
         return fuel;
     }
-    public float GetBaseFuel()
+    public float GetMaxFuel()
     {
-        return baseFuel;
+        return baseFuel + PowerUpManager.Instance.Fuel;
     }
     #endregion
 
