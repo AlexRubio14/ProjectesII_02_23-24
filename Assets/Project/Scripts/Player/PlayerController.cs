@@ -14,15 +14,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InputActionReference accelerateAction;
 
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, DRILL, INVENCIBILITY, FREEZE, BOOST, DEAD};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
     [Space, Header("Movement"), SerializeField]
-    private float movementScale;
-    private float currentMovementScale;
+    private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
+    public float externalMovementSpeed;
 
     [Space, Header("Rotation")]
     [SerializeField]
@@ -56,17 +56,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem engineParticles;
 
-    [Space, Header("Drill"), SerializeField]
-    private float drillMovementScale;
-    [SerializeField]
-    private GameObject drillSprite;
-    private DrillController drillController;
-
-    [Space, Header("Boost"), SerializeField]
-    private float boostMovementScale;
-    [SerializeField]
-    private float boostMovementWithoutAcceleration;
-
     [Space, Header("Storage"), SerializeField]
     private int maxStorage;
     private int currentStorage;
@@ -74,8 +63,6 @@ public class PlayerController : MonoBehaviour
     private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
-    private WebController webController;
-
 
     private void Awake()
     {
@@ -85,15 +72,12 @@ public class PlayerController : MonoBehaviour
         inputController = GetComponent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        drillController = GetComponent<DrillController>();
         shipLight = GetComponentInChildren<Light2D>();
-        webController = GetComponent<WebController>();
     }
     
     private void Start()
     {
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
-        currentMovementScale = movementScale;
     }
 
     private void OnEnable()
@@ -128,17 +112,6 @@ public class PlayerController : MonoBehaviour
         {
             fuel += 50;
         }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (currentState == State.DRILL)
-            {
-                ChangeState(State.MOVING);
-            }else if (currentState == State.MOVING)
-            {
-                ChangeState(State.DRILL);
-            }
-        }
     }
 
     private void FixedUpdate()
@@ -153,14 +126,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.KNOCKBACK:
                 break;
-            case State.DRILL:
-                Move();
-                Rotation();
-                break;
-            case State.BOOST:
-                BoostMove();
-                Rotation();
-                break;
             default:
                 break;
         }
@@ -169,21 +134,12 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        Vector2 acceleration = transform.right * accelerationValue * currentMovementScale * webController.webDecrease;
+        Vector2 acceleration =
+                        transform.right * //Direccion
+                        accelerationValue * //Aceleracion
+                        Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
-    }
-
-    private void BoostMove()
-    {
-        if(movementDirection == Vector2.zero)
-        {
-            c_rb.AddForce(transform.right * boostMovementWithoutAcceleration, ForceMode2D.Force);
-        }
-        else
-        {
-            Move();
-        }
     }
  
     private void Rotation()
@@ -207,48 +163,50 @@ public class PlayerController : MonoBehaviour
     #region Ship Health & Fuel
     void LoseFuel()
     {
-        switch (currentState)
-        {
-            case State.MOVING:
-                if(accelerationValue == 0)
-                {
-                    fuel -= Time.deltaTime / 3;
+
+        //Rehacer todo
+        //switch (currentState)
+        //{
+        //    case State.MOVING:
+        //        if(accelerationValue == 0)
+        //        {
+        //            fuel -= Time.deltaTime / 3;
                     
-                    if(engineParticles.isPlaying)
-                        engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-                }
-                else
-                {
-                    fuel -= Time.deltaTime;
+        //            if(engineParticles.isPlaying)
+        //                engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        //        }
+        //        else
+        //        {
+        //            fuel -= Time.deltaTime;
 
-                    if (engineParticles.isStopped)
-                        engineParticles.Play(true);
-                }
-                break;
-            case State.MINING:
-                break;
-            case State.KNOCKBACK:
-                break;
-            case State.INVENCIBILITY:
-                break;
-            case State.BOOST:
-                if(accelerationValue == 0)
-                {
-                    fuel -= Time.deltaTime;
-                }
-                else
-                {
-                    fuel -= Time.deltaTime * 2;
-                }
-                break;
-            default:
-                break;
-        }
+        //            if (engineParticles.isStopped)
+        //                engineParticles.Play(true);
+        //        }
+        //        break;
+        //    case State.MINING:
+        //        break;
+        //    case State.KNOCKBACK:
+        //        break;
+        //    case State.INVENCIBILITY:
+        //        break;
+        //    case State.BOOST:
+        //        if(accelerationValue == 0)
+        //        {
+        //            fuel -= Time.deltaTime;
+        //        }
+        //        else
+        //        {
+        //            fuel -= Time.deltaTime * 2;
+        //        }
+        //        break;
+        //    default:
+        //        break;
+        //}
 
-        if(Time.deltaTime / 3 == 0)
-        {
-            fuel -= Time.deltaTime;
-        }
+        //if(Time.deltaTime / 3 == 0)
+        //{
+        //    fuel -= Time.deltaTime;
+        //}
 
         CheckIfPlayerDies();
     }
@@ -302,7 +260,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        CameraController.Instance.AddMediumTrauma();
+        CameraController.Instance.AddHighTrauma();
         Knockback(damagePos);
         fuel -= value / PowerUpManager.Instance.Armor;
     }
@@ -350,16 +308,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.KNOCKBACK:
                 break; 
-            case State.DRILL:
-                currentMovementScale = movementScale;
-                drillController.enabled = false;
-                drillSprite.SetActive(false);
-                c_rb.angularVelocity = 0;
-                break;
             case State.FREEZE:
-                break;
-            case State.BOOST:
-                currentMovementScale = movementScale;
                 break;
             case State.DEAD:
                 return;
@@ -379,20 +328,12 @@ public class PlayerController : MonoBehaviour
             case State.KNOCKBACK:
                 c_rb.velocity = Vector2.zero;
                 break;
-            case State.DRILL:
-                currentMovementScale = drillMovementScale;
-                drillController.enabled = true;
-                drillSprite.SetActive(true);
 
-                break;
             case State.FREEZE:
                 c_rb.velocity = Vector2.zero;
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
-                break;
-                case State.BOOST:
-                currentMovementScale = boostMovementScale;
                 break;
             default:
                 break;
@@ -406,12 +347,7 @@ public class PlayerController : MonoBehaviour
 
     public float GetSpeed()
     {
-        return movementScale;
-    }
-
-    public void SetSpeed(float value)
-    {
-        currentMovementScale = value;
+        return movementSpeed;
     }
 
     #endregion

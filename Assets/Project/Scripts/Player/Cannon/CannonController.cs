@@ -86,7 +86,7 @@ public class CannonController : MonoBehaviour
         {
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
-            CameraController.Instance.AddLowTrauma();
+            CameraController.Instance.SetTrauma(0.4f);
             playerController.SubstractHealth(fuelConsume);
         }
     }
