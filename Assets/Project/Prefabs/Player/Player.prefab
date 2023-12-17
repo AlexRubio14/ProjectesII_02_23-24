@@ -382,7 +382,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: 8648923338690527996, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  movementScale: 50
+  movementSpeed: 50
+  externalMovementSpeed: 0
   minRotationSpeed: 1
   maxRotationSpeed: 3
   rotationSpeed: 110
@@ -395,10 +396,6 @@ MonoBehaviour:
   timeToExploteShip: 3
   timeToReturnHub: 3
   engineParticles: {fileID: 4361300617207404308}
-  drillMovementScale: 20
-  drillSprite: {fileID: 3698819587768263416}
-  boostMovementScale: 150
-  boostMovementWithoutAcceleration: 0
   maxStorage: 50
 --- !u!114 &4196185413055272076
 MonoBehaviour:
@@ -420,7 +417,7 @@ MonoBehaviour:
   c_itemToShowCanvas: {fileID: 0}
   c_itemToShowImage: {fileID: 0}
   c_lockedUpgradeImage: {fileID: 0}
-  interactKeySprite: {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+  interactKeySprite: {fileID: 21300000, guid: c01a1548b10ef4c4992c29241cd38f51, type: 3}
   showCanvas: 0
 --- !u!114 &697992122945508969
 MonoBehaviour:
@@ -512,6 +509,9 @@ MonoBehaviour:
     - Key: 3
       Value: {fileID: 0}
   locketUpgradeSprite: {fileID: 21300000, guid: ad3edb4bfe23c734da74e1a4f9c8decb, type: 3}
+  boostMovementSpeed: 50
+  drillMovementSlow: 20
+  drillSprite: {fileID: 3698819587768263416}
   lightUpgrade: {fileID: 9096134186405275553}
   boostIntake: 0
   drillIntake: 0
@@ -548,9 +548,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToEraseWeb: 10
-  speedDecreaseWithOneWeb: 0.75
-  speedDecreaseWithTwoWebs: 0.5
-  speedDecreaseWithThreeWebs: 0.3
+  maxWebs: 3
+  webSlow: 7
 --- !u!1 &4329926445472445026
 GameObject:
   m_ObjectHideFlags: 0

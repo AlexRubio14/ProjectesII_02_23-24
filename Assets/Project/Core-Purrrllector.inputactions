@@ -221,7 +221,7 @@
                 {
                     "name": "",
                     "id": "dff54714-1743-4c11-aafd-3123f0827c89",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -243,7 +243,7 @@
                 {
                     "name": "",
                     "id": "8ea4135a-bb3d-48e8-8ce2-8d666cc4e954",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -285,37 +285,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "One Modifier",
-                    "id": "76162d78-2cb0-4430-800e-812158e396d0",
-                    "path": "OneModifier",
+                    "name": "",
+                    "id": "65a90656-8be1-4490-99b8-0f8d15d5d4b8",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "UpUpgradeSelected",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "dd1522d4-02f0-412a-a261-b444ad753095",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "UpUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "d4c0ce3b-844a-41de-88a5-98391781f0b0",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "UpUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -329,125 +307,59 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "One Modifier",
-                    "id": "40ac6f15-0987-4e7d-9355-d57e3e446966",
-                    "path": "OneModifier",
+                    "name": "",
+                    "id": "3189aa68-c3df-4e41-93b5-bb987f64e727",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DownUpgradeSelected",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "9d6626d2-a5a3-4992-883b-d57d77356444",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "DownUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "46e459f3-1bbf-4e34-92ab-87e04c49b04f",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "DownUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
                     "id": "10746cc8-2b8e-45a0-9558-115a871f715d",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "RightUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "e4ba9513-280d-4657-96cb-e1cb75893653",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RightUpgradeSelected",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "a688da92-8fdc-44e3-b192-c01248cd63b1",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "RightUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "bff6eeb2-dd24-4482-b7d8-6f2e1b8e5c64",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "RightUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "b022ac4e-c67e-406b-b418-e0909e549b23",
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "RightUpgradeSelected",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6db1a99-b062-46df-9183-f5a958f2d9b1",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightUpgradeSelected",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b022ac4e-c67e-406b-b418-e0909e549b23",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "LeftUpgradeSelected",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "One Modifier",
-                    "id": "b7d9ae1d-be8f-415b-a4a0-0341c9788db7",
-                    "path": "OneModifier",
+                    "name": "",
+                    "id": "b92f0e40-5d5c-423f-8ecc-78eb2e6068a5",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "LeftUpgradeSelected",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "5af32d95-c784-462c-8550-75f2f6d64a79",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "LeftUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "7058634b-4923-4c6e-81fe-8380f853e5be",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "LeftUpgradeSelected",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },

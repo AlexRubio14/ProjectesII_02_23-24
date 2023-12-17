@@ -6,44 +6,42 @@ public class WebController : MonoBehaviour
 {
     private int websInPlayer;
 
-    public float webDecrease { get; private set; }
-
     [SerializeField]
     private float timeToEraseWeb;
     private float currentWebTime;
 
-    [Space, Header("Speed Decrease"), SerializeField]
-    private float speedDecreaseWithOneWeb;
     [SerializeField]
-    private float speedDecreaseWithTwoWebs;
-    [SerializeField]
-    private float speedDecreaseWithThreeWebs;
+    private int maxWebs;
 
+    [Space, Header("Speed Decrease"), SerializeField]
+    private float webSlow;
+
+    private PlayerController playerController;
 
     private void Awake()
     {
-        webDecrease = 1;
+        playerController = GetComponent<PlayerController>();
+
         currentWebTime = timeToEraseWeb;
         websInPlayer = 0;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         EraseWeb();
     }
-
-    private void EraseWeb()
+    public void EraseWeb()
     {
         if (websInPlayer == 0)
             return;
 
-        currentWebTime -= Time.deltaTime;
+        currentWebTime -= Time.fixedDeltaTime;
 
         if(currentWebTime <= 0)
         {
             websInPlayer--;
-            PlayerSpeedWithWebs();
-
+            //Bajar la velocidad
+            playerController.externalMovementSpeed += webSlow;
             if (websInPlayer == 0)
                 return;
 
@@ -51,48 +49,32 @@ public class WebController : MonoBehaviour
         }
     }
 
-    public float PlayerSpeedWithWebs()
+    public void ReducePlayerSpeed()
     {
-        switch (websInPlayer) 
-        {
-            case 0:
-                webDecrease = 1;
-                break;
-            case 1:
-                webDecrease = speedDecreaseWithOneWeb;
-                break;
-            case 2:
-                webDecrease = speedDecreaseWithTwoWebs;
-                break;
-            case 3:
-                webDecrease = speedDecreaseWithThreeWebs;
-                break;
-            default: 
-                break;
-        }
-        return webDecrease;
-    }
+        Mathf.Clamp(websInPlayer, 0, maxWebs);
 
-    public int GetWebs()
-    {
-        return websInPlayer;
+        playerController.externalMovementSpeed -= webSlow;
     }
 
     public void EraseAllWebs()
     {
+        for (int i = 0; i < websInPlayer; i++)
+        {
+            playerController.externalMovementSpeed += webSlow;
+        }
+
         websInPlayer = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (websInPlayer == 3)
-            return;
 
-        if(collision.CompareTag("Web"))
+        if(collision.CompareTag("Web") && websInPlayer <= maxWebs)
         {
             websInPlayer++;
-            PlayerSpeedWithWebs();
+            ReducePlayerSpeed();
             currentWebTime = timeToEraseWeb;
+            collision.gameObject.SetActive(false);
         }
     }
 }
