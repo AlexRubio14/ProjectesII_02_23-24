@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
+    [HideInInspector]
     public float externalMovementSpeed;
 
     [Space, Header("Rotation")]
@@ -40,11 +41,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float knockbackTime;
 
-    [Space, Header("Health"), SerializeField]
+    [Space, Header("Fuel"), SerializeField]
     private float baseFuel;
     public float fuel { get; private set; }
+    
+    public float fuelConsume;
     [SerializeField]
     private float mapDamage;
+    [SerializeField]
+    private float idleFuelConsume;
+    [SerializeField]
+    private float movingFuelConsume;
+
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -56,17 +64,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem engineParticles;
 
-    [Space, Header("Storage"), SerializeField]
-    private int maxStorage;
-    private int currentStorage;
-
     private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
 
     private void Awake()
     {
-        currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
 
         inputController = GetComponent<InputController>();
@@ -77,6 +80,9 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        fuelConsume = idleFuelConsume;
+        currentState = State.IDLE;
+
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
     }
 
@@ -104,10 +110,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {
-        LoseFuel();
-        
+    {        
         fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+
         if(Input.GetKey(KeyCode.L))
         {
             fuel += 50;
@@ -118,13 +123,17 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentState)
         {
+            case State.IDLE:
             case State.MOVING:
                 Move();
                 Rotation();
+                CheckIdleOrMovingState();
+                LoseFuel();
                 break;
             case State.MINING:
                 break;
             case State.KNOCKBACK:
+                LoseFuel();
                 break;
             default:
                 break;
@@ -160,54 +169,10 @@ public class PlayerController : MonoBehaviour
    
     #endregion
 
-    #region Ship Health & Fuel
+    #region Ship Fuel
     void LoseFuel()
     {
-
-        //Rehacer todo
-        //switch (currentState)
-        //{
-        //    case State.MOVING:
-        //        if(accelerationValue == 0)
-        //        {
-        //            fuel -= Time.deltaTime / 3;
-                    
-        //            if(engineParticles.isPlaying)
-        //                engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        //        }
-        //        else
-        //        {
-        //            fuel -= Time.deltaTime;
-
-        //            if (engineParticles.isStopped)
-        //                engineParticles.Play(true);
-        //        }
-        //        break;
-        //    case State.MINING:
-        //        break;
-        //    case State.KNOCKBACK:
-        //        break;
-        //    case State.INVENCIBILITY:
-        //        break;
-        //    case State.BOOST:
-        //        if(accelerationValue == 0)
-        //        {
-        //            fuel -= Time.deltaTime;
-        //        }
-        //        else
-        //        {
-        //            fuel -= Time.deltaTime * 2;
-        //        }
-        //        break;
-        //    default:
-        //        break;
-        //}
-
-        //if(Time.deltaTime / 3 == 0)
-        //{
-        //    fuel -= Time.deltaTime;
-        //}
-
+        fuel = Mathf.Clamp(fuel - fuelConsume * Time.fixedDeltaTime, 0, GetMaxFuel());
         CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
@@ -279,6 +244,19 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region States
+    private void CheckIdleOrMovingState()
+    {
+        if (accelerationValue == 0 && currentState == State.MOVING)
+        {
+            ChangeState(State.IDLE);
+
+        }
+        else if (accelerationValue != 0 && currentState == State.IDLE)
+        {
+            ChangeState(State.MOVING);
+        }
+    }
+
     private void WaitForKnockbackTime()
     {
         ChangeState(State.MOVING);
@@ -299,7 +277,12 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentState)
         {
+            case State.IDLE:
+                fuelConsume -= idleFuelConsume;
+                break;
             case State.MOVING:
+                fuelConsume -= movingFuelConsume;
+                engineParticles.Stop();
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
@@ -318,7 +301,12 @@ public class PlayerController : MonoBehaviour
 
         switch (state)
         {
+            case State.IDLE:
+                fuelConsume += idleFuelConsume;
+                break;
             case State.MOVING:
+                fuelConsume += movingFuelConsume;
+                engineParticles.Play();
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
@@ -344,7 +332,6 @@ public class PlayerController : MonoBehaviour
     {
         return currentState;
     }
-
     public float GetSpeed()
     {
         return movementSpeed;
