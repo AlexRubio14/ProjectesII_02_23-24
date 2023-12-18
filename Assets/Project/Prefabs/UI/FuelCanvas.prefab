@@ -1459,7 +1459,7 @@ GameObject:
   - component: {fileID: 5922197424190167613}
   - component: {fileID: 4713200198123826815}
   m_Layer: 5
-  m_Name: HealthCanvas
+  m_Name: FuelCanvas
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

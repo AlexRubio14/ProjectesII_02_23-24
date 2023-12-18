@@ -4905,7 +4905,6 @@ GameObject:
   - component: {fileID: 5705288886313716301}
   - component: {fileID: 2806392783800965203}
   - component: {fileID: 6367322862775916959}
-  - component: {fileID: 2509157938815098306}
   m_Layer: 0
   m_Name: WindColumn
   m_TagString: Untagged
@@ -4927,7 +4926,7 @@ Transform:
   m_Children:
   - {fileID: 5317888789610539419}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2806392783800965203
 BoxCollider2D:
@@ -4989,23 +4988,8 @@ AreaEffector2D:
     m_Bits: 6071
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
-  m_ForceMagnitude: 40
+  m_ForceMagnitude: 85
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 0
   m_AngularDrag: 0
---- !u!114 &2509157938815098306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7676132289814837664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a51bde976671b644d9a28d8359ffa7ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  neededUpgrade: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
-  forceWithUpgrade: 20
-  forceWithoutUpgrade: 85

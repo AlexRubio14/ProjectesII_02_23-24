@@ -52,12 +52,12 @@ public class UpgradeSelector : MonoBehaviour
     [Space, Header("Light"), SerializeField]
     private GameObject lightUpgrade;
 
-    [Space, Header("Fuel Intake"), SerializeField]
-    private float boostIntake;
+    [Space, Header("Fuel Consume"), SerializeField]
+    private float boostConsume;
     [SerializeField]
-    private float drillIntake;
+    private float drillConsume;
     [SerializeField]
-    private float lightIntake;
+    private float lightConsume;
 
 
     private PlayerController playerController;
@@ -171,12 +171,11 @@ public class UpgradeSelector : MonoBehaviour
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
             webController.EraseAllWebs();
-            playerController.SubstractHealth(boostIntake);
             ChangeBackground(_pos, true);
             playerController.externalMovementSpeed += boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = true;
             //Sumar al consumo de fuel
-
+            playerController.fuelConsume += boostConsume;
         }
         else
         {
@@ -184,7 +183,7 @@ public class UpgradeSelector : MonoBehaviour
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
             //Restar al consumo de fuel
-
+            playerController.fuelConsume -= boostConsume;
         }
     }
 
@@ -196,7 +195,7 @@ public class UpgradeSelector : MonoBehaviour
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = true;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
             //Sumar al consumo de fuel
-
+            playerController.fuelConsume += lightConsume;
         }
         else
         {
@@ -204,6 +203,7 @@ public class UpgradeSelector : MonoBehaviour
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = false;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
             //Restar al consumo de fuel
+            playerController.fuelConsume -= lightConsume;
         }
     }
 
@@ -217,7 +217,7 @@ public class UpgradeSelector : MonoBehaviour
             upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL] = true;
             ChangeBackground(_pos, true);
             //Sumar al consumo de fuel
-
+            playerController.fuelConsume += drillConsume;
         }
         else
         {
@@ -227,7 +227,7 @@ public class UpgradeSelector : MonoBehaviour
             upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL] = false;
             ChangeBackground(_pos, false);
             //Restar al consumo de fuel
-
+            playerController.fuelConsume -= drillConsume;
         }
     }
 

@@ -61,7 +61,7 @@ public class FuelCanvasController : MonoBehaviour
         float currFuel = playerController.GetFuel();
         currentFuel.text = currFuel.ToString("0.0");
         fuelSlider.value = currFuel;
-
+        totalConsumePerSecond.text = playerController.fuelConsume.ToString("0.0");
         ShowLowFuel(currFuel);
 
     }

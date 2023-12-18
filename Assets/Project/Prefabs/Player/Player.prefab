@@ -391,12 +391,14 @@ MonoBehaviour:
   knockbackRotation: 1
   knockbackTime: 0.3
   baseFuel: 100
+  fuelConsume: 0
   mapDamage: 10
+  idleFuelConsume: 0.1
+  movingFuelConsume: 0.8
   explosionParticles: {fileID: 8568151849809588671, guid: 06129a86feb697948bf26773e90b9dce, type: 3}
   timeToExploteShip: 3
   timeToReturnHub: 3
   engineParticles: {fileID: 4361300617207404308}
-  maxStorage: 50
 --- !u!114 &4196185413055272076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,9 +515,9 @@ MonoBehaviour:
   drillMovementSlow: 20
   drillSprite: {fileID: 3698819587768263416}
   lightUpgrade: {fileID: 9096134186405275553}
-  boostIntake: 0
-  drillIntake: 0
-  lightIntake: 0
+  boostConsume: 0.8
+  drillConsume: 1.2
+  lightConsume: 0.2
 --- !u!114 &670545847217739927
 MonoBehaviour:
   m_ObjectHideFlags: 0
