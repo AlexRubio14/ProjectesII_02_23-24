@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
-
+    private AutoHelpController autoHelpController;
     private void Awake()
     {
         c_rb = GetComponent<Rigidbody2D>();
@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
+        autoHelpController = GetComponent<AutoHelpController>();
     }
     
     private void Start()
@@ -152,12 +153,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Rotation()
     {
-        if (movementDirection.sqrMagnitude < 0.001f)
+        if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
         {
             return;
         }
 
-        Vector2 normalizedInputDirection = movementDirection.normalized;
+
+        Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
+        Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
 
         Quaternion targetRotation = Quaternion.AngleAxis(
             Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime)
@@ -180,6 +183,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
     #endregion
 
     #region Ship Fuel
