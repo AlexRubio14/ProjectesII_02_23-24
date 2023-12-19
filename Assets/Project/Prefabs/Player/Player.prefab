@@ -486,10 +486,16 @@ MonoBehaviour:
   rightUpgradeAction: {fileID: -1784829170732850432, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   unselectedBackground: {fileID: 21300000, guid: 1dd94391b7a2cb449ace593a53acb46a, type: 3}
   selectedBackground: {fileID: 21300000, guid: c9fba170e503d774991290bb242676cc, type: 3}
-  upBackGround: {fileID: 0}
-  downBackGround: {fileID: 0}
-  rightBackGround: {fileID: 0}
-  leftBackGround: {fileID: 0}
+  backgroundImagePositions:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 0}
+    - Key: 1
+      Value: {fileID: 0}
+    - Key: 2
+      Value: {fileID: 0}
+    - Key: 3
+      Value: {fileID: 0}
   upgradePositions:
     _serializedList:
     - Key: 0
@@ -512,6 +518,8 @@ MonoBehaviour:
       Value: {fileID: 0}
   locketUpgradeSprite: {fileID: 21300000, guid: ad3edb4bfe23c734da74e1a4f9c8decb, type: 3}
   boostMovementSpeed: 50
+  boostStaminaReduction: 0.7
+  boostStaminaRecover: 0.3
   drillMovementSlow: 20
   drillSprite: {fileID: 3698819587768263416}
   lightUpgrade: {fileID: 9096134186405275553}
@@ -5598,13 +5606,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac313606fcd29e4f9611b3642890424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimTurretAction: {fileID: 7774272305282626994, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   posToSpawnBullets: {fileID: 4204113142784814922}
   laserPrefab: {fileID: 1805159943047549904, guid: b6480ce03b4600c42b61c93f23ce547d, type: 3}
-  reloadDelay: 0.5
-  fuelConsume: 0.5
-  canShootStates: 00000000010000000500000007000000
+  shootingRange: 8
+  reloadDelay: 1.5
+  fuelConsume: 1
+  canShootStates: 000000000100000005000000
+  enemiesMask:
+    serializedVersion: 2
+    m_Bits: 512
+  aimTarget: {fileID: 0}
+  autoShoot: 0
 --- !u!1 &7686264573825968600
 GameObject:
   m_ObjectHideFlags: 0
