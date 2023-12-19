@@ -14,8 +14,8 @@ public class EnemyIA : MonoBehaviour
     [SerializeField]
     protected IAData iaData;
 
-    [SerializeField]
-    private float detectionDelay = 0.05f;
+    //[SerializeField]
+    //private float detectionDelay = 0.05f;
 
     [SerializeField]
     protected ContextSolver movementDirectionSolver;

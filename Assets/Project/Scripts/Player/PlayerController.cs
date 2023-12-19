@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
-    [HideInInspector]
+    //[HideInInspector]
     public float externalMovementSpeed;
 
     [Space, Header("Rotation")]
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     [Space, Header("Fuel"), SerializeField]
     private float baseFuel;
     public float fuel { get; private set; }
-    
+    [HideInInspector]
     public float fuelConsume;
     [SerializeField]
     private float mapDamage;
@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
-
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -129,6 +128,7 @@ public class PlayerController : MonoBehaviour
                 Rotation();
                 CheckIdleOrMovingState();
                 LoseFuel();
+                CheckEnableEngineParticles();
                 break;
             case State.MINING:
                 break;
@@ -145,12 +145,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 acceleration =
                         transform.right * //Direccion
-                        accelerationValue * //Aceleracion
+                        Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
                         Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
         c_rb.AddForce(acceleration, ForceMode2D.Force);
     }
- 
     private void Rotation()
     {
         if (movementDirection.sqrMagnitude < 0.001f)
@@ -166,7 +165,21 @@ public class PlayerController : MonoBehaviour
 
         c_rb.SetRotation(transform.rotation * targetRotation);
     }
-   
+
+    private void CheckEnableEngineParticles()
+    {
+        float moveForce = Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity));
+
+        if (engineParticles.isStopped && moveForce > 0 ) // Encender particulas
+        {
+            engineParticles.Play();
+        }
+        else if (engineParticles.isPlaying && moveForce == 0) //Apagar particulas
+        {
+            engineParticles.Stop();
+        }
+
+    }
     #endregion
 
     #region Ship Fuel
@@ -282,7 +295,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MOVING:
                 fuelConsume -= movingFuelConsume;
-                engineParticles.Stop();
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
@@ -306,7 +318,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MOVING:
                 fuelConsume += movingFuelConsume;
-                engineParticles.Play();
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar

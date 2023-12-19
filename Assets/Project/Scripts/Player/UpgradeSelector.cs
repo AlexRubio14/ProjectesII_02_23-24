@@ -23,26 +23,28 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private Sprite selectedBackground;
 
-    [SerializeField]
-    private Image upBackGround; 
-    [SerializeField]
-    private Image downBackGround;
-    [SerializeField]
-    private Image rightBackGround;
-    [SerializeField]
-    private Image leftBackGround;
+    [SerializedDictionary("Position", "Background")]
+    public SerializedDictionary<Position, Image> backgroundImagePositions;
+
 
     [Space, Header("Upgrades"), SerializedDictionary("Position", "Upgrade")]
     public SerializedDictionary<Position, UpgradeObject> upgradePositions;
     private Dictionary<UpgradeObject, bool> obtainedUpgrades;
     [Space(height: 10), SerializedDictionary("Position", "Image")]
     public SerializedDictionary<Position, Image> upgradeImagePositions;
-    [SerializeField]
+    [Space, SerializeField]
     private Sprite locketUpgradeSprite;
     public bool[] upgradesToggled { private set; get; }
 
     [Space, Header("Boost"), SerializeField]
     private float boostMovementSpeed;
+    private float boostStamina = 1;
+    [SerializeField]
+    private float boostStaminaReduction;
+    [SerializeField]
+    private float boostStaminaRecover;
+    private Position boostPos;
+
     [Space, Header("Drill"), SerializeField]
     private float drillMovementSlow;
     [SerializeField]
@@ -74,6 +76,8 @@ public class UpgradeSelector : MonoBehaviour
     private void Start()
     {
         obtainedUpgrades = new Dictionary<UpgradeObject, bool>();
+
+
         foreach (KeyValuePair<Position, UpgradeObject> item in upgradePositions)
         {
             Sprite currentSprite;
@@ -81,6 +85,7 @@ public class UpgradeSelector : MonoBehaviour
             {
                 currentSprite = item.Value.c_UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
+                
             }
             else
             {
@@ -89,6 +94,12 @@ public class UpgradeSelector : MonoBehaviour
             }
 
             upgradeImagePositions[item.Key].sprite = currentSprite;
+
+            if (item.Value.type == UpgradeObject.UpgradeType.BOOST)
+            {
+                boostPos = item.Key;
+            }
+
         }
 
 
@@ -100,32 +111,33 @@ public class UpgradeSelector : MonoBehaviour
 
     private void OnEnable()
     {
-        upUpgradeAction.action.started += _ => ToggleUpgrade(Position.UP);
-        upUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.UP);
+        upUpgradeAction.action.started += _ => ToggleUpgrade(Position.UP, _);
+        upUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.UP, _);
 
-        downUpgradeAction.action.started += _ => ToggleUpgrade(Position.DOWN);
-        downUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.DOWN);
+        downUpgradeAction.action.started += _ => ToggleUpgrade(Position.DOWN, _);
+        downUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.DOWN, _);
 
-        rightUpgradeAction.action.started += _ => ToggleUpgrade(Position.RIGHT);
-        rightUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.RIGHT);
+        rightUpgradeAction.action.started += _ => ToggleUpgrade(Position.RIGHT, _);
+        rightUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.RIGHT, _);
 
-        leftUpgradeAction.action.started += _ => ToggleUpgrade(Position.LEFT);
-        leftUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.LEFT);
+        leftUpgradeAction.action.started += _ => ToggleUpgrade(Position.LEFT, _);
+        leftUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.LEFT, _);
 
     }
+
     private void OnDisable()
     {
-        upUpgradeAction.action.started -= _ => ToggleUpgrade(Position.UP);
-        upUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.UP);
+        upUpgradeAction.action.started -= _ => ToggleUpgrade(Position.UP, _);
+        upUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.UP, _);
 
-        downUpgradeAction.action.started -= _ => ToggleUpgrade(Position.DOWN);
-        downUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.DOWN);
+        downUpgradeAction.action.started -= _ => ToggleUpgrade(Position.DOWN, _);
+        downUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.DOWN, _);
 
-        rightUpgradeAction.action.started -= _ => ToggleUpgrade(Position.RIGHT);
-        rightUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.RIGHT);
+        rightUpgradeAction.action.started -= _ => ToggleUpgrade(Position.RIGHT, _);
+        rightUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.RIGHT, _);
 
-        leftUpgradeAction.action.started -= _ => ToggleUpgrade(Position.LEFT);
-        leftUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.LEFT);
+        leftUpgradeAction.action.started -= _ => ToggleUpgrade(Position.LEFT, _);
+        leftUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.LEFT, _);
     }
 
     private void Update()
@@ -138,9 +150,11 @@ public class UpgradeSelector : MonoBehaviour
                 obtainedUpgrades[item.Value] = true;
             }
         }
+
+        CheckBoostStamina();
     }
 
-    private void ToggleUpgrade(Position _pos)
+    private void ToggleUpgrade(Position _pos, InputAction.CallbackContext obj)
     {
         if (!obtainedUpgrades[upgradePositions[_pos]])
             return;
@@ -148,7 +162,9 @@ public class UpgradeSelector : MonoBehaviour
         switch (upgradePositions[_pos].type)
         {
             case UpgradeObject.UpgradeType.BOOST:
-                ToggleBoost(_pos);
+                bool isPressed = obj.action.IsPressed();
+                ToggleBoost(_pos, isPressed);
+                Debug.Log("El boost esta " + isPressed);
                 break;
             case UpgradeObject.UpgradeType.LIGHT:
                 ToggleLight(_pos);
@@ -164,11 +180,11 @@ public class UpgradeSelector : MonoBehaviour
         }
 
     }
-    private void ToggleBoost(Position _pos)
+    private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
 
-        if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
+        if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
             webController.EraseAllWebs();
             ChangeBackground(_pos, true);
@@ -177,13 +193,37 @@ public class UpgradeSelector : MonoBehaviour
             //Sumar al consumo de fuel
             playerController.fuelConsume += boostConsume;
         }
-        else
+        else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
             ChangeBackground(_pos, false); 
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
             //Restar al consumo de fuel
             playerController.fuelConsume -= boostConsume;
+        }
+    }
+    private void CheckBoostStamina()
+    {
+        if (!obtainedUpgrades[upgradePositions[boostPos]])
+            return;
+
+        //Si la mejora esta activada resta stamina        
+        if (upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
+        {
+            boostStamina -= boostStaminaReduction * Time.deltaTime;
+        }
+        else //Si esta desactivada recupera stamina
+        {
+            boostStamina += boostStaminaRecover * Time.deltaTime;
+        }
+
+        boostStamina = Mathf.Clamp01(boostStamina);
+
+        backgroundImagePositions[boostPos].fillAmount = boostStamina;
+
+        if (boostStamina == 0)
+        {
+            ToggleBoost(boostPos, false);
         }
     }
 
@@ -249,43 +289,7 @@ public class UpgradeSelector : MonoBehaviour
             currentSprite = unselectedBackground;
         }
 
-        switch (_pos)
-        {
-            case Position.UP:
-                upBackGround.sprite = currentSprite;
-                break;
-            case Position.DOWN:
-                downBackGround.sprite = currentSprite;
-                break;
-            case Position.RIGHT:
-                rightBackGround.sprite = currentSprite; 
-                break;
-            case Position.LEFT:
-                leftBackGround.sprite = currentSprite;
-                break;
-            default:
-                break;
-        }
+        backgroundImagePositions[_pos].sprite = currentSprite;
     }
 
-    private void SetBackgroundFill(Position _pos, float _value)
-    {
-        switch (_pos)
-        {
-            case Position.UP:
-                upBackGround.fillAmount = _value;
-                break;
-            case Position.DOWN:
-                downBackGround.fillAmount = _value;
-                break;
-            case Position.RIGHT:
-                rightBackGround.fillAmount = _value;
-                break;
-            case Position.LEFT:
-                leftBackGround.fillAmount = _value;
-                break;
-            default:
-                break;
-        }
-    }
 }
