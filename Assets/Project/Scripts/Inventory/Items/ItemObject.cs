@@ -22,7 +22,9 @@ public class ItemObject : ScriptableObject
     public Sprite c_PickableSprite { get; private set; }
 
     [field: SerializeField]
-    public Color LightColor { get; private set; }
+    public Color EffectsColor { get; private set; }
+    
+
 
     [field: Tooltip("En caso de no tener power up, dejarlo en NONE"), SerializeField]
     public PowerUpManager.PowerUpType PowerUp { get; private set; }

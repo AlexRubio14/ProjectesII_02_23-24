@@ -16,5 +16,5 @@ MonoBehaviour:
   <Weight>k__BackingField: 0
   <c_MapSprite>k__BackingField: {fileID: 0}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 5281b4d4e4942f6498e82e1c19241dbb, type: 3}
-  <LightColor>k__BackingField: {r: 0.9811321, g: 0.041651815, b: 0.7565736, a: 1}
+  <EffectsColor>k__BackingField: {r: 0.9150943, g: 0, b: 0.5735044, a: 1}
   <PowerUp>k__BackingField: 0
