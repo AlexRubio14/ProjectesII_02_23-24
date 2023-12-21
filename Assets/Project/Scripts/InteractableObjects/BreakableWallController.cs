@@ -16,7 +16,14 @@ public class BreakableWallController : InteractableObject
     }
     private void Start()
     {
-        SetupHiddenParticles();
+        if (isHide)
+        {
+            SetupParticles(vfxHideColor);
+        }
+        else
+        {
+            SetupParticles(vfxUnhideColor);
+        }
     }
 
     public override void Interact()
@@ -26,6 +33,8 @@ public class BreakableWallController : InteractableObject
 
     public override void UnHide()
     {
+        SetupParticles(vfxUnhideColor);
+
         breakableWallTilemap.CompressBounds();
 
         for (int x = breakableWallTilemap.cellBounds.xMin; x < breakableWallTilemap.cellBounds.xMax; x++)
@@ -47,7 +56,7 @@ public class BreakableWallController : InteractableObject
             }
         }
 
-        currentHiddenParticles.Stop();
+        interactableParticles.Stop();
 
         isHide = false;
     }

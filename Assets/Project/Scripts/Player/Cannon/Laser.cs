@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
@@ -10,6 +11,11 @@ public class Laser : MonoBehaviour
     private int damage;
     [SerializeField]
     private float maxDistance;
+
+    [Space, Header("Auto Aim"), SerializeField]
+    private float autoAimRadius;
+    [SerializeField]
+    private LayerMask enemyLayer;
 
     private Vector2 startPosition;
     private float currentDistance;
@@ -29,9 +35,27 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
+
+        AutoAim();
+
+        CheckDestroyBullet();
+    }
+
+    private void AutoAim()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, autoAimRadius, Vector2.zero, 0, enemyLayer);
+
+        if (hit)
+        {
+            c_rb.velocity = (transform.up + (hit.transform.position - transform.position)).normalized;
+        }
+    }
+
+    private void CheckDestroyBullet()
+    {
         currentDistance = Vector2.Distance(transform.position, startPosition);
 
-        if(currentDistance >= maxDistance)
+        if (currentDistance >= maxDistance)
         {
             DisableObject();
         }
@@ -59,5 +83,10 @@ public class Laser : MonoBehaviour
         }
     }
 
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, autoAimRadius);
+    }
 }

@@ -23,7 +23,7 @@ public class PickableItemController : MonoBehaviour
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = c_currentItem.c_PickableSprite;
-        GetComponentInChildren<Light2D>().color = c_currentItem.LightColor;
+        GetComponentInChildren<Light2D>().color = c_currentItem.EffectsColor;
 
     }
 

@@ -17,26 +17,30 @@ abstract public class InteractableObject : MonoBehaviour
     protected Grid grid;
     [SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
     protected Tilemap tilemap;
-    [SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
-    protected GameObject hiddenParticlesPrefab;
-    protected ParticleSystem currentHiddenParticles;
     [SerializeField]
-    protected Vector2 hiddenParticlesSize;
+    protected ParticleSystem interactableParticles;
     [SerializeField]
-    protected Vector2 hiddenParticlesPosition;
+    protected Color vfxUnhideColor;
+    protected Color vfxHideColor = new Color(120, 0, 121, 0.1f);
+    [SerializeField]
+    protected Vector2 particlesSize;
+    [SerializeField]
+    protected Vector2 particlesPosition;
     [SerializeField]
     protected float hiddenParticlesRateOverTime;
 
     abstract public void Interact();
     abstract public void UnHide();
 
-    protected void SetupHiddenParticles()
+    protected void SetupParticles(Color _color)
     {
-        currentHiddenParticles = Instantiate(hiddenParticlesPrefab, transform).GetComponent<ParticleSystem>();
-        ParticleSystem.ShapeModule shape = currentHiddenParticles.shape;
-        shape.scale = hiddenParticlesSize;
-        shape.position = hiddenParticlesPosition;
-        ParticleSystem.EmissionModule emission = currentHiddenParticles.emission;
+        //Cambiar el color de las particulas
+        ParticleSystem.MainModule color = interactableParticles.main;
+        color.startColor = _color;
+        ParticleSystem.ShapeModule shape = interactableParticles.shape;
+        shape.scale = particlesSize;
+        interactableParticles.transform.localPosition = particlesPosition;
+        ParticleSystem.EmissionModule emission = interactableParticles.emission;
         emission.rateOverTime = hiddenParticlesRateOverTime;
     }
 }

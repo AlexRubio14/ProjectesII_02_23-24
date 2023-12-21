@@ -14,8 +14,6 @@ public class MineralController : InteractableObject
     [SerializeField]
     private bool isBeta;
 
-    private Light2D currentLight;
-
     private PlayerMineryController player;
 
     private SpriteRenderer c_spriteR;
@@ -23,18 +21,21 @@ public class MineralController : InteractableObject
     {
         c_spriteR = GetComponent<SpriteRenderer>();
         c_spriteR.sprite = c_currentItem.c_MapSprite;
-        currentLight = GetComponentInChildren<Light2D>();
-        currentLight.color = c_currentItem.LightColor;
     }
     private void Start()
     {
         player = PlayerManager.Instance.player.gameObject.GetComponent<PlayerMineryController>();
 
+        vfxUnhideColor = new Color(c_currentItem.EffectsColor.r, c_currentItem.EffectsColor.g, c_currentItem.EffectsColor.b, 0.1f);
+
         if (isHide)
         {
-            currentLight.enabled = false;
             isInteractable = false;
-            SetupHiddenParticles();
+            SetupParticles(vfxHideColor);
+        }
+        else
+        {
+            SetupParticles(vfxUnhideColor);
         }
 
     }
@@ -74,8 +75,6 @@ public class MineralController : InteractableObject
         isInteractable = true;
         isHide = false;
 
-        currentLight.enabled = true;
-        currentHiddenParticles.Stop();
-
+        SetupParticles(vfxUnhideColor);
     }
 }

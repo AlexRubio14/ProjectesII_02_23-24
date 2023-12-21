@@ -103,6 +103,10 @@ MonoBehaviour:
   speed: 10
   damage: 40
   maxDistance: 100
+  autoAimRadius: 0.63
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!50 &1869822933708621716
 Rigidbody2D:
   serializedVersion: 4
