@@ -7,8 +7,6 @@ using TMPro;
 public class QuestInfo : MonoBehaviour
 {
 
-    [SerializeField]
-    private Button firstSelectedButton;
     [Space, SerializeField]
     private GameObject needImagePrefab;
     [SerializeField]
@@ -30,10 +28,12 @@ public class QuestInfo : MonoBehaviour
     [SerializeField]
     private GameObject nextQuestMenu;
 
+    [Space, SerializeField]
+    private Button[] backgroundButtons;
+
     // Start is called before the first frame update
     void OnEnable()
     {
-        firstSelectedButton.Select();
 
 
         QuestObject quest = QuestManager.Instance.GetCurrentQuest();
@@ -43,6 +43,9 @@ public class QuestInfo : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
+        
+        QuestButton();
+
         SetInfoValues(quest);
 
     }
@@ -101,11 +104,8 @@ public class QuestInfo : MonoBehaviour
         }
     }
 
-    public void QuestButton()
+    private void QuestButton()
     {
-
-        gameObject.SetActive(true);
-
 
         currentQuest = QuestManager.Instance.GetCurrentQuest();
         if (currentQuest && InventoryManager.Instance.CanBuy(currentQuest.neededItems))
@@ -133,4 +133,12 @@ public class QuestInfo : MonoBehaviour
     }
 
     
+    public void SetBackgroundButtonsInteractable(bool _canInteract)
+    {
+        foreach (Button item in backgroundButtons)
+        {
+            item.interactable = _canInteract;
+        }
+    }
+
 }

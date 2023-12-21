@@ -16,6 +16,9 @@ public class AutoHelpController : MonoBehaviour
 
     [SerializeField]
     private int maxDegree;
+    [SerializeField]
+    private int totalRays;
+
 
     public Vector2 autoHelpDirection { private set; get; }
 
@@ -44,16 +47,11 @@ public class AutoHelpController : MonoBehaviour
     {
         List<RaycastHit2D> rayCastHits = new List<RaycastHit2D>();
 
-        for (float i = 0; i < maxDegree; i += maxDegree / maxDegree)
+        for (float i = 0; i < maxDegree; i += maxDegree / totalRays)
         {
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
 
             rayCastHits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, distance, mapLayer));
-            if (i != 0)
-            {
-                direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-                rayCastHits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, distance, mapLayer));
-            }
         }
         return rayCastHits;
     }
@@ -79,15 +77,11 @@ public class AutoHelpController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-
-        for (float i = 0; i < maxDegree; i += maxDegree / maxDegree)
+        
+        for (float i = 0; i < maxDegree; i += maxDegree / totalRays)
         {
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * distance);
-
-            direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * distance);
-
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * distance);        
         }
 
     }

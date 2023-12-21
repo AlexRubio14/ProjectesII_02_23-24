@@ -63,14 +63,15 @@ public class UpgradeSelector : MonoBehaviour
 
 
     private PlayerController playerController;
-
     private WebController webController;
+    private AutoHelpController autoHelpController;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();  
         drillController = GetComponent<DrillController>();
         webController = GetComponent<WebController>();
+        autoHelpController = GetComponent<AutoHelpController>();
     }
 
     private void Start()
@@ -164,7 +165,6 @@ public class UpgradeSelector : MonoBehaviour
             case UpgradeObject.UpgradeType.BOOST:
                 bool isPressed = obj.action.IsPressed();
                 ToggleBoost(_pos, isPressed);
-                Debug.Log("El boost esta " + isPressed);
                 break;
             case UpgradeObject.UpgradeType.LIGHT:
                 ToggleLight(_pos);
@@ -258,6 +258,7 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, true);
             //Sumar al consumo de fuel
             playerController.fuelConsume += drillConsume;
+            autoHelpController.enabled = false;
         }
         else
         {
@@ -268,6 +269,7 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, false);
             //Restar al consumo de fuel
             playerController.fuelConsume -= drillConsume;
+            autoHelpController.enabled = true;
         }
     }
 

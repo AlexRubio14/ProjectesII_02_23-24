@@ -446,9 +446,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d05cab0917aa2a43b5db119d6235714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drillDistance: 2
-  maxDrillAngle: 80
-  raysPerSide: 15
+  drillPosistion: {fileID: 3554370719058673432}
+  drillDistance: 1.84
+  maxDrillAngle: 62
+  raysPerSide: 10
+  raysAngle: 43
   breakableWallLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -543,7 +545,8 @@ MonoBehaviour:
   mapLayer:
     serializedVersion: 2
     m_Bits: 5120
-  maxDegree: 180
+  maxDegree: 360
+  totalRays: 50
 --- !u!114 &2136173676395713007
 MonoBehaviour:
   m_ObjectHideFlags: 0

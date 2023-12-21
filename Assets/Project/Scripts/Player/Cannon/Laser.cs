@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
@@ -16,6 +13,7 @@ public class Laser : MonoBehaviour
     private float autoAimRadius;
     [SerializeField]
     private LayerMask enemyLayer;
+    private GameObject autoAimTarget;
 
     private Vector2 startPosition;
     private float currentDistance;
@@ -43,12 +41,20 @@ public class Laser : MonoBehaviour
 
     private void AutoAim()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, autoAimRadius, Vector2.zero, 0, enemyLayer);
-
-        if (hit)
+        if (!autoAimTarget)
         {
-            c_rb.velocity = (transform.up + (hit.transform.position - transform.position)).normalized;
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, autoAimRadius, Vector2.zero, 0, enemyLayer);
+
+            if (hit)
+            {
+                autoAimTarget = hit.rigidbody.gameObject;
+            }
         }
+        else
+        {
+            c_rb.velocity = (autoAimTarget.transform.position - transform.position).normalized * speed;
+        }
+
     }
 
     private void CheckDestroyBullet()

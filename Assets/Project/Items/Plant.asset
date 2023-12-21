@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Plant
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: ' '
+  <ItemName>k__BackingField: Plant
   <Weight>k__BackingField: 0
   <c_MapSprite>k__BackingField: {fileID: 21300000, guid: b5fac7acf4f898245b28a33b37e8087f, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 91fb54392ab5b444c81f8e46a790cd0d, type: 3}

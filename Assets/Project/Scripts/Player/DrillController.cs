@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class DrillController : MonoBehaviour
 {
-
     [SerializeField]
+    private Transform drillPosistion;
+
+    [Space, SerializeField]
     private float drillDistance;
     [SerializeField]
-    private float maxDrillAngle;
+    private int maxDrillAngle;
     [SerializeField]
     private int raysPerSide;
-    
+    [SerializeField]
+    private float raysAngle;
+
     [SerializeField]
     private LayerMask breakableWallLayer;
 
@@ -52,7 +56,7 @@ public class DrillController : MonoBehaviour
     private BreakableWallController breakableWallController;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Drill();        
     }
@@ -70,16 +74,18 @@ public class DrillController : MonoBehaviour
     private List<RaycastHit2D> CheckSomethingToDrill()
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
+
+        hits.Add(Physics2D.Raycast(drillPosistion.position, transform.right, drillDistance, breakableWallLayer));
+
         for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
         {
-            float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
+            float range = drillDistance - (i / raysAngle); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
+
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
-            if (i != 0)
-            {
-                direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-                hits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
-            }
+            hits.Add(Physics2D.Raycast(drillPosistion.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
+
+            direction = transform.rotation * Quaternion.Euler(0, 0, -i);
+            hits.Add(Physics2D.Raycast(drillPosistion.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
         }
 
         return hits;
@@ -264,16 +270,18 @@ public class DrillController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(drillPosistion.position, drillPosistion.position + (transform.rotation * Vector2.right) * drillDistance);
+
+
         for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
         {
-            Gizmos.color = Color.magenta;
-            float range = drillDistance - (i / 90); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
+            float range = drillDistance - (i / raysAngle); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * range);
+            Gizmos.DrawLine(drillPosistion.position, drillPosistion.position + (direction * Vector2.right) * range);
 
-            Gizmos.color = Color.magenta;
             direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * range);
+            Gizmos.DrawLine(drillPosistion.position, drillPosistion.position + (direction * Vector2.right) * range);
 
         }
 

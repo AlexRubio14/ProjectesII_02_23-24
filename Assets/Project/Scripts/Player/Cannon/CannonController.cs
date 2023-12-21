@@ -66,12 +66,15 @@ public class CannonController : MonoBehaviour
 
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
+        int index = 0;
         foreach (RaycastHit2D hit in hits)
         {
-            if (minDisntance > hit.distance)
+            index++;
+            float distance = Vector2.Distance(transform.position, hit.point);
+            if (minDisntance > distance)
             {
                 foundEnemy = hit.rigidbody;
-                minDisntance = hit.distance;
+                minDisntance = distance;
             }
         }
 
@@ -110,7 +113,7 @@ public class CannonController : MonoBehaviour
         {
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
-            CameraController.Instance.SetTrauma(0.3f);
+            CameraController.Instance.AddLowTrauma();
             playerController.SubstractHealth(fuelConsume);
         }
     }

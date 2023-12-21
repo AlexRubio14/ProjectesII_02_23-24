@@ -29,9 +29,4 @@ public class NextQuestInfo : MonoBehaviour
         }
         nextQuestText.text = nextQuestString;
     }
-
-    public void CloseButton()
-    {
-        transform.parent.gameObject.SetActive(false);
-    }
 }
