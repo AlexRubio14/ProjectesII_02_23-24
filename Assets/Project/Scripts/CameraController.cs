@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        traumaLevel -= Time.deltaTime / 1.5f;
+        traumaLevel -= Time.deltaTime / 1.3f;
 
         traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
 
@@ -82,17 +82,17 @@ public class CameraController : MonoBehaviour
 
     public void AddLowTrauma()
     {
-        traumaLevel += 0.4f;
+        traumaLevel += 0.5f;
         traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
     public void AddMediumTrauma()
     {
-        traumaLevel += 0.6f;
+        traumaLevel += 0.75f;
         traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
     public void AddHighTrauma()
     {
-        traumaLevel += 1f;
+        traumaLevel += 1.1f;
         traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
 

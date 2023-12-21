@@ -71,10 +71,4 @@ public class PickableItemController : MonoBehaviour
             playerThrow = false;
         }
     }
-
-    private void OnDestroy()
-    {
-        
-    }
-
 }

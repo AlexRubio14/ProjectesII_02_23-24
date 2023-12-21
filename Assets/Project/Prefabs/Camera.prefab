@@ -153,4 +153,4 @@ MonoBehaviour:
   c_objectToFollow: {fileID: 0}
   maxShakePosition: 0.6
   maxShakeRotation: 0.2
-  maxTraumaLevel: 1
+  maxTraumaLevel: 1.5

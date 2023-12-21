@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public abstract class Enemy : EnemyIA, IHealth
 {
@@ -126,6 +124,8 @@ public abstract class Enemy : EnemyIA, IHealth
         float throwSpeed = Random.Range(0, maxThrowSpeed);
         currItem.ImpulseItem(randomDir, throwSpeed);
         currItem.transform.up = randomDir;
+
+        currItem.GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = c_currentDrop.EffectsColor;
     }
     #endregion
 
