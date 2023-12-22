@@ -32,6 +32,12 @@ public class PlayerController : MonoBehaviour
     private float maxRotationSpeed;
     [SerializeField]
     private float rotationSpeed;
+    [SerializeField]
+    private AnimationCurve driftCurve;
+    private float driftTime;
+    [SerializeField]
+    private float maxDriftTime = 1.0f;
+    private float lastAngularDirection = 0.0f;
 
 
     [Space, Header("Knockback"), SerializeField]
@@ -76,6 +82,8 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
+
+        driftTime = maxDriftTime + 1f;
     }
     
     private void Start()
@@ -153,20 +161,37 @@ public class PlayerController : MonoBehaviour
     }
     private void Rotation()
     {
+        Quaternion targetRotation = Quaternion.identity;
+
         if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
         {
-            return;
+            if (driftTime < maxDriftTime)
+            {
+                driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
+                float t = driftTime / maxDriftTime;
+                float driftAmount = driftCurve.Evaluate(t);
+
+                targetRotation = Quaternion.AngleAxis(
+                    rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
+                    Vector3.forward);
+            }
+        }
+        else
+        {
+            Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
+            Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+
+            float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+            targetRotation = Quaternion.AngleAxis(
+                Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
+                Vector3.forward);
+
+            driftTime = 0.0f;
+            lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
+            Debug.Log(lastAngularDirection);
         }
 
-
-        Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
-        Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
-
-        Quaternion targetRotation = Quaternion.AngleAxis(
-            Mathf.Clamp(Vector2.SignedAngle(transform.right, normalizedInputDirection), -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime)
-            , Vector3.forward);
-
-        c_rb.SetRotation(transform.rotation * targetRotation);
+        c_rb.MoveRotation(transform.rotation * targetRotation);
     }
 
     private void CheckEnableEngineParticles()

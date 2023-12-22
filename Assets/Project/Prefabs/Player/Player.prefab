@@ -387,6 +387,13 @@ MonoBehaviour:
   minRotationSpeed: 1
   maxRotationSpeed: 3
   rotationSpeed: 110
+  driftCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxDriftTime: 1
   knockbackScale: 10
   knockbackRotation: 1
   knockbackTime: 0.3
@@ -541,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 0.7
-  autoHelpMagnitude: 1.5
+  autoHelpMagnitude: 1.75
   mapLayer:
     serializedVersion: 2
     m_Bits: 5120
