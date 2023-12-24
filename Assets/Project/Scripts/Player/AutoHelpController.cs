@@ -22,6 +22,10 @@ public class AutoHelpController : MonoBehaviour
 
     public Vector2 autoHelpDirection { private set; get; }
 
+
+    [Space, SerializeField]
+    private bool showGizmos = false;
+
     private void Awake()
     {
         c_rb = GetComponent<Rigidbody2D>();
@@ -76,6 +80,9 @@ public class AutoHelpController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (!showGizmos)
+            return;
+
         Gizmos.color = Color.green;
         
         for (float i = 0; i < maxDegree; i += maxDegree / totalRays)
