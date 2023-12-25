@@ -35,6 +35,11 @@ public class CannonController : MonoBehaviour
 
     private PlayerController playerController;
 
+
+
+    [Space, SerializeField]
+    private bool showGizmos;
+
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -144,6 +149,9 @@ public class CannonController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (!showGizmos)
+            return;
+
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, shootingRange);
     }

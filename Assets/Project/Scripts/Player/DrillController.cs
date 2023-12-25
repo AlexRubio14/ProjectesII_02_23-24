@@ -5,22 +5,32 @@ using UnityEngine.Tilemaps;
 public class DrillController : MonoBehaviour
 {
     [SerializeField]
-    private Transform drillPosistion;
+    private GameObject laserDrill;
+
+    [Space, Header("Drilling"), SerializeField]
+    private float raysDelimiter;
 
     [Space, SerializeField]
-    private float drillDistance;
+    private float raysDistance;
     [SerializeField]
-    private int maxDrillAngle;
-    [SerializeField]
-    private int raysPerSide;
-    [SerializeField]
-    private float raysAngle;
+    private int totalRays;
 
     [SerializeField]
     private LayerMask breakableWallLayer;
 
+    [Space, Header("Laser Line Renderers"), SerializeField]
+    private Transform[] laserCannons; 
+    [SerializeField]
+    private Material laserMaterial;
+    [SerializeField]
+    private float laserWidth;
+    [SerializeField]
+    private Gradient laserColor;
 
-    [Space, SerializeField]
+
+    #region Tiles
+
+    [Space, Header("Tiles"), SerializeField]
     private TileBase baseTile;
     [SerializeField]
     private TileBase aloneTile;
@@ -52,11 +62,36 @@ public class DrillController : MonoBehaviour
     private TileBase threeSideTileRight;
     [SerializeField]
     private TileBase threeSideTileLeft;
+    #endregion
 
+    private LineRenderer[] lasers;
     private BreakableWallController breakableWallController;
 
-    // Update is called once per frame
-    void FixedUpdate()
+
+    [Space, SerializeField]
+    private bool showGizmos = false;
+
+
+    private void Awake()
+    {
+        lasers = new LineRenderer[totalRays];
+        for (int i = 0; i < totalRays; i++)
+        {
+            GameObject laserObj = new GameObject("Laser" + i);
+            laserObj.transform.parent = laserDrill.transform;
+            LineRenderer currLaser = laserObj.AddComponent<LineRenderer>();
+            currLaser.enabled = false;
+            currLaser.numCapVertices = 90;
+            currLaser.material = laserMaterial;
+            currLaser.startWidth = laserWidth;
+            currLaser.SetPositions(new Vector3[2]);
+            currLaser.colorGradient = laserColor;
+            currLaser.sortingLayerName = "Player";
+            lasers[i] = currLaser;
+        }
+    }
+
+    private void FixedUpdate()
     {
         Drill();        
     }
@@ -68,6 +103,8 @@ public class DrillController : MonoBehaviour
 
         DrillWalls(hits);
 
+        ThrowLasers(hits);
+
         hits.Clear();
     }
 
@@ -75,29 +112,26 @@ public class DrillController : MonoBehaviour
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        hits.Add(Physics2D.Raycast(drillPosistion.position, transform.right, drillDistance, breakableWallLayer));
+        float raysOffset = (raysDelimiter * 2) / totalRays;
+        Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset * Mathf.Floor(totalRays / 2)));
 
-        for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
+        for (int i = 1; i < totalRays + 1; i++)
         {
-            float range = drillDistance - (i / raysAngle); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.right, raysDistance, breakableWallLayer);
+            if (hit)
+                hits.Add(hit);
 
-            Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            hits.Add(Physics2D.Raycast(drillPosistion.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
-
-            direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            hits.Add(Physics2D.Raycast(drillPosistion.position, (direction * Vector2.right).normalized, range, breakableWallLayer));
+            rayPos += (Vector2)(transform.up * raysOffset);
         }
 
         return hits;
     }
     private void DrillWalls(List<RaycastHit2D> _hits)
     {
-        
-
         int totalHits = 0;
         foreach (RaycastHit2D hit in _hits)
         {
-            if (hit && hit.collider.CompareTag("BreakableWall"))
+            if (hit.collider.CompareTag("BreakableWall"))
             {
                 if (!breakableWallController)
                 {
@@ -132,7 +166,7 @@ public class DrillController : MonoBehaviour
         }
     }
 
-    void UpdateSideTile(Vector2 _tilePos)
+    private void UpdateSideTile(Vector2 _tilePos)
     {
         Vector2 gridOffset = breakableWallController.GetGridOffset();
 
@@ -267,22 +301,51 @@ public class DrillController : MonoBehaviour
 
     }
 
+    private void ThrowLasers(List<RaycastHit2D> _hits)
+    {
+        for (int i = 0; i < totalRays; i++)
+        {
+            if (i < _hits.Count)
+            {
+                lasers[i].enabled = true;
+                lasers[i].SetPosition(0, GetNearestCannonPos(_hits[i].point));
+                lasers[i].SetPosition(1, _hits[i].point);
+            }
+            else
+            {
+                lasers[i].enabled = false;
+            }
+        }
+    }
 
+    private Vector3 GetNearestCannonPos(Vector2 _destinyPos)
+    {
+        float distanceBetweenFirstPos = Vector2.Distance(laserCannons[0].position, _destinyPos);
+        float distanceBetweenSecondPos = Vector2.Distance(laserCannons[1].position, _destinyPos); ;
+        if (distanceBetweenFirstPos <= distanceBetweenSecondPos)
+        {
+            return laserCannons[0].position;
+        }
+        else
+        {
+            return laserCannons[1].position;
+        }
+    }
     private void OnDrawGizmosSelected()
     {
+        if (!showGizmos)
+            return;
+
         Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(drillPosistion.position, drillPosistion.position + (transform.rotation * Vector2.right) * drillDistance);
+        
+        float raysOffset = (raysDelimiter * 2) / totalRays;
+        Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset * Mathf.Floor(totalRays/2)));
 
-
-        for (float i = 0; i < maxDrillAngle; i += maxDrillAngle / raysPerSide)
+        for (int i = 1; i < totalRays + 1; i++)
         {
-            float range = drillDistance - (i / raysAngle); //Esta resta se hace para que los rayos no esten todos a la misma distancia como su fuera un circulo
-            Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(drillPosistion.position, drillPosistion.position + (direction * Vector2.right) * range);
+            Gizmos.DrawLine(rayPos, rayPos + ((Vector2)transform.right * raysDistance));
 
-            direction = transform.rotation * Quaternion.Euler(0, 0, -i);
-            Gizmos.DrawLine(drillPosistion.position, drillPosistion.position + (direction * Vector2.right) * range);
-
+            rayPos += (Vector2)(transform.up * raysOffset);
         }
 
     }

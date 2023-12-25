@@ -28,6 +28,11 @@ public class HubTpController : InteractableObject
         c_tpParticles = Instantiate(tpParticles, c_playerController.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         c_playerSR.enabled = false;
         c_playerMapInteraction.showCanvas = false;
+        Canvas[] activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+        foreach (Canvas item in activeCanvas)
+        {
+            item.gameObject.SetActive(false);
+        }
         Invoke("StopParticles", timeToGoHub);
     }
     public override void UnHide()
