@@ -28,7 +28,7 @@ public class QuestManager : MonoBehaviour
     }
     public void EndCurrentQuest()
     {
-        currentQuest = currentQuest.nextQuest;
+        //currentQuest = currentQuest.nextQuest;
     }
 
 }

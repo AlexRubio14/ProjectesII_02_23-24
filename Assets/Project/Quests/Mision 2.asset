@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
   m_Name: Mision 2
   m_EditorClassIdentifier: 
+  <questID>k__BackingField: 
   <questName>k__BackingField: Creeper a la vista
-  <questIntroduction>k__BackingField: Traeme 5 partes del enemigo morado que explota,
-    voy a hacerme una sopita bien rica :3
+  <questDialogue>k__BackingField:
+  - 
+  <questResume>k__BackingField: 
   neededItems:
-    _serializedList:
-    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 1
-  <nextQuest>k__BackingField: {fileID: 0}
+    _serializedList: []
+  rewards:
+    _serializedList: []
+  obtainedQuest: 0
+  completedQuest: 0

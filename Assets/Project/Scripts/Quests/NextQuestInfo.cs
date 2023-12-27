@@ -21,12 +21,12 @@ public class NextQuestInfo : MonoBehaviour
         string nextQuestString;
         if (_nextQuest)
         {
-            nextQuestString = "Nuestra siguiente operacion tiene el nombre en clave de '" + _nextQuest.questName + "' \n"  + _nextQuest.questIntroduction;
+            //nextQuestString = "Nuestra siguiente operacion tiene el nombre en clave de '" + _nextQuest.questName + "' \n"  + _nextQuest.questIntroduction;
         }
         else
         {
             nextQuestString = "Felicidades, ya no tengo mas misiones que darte *clap* *clap* *clap* \n Ahora ya tienes todas las mejoras desbqueadas, no te olvides pasarte por la tienda a echarles un ojo";
         }
-        nextQuestText.text = nextQuestString;
+        //nextQuestText.text = nextQuestString;
     }
 }

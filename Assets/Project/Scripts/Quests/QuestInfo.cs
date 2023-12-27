@@ -74,7 +74,7 @@ public class QuestInfo : MonoBehaviour
         prizeImages = new List<Image>();
         prizeTexts = new List<TextMeshProUGUI>();
 
-        titleText.text = currentQuest.questIntroduction;
+        //titleText.text = currentQuest.questIntroduction;
 
 
         for (int i = 0; i < _quest.neededItems.Count; i++)
@@ -106,7 +106,6 @@ public class QuestInfo : MonoBehaviour
 
     private void QuestButton()
     {
-
         currentQuest = QuestManager.Instance.GetCurrentQuest();
         if (currentQuest && InventoryManager.Instance.CanBuy(currentQuest.neededItems))
         {

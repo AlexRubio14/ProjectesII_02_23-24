@@ -7,15 +7,28 @@ using AYellowpaper.SerializedCollections;
 public class QuestObject : ScriptableObject
 {
     [field: SerializeField]
+    public string questID { private set; get; }
+
+    [field: SerializeField]
     public string questName { private set; get; }
 
     [field: TextArea, SerializeField]
-    public string questIntroduction { private set; get; }
+    public string[] questDialogue { private set; get; }
+
+    [field: TextArea, SerializeField]
+    public string questResume { private set; get; }
 
     [SerializedDictionary("Item", "Amount")]
     public SerializedDictionary<ItemObject, short> neededItems;
 
-    [field: SerializeField]
-    public QuestObject nextQuest { private set; get; }
+    public enum RewardType { UPGRADE, NEW_QUEST };
 
+    //Rewards
+    [SerializedDictionary("REWARD", "TYPE")]
+    public SerializedDictionary<ScriptableObject, RewardType> rewards;
+
+
+    public bool obtainedQuest = false;
+
+    public bool completedQuest = false;
 }

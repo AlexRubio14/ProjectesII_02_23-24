@@ -12,13 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
   m_Name: Gato
   m_EditorClassIdentifier: 
+  <questID>k__BackingField: Mision 1
   <questName>k__BackingField: Introduccion
-  <questIntroduction>k__BackingField: Esta es tu primera mision, en ella tienes que
-    traerme un par de cosillas que encontraras muy facilmente en las primeras capas.
+  <questDialogue>k__BackingField:
+  - Sexo
+  - Sexo
+  - Sexo
+  <questResume>k__BackingField: Esta mision tiene sexo
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
       Value: 3
+    - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
+      Value: 3
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 3
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
       Value: 1
-  <nextQuest>k__BackingField: {fileID: 11400000, guid: b5cdc94c99a9ad04186e615f1031dc1a, type: 2}
+  rewards:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
+      Value: 0
+    - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
+      Value: 0
+  obtainedQuest: 0
+  completedQuest: 0

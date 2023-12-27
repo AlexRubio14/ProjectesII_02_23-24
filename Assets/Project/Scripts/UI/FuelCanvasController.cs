@@ -6,7 +6,6 @@ using TMPro;
 
 public class FuelCanvasController : MonoBehaviour
 {
-    [SerializeField]
     private PlayerController playerController;
 
     [Header("Fuel"), SerializeField]
@@ -39,6 +38,9 @@ public class FuelCanvasController : MonoBehaviour
 
     private void Start()
     {
+
+        playerController = PlayerManager.Instance.player;
+
         float maxFuel = playerController.GetMaxFuel();
         starterFuel.text = maxFuel.ToString("0") + "L";
         fuelSlider.maxValue = maxFuel;
