@@ -35,6 +35,11 @@ public class CannonController : MonoBehaviour
 
     private PlayerController playerController;
 
+    [SerializeField]
+    private AudioClip shootClip;
+
+    private AudioSource source;
+
 
 
     [Space, SerializeField]
@@ -44,6 +49,7 @@ public class CannonController : MonoBehaviour
     {
         playerController = GetComponentInParent<PlayerController>();
         isShooting = false;
+        source = GetComponentInParent<AudioSource>();
     }
 
     private void OnEnable()
@@ -116,6 +122,7 @@ public class CannonController : MonoBehaviour
 
         if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
         {
+            source.PlayOneShot(shootClip);
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();

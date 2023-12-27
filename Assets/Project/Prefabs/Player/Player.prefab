@@ -5727,6 +5727,7 @@ MonoBehaviour:
     m_Bits: 512
   aimTarget: {fileID: 0}
   autoShoot: 1
+  shootClip: {fileID: 8300000, guid: e66666667fcd1a04fbda9b0049ee94b1, type: 3}
   showGizmos: 0
 --- !u!1 &7686264573825968600
 GameObject:
