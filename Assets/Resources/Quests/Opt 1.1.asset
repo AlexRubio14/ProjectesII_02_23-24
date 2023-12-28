@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
+  m_Name: Opt 1.1
+  m_EditorClassIdentifier: 
+  <questID>k__BackingField: 1
+  <questTitle>k__BackingField: Opt. 1.1
+  <questName>k__BackingField: Sin tiempo para morir
+  <questDialogue>k__BackingField:
+  - PlaceHolder
+  <questResume>k__BackingField: Recolecta la cantidad necesaria de materiales y desbloquea
+    una mejora que aumentara levemente el combustible de tu nave
+  neededItems:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+      Value: 0
+  rewards:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 193e1c8766041d74f8115e8a7f78ad76, type: 2}
+      Value: 1
+  obtainedQuest: 0
+  completedQuest: 0

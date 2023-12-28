@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class FirstTimeQuestController : MonoBehaviour
+public class QuestInfoMenu : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI titleMissionText;
@@ -12,8 +12,8 @@ public class FirstTimeQuestController : MonoBehaviour
 
     [Space, Header("Requirements"), SerializeField]
     private LayoutGroup requirementsLayout;
-    private List<Image> prizeImages;
-    private List<TextMeshProUGUI> prizeTexts;
+    private List<Image> requirementImages;
+    private List<TextMeshProUGUI> requirementTexts;
 
     [Space, Header("Rewards"), SerializeField]
     private LayoutGroup rewardLayout;
@@ -22,46 +22,50 @@ public class FirstTimeQuestController : MonoBehaviour
     [Space, SerializeField]
     private DialogueController dialogue;
 
-    private void OnEnable()
-    {
-        QuestObject quest = QuestManager.Instance.GetCurrentQuest();
+    private QuestObject currentQuest;
 
-        SetValues(quest);
+    private void OnDisable()
+    {
+        RemoveQuestInfo();
+    }
+    public void SetValues(QuestObject _quest)
+    {
+        currentQuest = _quest;
+        titleMissionText.text = currentQuest.questTitle.ToString() + ": " + currentQuest.questName.ToString();
+        missionResumeText.text = currentQuest.questResume;
+
+        SetRequirementValues();
+        SetRewardValues();
+
+        if (!dialogue)
+            return;
+
+        dialogue.dialogues = currentQuest.questDialogue;
+        dialogue.gameObject.SetActive(true);
+
         dialogue.StartDialogue();
     }
 
-    private void SetValues(QuestObject _quest)
+    private void SetRequirementValues()
     {
-        titleMissionText.text = _quest.questID.ToString() + ": " + _quest.questName.ToString();
-        missionResumeText.text = _quest.questResume;
-
-        SetRequirementValues(_quest);
-        SetRewardValues(_quest);
-
-        dialogue.dialogues = _quest.questDialogue;
-        dialogue.gameObject.SetActive(true);
-    }
-
-    private void SetRequirementValues(QuestObject _quest)
-    {
-        prizeImages = new List<Image>();
-        prizeTexts = new List<TextMeshProUGUI>();
+        requirementImages = new List<Image>();
+        requirementTexts = new List<TextMeshProUGUI>();
 
         Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetAllItems();
 
-        foreach (KeyValuePair<ItemObject, short> item in _quest.neededItems)
+        foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
             GameObject newObj = new GameObject("Requirement Image");
 
             Image newImage = newObj.AddComponent<Image>();
-            prizeImages.Add(newImage);
+            requirementImages.Add(newImage);
             newImage.sprite = item.Key.c_PickableSprite;
 
             newObj.transform.SetParent(requirementsLayout.transform);
 
             newObj = new GameObject("Requirement Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
-            prizeTexts.Add(newText);
+            requirementTexts.Add(newText);
             newText.text = inventory[item.Key] + " / " + item.Value;
             newText.enableAutoSizing = true;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;
@@ -70,11 +74,10 @@ public class FirstTimeQuestController : MonoBehaviour
             newObj.transform.SetParent(requirementsLayout.transform);
         }
     }
-
-    private void SetRewardValues(QuestObject _quest)
+    private void SetRewardValues()
     {
         rewardList = new List<TextMeshProUGUI>();
-        foreach (KeyValuePair<ScriptableObject, QuestObject.RewardType> item in _quest.rewards)
+        foreach (KeyValuePair<ScriptableObject, QuestObject.RewardType> item in currentQuest.rewards)
         {
             GameObject newObj = new GameObject("Reward Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
@@ -87,7 +90,7 @@ public class FirstTimeQuestController : MonoBehaviour
                     break;
                 case QuestObject.RewardType.NEW_QUEST:
                     QuestObject quest = (QuestObject)item.Key;
-                    newText.text = quest.questID + ": " + quest.name;
+                    newText.text = quest.questTitle + ": " + quest.questName;
                     break;
                 default:
                     break;
@@ -97,5 +100,28 @@ public class FirstTimeQuestController : MonoBehaviour
 
             rewardList.Add(newText);
         }
+    }
+
+    public void ObtainCurrentQuest()
+    {
+        currentQuest.obtainedQuest = true;
+    }
+    public void RemoveQuestInfo()
+    {
+        for (int i = 0; i < requirementImages.Count; i++)
+        {
+            Destroy(requirementImages[i].gameObject);
+            Destroy(requirementTexts[i].gameObject);
+        }
+
+        requirementImages.Clear();
+        requirementTexts.Clear();
+
+        foreach (TextMeshProUGUI item in rewardList)
+        {
+            Destroy(item.gameObject);
+        }
+
+        rewardList.Clear();
     }
 }

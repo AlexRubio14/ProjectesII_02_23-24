@@ -178,17 +178,16 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
-            Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+            //Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
+            //Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
 
-            float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
-            targetRotation = Quaternion.AngleAxis(
-                Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
-                Vector3.forward);
+            //float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+            //targetRotation = Quaternion.AngleAxis(
+            //    Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
+            //    Vector3.forward);
 
-            driftTime = 0.0f;
-            lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
-            Debug.Log(lastAngularDirection);
+            //driftTime = 0.0f;
+            //lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
         }
 
         c_rb.MoveRotation(transform.rotation * targetRotation);

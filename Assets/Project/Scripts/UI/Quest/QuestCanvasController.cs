@@ -18,6 +18,8 @@ public class QuestCanvasController : MonoBehaviour
     private List<Image> prizeImages;
     private List<TextMeshProUGUI> prizeTexts;
 
+    private QuestObject currentQuest;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,22 +31,22 @@ public class QuestCanvasController : MonoBehaviour
 
     private void SetupQuestCanvas()
     {
-        QuestObject quest = QuestManager.Instance.GetCurrentQuest();
+        currentQuest = QuestManager.Instance.GetSelectedQuest();
 
-        if (!quest)
+        if (!currentQuest)
         {
             gameObject.SetActive(false);
             return;
         }
-        questTitleText.text = quest.questName;
+        questTitleText.text = currentQuest.questName;
 
-        for (int i = 0; i < quest.neededItems.Count; i++)
+        for (int i = 0; i < currentQuest.neededItems.Count; i++)
         {
             
 
         }
 
-        foreach (KeyValuePair<ItemObject, short> item in quest.neededItems)
+        foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
             Image newImage = Instantiate(needImagePrefab, layoutQuest.transform).GetComponent<Image>();
             prizeImages.Add(newImage);
@@ -59,11 +61,9 @@ public class QuestCanvasController : MonoBehaviour
 
     private void UpdateQuestCanvas(ItemObject _itemType = null, short _itemAmount = 0)
     {
-        QuestObject quest = QuestManager.Instance.GetCurrentQuest();
-
         int index = 0;
 
-        foreach (KeyValuePair<ItemObject, short> item in quest.neededItems)
+        foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
   
             prizeTexts[index].text = InventoryManager.Instance.GetTotalItemAmount(item.Key) + " / " + item.Value;

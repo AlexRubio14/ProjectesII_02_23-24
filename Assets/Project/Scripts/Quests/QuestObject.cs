@@ -6,8 +6,12 @@ using AYellowpaper.SerializedCollections;
 [CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObjects/Quest")]
 public class QuestObject : ScriptableObject
 {
+
     [field: SerializeField]
-    public string questID { private set; get; }
+    public int questID { private set; get; }
+
+    [field: SerializeField]
+    public string questTitle { private set; get; }
 
     [field: SerializeField]
     public string questName { private set; get; }
