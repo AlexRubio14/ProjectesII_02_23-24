@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
-    //[HideInInspector]
+    [HideInInspector]
     public float externalMovementSpeed;
 
     [Space, Header("Rotation")]
@@ -165,16 +165,16 @@ public class PlayerController : MonoBehaviour
 
         if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
         {
-            if (driftTime < maxDriftTime)
-            {
-                driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
-                float t = driftTime / maxDriftTime;
-                float driftAmount = driftCurve.Evaluate(t);
+            //if (driftTime < maxDriftTime)
+            //{
+            //    driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
+            //    float t = driftTime / maxDriftTime;
+            //    float driftAmount = driftCurve.Evaluate(t);
 
-                targetRotation = Quaternion.AngleAxis(
-                    rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
-                    Vector3.forward);
-            }
+            //    targetRotation = Quaternion.AngleAxis(
+            //        rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
+            //        Vector3.forward);
+            //}
         }
         else
         {
@@ -188,7 +188,6 @@ public class PlayerController : MonoBehaviour
 
             driftTime = 0.0f;
             lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
-            Debug.Log(lastAngularDirection);
         }
 
         c_rb.MoveRotation(transform.rotation * targetRotation);
