@@ -22,7 +22,11 @@ MonoBehaviour:
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 0
+      Value: 60
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 15
+    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
+      Value: 35
   rewards:
     _serializedList: []
   obtainedQuest: 0

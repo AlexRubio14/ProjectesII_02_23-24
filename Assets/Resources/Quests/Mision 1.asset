@@ -23,7 +23,9 @@ MonoBehaviour:
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 0
+      Value: 10
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 10
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
