@@ -32,3 +32,4 @@ MonoBehaviour:
       Value: 1
   obtainedQuest: 0
   completedQuest: 0
+  newQuest: 1

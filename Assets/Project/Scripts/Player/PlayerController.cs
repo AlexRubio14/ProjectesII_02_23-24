@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
-    //[HideInInspector]
+    [HideInInspector]
     public float externalMovementSpeed;
 
     [Space, Header("Rotation")]
@@ -165,29 +165,29 @@ public class PlayerController : MonoBehaviour
 
         if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
         {
-            if (driftTime < maxDriftTime)
-            {
-                driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
-                float t = driftTime / maxDriftTime;
-                float driftAmount = driftCurve.Evaluate(t);
+            //if (driftTime < maxDriftTime)
+            //{
+            //    driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
+            //    float t = driftTime / maxDriftTime;
+            //    float driftAmount = driftCurve.Evaluate(t);
 
-                targetRotation = Quaternion.AngleAxis(
-                    rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
-                    Vector3.forward);
-            }
+            //    targetRotation = Quaternion.AngleAxis(
+            //        rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
+            //        Vector3.forward);
+            //}
         }
         else
         {
-            //Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
-            //Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+            Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
+            Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
 
-            //float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
-            //targetRotation = Quaternion.AngleAxis(
-            //    Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
-            //    Vector3.forward);
+            float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+            targetRotation = Quaternion.AngleAxis(
+                Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
+                Vector3.forward);
 
-            //driftTime = 0.0f;
-            //lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
+            driftTime = 0.0f;
+            lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
         }
 
         c_rb.MoveRotation(transform.rotation * targetRotation);

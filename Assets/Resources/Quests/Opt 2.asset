@@ -27,3 +27,4 @@ MonoBehaviour:
     _serializedList: []
   obtainedQuest: 0
   completedQuest: 0
+  newQuest: 1

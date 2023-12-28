@@ -71,6 +71,9 @@ public class CheckQuestController : MonoBehaviour
             selectButton.gameObject.SetActive(false);
         }
 
+        if (currentQuest.newQuest)
+            currentQuest.newQuest = false;
+
     }
     private void CompleteQuest()
     {
