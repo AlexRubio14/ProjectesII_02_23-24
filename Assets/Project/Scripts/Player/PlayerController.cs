@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem engineParticles;
 
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip collisionClip;
+    private AudioSource source;
+
     private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
@@ -82,6 +86,8 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
+
+        source = GetComponent<AudioSource>();
 
         driftTime = maxDriftTime + 1f;
     }
@@ -394,6 +400,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
+            source.PlayOneShot(collisionClip);
             GetDamage(mapDamage, collision.contacts[0].point);
         }
 
