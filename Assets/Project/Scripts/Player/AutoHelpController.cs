@@ -73,7 +73,7 @@ public class AutoHelpController : MonoBehaviour
                 autoHelpVector += ((Vector2)transform.position - collisionPoint).normalized;
         }
 
-        c_rb.AddForce(autoHelpVector * autoHelpMagnitude * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        c_rb.AddForce(autoHelpVector * autoHelpMagnitude, ForceMode2D.Impulse);
 
         autoHelpDirection = autoHelpVector.normalized;
     }

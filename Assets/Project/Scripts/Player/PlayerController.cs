@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     
     [Header("Inputs"), SerializeField]
-    private InputActionReference moveAction;
+    private InputActionReference rotationAction;
     [SerializeField]
     private InputActionReference accelerateAction;
 
@@ -25,14 +25,16 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float externalMovementSpeed;
 
-    [Space, Header("Rotation")]
+    public enum RotationType { OLD_ROTATION, NEW_ROTATION };
+    [Space, Header("Rotation"), SerializeField]
+    private RotationType currentRotation;
     [SerializeField]
-    private float minRotationSpeed;
-    [SerializeField]
-    private float maxRotationSpeed;
-    [SerializeField]
-    private float rotationSpeed;
-    [SerializeField]
+    private float[] rotationSpeed;
+
+
+
+
+    [Space, SerializeField]
     private AnimationCurve driftCurve;
     private float driftTime;
     [SerializeField]
@@ -96,9 +98,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        moveAction.action.started += MoveAction;
-        moveAction.action.performed += MoveAction;
-        moveAction.action.canceled += MoveAction;
+        rotationAction.action.started += RotateAction;
+        rotationAction.action.performed += RotateAction;
+        rotationAction.action.canceled += RotateAction;
 
         accelerateAction.action.started += AccelerateAction;
         accelerateAction.action.performed += AccelerateAction;
@@ -108,9 +110,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        moveAction.action.started -= MoveAction;
-        moveAction.action.performed -= MoveAction;
-        moveAction.action.canceled -= MoveAction;
+        rotationAction.action.started -= RotateAction;
+        rotationAction.action.performed -= RotateAction;
+        rotationAction.action.canceled -= RotateAction;
 
         accelerateAction.action.started -= AccelerateAction;
         accelerateAction.action.performed -= AccelerateAction;
@@ -161,36 +163,83 @@ public class PlayerController : MonoBehaviour
     }
     private void Rotation()
     {
-        Quaternion targetRotation = Quaternion.identity;
-
-        if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
+        if (currentRotation == RotationType.OLD_ROTATION)
         {
-            //if (driftTime < maxDriftTime)
-            //{
-            //    driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
-            //    float t = driftTime / maxDriftTime;
-            //    float driftAmount = driftCurve.Evaluate(t);
+            Quaternion targetRotation = Quaternion.identity;
 
-            //    targetRotation = Quaternion.AngleAxis(
-            //        rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
-            //        Vector3.forward);
-            //}
-        }
-        else
-        {
+            #region rotacion Edu
+            /*if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
+            {
+                //if (driftTime < maxDriftTime)
+                //{
+                //    driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
+                //    float t = driftTime / maxDriftTime;
+                //    float driftAmount = driftCurve.Evaluate(t);
+
+                //    targetRotation = Quaternion.AngleAxis(
+                //        rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
+                //        Vector3.forward);
+                //}
+            }
+            else
+            {
+                /* 
+             * Hecho Con Edu
+             * if (movementDirection.sqrMagnitude < 0.001f && autoHelpController.autoHelpDirection == Vector2.zero)
+            {
+                //if (driftTime < maxDriftTime)
+                //{
+                //    driftTime = Mathf.Min(maxDriftTime, driftTime + Time.deltaTime);
+                //    float t = driftTime / maxDriftTime;
+                //    float driftAmount = driftCurve.Evaluate(t);
+
+                //    targetRotation = Quaternion.AngleAxis(
+                //        rotationSpeed * lastAngularDirection * driftAmount * Time.deltaTime,
+                //        Vector3.forward);
+                //}
+            }
+            else
+            {
+               Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
+                Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+
+                float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+                targetRotation = Quaternion.AngleAxis(
+                    Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
+                    Vector3.forward);
+
+                driftTime = 0.0f;
+                lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f); 
+            }
+            */
+            #endregion
+
             Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
             Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
 
             float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
-            targetRotation = Quaternion.AngleAxis(
-                Mathf.Clamp(signedAngle, -rotationSpeed * Time.deltaTime, rotationSpeed * Time.deltaTime),
-                Vector3.forward);
 
-            driftTime = 0.0f;
-            lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
+            c_rb.AddTorque(signedAngle * rotationSpeed[(int)RotationType.OLD_ROTATION]);
+
+
+            //targetRotation = Quaternion.AngleAxis(
+            //    Mathf.Clamp(signedAngle, -rotationSpeed[(int)RotationType.OLD_ROTATION] * Time.deltaTime, rotationSpeed[(int)RotationType.OLD_ROTATION] * Time.deltaTime),
+            //    Vector3.forward);
+
+            //driftTime = 0.0f;
+            //lastAngularDirection = Mathf.Clamp(c_rb.angularVelocity, -1f, 1f);
+
+            //c_rb.MoveRotation(transform.rotation * targetRotation);
         }
+        else
+        {
+            Vector2 movementAndAutoHelpDirection = new Vector2(movementDirection.x, 0).normalized + autoHelpController.autoHelpDirection.normalized;
 
-        c_rb.MoveRotation(transform.rotation * targetRotation);
+            float signedAngle = Vector2.SignedAngle(transform.right, movementAndAutoHelpDirection);
+
+            c_rb.AddTorque(-movementDirection.x * rotationSpeed[(int)RotationType.NEW_ROTATION]);
+        }
+        
     }
 
     private void CheckEnableEngineParticles()
@@ -379,7 +428,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Input
-    private void MoveAction(InputAction.CallbackContext obj)
+    private void RotateAction(InputAction.CallbackContext obj)
     {
         movementDirection = obj.action.ReadValue<Vector2>();
     }
@@ -387,6 +436,7 @@ public class PlayerController : MonoBehaviour
     {
         accelerationValue = obj.ReadValue<float>();
     }
+
     #endregion
 
     private void OnCollisionEnter2D(Collision2D collision)
