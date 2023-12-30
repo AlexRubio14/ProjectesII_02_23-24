@@ -16,9 +16,13 @@ MonoBehaviour:
   <questTitle>k__BackingField: Opt. 1.1
   <questName>k__BackingField: Sin tiempo para morir
   <questDialogue>k__BackingField:
-  - PlaceHolder
-  <questResume>k__BackingField: Recolecta la cantidad necesaria de materiales y desbloquea
-    una mejora que aumentara levemente el combustible de tu nave
+  - " \xA1Saludos! Antes de que te lances nuevamente a las entra\xF1as del planeta,
+    hay noticias emocionantes que debo compartir contigo. "
+  - "No solo puedo crearte mejoras funcionales para tu nave, sino tambi\xE9n mejoras
+    b\xE1sicas que transformar\xE1n tu experiencia en tu travesia a traves de las
+    cuevas mas profundas de este planeta."
+  <questResume>k__BackingField: Desbloquea tu primera mejora de combustible de la
+    nave
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

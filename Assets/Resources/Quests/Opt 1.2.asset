@@ -15,8 +15,7 @@ MonoBehaviour:
   <questID>k__BackingField: 2
   <questTitle>k__BackingField: Opt. 1.2
   <questName>k__BackingField: Tomemonos un respiro
-  <questDialogue>k__BackingField:
-  - PlaceHolder
+  <questDialogue>k__BackingField: []
   <questResume>k__BackingField: Recolecta la cantidad necesaria de materiales y desbloquea
     una mejora que aumentara de forma moderada el combustible de tu nave
   neededItems:

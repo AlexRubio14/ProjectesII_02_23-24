@@ -70,6 +70,7 @@ public class QuestInfoMenu : MonoBehaviour
             newText.enableAutoSizing = true;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;
             newText.verticalAlignment = VerticalAlignmentOptions.Middle;
+            newText.enableWordWrapping = false;
 
             newObj.transform.SetParent(requirementsLayout.transform);
         }

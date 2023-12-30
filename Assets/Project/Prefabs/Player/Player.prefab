@@ -413,13 +413,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada7edbc5a9db54db362bec2980c7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAction: {fileID: 8648923338690527996, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  rotationAction: {fileID: 8648923338690527996, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   movementSpeed: 50
   externalMovementSpeed: 0
-  minRotationSpeed: 1
-  maxRotationSpeed: 3
-  rotationSpeed: 110
+  currentRotation: 0
+  rotationSpeed:
+  - 0.55
+  - 15
   driftCurve:
     serializedVersion: 2
     m_Curve: []
@@ -615,8 +616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdda5b3170a11744b922e4159fe2b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 0.7
-  autoHelpMagnitude: 1.75
+  distance: 0.45
+  autoHelpMagnitude: 1
   mapLayer:
     serializedVersion: 2
     m_Bits: 4096
