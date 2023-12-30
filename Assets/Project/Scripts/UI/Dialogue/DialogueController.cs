@@ -59,11 +59,15 @@ public class DialogueController : MonoBehaviour
 
     public void StartDialogue()
     {
+        if (dialogues.Length == 0)
+            return;
+
         //Empezar con el dialogo
         dialogueObject.SetActive(true);
-        c_dialogueText.text = "";
         currentDialogueIndex = 0;
         letterIndex = 0;
+        c_dialogueText.text = dialogues[currentDialogueIndex];
+        c_dialogueText.maxVisibleCharacters = letterIndex;
         showingText = true;
         displayingDialogue = true;
         Invoke("DisplayLetters", timeBetweenLetters);
@@ -76,7 +80,8 @@ public class DialogueController : MonoBehaviour
             //Si aun no se ha acabado el dialogo
             displayingDialogue = true;
             letterIndex = 0;
-            c_dialogueText.text = "";
+            c_dialogueText.text = dialogues[currentDialogueIndex];
+            c_dialogueText.maxVisibleCharacters = letterIndex;
             Invoke("DisplayLetters", timeBetweenLetters);
         }
         else
@@ -97,9 +102,8 @@ public class DialogueController : MonoBehaviour
                 //Exit
                 currentDialogueIndex++;
                 displayingDialogue = false;
-                return;
             }
-            c_dialogueText.text += dialogues[currentDialogueIndex][letterIndex];
+            c_dialogueText.maxVisibleCharacters = letterIndex;
             letterIndex++;
             Invoke("DisplayLetters", timeBetweenLetters);
         }
@@ -108,9 +112,8 @@ public class DialogueController : MonoBehaviour
     private void DisplayAllLetters()
     {
         displayingDialogue = false;
-        c_dialogueText.text = dialogues[currentDialogueIndex];
+        c_dialogueText.maxVisibleCharacters = dialogues[currentDialogueIndex].Length;
         currentDialogueIndex++;
-
     }
 
 }

@@ -16,16 +16,28 @@ MonoBehaviour:
   <questTitle>k__BackingField: Mision 1
   <questName>k__BackingField: Introduccion
   <questDialogue>k__BackingField:
-  - Esto es una prueba
-  - De si funcionan las quests
-  <questResume>k__BackingField: Es una mision de prueba para probar que todo funciona
-    correctamente
+  - "\xA1Bienvenido intr\xE9pido recolector de nucleos! Has llegado a mi refugio
+    intergal\xE1ctico, como ya sabes estas aqui para alcanzar el nucleo de este planeta
+    y convertirlo en energia con la que podamos comerciar."
+  - "Veo que tu nave a\xFAn no est\xE1 preparada para la inmersi\xF3n en las entra\xF1as
+    del planeta."
+  - "Pero no temas recolector de n\xFAcleos, yo te ayudare a mejorar tu nave. "
+  - "Aunque las mejoras no se otorgan sin esfuerzo. Para optimizar tu nave, deber\xE1s
+    completar misiones espec\xEDficas que te encomendar\xE9."
+  - " La primera recompensa que te aguarda es vital: un postquemador mejorado. Este
+    dispositivo impulsar\xE1 tu nave a trav\xE9s de las capas m\xE1s profundas del
+    planeta, permiti\xE9ndote recolectar el preciado n\xFAcleo. "
+  - "\xA1Emb\xE1rcate en estas misiones, recplector de nucleos, y que cada victoria
+    te acerque a la conquista de las profundidades c\xF3smicas!"
+  <questResume>k__BackingField: Bienvenido a mi refugio, para realizar tu primear
+    mision necesito que me traigas dos materiales distintos, estos los encontraras
+    en abundantes cantidades en las primeras capas del planeta
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 10
+      Value: 0
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 10
+      Value: 0
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
