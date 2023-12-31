@@ -25,6 +25,9 @@ public class DialogueController : MonoBehaviour
     private bool showingText = false;
     private bool displayingDialogue = false;
 
+    [Header("Animator"), SerializeField]
+    private Animator[] catAnimations; 
+
     private void Awake()
     {
         c_dialogueText = dialogueObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -71,18 +74,31 @@ public class DialogueController : MonoBehaviour
         showingText = true;
         displayingDialogue = true;
         Invoke("DisplayLetters", timeBetweenLetters);
+
+        foreach (Animator animator in catAnimations)
+        {
+            animator.SetBool("talking", true);
+            animator.SetTrigger("normalTalk"); 
+        }
     }
 
     private void DisplayNextDialogue()
     {
+
         if (dialogues.Length > currentDialogueIndex)
         {
+            foreach (Animator animator in catAnimations)
+            {
+                animator.SetBool("talking", true);
+                animator.SetTrigger("normalTalk");
+            }
             //Si aun no se ha acabado el dialogo
             displayingDialogue = true;
             letterIndex = 0;
             c_dialogueText.text = dialogues[currentDialogueIndex];
             c_dialogueText.maxVisibleCharacters = letterIndex;
             Invoke("DisplayLetters", timeBetweenLetters);
+
         }
         else
         {
@@ -91,6 +107,7 @@ public class DialogueController : MonoBehaviour
             displayingDialogue = false;
             gameObject.SetActive(false);
         }
+
     }
     private void DisplayLetters()
     {
@@ -102,6 +119,10 @@ public class DialogueController : MonoBehaviour
                 //Exit
                 currentDialogueIndex++;
                 displayingDialogue = false;
+                foreach (Animator animator in catAnimations)
+                {
+                    animator.SetBool("talking", false);
+                }
             }
             c_dialogueText.maxVisibleCharacters = letterIndex;
             letterIndex++;
@@ -114,6 +135,10 @@ public class DialogueController : MonoBehaviour
         displayingDialogue = false;
         c_dialogueText.maxVisibleCharacters = dialogues[currentDialogueIndex].Length;
         currentDialogueIndex++;
+        foreach (Animator animator in catAnimations)
+        {
+            animator.SetBool("talking", false);
+        }
     }
 
 }

@@ -79,12 +79,14 @@ public class FuelCanvasController : MonoBehaviour
 
     private void ShakeCanvas()
     {
+        float shakeX = Random.Range(-shakeMagnitude, shakeMagnitude);
+        float shakeY = Random.Range(-shakeMagnitude, shakeMagnitude); 
         for (int i = 0; i < backgrounds.Length; i++)
         {
             backgrounds[i].transform.parent.transform.localPosition = 
                 starterPos[i] + new Vector2(
-                    Random.Range(-shakeMagnitude, shakeMagnitude),
-                    Random.Range(-shakeMagnitude, shakeMagnitude)
+                    shakeX,
+                    shakeY
                     );
         }
     }

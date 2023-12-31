@@ -24,6 +24,9 @@ public class QuestInfoMenu : MonoBehaviour
 
     private QuestObject currentQuest;
 
+    [SerializeField]
+    private TMP_FontAsset fontAsset;
+
     private void OnDisable()
     {
         RemoveQuestInfo();
@@ -65,6 +68,7 @@ public class QuestInfoMenu : MonoBehaviour
 
             newObj = new GameObject("Requirement Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
+            newText.font = fontAsset; 
             requirementTexts.Add(newText);
             newText.text = inventory[item.Key] + " / " + item.Value;
             newText.enableAutoSizing = true;
@@ -82,7 +86,8 @@ public class QuestInfoMenu : MonoBehaviour
         {
             GameObject newObj = new GameObject("Reward Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
-            newText.enableAutoSizing = true;
+            newText.fontSize = 20;
+            newText.font = fontAsset; 
 
             switch (item.Value)
             {
