@@ -49,7 +49,7 @@ public class CannonController : MonoBehaviour
     {
         playerController = GetComponentInParent<PlayerController>();
         isShooting = false;
-        source = GetComponentInParent<AudioSource>();
+        source = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -123,6 +123,7 @@ public class CannonController : MonoBehaviour
         if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
         {
             source.PlayOneShot(shootClip);
+
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();
