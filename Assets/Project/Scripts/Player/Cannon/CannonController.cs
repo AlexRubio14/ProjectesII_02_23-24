@@ -38,10 +38,6 @@ public class CannonController : MonoBehaviour
     [SerializeField]
     private AudioClip shootClip;
 
-    private AudioSource source;
-
-
-
     [Space, SerializeField]
     private bool showGizmos;
 
@@ -49,7 +45,6 @@ public class CannonController : MonoBehaviour
     {
         playerController = GetComponentInParent<PlayerController>();
         isShooting = false;
-        source = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -122,7 +117,7 @@ public class CannonController : MonoBehaviour
 
         if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
         {
-            source.PlayOneShot(shootClip);
+            AudioManager._instance.Play2dOneShotSound(shootClip, "Laser");
 
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
