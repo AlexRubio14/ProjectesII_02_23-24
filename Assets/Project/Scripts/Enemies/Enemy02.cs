@@ -8,6 +8,8 @@ public class Enemy02 : Enemy
     private float timeFollowing = 5.0f;
     [SerializeField]
     private GameObject c_explosionParticles;
+    [SerializeField]
+    private AudioClip explosionClip;
 
     void Awake()
     {
@@ -100,6 +102,7 @@ public class Enemy02 : Enemy
 
     override public void Die()
     {
+        AudioManager._instance.Play2dOneShotSound(explosionClip, "Enemy");
         Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
         base.Die();
     }

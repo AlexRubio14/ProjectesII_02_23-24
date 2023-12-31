@@ -88,12 +88,12 @@ public class Laser : MonoBehaviour
     {
         if (collision.CompareTag("Map") || collision.CompareTag("BreakableWall"))
         {
-            source.PlayOneShot(mapHit);
+            AudioManager._instance.Play2dOneShotSound(mapHit, "Laser");
             DisableObject();
         }
         if (collision.CompareTag("Enemy"))
         {
-            source.PlayOneShot(enemyHit);
+            AudioManager._instance.Play2dOneShotSound(enemyHit, "Laser");
             DisableObject();
         }
     }

@@ -574,7 +574,6 @@ MonoBehaviour:
   - {fileID: 5997103419151096230}
   - {fileID: 2450130724856854608}
   iaData: {fileID: 6668970655071454642}
-  detectionDelay: 0.05
   movementDirectionSolver: {fileID: 8942317131287401040}
   maxHealth: 100
   speed: 15
@@ -595,6 +594,7 @@ MonoBehaviour:
   eatingDuration: 1
   eatingForce: 10
   eatingHeal: 40
+  impactPlayerClip: {fileID: 8300000, guid: a837ea935bdc4754ba3b49a8ade09e2a, type: 3}
 --- !u!1 &9114009146373791086
 GameObject:
   m_ObjectHideFlags: 0
