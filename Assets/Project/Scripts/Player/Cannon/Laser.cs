@@ -17,6 +17,12 @@ public class Laser : MonoBehaviour
     private LayerMask enemyLayer;
     private GameObject autoAimTarget;
 
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip enemyHit;
+    [SerializeField]
+    private AudioClip mapHit;
+    private AudioSource source;
+
     private Vector2 startPosition;
     private float currentDistance;
     private Rigidbody2D c_rb;
@@ -24,6 +30,7 @@ public class Laser : MonoBehaviour
     private void Awake()
     {
         c_rb = GetComponent<Rigidbody2D>();
+        source = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -121,6 +128,7 @@ public class Laser : MonoBehaviour
     {
         if (collision.CompareTag("Map") || collision.CompareTag("BreakableWall"))
         {
+            source.PlayOneShot(mapHit);
             InstantiateLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position));
 
 
@@ -128,6 +136,7 @@ public class Laser : MonoBehaviour
         }
         if (collision.CompareTag("Enemy"))
         {
+            source.PlayOneShot(enemyHit);
             DestroyBullet();
         }
     }
