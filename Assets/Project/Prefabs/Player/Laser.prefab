@@ -103,6 +103,7 @@ MonoBehaviour:
   speed: 10
   damage: 40
   maxDistance: 100
+  collisionLaserPrefab: {fileID: 3977992916784669842, guid: 1054eb3d318f7764bae02f5b5635e94f, type: 3}
   autoAimRadius: 0.63
   enemyLayer:
     serializedVersion: 2

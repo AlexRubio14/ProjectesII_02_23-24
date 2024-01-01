@@ -26,6 +26,9 @@ public class CannonController : MonoBehaviour
     private Rigidbody2D nearestEnemy;
     [SerializeField]
     private LayerMask enemiesMask;
+    [SerializeField]
+    private ParticleSystem shootParticles;
+    private Animator shootinAnim;
 
     [Space, SerializeField]
     private GameObject aimTarget;
@@ -43,6 +46,7 @@ public class CannonController : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
+        shootinAnim = GetComponentInChildren<Animator>();
         isShooting = false;
     }
 
@@ -112,7 +116,6 @@ public class CannonController : MonoBehaviour
         {
             isShooting = nearestEnemy;
         }
-        
 
         if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
         {
@@ -120,6 +123,8 @@ public class CannonController : MonoBehaviour
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();
             playerController.SubstractHealth(fuelConsume);
+            shootinAnim.SetTrigger("Shoot");
+            shootParticles.Play();
         }
     }
     private bool CheckPlayerState()
@@ -137,8 +142,6 @@ public class CannonController : MonoBehaviour
         return false;
 
     }
-
-
 
     #region Input
     private void ShootAction(InputAction.CallbackContext obj)
