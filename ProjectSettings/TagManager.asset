@@ -50,6 +50,12 @@ TagManager:
   - name: Background
     uniqueID: 2765273441
     locked: 0
+  - name: Details2
+    uniqueID: 2212402939
+    locked: 0
+  - name: Details1
+    uniqueID: 2496116073
+    locked: 0
   - name: Items
     uniqueID: 1742496995
     locked: 0
