@@ -81,19 +81,18 @@ public class Laser : MonoBehaviour
         return damage * PowerUpManager.Instance.Damage;
     }
 
-    private void InstantiateLaserHit(Vector2 _spawnPos)
+    private void InstantiateWallLaserHit(Vector2 _hitPos)
     {
-        GameObject laserCollision = Instantiate(collisionLaserPrefab, _spawnPos, Quaternion.identity);
-        Vector2 targetRotation = Vector2.zero;
+        GameObject laserCollision = Instantiate(collisionLaserPrefab, _hitPos, Quaternion.identity);
 
-        Vector2 direction = ((Vector2)transform.position - _spawnPos).normalized;
+        Vector2 direction = ((Vector2)transform.position - _hitPos).normalized;
         float upDot = Vector2.Dot(Vector2.up, direction);
         float rightDot = Vector2.Dot(Vector2.right, direction);
         float leftDot = Vector2.Dot(Vector2.left, direction);
         float downDot = Vector2.Dot(Vector2.down, direction);
 
         float currDot = upDot;
-        targetRotation = Vector2.up;
+        Vector2 targetRotation = Vector2.up;
         
         if (rightDot > currDot)
         {
@@ -115,7 +114,39 @@ public class Laser : MonoBehaviour
 
         laserCollision.transform.up = targetRotation;
     }
+    private void InstantiateEnemyLaserHit(Vector2 _hitPos, Transform _enemyTransform)
+    {
+        GameObject laserCollision = Instantiate(collisionLaserPrefab, _hitPos, Quaternion.identity);
 
+        Vector2 direction = ((Vector2)transform.position - _hitPos).normalized;
+        float upDot = Vector2.Dot(_enemyTransform.up, direction);
+        float rightDot = Vector2.Dot(_enemyTransform.right, direction);
+        float leftDot = Vector2.Dot(-_enemyTransform.right, direction);
+        float downDot = Vector2.Dot(-_enemyTransform.up, direction);
+
+        float currDot = upDot;
+        Vector2 targetRotation = _enemyTransform.up;
+
+        if (rightDot > currDot)
+        {
+            currDot = rightDot;
+            targetRotation = _enemyTransform.right;
+        }
+
+        if (leftDot > currDot)
+        {
+            currDot = leftDot;
+            targetRotation = -_enemyTransform.right;
+        }
+
+        if (downDot > currDot)
+        {
+            targetRotation = -_enemyTransform.up;
+        }
+
+
+        laserCollision.transform.up = targetRotation;
+    }
     private void DestroyBullet()
     {
         //Comprobar la rotacion de donde deberia chocar
@@ -129,14 +160,13 @@ public class Laser : MonoBehaviour
         if (collision.CompareTag("Map") || collision.CompareTag("BreakableWall"))
         {
             source.PlayOneShot(mapHit);
-            InstantiateLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position));
-
-
+            InstantiateWallLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position));
             DestroyBullet();
         }
         if (collision.CompareTag("Enemy"))
         {
             source.PlayOneShot(enemyHit);
+            InstantiateEnemyLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position), collision.transform);
             DestroyBullet();
         }
     }

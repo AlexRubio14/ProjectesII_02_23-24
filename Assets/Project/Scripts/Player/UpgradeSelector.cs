@@ -44,6 +44,8 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private float boostStaminaRecover;
     private Position boostPos;
+    [SerializeField]
+    private ParticleSystem boostParticles;
 
     [Space, Header("Drill"), SerializeField]
     private float drillMovementSlow;
@@ -103,10 +105,9 @@ public class UpgradeSelector : MonoBehaviour
 
         }
 
-
-        //SetBackgroundFill(Position.DOWN, 0.3f);
-
         upgradesToggled = new bool[4];
+
+        boostParticles.Stop(true);
 
     }
 
@@ -192,6 +193,7 @@ public class UpgradeSelector : MonoBehaviour
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = true;
             //Sumar al consumo de fuel
             playerController.fuelConsume += boostConsume;
+            boostParticles.Play(true);
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
@@ -200,6 +202,7 @@ public class UpgradeSelector : MonoBehaviour
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
             //Restar al consumo de fuel
             playerController.fuelConsume -= boostConsume;
+            boostParticles.Stop(true);
         }
     }
     private void CheckBoostStamina()
@@ -251,6 +254,7 @@ public class UpgradeSelector : MonoBehaviour
     {
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL])
         {
+            //ACTIVAMOS LA MEJORA
             playerController.externalMovementSpeed -= drillMovementSlow;
             drillController.enabled = true;
             drillSprite.SetActive(true);
@@ -259,9 +263,11 @@ public class UpgradeSelector : MonoBehaviour
             //Sumar al consumo de fuel
             playerController.fuelConsume += drillConsume;
             autoHelpController.enabled = false;
+            
         }
         else
         {
+            //DESACTIVAMOS LA MEJORA
             playerController.externalMovementSpeed += drillMovementSlow;
             drillController.enabled = false;
             drillSprite.SetActive(false);

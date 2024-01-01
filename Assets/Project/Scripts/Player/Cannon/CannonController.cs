@@ -30,19 +30,19 @@ public class CannonController : MonoBehaviour
     private ParticleSystem shootParticles;
     private Animator shootinAnim;
 
-    [Space, SerializeField]
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip shootClip;
+
+    [Space, Header("AutoShoot"), SerializeField]
+    private bool autoShoot;
+    [SerializeField]
     private GameObject aimTarget;
 
     [Space, SerializeField]
-    private bool autoShoot;
+    private bool showGizmos;
 
     private PlayerController playerController;
 
-    [SerializeField]
-    private AudioClip shootClip;
-
-    [Space, SerializeField]
-    private bool showGizmos;
 
     private void Awake()
     {
