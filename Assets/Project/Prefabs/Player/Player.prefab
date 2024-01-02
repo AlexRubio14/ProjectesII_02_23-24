@@ -31,6 +31,7 @@ Transform:
   m_Children:
   - {fileID: 6515609165883420550}
   - {fileID: 5475596624802874658}
+  - {fileID: 4981908877329033987}
   m_Father: {fileID: 8472911716521364800}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -524,6 +525,32 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  laserParticles:
+  - {fileID: 2310288218286856416}
+  - {fileID: 4327221798110619009}
+  - {fileID: 7454377798521344426}
+  - {fileID: 8191577818751322732}
+  - {fileID: 3502996488963008893}
+  - {fileID: 1381866034074851385}
+  - {fileID: 4907357659761953213}
+  - {fileID: 6938356673877493561}
+  - {fileID: 8440554957544874788}
+  - {fileID: 8044955608423459770}
+  - {fileID: 6198164109470736106}
+  - {fileID: 594519998265328259}
+  - {fileID: 8409033035439433136}
+  - {fileID: 6261486750627260181}
+  - {fileID: 2062837621715981187}
+  - {fileID: 4969157691040286739}
+  - {fileID: 1708621278460131786}
+  - {fileID: 5707583169139622503}
+  - {fileID: 7160785206501816346}
+  - {fileID: 859500588284373910}
+  - {fileID: 8711964517882961553}
+  - {fileID: 1254440272176336352}
+  - {fileID: 4901250683723312212}
+  - {fileID: 266019813600915403}
+  - {fileID: 7958093267779124489}
   baseTile: {fileID: 11400000, guid: 7c0343178b625dc40ad933d4df82b932, type: 2}
   aloneTile: {fileID: 11400000, guid: 3fe535b130327bf42a9d45eb23120fc1, type: 2}
   oneSideTileUp: {fileID: 11400000, guid: af8246b0cf75082468e58ba8d083b317, type: 2}
@@ -5920,6 +5947,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8310545390780905078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4981908877329033987}
+  m_Layer: 7
+  m_Name: DrillLaserParticlePool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4981908877329033987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8310545390780905078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6710867640953333440}
+  - {fileID: 4693702133266520993}
+  - {fileID: 1899750932611182474}
+  - {fileID: 900813197782135884}
+  - {fileID: 5598859218405381981}
+  - {fileID: 7927284921081030169}
+  - {fileID: 4122042421817816989}
+  - {fileID: 2118942348887996697}
+  - {fileID: 580085254768958724}
+  - {fileID: 1336281513090618778}
+  - {fileID: 3110383290993467594}
+  - {fileID: 8461745543936572579}
+  - {fileID: 692677527583955856}
+  - {fileID: 3155692323365329205}
+  - {fileID: 7029744735646166435}
+  - {fileID: 4169206131731117619}
+  - {fileID: 7680957835440015338}
+  - {fileID: 3610594778644560967}
+  - {fileID: 2183744716850611770}
+  - {fileID: 8557841288588694966}
+  - {fileID: 416897316374798513}
+  - {fileID: 7802111091540898752}
+  - {fileID: 4119313664116920948}
+  - {fileID: 9124037659009225195}
+  - {fileID: 1395785882703430441}
+  m_Father: {fileID: 568766594774729756}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9096134186405275553
 GameObject:
   m_ObjectHideFlags: 0
@@ -6128,6 +6211,606 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3788841075491391134, guid: e13057f037c05694c961b4c908f462d3, type: 3}
   m_PrefabInstance: {fileID: 581766100191285642}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &867815112892193757
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &3110383290993467594 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 867815112892193757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6198164109470736106 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 867815112892193757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &930575317876105762
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (13)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &3155692323365329205 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 930575317876105762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6261486750627260181 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 930575317876105762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1529602036220512080
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (17)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &3610594778644560967 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 1529602036220512080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5707583169139622503 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 1529602036220512080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2165081139340142947
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (22)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &4119313664116920948 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2165081139340142947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4901250683723312212 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2165081139340142947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2167704349027126410
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &4122042421817816989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2167704349027126410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4907357659761953213 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2167704349027126410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2232284323122826532
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (15)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &4169206131731117619 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2232284323122826532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4969157691040286739 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2232284323122826532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2515341508417887142
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (20)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &416897316374798513 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2515341508417887142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8711964517882961553 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 2515341508417887142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3143795064171908955
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &900813197782135884 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3143795064171908955}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8191577818751322732 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3143795064171908955}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3162191732566986181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6198,6 +6881,661 @@ Transform:
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1465668847461264187, guid: 2bc194af9f403e74c933ce4fa4cf6b34, type: 3}
   m_PrefabInstance: {fileID: 3162191732566986181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3368048939748548743
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (12)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &692677527583955856 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3368048939748548743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8409033035439433136 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3368048939748548743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3399571583074592275
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &580085254768958724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3399571583074592275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8440554957544874788 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3399571583074592275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3782891735149279294
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (24)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &1395785882703430441 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3782891735149279294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7958093267779124489 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3782891735149279294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3866965713838042765
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &1336281513090618778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3866965713838042765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8044955608423459770 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 3866965713838042765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4138645746047663405
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (18)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &2183744716850611770 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 4138645746047663405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7160785206501816346 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 4138645746047663405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4199231676600959502
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &2118942348887996697 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 4199231676600959502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6938356673877493561 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 4199231676600959502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4430435136581915805
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!4 &1899750932611182474 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 4430435136581915805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7454377798521344426 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 4430435136581915805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5093570866860709556
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (14)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &2062837621715981187 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5093570866860709556}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7029744735646166435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5093570866860709556}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5269787168863558926
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &1381866034074851385 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5269787168863558926}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7927284921081030169 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5269787168863558926}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5413869380190657598
 PrefabInstance:
@@ -6357,4 +7695,604 @@ Transform:
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3788841075491391134, guid: e13057f037c05694c961b4c908f462d3, type: 3}
   m_PrefabInstance: {fileID: 5413869380190657598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5433591385530845399
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (21)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &1254440272176336352 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5433591385530845399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7802111091540898752 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5433591385530845399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5600624522173201661
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (16)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &1708621278460131786 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5600624522173201661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7680957835440015338 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5600624522173201661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5900519733389586081
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (19)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &859500588284373910 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5900519733389586081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8557841288588694966 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5900519733389586081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5931096250275006388
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (11)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &594519998265328259 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5931096250275006388}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8461745543936572579 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 5931096250275006388}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6466680642143152892
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (23)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &266019813600915403 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 6466680642143152892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9124037659009225195 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 6466680642143152892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7350495919663898806
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &4327221798110619009 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 7350495919663898806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4693702133266520993 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 7350495919663898806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7679324470920031306
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &3502996488963008893 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 7679324470920031306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5598859218405381981 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 7679324470920031306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8791200954498260439
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4981908877329033987}
+    m_Modifications:
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.21063851
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485188964978359284, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+      propertyPath: m_Name
+      value: Drill Laser Particles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+--- !u!198 &2310288218286856416 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6489498309331486007, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 8791200954498260439}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6710867640953333440 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819627342024833815, guid: c96381d5d6047304aa3c51a26ad52c24, type: 3}
+  m_PrefabInstance: {fileID: 8791200954498260439}
   m_PrefabAsset: {fileID: 0}

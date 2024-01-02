@@ -37,10 +37,6 @@ public class CoreController : InteractableObject
         glowUp = true;
         Invoke("EndGame", timeToChangeScene);
     }
-    public override void UnHide()
-    {
-        Debug.LogWarning("El Core no se puede esconder");
-    }
 
     private void EndGame()
     {

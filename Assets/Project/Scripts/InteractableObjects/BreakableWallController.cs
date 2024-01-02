@@ -33,6 +33,8 @@ public class BreakableWallController : InteractableObject
 
     public override void UnHide()
     {
+        base.UnHide();
+
         SetupParticles(vfxUnhideColor);
 
         breakableWallTilemap.CompressBounds();

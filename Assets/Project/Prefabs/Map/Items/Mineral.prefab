@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb1e9c97328df54c93b862ee615f2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <c_upgradeNeeded>k__BackingField: {fileID: 0}
   isInteractable: 1
   <isHide>k__BackingField: 0
-  <c_upgradeNeeded>k__BackingField: {fileID: 0}
   grid: {fileID: 0}
   tilemap: {fileID: 0}
   interactableParticles: {fileID: 9145034470601763409}
@@ -110,6 +110,8 @@ MonoBehaviour:
   particlesSize: {x: 1, y: 1}
   particlesPosition: {x: 0, y: 0}
   hiddenParticlesRateOverTime: 2
+  unhideVFX: {fileID: 4083470138585679013, guid: 296b5cd001a1e7745a477451952b35fa, type: 3}
+  unhidePivot: {fileID: 6431933432271367968}
   <c_currentItem>k__BackingField: {fileID: 0}
   <MaxItemsToReturn>k__BackingField: 0
   isBeta: 0
@@ -184,7 +186,7 @@ MonoBehaviour:
   - {x: 0.55, y: -0.55, z: 0}
   m_ShapePathHash: 1066209377
   m_Mesh: {fileID: 0}
-  m_InstanceId: -53800
+  m_InstanceId: 162114
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.55, y: 0.55, z: 0}
