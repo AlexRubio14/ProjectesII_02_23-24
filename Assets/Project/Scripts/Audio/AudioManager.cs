@@ -91,6 +91,7 @@ public class AudioManager : MonoBehaviour
         _as.minDistance = _radius;
         _as.maxDistance = _radius * 5;
         _as.gameObject.transform.position = new Vector3(_pos.x, _pos.y, -10);
+        _as.spatialBlend = 1;
         PlayOneShotSound(_as, _clip, mixerGroup, _minPitch, _maxPitch, _volume);
     }
 
