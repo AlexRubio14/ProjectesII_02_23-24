@@ -13,6 +13,9 @@ public class PickableItemController : MonoBehaviour
     private float minDistanceToGetItem;
     private bool playerThrow;
 
+    [SerializeField]
+    private AudioClip collectClip;
+
     private Transform c_playerTransform;
     private Rigidbody2D c_rb2d;
     private void Awake()
@@ -47,6 +50,7 @@ public class PickableItemController : MonoBehaviour
         if (Vector2.Distance(c_playerTransform.position, transform.position) <= minDistanceToGetItem)
         {
             InventoryManager.Instance.ChangeRunItemAmount(c_currentItem, 1);
+            AudioManager._instance.Play2dOneShotSound(collectClip, "Items");
             Destroy(gameObject);
         }
     }
