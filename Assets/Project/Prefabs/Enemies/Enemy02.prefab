@@ -348,7 +348,6 @@ MonoBehaviour:
   - {fileID: 613125535928429517}
   - {fileID: 1079477967935640561}
   iaData: {fileID: 931764774973105053}
-  detectionDelay: 0.05
   movementDirectionSolver: {fileID: 6505329190034688335}
   maxHealth: 100
   speed: 15
@@ -369,6 +368,7 @@ MonoBehaviour:
   showGizmos: 1
   timeFollowing: 5
   c_explosionParticles: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}
+  explosionClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
 --- !u!1 &5510550852629598786
 GameObject:
   m_ObjectHideFlags: 0

@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
-            source.PlayOneShot(collisionClip);
+            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
             GetDamage(mapDamage, collision.contacts[0].point);
         }
 

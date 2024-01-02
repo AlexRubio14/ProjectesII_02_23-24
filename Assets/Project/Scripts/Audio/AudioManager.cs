@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     [Space, Header("3D"), SerializeField]
     private int total3DAS;
     [SerializeField]
-    GameObject action3dASObj;
+    GameObject actions3dASObj;
     private AudioSource[] actions3dAS;
 
     private void Awake()
@@ -43,6 +43,13 @@ public class AudioManager : MonoBehaviour
             actions2dAS[i] = actions2dASObj.AddComponent<AudioSource>();
             actions2dAS[i].playOnAwake = false;
             actions2dAS[i].outputAudioMixerGroup = mixerGroup;
+        }
+
+        for (int i = 0; i < total3DAS; i++)
+        {
+            actions3dAS[i] = actions3dASObj.AddComponent<AudioSource>();
+            actions3dAS[i].playOnAwake = false;
+            actions3dAS[i].outputAudioMixerGroup = mixerGroup;
         }
     }
 
