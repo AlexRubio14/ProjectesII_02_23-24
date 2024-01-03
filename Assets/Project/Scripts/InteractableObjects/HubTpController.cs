@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class HubTpController : InteractableObject
 {
-    [SerializeField]
+    [Space, Header("TP"), SerializeField]
     private GameObject tpParticles;
     [SerializeField]
     private float timeToGoHub;
