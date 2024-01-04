@@ -9,7 +9,7 @@ public class WebController : MonoBehaviour
 
     private void Start()
     {
-        webDestroyedParticles.gameObject.transform.SetParent(null);
+        webDestroyedParticles.gameObject.transform.SetParent(transform.parent);
 
     }
     private void OnDisable()

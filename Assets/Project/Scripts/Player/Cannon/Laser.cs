@@ -119,15 +119,7 @@ public class Laser : MonoBehaviour
 
         GameObject laserCollision = Instantiate(collisionLaserPrefab, spawnPos, Quaternion.identity);
 
-
-
-        Debug.Log("DISTANCIA: Up - " + upHit.distance + ", Down - " + downHit.distance + ", Right - " + rightHit.distance + ", Left - " + leftHit.distance);
-        Debug.Log("POSICION: Up - " + upHit.point + ", Down - " + downHit.point + ", Right - " + rightHit.point + ", Left - " + leftHit.point);
-        Debug.Log(targetRotation);
-
         laserCollision.transform.up = targetRotation;
-
-        Debug.Log("Pared");
 
     }
 
@@ -197,7 +189,6 @@ public class Laser : MonoBehaviour
 
 
         laserCollision.transform.up = targetRotation;
-        Debug.Log("Enemigo");
     }
     private void DestroyBullet()
     {

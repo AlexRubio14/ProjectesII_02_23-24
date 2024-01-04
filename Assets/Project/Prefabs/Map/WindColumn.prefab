@@ -1427,7 +1427,7 @@ ParticleSystem:
   UVModule:
     serializedVersion: 2
     enabled: 0
-    mode: 0
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -1545,7 +1545,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 903713321, guid: 5ed502f0f31d5bf4088cff079167eb51, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -4057,7 +4057,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minVertexDistance: 0.1
     textureMode: 0
-    textureScale: {x: 1, y: 1}
+    textureScale: {x: 1, y: 0.45}
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
@@ -5055,7 +5055,7 @@ Transform:
   - {fileID: 5317888789610539419}
   - {fileID: 2176231829648135700}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2806392783800965203
 BoxCollider2D:

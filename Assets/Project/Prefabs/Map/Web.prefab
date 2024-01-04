@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7422550024616831813}
   - {fileID: 6025239614118230877}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &9148416280017081938
 BoxCollider2D:
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7755527721998682779}
   - component: {fileID: 6868267113692995112}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: DestroyedWebParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5005,8 +5005,8 @@ Transform:
   m_GameObject: {fileID: 6465620495979616535}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8169404912048284613}
   m_RootOrder: -1
