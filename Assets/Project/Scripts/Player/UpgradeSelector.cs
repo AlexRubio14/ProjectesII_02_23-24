@@ -65,14 +65,14 @@ public class UpgradeSelector : MonoBehaviour
 
 
     private PlayerController playerController;
-    private WebController webController;
+    private PlayerWebController webController;
     private AutoHelpController autoHelpController;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();  
         drillController = GetComponent<DrillController>();
-        webController = GetComponent<WebController>();
+        webController = GetComponent<PlayerWebController>();
         autoHelpController = GetComponent<AutoHelpController>();
     }
 
