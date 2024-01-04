@@ -9,8 +9,11 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float maxDistance;
 
-    [Space, SerializeField]
+    [Space, Header("Collision Particles"), SerializeField]
     private GameObject collisionLaserPrefab;
+    [SerializeField]
+    private LayerMask mapLayer;
+
     [Space, Header("Auto Aim"), SerializeField]
     private float autoAimRadius;
     [SerializeField]
@@ -81,7 +84,54 @@ public class Laser : MonoBehaviour
         return damage * PowerUpManager.Instance.Damage;
     }
 
-    private void InstantiateWallLaserHit(Vector2 _hitPos)
+    private void InstantiateWallLaserHit()
+    { 
+
+        RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, 100, mapLayer);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 100, mapLayer);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 100, mapLayer);
+        RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, 100, mapLayer);
+
+
+        Vector2 spawnPos = upHit.point;
+        float currDistance = upHit.distance;
+        Vector2 targetRotation = Vector2.down;
+        
+        if (rightHit.distance < currDistance)
+        {
+            spawnPos = rightHit.point;
+            currDistance = rightHit.distance;
+            targetRotation = Vector2.left;
+        }
+        
+        if (leftHit.distance < currDistance)
+        {
+            spawnPos = leftHit.point;
+            currDistance = leftHit.distance;
+            targetRotation = Vector2.right;
+        }
+
+        if (downHit.distance < currDistance)
+        {
+            spawnPos = downHit.point;
+            targetRotation = Vector2.up;
+        }
+
+        GameObject laserCollision = Instantiate(collisionLaserPrefab, spawnPos, Quaternion.identity);
+
+
+
+        Debug.Log("DISTANCIA: Up - " + upHit.distance + ", Down - " + downHit.distance + ", Right - " + rightHit.distance + ", Left - " + leftHit.distance);
+        Debug.Log("POSICION: Up - " + upHit.point + ", Down - " + downHit.point + ", Right - " + rightHit.point + ", Left - " + leftHit.point);
+        Debug.Log(targetRotation);
+
+        laserCollision.transform.up = targetRotation;
+
+        Debug.Log("Pared");
+
+    }
+
+    private void InstantiateBreakableWallLaserHit(Vector2 _hitPos)
     {
         GameObject laserCollision = Instantiate(collisionLaserPrefab, _hitPos, Quaternion.identity);
 
@@ -93,13 +143,13 @@ public class Laser : MonoBehaviour
 
         float currDot = upDot;
         Vector2 targetRotation = Vector2.up;
-        
+
         if (rightDot > currDot)
         {
             currDot = rightDot;
             targetRotation = Vector2.right;
         }
-        
+
         if (leftDot > currDot)
         {
             currDot = leftDot;
@@ -114,6 +164,7 @@ public class Laser : MonoBehaviour
 
         laserCollision.transform.up = targetRotation;
     }
+
     private void InstantiateEnemyLaserHit(Vector2 _hitPos, Transform _enemyTransform)
     {
         GameObject laserCollision = Instantiate(collisionLaserPrefab, _hitPos, Quaternion.identity);
@@ -146,6 +197,7 @@ public class Laser : MonoBehaviour
 
 
         laserCollision.transform.up = targetRotation;
+        Debug.Log("Enemigo");
     }
     private void DestroyBullet()
     {
@@ -157,16 +209,22 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Map") || collision.CompareTag("BreakableWall"))
+        if (collision.CompareTag("Map"))
         {
+            InstantiateWallLaserHit();
             source.PlayOneShot(mapHit);
-            InstantiateWallLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position));
             DestroyBullet();
         }
-        if (collision.CompareTag("Enemy"))
+        else if(collision.CompareTag("BreakableWall"))
         {
-            source.PlayOneShot(enemyHit);
+            InstantiateBreakableWallLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position));
+            source.PlayOneShot(mapHit);
+            DestroyBullet();
+        }
+        else if (collision.CompareTag("Enemy"))
+        {
             InstantiateEnemyLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position), collision.transform);
+            source.PlayOneShot(enemyHit);
             DestroyBullet();
         }
     }

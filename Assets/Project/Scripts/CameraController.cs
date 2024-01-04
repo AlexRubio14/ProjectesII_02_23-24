@@ -82,7 +82,7 @@ public class CameraController : MonoBehaviour
 
     public void AddLowTrauma()
     {
-        traumaLevel += 0.5f;
+        traumaLevel += 0.6f;
         traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
     public void AddMediumTrauma()
