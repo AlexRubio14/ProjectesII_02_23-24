@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DisplayQuestController : MonoBehaviour
 {
-    [Header("First Time Quest"), SerializeField]
+    [SerializeField]
+    private GameObject shopButtons;
+
+    [Space, Header("First Time Quest"), SerializeField]
     private QuestInfoMenu firstTimeQuest;
+    [SerializeField]
+    private Button firstTimeSelectedButton; 
 
     [Space, Header("Check List"), SerializeField]
     private CheckQuestController checkController;
-
-    [Space, Header("New Quests")]
+    [SerializeField]
+    private Button checkListSelectedButton;
+    [HideInInspector]
     public List<QuestObject> newQuests;
-
+    [HideInInspector]
     public bool checkDisplayNewQuests = false;
+
+    [Space, SerializeField]
+    private DialogueController dialogue;
 
     private void Start()
     {
@@ -24,7 +34,31 @@ public class DisplayQuestController : MonoBehaviour
         {
             firstTimeQuest.gameObject.SetActive(true);
             firstTimeQuest.SetValues(selectedQuest);
+            shopButtons.SetActive(false);
+            dialogue.onDialogueEnd += OnDialogueEnd;
         }
+    }
+
+    private void OnDisable()
+    {
+        dialogue.onDialogueEnd -= OnDialogueEnd;
+    }
+    private void OnDialogueEnd()
+    {
+        IEnumerator WaitSelectFirstTimeButton()
+        {
+            yield return new WaitForEndOfFrame();
+            firstTimeSelectedButton.Select();
+        }
+
+
+        if (checkController.isActiveAndEnabled && newQuests.Count <= 1)
+        {
+            firstTimeQuest.endDialogueButtonSelect = checkController.questBackButton;
+        }
+
+        StartCoroutine(WaitSelectFirstTimeButton());
+
     }
 
     private void Update()
@@ -49,6 +83,8 @@ public class DisplayQuestController : MonoBehaviour
 
             firstTimeQuest.gameObject.SetActive(true);
             firstTimeQuest.SetValues(newQuests[0]);
+            shopButtons.SetActive(false);
+            dialogue.onDialogueEnd += OnDialogueEnd;
         }
     }
 
@@ -56,6 +92,7 @@ public class DisplayQuestController : MonoBehaviour
     {
         checkController.gameObject.SetActive(true);
         checkController.DisplayQuestCardList();
+        checkListSelectedButton.Select();
     }
 
 
