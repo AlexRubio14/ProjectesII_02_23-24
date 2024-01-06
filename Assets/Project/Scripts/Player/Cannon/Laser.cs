@@ -19,7 +19,6 @@ public class Laser : MonoBehaviour
     private AudioClip enemyHit;
     [SerializeField]
     private AudioClip mapHit;
-    private AudioSource source;
 
     private Vector2 startPosition;
     private float currentDistance;
@@ -28,7 +27,6 @@ public class Laser : MonoBehaviour
     private void Awake()
     {
         c_rb = GetComponent<Rigidbody2D>();
-        source = GetComponent<AudioSource>();
     }
 
     private void Start()

@@ -16,6 +16,14 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private InputActionReference rightUpgradeAction;
 
+    [Header("Audio Boost"), SerializeField]
+    private AudioClip startBoost;
+    [SerializeField]
+    private AudioClip boost;
+    [SerializeField]
+    private AudioClip finishBoost;
+    private AudioSource boostSource;
+
     public enum Position { UP, DOWN, RIGHT, LEFT }
 
     [Header("Backgrounds"), SerializeField]
@@ -86,7 +94,6 @@ public class UpgradeSelector : MonoBehaviour
             {
                 currentSprite = item.Value.c_UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
-                
             }
             else
             {
@@ -100,7 +107,6 @@ public class UpgradeSelector : MonoBehaviour
             {
                 boostPos = item.Key;
             }
-
         }
 
 
@@ -183,9 +189,12 @@ public class UpgradeSelector : MonoBehaviour
     private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
+        
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
+            AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
+            boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
             webController.EraseAllWebs();
             ChangeBackground(_pos, true);
             playerController.externalMovementSpeed += boostMovementSpeed;
@@ -195,6 +204,8 @@ public class UpgradeSelector : MonoBehaviour
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
+            AudioManager._instance.StopLoopSound(boostSource);
+            AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
             ChangeBackground(_pos, false); 
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;

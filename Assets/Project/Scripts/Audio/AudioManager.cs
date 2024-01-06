@@ -99,11 +99,11 @@ public class AudioManager : MonoBehaviour
     {
         if (_as != null)
         {
-            _as.outputAudioMixerGroup = mixer.FindMatchingGroups(mixerGroup)[0];
-            _as.loop = false;
-            _as.pitch = Random.Range(_minPitch, _maxPitch);
-            _as.volume = _volume;
-            _as.PlayOneShot(_clip);
+            _as.outputAudioMixerGroup = mixer.FindMatchingGroups(mixerGroup)[0]; 
+            _as.loop = false; 
+            _as.pitch = Random.Range(_minPitch, _maxPitch); 
+            _as.volume = _volume; 
+            _as.PlayOneShot(_clip); 
         }
     }
     
@@ -152,5 +152,11 @@ public class AudioManager : MonoBehaviour
         _as.loop = false;
         _as.clip = null;
         _as.Stop();
+    }
+
+    public IEnumerator FadeOutSFXLoop(AudioSource source, float  fadeSpeed)
+    {
+        yield return new WaitUntil(() => (source.volume -= fadeSpeed) <= 0);
+        StopLoopSound(source);
     }
 }

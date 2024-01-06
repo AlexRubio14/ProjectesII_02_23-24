@@ -422,31 +422,6 @@ MonoBehaviour:
   rotationSpeed:
   - 0.55
   - 15
-  driftCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.00028889952
-      value: 1.0010004
-      inSlope: 0.008824526
-      outSlope: 0.008824526
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.04036632
-    - serializedVersion: 3
-      time: 1
-      value: 0.0013580322
-      inSlope: -2.159927
-      outSlope: -2.159927
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.024491925
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxDriftTime: 0.25
   knockbackScale: 10
   knockbackRotation: 1
   knockbackTime: 0.3
@@ -460,6 +435,7 @@ MonoBehaviour:
   timeToReturnHub: 3
   engineParticles: {fileID: 4361300617207404308}
   collisionClip: {fileID: 8300000, guid: b884c2bebe6af954eaa0b217c2a87247, type: 3}
+  engineClip: {fileID: 0}
 --- !u!114 &4196185413055272076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,6 +558,9 @@ MonoBehaviour:
   downUpgradeAction: {fileID: -7893445427389807243, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   leftUpgradeAction: {fileID: -5749262144971248650, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   rightUpgradeAction: {fileID: -1784829170732850432, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  startBoost: {fileID: 8300000, guid: b32c62d132e3b03459b242b36a3d3d34, type: 3}
+  boost: {fileID: 8300000, guid: b4ef97c998fe64d46b3a7a633aa8698f, type: 3}
+  finishBoost: {fileID: 8300000, guid: e2b553493f0d6524fbe607b4597a7a89, type: 3}
   unselectedBackground: {fileID: 21300000, guid: 1dd94391b7a2cb449ace593a53acb46a, type: 3}
   selectedBackground: {fileID: 21300000, guid: c9fba170e503d774991290bb242676cc, type: 3}
   backgroundImagePositions:
