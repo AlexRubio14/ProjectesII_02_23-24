@@ -15,7 +15,7 @@ MonoBehaviour:
   <type>k__BackingField: 0
   <UpgradeName>k__BackingField: Engine Upgrade
   <UpgradeDescription>k__BackingField: SUPER MAMADA GALAXIAL
-  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: ea255ba0a5e28a2448252d18b76d4dcb, type: 3}
+  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 0ffcfa13211d521498098f523e10bd1d, type: 3}
   prize:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

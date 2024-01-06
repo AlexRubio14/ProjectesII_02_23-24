@@ -26,6 +26,8 @@ public class DrillController : MonoBehaviour
     [SerializeField]
     private Gradient laserColor;
 
+    [Space, Header("Particles"), SerializeField]
+    private ParticleSystem[] laserParticles;
 
     #region Tiles
 
@@ -309,6 +311,14 @@ public class DrillController : MonoBehaviour
                 lasers[i].enabled = true;
                 lasers[i].SetPosition(0, GetNearestCannonPos(_hits[i].point));
                 lasers[i].SetPosition(1, _hits[i].point);
+
+                ParticleSystem currentParticle = GetUnusedParticleSystem();
+                if (currentParticle != null)
+                {
+                    currentParticle.gameObject.transform.position = _hits[i].point;
+                    currentParticle.Play(true);
+                }
+
             }
             else
             {
@@ -330,6 +340,20 @@ public class DrillController : MonoBehaviour
             return laserCannons[1].position;
         }
     }
+
+    private ParticleSystem GetUnusedParticleSystem()
+    {
+        foreach (ParticleSystem item in laserParticles)
+        {
+            if (!item.isPlaying)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (!showGizmos)

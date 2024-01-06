@@ -46,6 +46,8 @@ public class MineralController : InteractableObject
     }
     public override void UnHide()
     {
+        base.UnHide();
+
         if (!isBeta)
         {
             //Borrar solo el del centro

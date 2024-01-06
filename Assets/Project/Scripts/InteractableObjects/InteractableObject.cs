@@ -6,14 +6,16 @@ using UnityEngine.Tilemaps;
 abstract public class InteractableObject : MonoBehaviour
 {
 
-    [SerializeField]
-    public bool isInteractable = true;
-    [field: SerializeField]
-    public bool isHide { get; protected set; }
     [field: SerializeField, Tooltip("Solo es necesario asignarle algo si podemos interactuar con el objeto y necesita una mejora")]
     public UpgradeObject c_upgradeNeeded { get; private set; }
 
-    [Space, SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
+    [SerializeField]
+    public bool isInteractable = true;    
+
+    [field: Space, Header("Hide"), SerializeField]
+    public bool isHide { get; protected set; }
+
+    [SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
     protected Grid grid;
     [SerializeField, Tooltip("Solo hay que darle un valor si el elemento esta oculto")]
     protected Tilemap tilemap;
@@ -28,9 +30,18 @@ abstract public class InteractableObject : MonoBehaviour
     protected Vector2 particlesPosition;
     [SerializeField]
     protected float hiddenParticlesRateOverTime;
+    [SerializeField]
+    private GameObject unhideVFX;
+    [SerializeField]
+    private Transform unhidePivot;
 
     abstract public void Interact();
-    abstract public void UnHide();
+    virtual public void UnHide()
+    {
+        GameObject vfx = Instantiate(unhideVFX, unhidePivot.position, Quaternion.identity);
+
+        Destroy(vfx, 3);
+    }
 
     protected void SetupParticles(Color _color)
     {

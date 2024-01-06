@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class HubTpController : InteractableObject
 {
-    [SerializeField]
+    [Space, Header("TP"), SerializeField]
     private GameObject tpParticles;
     [SerializeField]
     private float timeToGoHub;
@@ -34,10 +34,6 @@ public class HubTpController : InteractableObject
             item.gameObject.SetActive(false);
         }
         Invoke("StopParticles", timeToGoHub);
-    }
-    public override void UnHide()
-    {
-        Debug.LogWarning("No hay ninguna interaccion");
     }
     private void StopParticles()
     {

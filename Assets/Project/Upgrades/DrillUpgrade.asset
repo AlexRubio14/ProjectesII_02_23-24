@@ -15,7 +15,7 @@ MonoBehaviour:
   <type>k__BackingField: 2
   <UpgradeName>k__BackingField: Drill Upgrade
   <UpgradeDescription>k__BackingField: Rompisiona muchas cosas
-  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: c62b5beee37d66d47bcddde7e1c79164, type: 3}
+  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 2177c061fc46af948af03094e54e28b9, type: 3}
   prize:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
