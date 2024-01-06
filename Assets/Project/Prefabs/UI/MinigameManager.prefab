@@ -405,7 +405,7 @@ RectTransform:
   m_GameObject: {fileID: 942154565128667897}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.5000005, z: 1}
+  m_LocalScale: {x: 1, y: 1.5000006, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6227664134604923887}
@@ -413,7 +413,7 @@ RectTransform:
   - {fileID: 9025779699264126469}
   - {fileID: 8193324810005831337}
   - {fileID: 8119412498010242861}
-  m_Father: {fileID: 6662548893306437348}
+  m_Father: {fileID: 5992441030099964028}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1209,7 +1209,12 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8659900188293130304}
+  - {fileID: 1059356119925187759}
+  - {fileID: 1873952052181402208}
+  - {fileID: 9040804973516062030}
   - {fileID: 3579627173208785863}
+  - {fileID: 2229796089814197921}
   - {fileID: 6662548893306437348}
   - {fileID: 5075220975362547989}
   m_Father: {fileID: 6872371389966441854}
@@ -1464,7 +1469,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6539468230628126834}
-  m_Father: {fileID: 6662548893306437348}
+  m_Father: {fileID: 5992441030099964028}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2629,12 +2634,12 @@ RectTransform:
   m_Children:
   - {fileID: 3654375273486150968}
   - {fileID: 4020475443001124554}
-  m_Father: {fileID: 6662548893306437348}
+  m_Father: {fileID: 5992441030099964028}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: 235}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &650299027933297883
@@ -3322,7 +3327,7 @@ RectTransform:
   m_GameObject: {fileID: 7530040860988857207}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.5000005, z: 1}
+  m_LocalScale: {x: 1, y: 1.5000006, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6644462918150026015}
@@ -3330,7 +3335,7 @@ RectTransform:
   - {fileID: 5041953480837856972}
   - {fileID: 4087865223996663104}
   - {fileID: 5023011097213148143}
-  m_Father: {fileID: 6662548893306437348}
+  m_Father: {fileID: 5992441030099964028}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3433,12 +3438,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8659900188293130304}
-  - {fileID: 1059356119925187759}
-  - {fileID: 1873952052181402208}
-  - {fileID: 9040804973516062030}
-  - {fileID: 2229796089814197921}
+  m_Children: []
   m_Father: {fileID: 5992441030099964028}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4308,7 +4308,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 78882571775961152}
-  m_Father: {fileID: 6662548893306437348}
+  m_Father: {fileID: 5992441030099964028}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4496,6 +4496,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3452461215893616744, guid: 6ce6648cb8fc9a64982bec5744ba4cfa, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4578,6 +4582,10 @@ PrefabInstance:
     - target: {fileID: 3452461215893616744, guid: 6ce6648cb8fc9a64982bec5744ba4cfa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3452461215893616744, guid: 6ce6648cb8fc9a64982bec5744ba4cfa, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
