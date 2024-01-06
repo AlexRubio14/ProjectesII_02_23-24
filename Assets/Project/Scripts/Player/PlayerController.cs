@@ -360,6 +360,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case State.FREEZE:
+                engineParticles.gameObject.SetActive(false);
                 c_rb.velocity = Vector2.zero;
                 break;
             case State.DEAD:

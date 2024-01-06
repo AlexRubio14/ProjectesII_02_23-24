@@ -25,6 +25,7 @@ public class HubTpController : InteractableObject
     public override void Interact()
     {
         c_playerController.ChangeState(PlayerController.State.FREEZE);
+        c_playerController.GetComponentInChildren<CannonController>().gameObject.SetActive(false);
         c_tpParticles = Instantiate(tpParticles, c_playerController.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         c_playerSR.enabled = false;
         c_playerMapInteraction.showCanvas = false;

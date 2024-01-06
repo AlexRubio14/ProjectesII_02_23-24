@@ -25,7 +25,7 @@ public class QuestObject : ScriptableObject
     [SerializedDictionary("Item", "Amount")]
     public SerializedDictionary<ItemObject, short> neededItems;
 
-    public enum RewardType { UPGRADE, NEW_QUEST };
+    public enum RewardType { UPGRADE, NEW_QUEST, POWER_UP };
 
     //Rewards
     [SerializedDictionary("REWARD", "TYPE")]

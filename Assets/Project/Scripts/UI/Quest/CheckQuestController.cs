@@ -104,6 +104,10 @@ public class CheckQuestController : MonoBehaviour
                     displayQuestController.checkDisplayNewQuests = true;
                     displayQuestController.newQuests.Add((QuestObject)item.Key);
                     break;
+                case QuestObject.RewardType.POWER_UP:
+                    ItemObject currentItem = (ItemObject)item.Key;
+                    PowerUpManager.Instance.PowerUpObtained(currentItem.PowerUp);
+                    break;
                 default:
                     break;
             }

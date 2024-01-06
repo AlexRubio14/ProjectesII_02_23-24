@@ -30,6 +30,8 @@ MonoBehaviour:
       Value: 10
   rewards:
     _serializedList:
+    - Key: {fileID: 11400000, guid: f2a3a1e76f8f2d64b809d13372fdea8c, type: 2}
+      Value: 2
     - Key: {fileID: 11400000, guid: c0c3993ecb1e77f4580fd4defe12856a, type: 2}
       Value: 1
   obtainedQuest: 0

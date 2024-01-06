@@ -33,7 +33,9 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
       Value: 15
   rewards:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 11400000, guid: f2a3a1e76f8f2d64b809d13372fdea8c, type: 2}
+      Value: 2
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1

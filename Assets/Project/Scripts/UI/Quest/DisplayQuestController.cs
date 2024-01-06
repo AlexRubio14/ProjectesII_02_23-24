@@ -39,6 +39,11 @@ public class DisplayQuestController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+            dialogue.onDialogueEnd += OnDialogueEnd;
+    }
+
     private void OnDisable()
     {
         dialogue.onDialogueEnd -= OnDialogueEnd;
@@ -84,7 +89,6 @@ public class DisplayQuestController : MonoBehaviour
             firstTimeQuest.gameObject.SetActive(true);
             firstTimeQuest.SetValues(newQuests[0]);
             shopButtons.SetActive(false);
-            dialogue.onDialogueEnd += OnDialogueEnd;
         }
     }
 

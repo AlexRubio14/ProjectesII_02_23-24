@@ -66,7 +66,13 @@ public class DialogueController : MonoBehaviour
     public void StartDialogue()
     {
         if (dialogues.Length == 0)
+        {
+            showingText = false;
+            displayingDialogue = false;
+            onDialogueEnd();
+            gameObject.SetActive(false);
             return;
+        }
 
         //Empezar con el dialogo
         dialogueObject.SetActive(true);
