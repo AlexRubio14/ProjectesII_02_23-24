@@ -5448,9 +5448,9 @@ MonoBehaviour:
     - Key: 3
       Value: {fileID: 0}
   locketUpgradeSprite: {fileID: 21300000, guid: ad3edb4bfe23c734da74e1a4f9c8decb, type: 3}
-  boostMovementSpeed: 50
-  boostStaminaReduction: 0.35
-  boostStaminaRecover: 0.15
+  boostMovementSpeed: 55
+  boostStaminaReduction: 0.3
+  boostStaminaRecover: 0.25
   boostParticles: {fileID: 9202339918048795296}
   drillMovementSlow: 20
   drillSprite: {fileID: 702809251199840510}
@@ -5470,8 +5470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdda5b3170a11744b922e4159fe2b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 0.45
-  autoHelpMagnitude: 1
+  distance: 0.65
+  autoHelpMagnitude: 0.4
   mapLayer:
     serializedVersion: 2
     m_Bits: 4096
