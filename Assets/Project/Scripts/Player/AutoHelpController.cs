@@ -70,7 +70,7 @@ public class AutoHelpController : MonoBehaviour
                 continue;
 
                 Vector2 collisionPoint = hit.collider.ClosestPoint(transform.position);
-                autoHelpVector += ((Vector2)transform.position - collisionPoint).normalized;
+                autoHelpVector += ((Vector2)transform.position - collisionPoint);
         }
 
         c_rb.AddForce(autoHelpVector * autoHelpMagnitude, ForceMode2D.Impulse);

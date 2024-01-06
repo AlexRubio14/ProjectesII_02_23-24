@@ -22,8 +22,11 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
+    private Vector2 lastMovementDirection;
     [HideInInspector]
     public float externalMovementSpeed;
+
+
 
     public enum RotationType { OLD_ROTATION, NEW_ROTATION };
     [Space, Header("Rotation"), SerializeField]
@@ -157,7 +160,24 @@ public class PlayerController : MonoBehaviour
     {
         if (currentRotation == RotationType.OLD_ROTATION)
         {
-            Vector2 movementAndAutoHelpDirection = movementDirection.normalized + autoHelpController.autoHelpDirection;
+            Vector2 movementAndAutoHelpDirection;
+
+            Vector2 autoHelp = autoHelpController.autoHelpDirection;
+            float autoHelpMutliplier = 3;
+            //En caso de que se tenga que aplicar la auto ayuda
+            //Y el player no este tocando ningun input
+            //Y la ultima direccion no este mirando directo a la pared
+            //Se usara la ultima direccion de movimiento
+
+            if (autoHelp != Vector2.zero && movementDirection == Vector2.zero && Vector2.Dot(lastMovementDirection, autoHelp) > -0.6f)
+            {
+                movementAndAutoHelpDirection = lastMovementDirection.normalized * autoHelpMutliplier + autoHelp;
+            }
+            else
+            {
+                movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
+            }
+
             Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
 
             float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
@@ -365,6 +385,11 @@ public class PlayerController : MonoBehaviour
     private void RotateAction(InputAction.CallbackContext obj)
     {
         movementDirection = obj.action.ReadValue<Vector2>();
+
+        if (movementDirection != Vector2.zero)
+        {
+            lastMovementDirection = movementDirection;
+        }
     }
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
