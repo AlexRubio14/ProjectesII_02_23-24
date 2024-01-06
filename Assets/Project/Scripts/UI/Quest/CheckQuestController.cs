@@ -13,6 +13,9 @@ public class CheckQuestController : MonoBehaviour
     [Header("Card List"), SerializeField]
     private Transform cardLayout;
     [SerializeField]
+    private Button cardListBackButton;
+    public Button questBackButton;
+    [SerializeField]
     private GameObject cardPrefab;
     private List<GameObject> cardList;   
 
@@ -24,6 +27,8 @@ public class CheckQuestController : MonoBehaviour
     private TextMeshProUGUI completeText;
     [SerializeField]
     private Button selectButton;
+    [SerializeField]
+    private Button backButton;
     private TextMeshProUGUI selectText;
 
     private void Awake()
@@ -38,8 +43,16 @@ public class CheckQuestController : MonoBehaviour
         selectButton.onClick.AddListener(() => SelectQuest());
     }
 
-    public void UpdateQuestValues(QuestObject _quest)
+    public void UpdateQuestValues(QuestObject _quest, bool _selectButton = true)
     {
+        if (_selectButton)
+        {
+            cardLayout.gameObject.SetActive(false);
+            cardListBackButton.gameObject.SetActive(false);
+            backButton.Select();
+        }
+        
+
         currentQuest = _quest;
         questCanvas.gameObject.SetActive(true);
         questCanvas.SetValues(currentQuest);
@@ -91,6 +104,10 @@ public class CheckQuestController : MonoBehaviour
                     displayQuestController.checkDisplayNewQuests = true;
                     displayQuestController.newQuests.Add((QuestObject)item.Key);
                     break;
+                case QuestObject.RewardType.POWER_UP:
+                    ItemObject currentItem = (ItemObject)item.Key;
+                    PowerUpManager.Instance.PowerUpObtained(currentItem.PowerUp);
+                    break;
                 default:
                     break;
             }
@@ -98,7 +115,7 @@ public class CheckQuestController : MonoBehaviour
 
         RemoveQuestCardList();
         questCanvas.RemoveQuestInfo();
-        UpdateQuestValues(currentQuest);
+        UpdateQuestValues(currentQuest, false);
     }
 
     private void SelectQuest()

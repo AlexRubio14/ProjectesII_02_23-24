@@ -1,7 +1,7 @@
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
-
 
 public class DialogueController : MonoBehaviour
 {
@@ -25,8 +25,11 @@ public class DialogueController : MonoBehaviour
     private bool showingText = false;
     private bool displayingDialogue = false;
 
-    [Header("Animator"), SerializeField]
-    private Animator[] catAnimations; 
+    [Space, Header("Animator"), SerializeField]
+    private Animator[] catAnimations;
+
+    [HideInInspector]
+    public Action onDialogueEnd;
 
     private void Awake()
     {
@@ -63,7 +66,13 @@ public class DialogueController : MonoBehaviour
     public void StartDialogue()
     {
         if (dialogues.Length == 0)
+        {
+            showingText = false;
+            displayingDialogue = false;
+            onDialogueEnd();
+            gameObject.SetActive(false);
             return;
+        }
 
         //Empezar con el dialogo
         dialogueObject.SetActive(true);
@@ -105,6 +114,7 @@ public class DialogueController : MonoBehaviour
             //Si no hay mas dialogos
             showingText = false;
             displayingDialogue = false;
+            onDialogueEnd();
             gameObject.SetActive(false);
         }
 

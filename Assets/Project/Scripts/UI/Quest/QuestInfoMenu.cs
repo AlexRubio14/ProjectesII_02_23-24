@@ -21,10 +21,10 @@ public class QuestInfoMenu : MonoBehaviour
 
     [Space, SerializeField]
     private DialogueController dialogue;
-
+    public Button endDialogueButtonSelect;
     private QuestObject currentQuest;
 
-    [SerializeField]
+    [Space, SerializeField]
     private TMP_FontAsset fontAsset;
 
     private void OnDisable()
@@ -45,10 +45,8 @@ public class QuestInfoMenu : MonoBehaviour
 
         dialogue.dialogues = currentQuest.questDialogue;
         dialogue.gameObject.SetActive(true);
-
         dialogue.StartDialogue();
     }
-
     private void SetRequirementValues()
     {
         requirementImages = new List<Image>();
@@ -98,6 +96,9 @@ public class QuestInfoMenu : MonoBehaviour
                     QuestObject quest = (QuestObject)item.Key;
                     newText.text = quest.questTitle + ": " + quest.questName;
                     break;
+                case QuestObject.RewardType.POWER_UP:
+                    newText.text = ((ItemObject)item.Key).ItemName;
+                    break;
                 default:
                     break;
             }
@@ -129,5 +130,11 @@ public class QuestInfoMenu : MonoBehaviour
         }
 
         rewardList.Clear();
+    }
+
+
+    public void SelectEndFirtstTimeButton()
+    {
+        endDialogueButtonSelect.Select();
     }
 }

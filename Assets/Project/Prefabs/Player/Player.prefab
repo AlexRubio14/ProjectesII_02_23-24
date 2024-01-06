@@ -5694,9 +5694,12 @@ MonoBehaviour:
   reloadDelay: 0.8
   fuelConsume: 1
   canShootStates: 000000000100000005000000
-  enemiesMask:
+  enemiesLayer:
     serializedVersion: 2
     m_Bits: 512
+  mapLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   shootParticles: {fileID: 4590653105361512190}
   shootClip: {fileID: 8300000, guid: 49ed066e3c4dcf641bdbef011ec6959b, type: 3}
   autoShoot: 1

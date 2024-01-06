@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,7 +23,9 @@ public class CannonController : MonoBehaviour
     private PlayerController.State[] canShootStates;
     private Rigidbody2D nearestEnemy;
     [SerializeField]
-    private LayerMask enemiesMask;
+    private LayerMask enemiesLayer;
+    [SerializeField]
+    private LayerMask mapLayer;
     [SerializeField]
     private ParticleSystem shootParticles;
     private Animator shootinAnim;
@@ -72,7 +72,7 @@ public class CannonController : MonoBehaviour
 
     private void CheckNearestEnemy()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, shootingRange, Vector2.zero, 0, enemiesMask);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, shootingRange, Vector2.zero, 0, enemiesLayer);
 
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
@@ -81,8 +81,12 @@ public class CannonController : MonoBehaviour
         {
             index++;
             float distance = Vector2.Distance(transform.position, hit.point);
-            if (minDisntance > distance)
+            float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
+            Vector3 dir = (hit.rigidbody.transform.position - transform.position);
+            if (minDisntance > distance && 
+                !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
             {
+                Debug.DrawLine(transform.position, transform.position + dir.normalized * multuplyValue, Color.green, 0.01f);
                 foundEnemy = hit.rigidbody;
                 minDisntance = distance;
             }
