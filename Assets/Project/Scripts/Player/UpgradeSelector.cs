@@ -108,38 +108,37 @@ public class UpgradeSelector : MonoBehaviour
         upgradesToggled = new bool[4];
 
         boostParticles.Stop(true);
-
     }
 
     private void OnEnable()
     {
-        upUpgradeAction.action.started += _ => ToggleUpgrade(Position.UP, _);
-        upUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.UP, _);
+        upUpgradeAction.action.started += upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
+        upUpgradeAction.action.canceled += upUpgradeCanceled => ToggleUpgrade(Position.UP, upUpgradeCanceled);
 
-        downUpgradeAction.action.started += _ => ToggleUpgrade(Position.DOWN, _);
-        downUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.DOWN, _);
+        downUpgradeAction.action.started += downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
+        downUpgradeAction.action.canceled += downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
 
-        rightUpgradeAction.action.started += _ => ToggleUpgrade(Position.RIGHT, _);
-        rightUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.RIGHT, _);
+        rightUpgradeAction.action.started += rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
+        rightUpgradeAction.action.canceled += rightUpgradeCanceled => ToggleUpgrade(Position.RIGHT, rightUpgradeCanceled);
 
-        leftUpgradeAction.action.started += _ => ToggleUpgrade(Position.LEFT, _);
-        leftUpgradeAction.action.canceled += _ => ToggleUpgrade(Position.LEFT, _);
+        leftUpgradeAction.action.started += leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
+        leftUpgradeAction.action.canceled += leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
 
     }
 
     private void OnDisable()
     {
-        upUpgradeAction.action.started -= _ => ToggleUpgrade(Position.UP, _);
-        upUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.UP, _);
+        upUpgradeAction.action.started -= upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
+        upUpgradeAction.action.canceled -= upUpgradeCanceled => ToggleUpgrade(Position.UP, upUpgradeCanceled);
 
-        downUpgradeAction.action.started -= _ => ToggleUpgrade(Position.DOWN, _);
-        downUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.DOWN, _);
+        downUpgradeAction.action.started -= downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
+        downUpgradeAction.action.canceled -= downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
 
-        rightUpgradeAction.action.started -= _ => ToggleUpgrade(Position.RIGHT, _);
-        rightUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.RIGHT, _);
+        rightUpgradeAction.action.started -= rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
+        rightUpgradeAction.action.canceled -= rightUpgradeCanceled => ToggleUpgrade(Position.RIGHT, rightUpgradeCanceled);
 
-        leftUpgradeAction.action.started -= _ => ToggleUpgrade(Position.LEFT, _);
-        leftUpgradeAction.action.canceled -= _ => ToggleUpgrade(Position.LEFT, _);
+        leftUpgradeAction.action.started -= leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
+        leftUpgradeAction.action.canceled -= leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
     }
 
     private void Update()
