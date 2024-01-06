@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Plant
   <Weight>k__BackingField: 0
-  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: b5fac7acf4f898245b28a33b37e8087f, type: 3}
+  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 1763fbed983728a42a89247830cb2fad, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 91fb54392ab5b444c81f8e46a790cd0d, type: 3}
-  <EffectsColor>k__BackingField: {r: 0.35830188, g: 1, b: 0, a: 1}
+  <EffectsColor>k__BackingField: {r: 1, g: 0, b: 0.79884434, a: 1}
   <PowerUp>k__BackingField: 0

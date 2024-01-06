@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Cooper
   <Weight>k__BackingField: 0
-  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: adef8bd251c059249af9d1a40a014550, type: 3}
+  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 122a4530f21d2e245ba231d62d5b6b7d, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: dcf800fcbf4e78849a007ab2b99d67e4, type: 3}
-  <EffectsColor>k__BackingField: {r: 0.6886792, g: 0.4097598, b: 0, a: 1}
+  <EffectsColor>k__BackingField: {r: 1, g: 0.8747871, b: 0.023584902, a: 1}
   <PowerUp>k__BackingField: 0

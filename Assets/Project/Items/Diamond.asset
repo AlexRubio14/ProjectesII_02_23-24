@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Diamond
   <Weight>k__BackingField: 0
-  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: cc568cfe6d67a9542bb49ba6c003c464, type: 3}
+  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 401f567118a390b4fa3606c3e40d2547, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 4753d237ebb2915459c62eabdbdf919a, type: 3}
-  <EffectsColor>k__BackingField: {r: 0, g: 1, b: 0.96936965, a: 1}
+  <EffectsColor>k__BackingField: {r: 0.119199276, g: 1, b: 0, a: 1}
   <PowerUp>k__BackingField: 0
