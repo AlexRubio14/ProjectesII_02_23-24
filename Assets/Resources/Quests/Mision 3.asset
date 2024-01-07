@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
+  m_Name: Mision 3
+  m_EditorClassIdentifier: 
+  <questID>k__BackingField: 8
+  <questTitle>k__BackingField: Mision 3
+  <questName>k__BackingField: Y se hizo la luz
+  <questDialogue>k__BackingField:
+  - "Saludos. Ya tienes integrada la nueva mejora a tus l\xE1seres de miner\xEDa,
+    esta herramienta puede desintegrar algunas paredes fragiles que encuentres. "
+  - "Tu pr\xF3xima misi\xF3n es clara: emplear esos l\xE1seres mejorados para perforar
+    las barreras que yacen entre nosotros y las capas m\xE1s profundas del planeta."
+  - "En la capa mas profunda encontraras el material mas resistente del planeta:
+    \xA1El Cattanium!"
+  - "El Cattanium me servira para darte mejoras mas avanzadas para tu nave \xA1Si
+    ves una mena no dudes en minarlo!"
+  <questResume>k__BackingField: "Utiliza la mejora de los laseres de mineria para
+    destruir las paredes quebradas y bajar a la capa mas profunda. Es hora de obtener
+    un mineral muy valioso: \xA1El Cattanium! "
+  neededItems:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+      Value: 30
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 30
+    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
+      Value: 20
+    - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
+      Value: 13
+    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
+      Value: 8
+    - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
+      Value: 8
+  rewards:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
+      Value: 0
+    - Key: {fileID: 11400000, guid: 421d4d9ec1c62634db8c2e6d3bda2b31, type: 2}
+      Value: 1
+  obtainedQuest: 0
+  completedQuest: 0
+  newQuest: 1

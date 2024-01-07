@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
+  m_Name: Opt 1.1
+  m_EditorClassIdentifier: 
+  <questID>k__BackingField: 1
+  <questTitle>k__BackingField: Opt. 1.1
+  <questName>k__BackingField: Sin tiempo para morir
+  <questDialogue>k__BackingField:
+  - " \xA1Saludos! Antes de que te lances nuevamente a las entra\xF1as del planeta,
+    hay noticias emocionantes que debo compartir contigo. "
+  - "No solo puedo crearte mejoras funcionales para tu nave, sino tambi\xE9n mejoras
+    b\xE1sicas que transformar\xE1n tu experiencia en tu travesia a traves de las
+    cuevas mas profundas de este planeta."
+  <questResume>k__BackingField: Desbloquea tu primera mejora de combustible de la
+    nave
+  neededItems:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+      Value: 15
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 10
+    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
+      Value: 5
+  rewards:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: f2a3a1e76f8f2d64b809d13372fdea8c, type: 2}
+      Value: 2
+    - Key: {fileID: 11400000, guid: 193e1c8766041d74f8115e8a7f78ad76, type: 2}
+      Value: 1
+  obtainedQuest: 0
+  completedQuest: 0
+  newQuest: 1

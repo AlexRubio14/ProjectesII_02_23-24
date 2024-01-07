@@ -1,13 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInventoryController : MonoBehaviour
 {
-    [field: SerializeField]
-    public GameObject inventory { get; private set; }
+    [SerializeField]
+    public GameObject inventory;
 
-    public void ChangeInventoryVisibility()
+    [SerializeField]
+    private InputActionReference inventoryAction;
+
+    private void OnEnable()
+    {
+        inventoryAction.action.started += InventoryAction;
+    }
+    private void OnDisable()
+    {
+        inventoryAction.action.started -= InventoryAction;
+    }
+
+    private void InventoryAction(InputAction.CallbackContext obj)
     {
         inventory.SetActive(!inventory.activeInHierarchy);
     }

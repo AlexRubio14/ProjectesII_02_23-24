@@ -1,0 +1,69 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class QuestCard : MonoBehaviour
+{
+    [SerializeField]
+    private TextMeshProUGUI titleText;
+    [SerializeField]
+    private TextMeshProUGUI nameText;
+
+    [SerializeField]
+    private Image questStateBackground;
+    [SerializeField]
+    private TextMeshProUGUI questStateText;
+    [SerializeField]
+    private Color completeColor;
+    [SerializeField]
+    private Color selectedColor;
+    [SerializeField]
+    private Color newQuestColor;
+    
+    [HideInInspector]
+    public QuestObject currentQuest;
+
+    private Button checkCardButton;
+
+    private void Awake()
+    {
+        checkCardButton = GetComponent<Button>();
+    }
+
+    public void SetTextValues(QuestObject _quest)
+    {
+        currentQuest = _quest;
+        titleText.text = currentQuest.questTitle;
+        nameText.text = currentQuest.questName;
+
+        CheckQuestController checkQuestCont = GetComponentInParent<CheckQuestController>();
+
+        checkCardButton.onClick.AddListener(() => checkQuestCont.UpdateQuestValues(currentQuest));
+
+        if (currentQuest.completedQuest)
+        {
+            //Completada
+            questStateBackground.color = completeColor;
+            questStateText.text = "Completada";
+        }
+        else if (QuestManager.Instance.GetSelectedQuest() == currentQuest)
+        {
+            //Seleccionada
+            questStateBackground.color = selectedColor;
+            questStateText.text = "Seleccionado";
+        }
+        else if (currentQuest.newQuest)
+        {
+            //Mision nueva
+            questStateBackground.color = newQuestColor;
+            questStateText.text = "Nuevo";
+        }
+        else
+        {
+            //Desactivarlo
+            questStateBackground.gameObject.SetActive(false);
+        }
+
+    }
+
+}

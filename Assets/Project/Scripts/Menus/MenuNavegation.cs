@@ -5,24 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class MenuNavegation : MonoBehaviour
 {
+    [SerializeField]
+    private string hubScene;
+    [SerializeField]
+    private string titleScene;
+    [SerializeField]
+    private string gameScene;
+
     public void GoToHub()
     {
-        SceneManager.LoadScene("HubScene"); 
+        SceneManager.LoadScene(hubScene); 
     }
 
     public void GoToTitleScreen()
     {
-        SceneManager.LoadScene("TitleScreen");
+        SceneManager.LoadScene(titleScene);
     }
 
     public void GoToGame()
     {
-        SceneManager.LoadScene("PlayableMapScene");
+        SceneManager.LoadScene(gameScene);
     }
 
     public void Exit()
     {
-        Debug.Log("Exit game..."); 
         Application.Quit();
     }
 }

@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
     private float maxShakeRotation;
     private Quaternion starterRotation;
     private float traumaLevel;
+    [SerializeField]
+    private float maxTraumaLevel = 1;
 
     private void Awake()
     {
@@ -32,9 +34,9 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        traumaLevel -= Time.deltaTime / 1.5f;
+        traumaLevel -= Time.deltaTime / 1.3f;
 
-        traumaLevel = Mathf.Clamp01(traumaLevel);
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
 
     }
     private void LateUpdate()
@@ -65,7 +67,6 @@ public class CameraController : MonoBehaviour
 
     private void SetRandomTraumaRotation()
     {
-        //Genera un float random entre -1 y 1 (los unicos resultados son -1 y 1) 
         float rotation = Mathf.PerlinNoise(2, Time.fixedTime);
         float rotationShake = Random.Range(-maxShakeRotation, maxShakeRotation);
 
@@ -81,17 +82,28 @@ public class CameraController : MonoBehaviour
 
     public void AddLowTrauma()
     {
-        traumaLevel += 0.4f;
-        traumaLevel = Mathf.Clamp01(traumaLevel);
+        traumaLevel += 0.6f;
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
     public void AddMediumTrauma()
     {
-        traumaLevel += 0.6f;
-        traumaLevel = Mathf.Clamp01(traumaLevel);
+        traumaLevel += 0.75f;
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
     public void AddHighTrauma()
     {
-        traumaLevel += 1f;
-        traumaLevel = Mathf.Clamp01(traumaLevel);
+        traumaLevel += 1.1f;
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+    }
+
+    public void AddCustomTrauma(float _trauma)
+    {
+        traumaLevel += _trauma;
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+    }
+    public void SetTrauma(float _trauma)
+    {
+        traumaLevel = _trauma;
+        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
 }

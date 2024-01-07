@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 334274823621980755}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.67, y: 1.67, z: 1.67}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6161894378625804264}
   m_RootOrder: -1
@@ -71,10 +71,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1407661151
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.8490566, g: 0.17354925, b: 0.20632106, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 41484e76c00e21448b0c8850faea597b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -209,13 +209,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777b6d11e1883224babaac0a17269776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeVision: 10
+  rangeVision: 8
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 5248
   showGizmos: 0
 --- !u!1 &1302204989104934714
 GameObject:
@@ -310,7 +310,7 @@ MonoBehaviour:
   detectionRange: 2
   layerToAvoid:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 5120
   showGizmos: 0
 --- !u!1 &4232757249334839429
 GameObject:
@@ -360,12 +360,12 @@ MonoBehaviour:
   m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 2.7
+  m_Color: {r: 1, g: 1, b: 1, a: 0.08627451}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 0000000061b9d2a4e364dc67a78d474db10a2c3b5f34e753c53ddf15816daa5cfb0a0631
-  m_LightCookieSprite: {fileID: 21300000, guid: 0eac839a3fea5004492047c596caf529, type: 3}
+  m_ApplyToSortingLayers: 00000000e364dc67a78d474db10a2c3b5f34e753c53ddf15816daa5cfb0a0631
+  m_LightCookieSprite: {fileID: 21300000, guid: 14d68de9280833d4c9ce83a1896b592a, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
@@ -378,8 +378,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.04000008, y: 0, z: 0}
-    m_Extent: {x: 3.1100001, y: 2.45, z: 0}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.45507812, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -448,10 +448,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6161894378625804264}
-  - component: {fileID: 6668970655071454642}
-  - component: {fileID: 2529801683766751785}
   - component: {fileID: 4181270967838813588}
   - component: {fileID: 8757612903827436750}
+  - component: {fileID: 6668970655071454642}
+  - component: {fileID: 2529801683766751785}
   m_Layer: 9
   m_Name: Enemy01
   m_TagString: Enemy
@@ -466,7 +466,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8189760236160603026}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.59, y: -1.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -476,54 +476,8 @@ Transform:
   - {fileID: 3501139305257391057}
   - {fileID: 8425547812211473044}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6668970655071454642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8189760236160603026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be62a5f2f72e0c8408bca91c4cfee095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_targets: []
-  m_obstacles: []
-  m_currentTarget: {fileID: 0}
---- !u!114 &2529801683766751785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8189760236160603026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a3786dd6d433274abb4e48b11c2afa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  l_steeringBehaviours:
-  - {fileID: 3024556263979690734}
-  - {fileID: 1181596179253775783}
-  l_detectors:
-  - {fileID: 5997103419151096230}
-  - {fileID: 2450130724856854608}
-  iaData: {fileID: 6668970655071454642}
-  detectionDelay: 0.05
-  movementDirectionSolver: {fileID: 8942317131287401040}
-  speed: 15
-  currentState: 1
-  maxHealth: 100
-  damage: 10
-  c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
-  maxThrowSpeed: 2
-  knockbackScale: 10
-  knockbackRotation: 1
-  TimeEating: 0.7
 --- !u!50 &4181270967838813588
 Rigidbody2D:
   serializedVersion: 4
@@ -586,6 +540,61 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
+--- !u!114 &6668970655071454642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189760236160603026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be62a5f2f72e0c8408bca91c4cfee095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_obstacles: []
+  m_currentTarget: {fileID: 0}
+  canSeeTarget: 0
+--- !u!114 &2529801683766751785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189760236160603026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3786dd6d433274abb4e48b11c2afa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  l_steeringBehaviours:
+  - {fileID: 3024556263979690734}
+  - {fileID: 1181596179253775783}
+  l_detectors:
+  - {fileID: 5997103419151096230}
+  - {fileID: 2450130724856854608}
+  iaData: {fileID: 6668970655071454642}
+  movementDirectionSolver: {fileID: 8942317131287401040}
+  maxHealth: 100
+  speed: 15
+  <damage>k__BackingField: 10
+  moveSpots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  knockbackForce: 3
+  knockbackRotation: 1
+  knockbackDuration: 0.05
+  c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
+  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  maxThrowSpeed: 2
+  showGizmos: 0
+  eatingDuration: 1
+  eatingForce: 10
+  eatingHeal: 40
+  impactPlayerClip: {fileID: 8300000, guid: a837ea935bdc4754ba3b49a8ade09e2a, type: 3}
 --- !u!1 &9114009146373791086
 GameObject:
   m_ObjectHideFlags: 0

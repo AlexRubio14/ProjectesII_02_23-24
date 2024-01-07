@@ -3,36 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    
+    [Header("Inputs"), SerializeField]
+    private InputActionReference rotationAction;
+    [SerializeField]
+    private InputActionReference accelerateAction;
+
     public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
+    [Space, Header("Movement"), SerializeField]
+    private float movementSpeed;
+    private float accelerationValue;
+    private Vector2 movementDirection;
+    private Vector2 lastMovementDirection;
+    [HideInInspector]
+    public float externalMovementSpeed;
 
-    [Header("Movement"), SerializeField]
-    private float movementScale;
-    //private Vector3 inputDirection;
 
-    [Space, Header("Rotation")]
-    private float currentRotationSpeed;
+
+    public enum RotationType { OLD_ROTATION, NEW_ROTATION };
+    [Space, Header("Rotation"), SerializeField]
+    private RotationType currentRotation;
     [SerializeField]
-    private float minRotationSpeed;
-    [SerializeField]
-    private float maxRotationSpeed;
+    private float[] rotationSpeed;
 
     [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
     [SerializeField]
     private float knockbackRotation;
+    [SerializeField]
+    private float knockbackTime;
 
-    [Space, Header("Health"), SerializeField]
+    [Space, Header("Fuel"), SerializeField]
     private float baseFuel;
-    public float Fuel { get; private set; }
+    public float fuel { get; private set; }
+    [HideInInspector]
+    public float fuelConsume;
     [SerializeField]
     private float mapDamage;
-    [Header("Death"), SerializeField]
+    [SerializeField]
+    private float idleFuelConsume;
+    [SerializeField]
+    private float movingFuelConsume;
+
+    [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
     [SerializeField]
     private float timeToExploteShip;
@@ -42,42 +63,66 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem engineParticles;
 
-    [Space, Header("Storage"), SerializeField]
-    private int maxStorage;
-    private int currentStorage;
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip collisionClip;
+    [SerializeField]
+    private AudioClip engineClip;
+    private AudioSource engineSource;
 
-    private InputController iController;
+    private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
-
+    private AutoHelpController autoHelpController;
     private void Awake()
     {
-        currentState = State.MOVING;
         c_rb = GetComponent<Rigidbody2D>();
 
-        currentRotationSpeed = minRotationSpeed;
-
-        iController = GetComponentInParent<InputController>();
+        inputController = GetComponent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
+        autoHelpController = GetComponent<AutoHelpController>();
 
     }
     
     private void Start()
     {
-        Fuel = baseFuel + PowerUpManager.Instance.Fuel;
+        fuelConsume = idleFuelConsume;
+        currentState = State.IDLE;
+
+        fuel = baseFuel + PowerUpManager.Instance.Fuel;
+    }
+
+    private void OnEnable()
+    {
+        rotationAction.action.started += RotateAction;
+        rotationAction.action.performed += RotateAction;
+        rotationAction.action.canceled += RotateAction;
+
+        accelerateAction.action.started += AccelerateAction;
+        accelerateAction.action.performed += AccelerateAction;
+        accelerateAction.action.canceled += AccelerateAction;
+
+    }
+
+    private void OnDisable()
+    {
+        rotationAction.action.started -= RotateAction;
+        rotationAction.action.performed -= RotateAction;
+        rotationAction.action.canceled -= RotateAction;
+
+        accelerateAction.action.started -= AccelerateAction;
+        accelerateAction.action.performed -= AccelerateAction;
+        accelerateAction.action.canceled -= AccelerateAction;
     }
 
     void Update()
-    {
-        LoseFuel();
-        RotationAcceleration();
+    {        
+        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
 
-        Fuel = Mathf.Clamp(Fuel, 0, Mathf.Infinity);
         if(Input.GetKey(KeyCode.L))
         {
-            Fuel += 50;
+            fuel += 50;
         }
     }
 
@@ -85,13 +130,18 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentState)
         {
+            case State.IDLE:
             case State.MOVING:
                 Move();
                 Rotation();
+                CheckIdleOrMovingState();
+                LoseFuel();
+                CheckEnableEngineParticles();
                 break;
             case State.MINING:
                 break;
             case State.KNOCKBACK:
+                LoseFuel();
                 break;
             default:
                 break;
@@ -101,77 +151,81 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Move()
     {
-        c_rb.AddForce(transform.up * iController.inputMovementDirection.y * movementScale, ForceMode2D.Force);
+        Vector2 acceleration =
+                        transform.right * //Direccion
+                        Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
+                        Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
+
+        c_rb.AddForce(acceleration, ForceMode2D.Force);
     }
     private void Rotation()
     {
-        c_rb.AddTorque(currentRotationSpeed * (iController.inputMovementDirection.x * -1), ForceMode2D.Force); 
-    }
-    private void RotationAcceleration()
-    {
-        if (iController.inputMovementDirection.x != 0)
+        if (currentRotation == RotationType.OLD_ROTATION)
         {
-            if (currentRotationSpeed <= maxRotationSpeed)
+            Vector2 movementAndAutoHelpDirection;
+
+            Vector2 autoHelp = autoHelpController.autoHelpDirection;
+            float autoHelpMutliplier = 3;
+            //En caso de que se tenga que aplicar la auto ayuda
+            //Y el player no este tocando ningun input
+            //Y la ultima direccion no este mirando directo a la pared
+            //Se usara la ultima direccion de movimiento
+
+            if (autoHelp != Vector2.zero && movementDirection == Vector2.zero && Vector2.Dot(lastMovementDirection, autoHelp) > -0.6f)
             {
-                currentRotationSpeed += Time.deltaTime;
+                movementAndAutoHelpDirection = lastMovementDirection.normalized * autoHelpMutliplier + autoHelp;
             }
-            
+            else
+            {
+                movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
+            }
+
+            Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+
+            float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+
+            c_rb.AddTorque(signedAngle * rotationSpeed[(int)RotationType.OLD_ROTATION]);
+
         }
         else
         {
-            if(currentRotationSpeed >= minRotationSpeed)
-            {
-                currentRotationSpeed -= Time.deltaTime;
-            }
+            Vector2 movementAndAutoHelpDirection = new Vector2(movementDirection.x, 0).normalized + autoHelpController.autoHelpDirection.normalized;
+
+            float signedAngle = Vector2.SignedAngle(transform.right, movementAndAutoHelpDirection);
+
+            c_rb.AddTorque(-movementDirection.x * rotationSpeed[(int)RotationType.NEW_ROTATION]);
         }
+        
     }
+
+    private void CheckEnableEngineParticles()
+    {
+        float moveForce = Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity));
+
+        if (engineParticles.isStopped && moveForce > 0 ) // Encender particulas
+        {
+            engineParticles.Play();
+        }
+        else if (engineParticles.isPlaying && moveForce == 0) //Apagar particulas
+        {
+            engineParticles.Stop();
+        }
+
+    }
+
     #endregion
 
-    #region Ship Health & Fuel
+    #region Ship Fuel
     void LoseFuel()
     {
-        switch (currentState)
-        {
-            case State.MOVING:
-                if(iController.inputMovementDirection == Vector2.zero)
-                {
-                    Fuel -= Time.deltaTime / 3;
-                    
-                    if(engineParticles.isPlaying)
-                        engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-
-                }
-                else
-                {
-                    Fuel -= Time.deltaTime;
-
-                    if (engineParticles.isStopped)
-                        engineParticles.Play(true);
-
-                }
-                break;
-            case State.MINING:
-                break;
-            case State.KNOCKBACK:
-                break;
-            case State.INVENCIBILITY:
-                break;
-            default:
-                break;
-        }
-
-        if(Time.deltaTime / 3 == 0)
-        {
-            Fuel -= Time.deltaTime;
-        }
-
+        fuel = Mathf.Clamp(fuel - fuelConsume * Time.fixedDeltaTime, 0, GetMaxFuel());
         CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
     {
-        if (Fuel <= 0 && currentState != State.DEAD)
+        if (fuel <= 0 && currentState != State.DEAD)
         {
-            Fuel = 0;
+            fuel = 0;
             Die();
         }
     }
@@ -217,33 +271,43 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        CameraController.Instance.AddMediumTrauma();
+        CameraController.Instance.AddHighTrauma();
         Knockback(damagePos);
-        Fuel -= value / PowerUpManager.Instance.Armor;
+        fuel -= value / PowerUpManager.Instance.Armor;
     }
     public void SubstractHealth(float value)
     {
-        Fuel -= value;
+        fuel -= value;
     }
     public float GetFuel()
     {
-        return Fuel;
+        return fuel;
     }
-
+    public float GetMaxFuel()
+    {
+        return baseFuel + PowerUpManager.Instance.Fuel;
+    }
     #endregion
 
     #region States
-    private void Stunned()
+    private void CheckIdleOrMovingState()
     {
-        if (c_rb.velocity.magnitude <= 0.1f)
+        if (accelerationValue == 0 && currentState == State.MOVING)
+        {
+            ChangeState(State.IDLE);
+
+        }
+        else if (accelerationValue != 0 && currentState == State.IDLE)
         {
             ChangeState(State.MOVING);
         }
-        else
-        {
-            Invoke("Stunned", 0.02f);
-        }
     }
+
+    private void WaitForKnockbackTime()
+    {
+        ChangeState(State.MOVING);
+    }
+
     private void Knockback(Vector2 collisionPoint)
     {
         ChangeState(State.KNOCKBACK);
@@ -253,23 +317,27 @@ public class PlayerController : MonoBehaviour
         c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
         c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
 
-        Stunned();
+        Invoke("WaitForKnockbackTime", knockbackTime);
     }
-
     public void ChangeState(State state)
     {
         switch (currentState)
         {
+            case State.IDLE:
+                fuelConsume -= idleFuelConsume;
+                break;
             case State.MOVING:
+                fuelConsume -= movingFuelConsume;
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
-                iController.ChangeActionMap("Player");
+                inputController.ChangeActionMap("Player");
                 c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
-                break;
+                break; 
             case State.FREEZE:
+                break;
             case State.DEAD:
                 return;
             default:
@@ -278,17 +346,23 @@ public class PlayerController : MonoBehaviour
 
         switch (state)
         {
+            case State.IDLE:
+                fuelConsume += idleFuelConsume;
+                break;
             case State.MOVING:
+                fuelConsume += movingFuelConsume;
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
-                iController.ChangeActionMap("MinigameMinery");
+                inputController.ChangeActionMap("MinigameMinery");
                 c_mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
                 c_rb.velocity = Vector2.zero;
                 break;
+
             case State.FREEZE:
+                engineParticles.gameObject.SetActive(false);
                 c_rb.velocity = Vector2.zero;
                 break;
             case State.DEAD:
@@ -299,46 +373,52 @@ public class PlayerController : MonoBehaviour
         }
         currentState = state;
     }
-
-    #endregion
-
-    #region Getters & Setters
-   
     public State GetState()
     {
         return currentState;
     }
-    #endregion
-
-    private void CheckStorage()
+    public float GetSpeed()
     {
-        if(currentStorage <= maxStorage * 0.5f)
-        {
-
-        }
-        else if(currentStorage <= maxStorage * 0.75f)
-        {
-
-        }
-        else
-        {
-
-        }
-            
+        return movementSpeed;
     }
 
-    
+    #endregion
+
+    #region Input
+    private void RotateAction(InputAction.CallbackContext obj)
+    {
+        movementDirection = obj.action.ReadValue<Vector2>();
+
+        if (movementDirection != Vector2.zero)
+        {
+            lastMovementDirection = movementDirection;
+        }
+    }
+    private void AccelerateAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+           engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
+
+        if (obj.canceled)
+            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
+
+        accelerationValue = obj.ReadValue<float>();
+    }
+
+    #endregion
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.CompareTag("Map"))
+        if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
+            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
             GetDamage(mapDamage, collision.contacts[0].point);
         }
 
         if(collision.collider.CompareTag("Enemy"))
         {
             Enemy enemy = collision.collider.GetComponent<Enemy>();
-            GetDamage(enemy.GetDamage(), collision.GetContact(0).point);
+            GetDamage(enemy.damage, collision.GetContact(0).point);
         }
     }
 }

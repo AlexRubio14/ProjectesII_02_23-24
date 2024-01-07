@@ -1,87 +1,168 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class CannonController : MonoBehaviour
 {
-    [SerializeField]
-    public List<Transform> l_lasers;
+    [Header("Input"), SerializeField]
+    private InputActionReference shootAction;
 
-    [SerializeField]
+    [Space, Header("External References"), SerializeField]
     private Transform posToSpawnBullets;
-
     [SerializeField]
     private GameObject laserPrefab;
 
+    [Space, Header("Shoot"), SerializeField]
+    private float shootingRange;
     [SerializeField]
     private float reloadDelay;
     private float currentDelay;
-
+    private bool isShooting;
     [SerializeField]
-    private float shootFuel;
+    private float fuelConsume;
+    [SerializeField]
+    private PlayerController.State[] canShootStates;
+    private Rigidbody2D nearestEnemy;
+    [SerializeField]
+    private LayerMask enemiesLayer;
+    [SerializeField]
+    private LayerMask mapLayer;
+    [SerializeField]
+    private ParticleSystem shootParticles;
+    private Animator shootinAnim;
 
-    public bool canShoot { get; set; }
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip shootClip;
 
-    private InputController iController;
+    [Space, Header("AutoShoot"), SerializeField]
+    private bool autoShoot;
+    [SerializeField]
+    private GameObject aimTarget;
+
+    [Space, SerializeField]
+    private bool showGizmos;
+
     private PlayerController playerController;
+
 
     private void Awake()
     {
-        iController = GetComponentInParent<InputController>();
         playerController = GetComponentInParent<PlayerController>();
-        canShoot = false;
+        shootinAnim = GetComponentInChildren<Animator>();
+        isShooting = false;
     }
-    private void Update()
-    {
 
-        currentDelay += Time.deltaTime;
+    private void OnEnable()
+    {
+        shootAction.action.started += ShootAction;
+        shootAction.action.canceled += ShootAction;
+    }
+
+    private void OnDisable()
+    {
+        shootAction.action.started -= ShootAction;
+        shootAction.action.canceled -= ShootAction;
     }
 
     private void FixedUpdate()
     {
+        CheckNearestEnemy();
         RotateCanon();
+        Shoot();
+    }
 
-        if(    playerController.GetState() == PlayerController.State.MOVING 
-            || playerController.GetState() == PlayerController.State.IDLE
-            || playerController.GetState() == PlayerController.State.INVENCIBILITY
-            || playerController.GetState() == PlayerController.State.KNOCKBACK)
+    private void CheckNearestEnemy()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, shootingRange, Vector2.zero, 0, enemiesLayer);
+
+        float minDisntance = 100;
+        Rigidbody2D foundEnemy = null;
+        int index = 0;
+        foreach (RaycastHit2D hit in hits)
         {
-            Shoot();
+            index++;
+            float distance = Vector2.Distance(transform.position, hit.point);
+            float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
+            Vector3 dir = (hit.rigidbody.transform.position - transform.position);
+            if (minDisntance > distance && 
+                !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
+            {
+                Debug.DrawLine(transform.position, transform.position + dir.normalized * multuplyValue, Color.green, 0.01f);
+                foundEnemy = hit.rigidbody;
+                minDisntance = distance;
+            }
         }
+
+        nearestEnemy = foundEnemy;
+
+        if (nearestEnemy)
+        {
+            if (!aimTarget.activeInHierarchy)
+            {
+                aimTarget.SetActive(true);
+            }
+
+            aimTarget.transform.position = nearestEnemy.transform.position;
+        }
+        else if (aimTarget.activeInHierarchy)
+            aimTarget.SetActive(false);
     }
     private void RotateCanon()
     {
-        //Vector2 direction = (pointerPosition - (Vector2)transform.position).normalized;
-
-        //transform.up = direction;
-        
-        if(iController.inputAimTurretDirection.normalized == Vector2.zero)
-        {
+        if (!nearestEnemy)
             return;
-        }
-        transform.up = iController.inputAimTurretDirection.normalized;
 
-
+        Vector2 direction = (nearestEnemy.transform.position - transform.position).normalized;
+        transform.up = direction;
     }
-
-    Vector2 GetMousePosition()
-    {
-        Vector2 mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        return mousePosition;
-    }
-
     public void Shoot()
     {
-        if (currentDelay >= reloadDelay && canShoot)
+        currentDelay += Time.fixedDeltaTime;
+        if (autoShoot)
         {
+            isShooting = nearestEnemy;
+        }
+
+        if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
+        {
+            AudioManager._instance.Play2dOneShotSound(shootClip, "Laser");
+
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();
-            playerController.SubstractHealth(shootFuel);
+            playerController.SubstractHealth(fuelConsume);
+            shootinAnim.SetTrigger("Shoot");
+            shootParticles.Play();
         }
     }
+    private bool CheckPlayerState()
+    {
+        PlayerController.State currentState = playerController.GetState();
 
-    
+        foreach (PlayerController.State item in canShootStates)
+        {
+            if (item == currentState)
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    #region Input
+    private void ShootAction(InputAction.CallbackContext obj)
+    {
+        isShooting = obj.action.IsInProgress();
+    }
+    #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!showGizmos)
+            return;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, shootingRange);
+    }
 }
