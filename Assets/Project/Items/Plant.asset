@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Plant
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Plant
+  <ItemName>k__BackingField: Purrrlanum
   <Weight>k__BackingField: 0
-  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: b5fac7acf4f898245b28a33b37e8087f, type: 3}
-  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 91fb54392ab5b444c81f8e46a790cd0d, type: 3}
-  <EffectsColor>k__BackingField: {r: 0.35830188, g: 1, b: 0, a: 1}
+  <c_BetaSprite>k__BackingField: {fileID: 21300000, guid: 61232341dcf68a045a728b24b4642c93, type: 3}
+  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 1763fbed983728a42a89247830cb2fad, type: 3}
+  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 1fed3e9c4c7fd9946ad9bf546278c54f, type: 3}
+  <EffectsColor>k__BackingField: {r: 1, g: 0, b: 0.79884434, a: 1}
   <PowerUp>k__BackingField: 0

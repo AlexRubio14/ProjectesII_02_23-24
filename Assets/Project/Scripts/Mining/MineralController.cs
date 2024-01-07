@@ -14,13 +14,31 @@ public class MineralController : InteractableObject
     [SerializeField]
     private bool isBeta;
 
+    [SerializeField]
+    private Sprite hideSprite;  
+
     private PlayerMineryController player;
 
     private SpriteRenderer c_spriteR;
+
+    private BoxCollider2D c_boxCollider;
     private void Awake()
     {
         c_spriteR = GetComponent<SpriteRenderer>();
-        c_spriteR.sprite = c_currentItem.c_MapSprite;
+        c_boxCollider = GetComponent<BoxCollider2D>();
+
+        if(isHide)
+        {
+            c_spriteR.sprite = hideSprite;
+            c_boxCollider.isTrigger = true;
+        }
+        else
+        {
+            if (isBeta)
+                c_spriteR.sprite = c_currentItem.c_BetaSprite;
+            else
+                c_spriteR.sprite = c_currentItem.c_MapSprite;
+        }
     }
     private void Start()
     {
@@ -47,32 +65,12 @@ public class MineralController : InteractableObject
     public override void UnHide()
     {
         base.UnHide();
+        c_boxCollider.isTrigger = false;
 
-        if (!isBeta)
-        {
-            //Borrar solo el del centro
-            Vector3Int cellPos = grid.LocalToCell(transform.position);
-            tilemap.SetTile(cellPos, null);
-        }
+        if (isBeta)
+            c_spriteR.sprite = c_currentItem.c_BetaSprite;
         else
-        {
-            //Borrar los que estan en cada extremo del mineral
-            BoxCollider2D box = GetComponent<BoxCollider2D>();
-            Vector3Int cellPos;
-
-            cellPos = grid.LocalToCell(new Vector2(box.bounds.min.x, box.bounds.min.y));
-            tilemap.SetTile(cellPos, null);
-
-            cellPos = grid.LocalToCell(new Vector2(box.bounds.max.x, box.bounds.min.y));
-            tilemap.SetTile(cellPos, null);
-
-            cellPos = grid.LocalToCell(new Vector2(box.bounds.min.x, box.bounds.max.y));
-            tilemap.SetTile(cellPos, null);
-
-            cellPos = grid.LocalToCell(new Vector2(box.bounds.max.x, box.bounds.max.y));
-            tilemap.SetTile(cellPos, null);
-        }
-
+            c_spriteR.sprite = c_currentItem.c_MapSprite;
 
         isInteractable = true;
         isHide = false;

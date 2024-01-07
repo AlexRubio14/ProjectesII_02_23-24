@@ -29,12 +29,12 @@ Transform:
   m_GameObject: {fileID: 3960477908591831838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.7, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9145034470601763439}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7257688421934806813
 SpriteRenderer:
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1742496995
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 910dbcc0a313f8a4e8f4ddfc48dcef9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -107,13 +107,13 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   interactableParticles: {fileID: 9145034470601763409}
   vfxUnhideColor: {r: 1, g: 1, b: 1, a: 0.43137255}
-  particlesSize: {x: 1, y: 1}
+  particlesSize: {x: 2, y: 1}
   particlesPosition: {x: 0, y: 0}
-  hiddenParticlesRateOverTime: 2
+  hiddenParticlesRateOverTime: 5
   unhideVFX: {fileID: 4083470138585679013, guid: 296b5cd001a1e7745a477451952b35fa, type: 3}
   unhidePivot: {fileID: 6431933432271367968}
-  <c_currentItem>k__BackingField: {fileID: 0}
-  <MaxItemsToReturn>k__BackingField: 0
+  <c_currentItem>k__BackingField: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
+  <MaxItemsToReturn>k__BackingField: 4
   isBeta: 0
 --- !u!61 &3422622027868929553
 BoxCollider2D:
@@ -147,18 +147,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008110717, y: -0.08220902}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 0.4311377}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7743192, y: 0.25130406}
   m_EdgeRadius: 0
 --- !u!114 &1593611586382392726
 MonoBehaviour:
@@ -180,16 +180,25 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 0000000061b9d2a4e364dc67a78d474db10a2c3b5f34e753c53ddf15816daa5c0be5774afb0a0631
   m_ShapePath:
-  - {x: -0.55, y: -0.55, z: 0}
-  - {x: -0.55, y: 0.55, z: 0}
-  - {x: 0.55, y: 0.55, z: 0}
-  - {x: 0.55, y: -0.55, z: 0}
-  m_ShapePathHash: 1066209377
+  - {x: -0.47391674, y: -0.21707246, z: 0}
+  - {x: -0.46003866, y: -0.089003846, z: 0}
+  - {x: -0.3841387, y: -0.10369548, z: 0}
+  - {x: -0.35722974, y: -0.04750916, z: 0}
+  - {x: -0.12473454, y: -0.044602957, z: 0}
+  - {x: -0.11827622, y: 0.03483295, z: 0}
+  - {x: -0.06983964, y: 0.0648636, z: 0}
+  - {x: -0.035395928, y: 0.1733614, z: 0}
+  - {x: 0.124757774, y: 0.17642677, z: 0}
+  - {x: 0.26117665, y: 0.021834847, z: 0}
+  - {x: 0.32943553, y: 0.017896648, z: 0}
+  - {x: 0.45161727, y: -0.15568154, z: 0}
+  - {x: 0.45306545, y: -0.21594498, z: 0}
+  m_ShapePathHash: -2092159022
   m_Mesh: {fileID: 0}
-  m_InstanceId: 162114
+  m_InstanceId: -3664
   m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.55, y: 0.55, z: 0}
+    m_Center: {x: -0.010425657, y: -0.020322844, z: 0}
+    m_Extent: {x: 0.46349108, y: 0.19674961, z: 0}
 --- !u!1001 &4789857280083723792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,6 +210,26 @@ PrefabInstance:
     - target: {fileID: 4364354964670000192, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
       propertyPath: m_Name
       value: HidenObjectsParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: lengthInSec
+      value: 1.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
       propertyPath: m_RootOrder

@@ -16,6 +16,9 @@ public class ItemObject : ScriptableObject
     public float Weight { get; private set; }
 
     [field: SerializeField]
+    public Sprite c_BetaSprite { get; private set; }
+
+    [field: SerializeField]
     public Sprite c_MapSprite { get; private set; }
 
     [field: SerializeField]

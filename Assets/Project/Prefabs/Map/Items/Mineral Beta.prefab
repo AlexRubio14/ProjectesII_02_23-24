@@ -29,12 +29,12 @@ Transform:
   m_GameObject: {fileID: 5508551060324315368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 29.97, y: -26.24, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6823452001241047539}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7745456955625772872
 SpriteRenderer:
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1742496995
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 915a70f2128d3e14b8f7b04aa178f86f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,18 +147,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.017185867, y: -0.115145996}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 0.53571427}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 0.95}
+  m_Size: {x: 0.68190944, y: 0.31855193}
   m_EdgeRadius: 0
 --- !u!114 &8761210342464215935
 MonoBehaviour:
@@ -180,16 +180,27 @@ MonoBehaviour:
   m_SelfShadows: 1
   m_ApplyToSortingLayers: 0000000061b9d2a4e364dc67a78d474db10a2c3b5f34e753c53ddf15816daa5c0be5774afb0a0631
   m_ShapePath:
-  - {x: -0.53, y: -0.53, z: 0}
-  - {x: -0.53, y: 0.53, z: 0}
-  - {x: 0.53, y: 0.53, z: 0}
-  - {x: 0.53, y: -0.53, z: 0}
-  m_ShapePathHash: 1865766725
+  - {x: -0.46275103, y: -0.22846222, z: 0}
+  - {x: -0.39788806, y: -0.19155693, z: 0}
+  - {x: -0.39788806, y: -0.12864614, z: 0}
+  - {x: -0.34148538, y: -0.09610629, z: 0}
+  - {x: -0.33931625, y: -0.0028250217, z: 0}
+  - {x: -0.37402546, y: 0.02537632, z: 0}
+  - {x: -0.3349775, y: 0.07960963, z: 0}
+  - {x: -0.28508294, y: 0.081779, z: 0}
+  - {x: -0.16576946, y: 0.20543098, z: 0}
+  - {x: -0.03127098, y: 0.19458437, z: 0}
+  - {x: 0.06417966, y: 0.07093239, z: 0}
+  - {x: 0.18349302, y: 0.13384295, z: 0}
+  - {x: 0.28349948, y: 0.12433481, z: 0}
+  - {x: 0.40851736, y: -0.021010399, z: 0}
+  - {x: 0.45841205, y: -0.2284627, z: 0}
+  m_ShapePathHash: -1095257861
   m_Mesh: {fileID: 0}
-  m_InstanceId: 162166
+  m_InstanceId: 116124
   m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.53, y: 0.53, z: 0}
+    m_Center: {x: -0.0021694899, y: -0.011515856, z: 0}
+    m_Extent: {x: 0.46058154, y: 0.21694684, z: 0}
 --- !u!1001 &7070801802936487308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,6 +212,18 @@ PrefabInstance:
     - target: {fileID: 4364354964670000192, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
       propertyPath: m_Name
       value: HidenObjectsParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: af643fc72906fad4a968fddb35182a2e, type: 3}
       propertyPath: m_RootOrder
