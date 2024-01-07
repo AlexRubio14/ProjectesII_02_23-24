@@ -38,6 +38,8 @@ public class Enemy02 : Enemy
             default:
                 break;
         }
+
+        FlipSprite();
     }
     override protected void PatrollingBehaviour()
     {

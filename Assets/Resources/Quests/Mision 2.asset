@@ -43,6 +43,8 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
       Value: 0
+    - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
+      Value: 1
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1

@@ -82,8 +82,12 @@ public class PlayerWebController : MonoBehaviour
 
     private void UpdateParticleWebDrag()
     {
+        if (webDragParticles.emission.rateOverTime.constant == 0 && websInPlayer == 0)
+            return;
+
         ParticleSystem.EmissionModule emission = webDragParticles.emission;
         emission.rateOverTime = websInPlayer * particlePerWeb;
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

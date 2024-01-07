@@ -27,7 +27,11 @@ public class DialogueController : MonoBehaviour
 
     [Space, Header("Animator"), SerializeField]
     private Animator[] catAnimations;
-
+    [SerializeField]
+    private AudioClip catSound;
+    [SerializeField]
+    private AudioClip catDialogueSound;
+    private int dialogueSoundIndex;
     [HideInInspector]
     public Action onDialogueEnd;
 
@@ -74,6 +78,7 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
+
         //Empezar con el dialogo
         dialogueObject.SetActive(true);
         currentDialogueIndex = 0;
@@ -89,6 +94,7 @@ public class DialogueController : MonoBehaviour
             animator.SetBool("talking", true);
             animator.SetTrigger("normalTalk"); 
         }
+
     }
 
     private void DisplayNextDialogue()
@@ -107,6 +113,7 @@ public class DialogueController : MonoBehaviour
             c_dialogueText.text = dialogues[currentDialogueIndex];
             c_dialogueText.maxVisibleCharacters = letterIndex;
             Invoke("DisplayLetters", timeBetweenLetters);
+            
 
         }
         else
@@ -137,6 +144,10 @@ public class DialogueController : MonoBehaviour
             c_dialogueText.maxVisibleCharacters = letterIndex;
             letterIndex++;
             Invoke("DisplayLetters", timeBetweenLetters);
+            if(dialogueSoundIndex % 4 == 0)
+                AudioManager._instance.Play2dOneShotSound(catDialogueSound, "SFX", 0.35f, 2f, 2.5f);
+
+            dialogueSoundIndex++;
         }
     }
 

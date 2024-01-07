@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Enemy 1
+  <ItemName>k__BackingField: Mandibula Purrforante
   <Weight>k__BackingField: 0
+  <c_BetaSprite>k__BackingField: {fileID: 0}
   <c_MapSprite>k__BackingField: {fileID: 0}
-  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 3917786bff66b194fbc9ee9e592ab14d, type: 3}
-  <EffectsColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
+  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 14d68de9280833d4c9ce83a1896b592a, type: 3}
+  <EffectsColor>k__BackingField: {r: 0.93819284, g: 0, b: 1, a: 1}
   <PowerUp>k__BackingField: 0
