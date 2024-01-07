@@ -131,10 +131,8 @@ public class AudioManager : MonoBehaviour
         return _as;
     }
 
-    private void PlayLoopSound(AudioSource _as, AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f)
-    {
-
-        _as.loop = true;
+    public void PlayLoopSound(AudioSource _as, AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f)
+    {   
         if (_as != null)
         {
             _as.outputAudioMixerGroup = mixer.FindMatchingGroups(mixerGroup)[0];
