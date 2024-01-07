@@ -92,7 +92,9 @@ public class MineMinigameController : MonoBehaviour
     private Image[] mineralTypeImages;
 
     [Space, Header("Audio"), SerializeField]
-    private AudioClip miningAudio;
+    private AudioClip miningClip;
+    [SerializeField]
+    private AudioClip endMiningClip;
     private AudioSource leftLaserSource;
     private AudioSource rightLaserSource;
 
@@ -286,6 +288,7 @@ public class MineMinigameController : MonoBehaviour
 
     private void EndMining()
     {
+        AudioManager._instance.Play2dOneShotSound(endMiningClip, "Mining");
         ThrowMinerals(CalculateMinerals(integrityValue));
 
         c_miningItem.gameObject.SetActive(false);
@@ -372,6 +375,9 @@ public class MineMinigameController : MonoBehaviour
     #region Input 
     private void ChargeRightLaserAction(InputAction.CallbackContext obj)
     {
+        if (obj.started)
+            rightLaserSource = AudioManager._instance.Play2dLoop(miningClip, "Mining");
+
         if (obj.canceled)
         {
             StartCoroutine(AudioManager._instance.FadeOutSFXLoop(rightLaserSource));
@@ -379,12 +385,16 @@ public class MineMinigameController : MonoBehaviour
         }
         else
         {
-            rightLaserSource = AudioManager._instance.Play2dLoop(miningAudio, "Mining");
             chargingRightLaser = true;
         }
+
+        
     }
     private void ChargeLeftLaserAction(InputAction.CallbackContext obj)
     {
+        if(obj.started)
+            leftLaserSource = AudioManager._instance.Play2dLoop(miningClip, "Mining");
+
         if (obj.canceled)
         {
             StartCoroutine(AudioManager._instance.FadeOutSFXLoop(leftLaserSource));
@@ -392,7 +402,7 @@ public class MineMinigameController : MonoBehaviour
         }
         else
         {
-            leftLaserSource = AudioManager._instance.Play2dLoop(miningAudio, "Mining");
+            
             chargingLeftLaser = true;
         }
     }

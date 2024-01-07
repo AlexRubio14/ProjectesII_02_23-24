@@ -904,7 +904,7 @@ Transform:
   m_Children:
   - {fileID: 5992441030099964028}
   m_Father: {fileID: 0}
-  m_RootOrder: -2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5189567363143038640
 MonoBehaviour:
@@ -957,6 +957,7 @@ MonoBehaviour:
   - {fileID: 1411991350068547076}
   - {fileID: 7506847372878584680}
   - {fileID: 7319883883408551993}
+  miningAudio: {fileID: 8300000, guid: 99d2087eb3539a84bae529f70fa25561, type: 3}
 --- !u!1 &2740209075890683257
 GameObject:
   m_ObjectHideFlags: 0
