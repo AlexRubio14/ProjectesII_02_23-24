@@ -37,7 +37,7 @@ public class NotificationController : MonoBehaviour
         string currentItemAmountSign = "+"; 
         if (currentAmount <= 0)
             currentItemAmountSign = "";
-        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.name;
+        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.ItemName;
 
 
     }
@@ -56,7 +56,7 @@ public class NotificationController : MonoBehaviour
         if (currentAmount <= 0)
             currentItemAmountSign = "";
 
-        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.name;
+        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.ItemName;
     }
 
 }
