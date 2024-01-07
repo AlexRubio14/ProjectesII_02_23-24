@@ -376,7 +376,7 @@ public class PlayerController : MonoBehaviour
            engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
 
         if (obj.canceled)
-            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource, 0.01f));
+            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
 
         accelerationValue = obj.ReadValue<float>();
     }
