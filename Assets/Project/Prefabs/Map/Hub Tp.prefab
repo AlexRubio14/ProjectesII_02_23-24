@@ -222,7 +222,7 @@ Transform:
   - {fileID: 3172463978017556727}
   - {fileID: 3895410429067587149}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2438612229382598180
 SpriteRenderer:
@@ -301,7 +301,9 @@ MonoBehaviour:
   unhideVFX: {fileID: 0}
   unhidePivot: {fileID: 0}
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
-  timeToGoHub: 3
+  timeToGoHub: 2
+  timeToStopParticles: 1.5
+  teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
 --- !u!61 &6824204765675086956
 BoxCollider2D:
   m_ObjectHideFlags: 0

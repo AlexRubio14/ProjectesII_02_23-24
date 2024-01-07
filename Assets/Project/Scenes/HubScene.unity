@@ -868,7 +868,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 334913699}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &334913699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,6 +931,22 @@ MonoBehaviour:
         - m_Target: {fileID: 334913698}
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1369,7 +1397,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 365583558}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &365583558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,6 +1460,22 @@ MonoBehaviour:
         - m_Target: {fileID: 365583557}
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2557,6 +2613,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &625757412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2640,6 +2712,18 @@ MonoBehaviour:
       - m_Target: {fileID: 422034184}
         m_TargetAssemblyTypeName: CheckQuestController, Assembly-CSharp
         m_MethodName: RemoveQuestCardList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3027,6 +3111,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &840389639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3111,6 +3211,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3814,6 +3926,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &965503683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3885,6 +4013,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2138786081}
         m_TargetAssemblyTypeName: DisplayQuestController, Assembly-CSharp
         m_MethodName: DisplayQuestList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4241,9 +4381,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: Select
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4311,6 +4451,22 @@ MonoBehaviour:
         - m_Target: {fileID: 1032017805}
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4953,6 +5109,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1229400355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5060,6 +5232,18 @@ MonoBehaviour:
       - m_Target: {fileID: 422034184}
         m_TargetAssemblyTypeName: CheckQuestController, Assembly-CSharp
         m_MethodName: DisplayQuestCardList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5918,6 +6102,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1579659941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5965,6 +6165,18 @@ MonoBehaviour:
       - m_Target: {fileID: 226249119}
         m_TargetAssemblyTypeName: MenuNavegation, Assembly-CSharp
         m_MethodName: GoToTitleScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6082,6 +6294,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1655739220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6153,6 +6381,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1032017805}
         m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
         m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6965,6 +7205,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813590187}
   m_CullTransparentMesh: 1
+--- !u!1 &1819140127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1819140129}
+  - component: {fileID: 1819140128}
+  m_Layer: 0
+  m_Name: UiButtonHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1819140128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819140127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37a025a17d7ced94e9b853d6842359ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickClip: {fileID: 8300000, guid: 46436cde2bf46fc43949bb0f2a77cce7, type: 3}
+  hoverClip: {fileID: 8300000, guid: bc9ddad072893da4ea16443a6c18700b, type: 3}
+--- !u!4 &1819140129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819140127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6287677, y: 5.0976944, z: 1.0588863}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854456581
 GameObject:
   m_ObjectHideFlags: 0
@@ -7414,6 +7700,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1928734251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7472,6 +7770,22 @@ MonoBehaviour:
         - m_Target: {fileID: 1928734250}
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7948,6 +8262,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &2087683797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8006,6 +8332,22 @@ MonoBehaviour:
         - m_Target: {fileID: 2087683796}
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8076,6 +8418,22 @@ MonoBehaviour:
         - m_Target: {fileID: 2116369077}
           m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
           m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1819140128}
+          m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+          m_MethodName: PlayOnHoverClip
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8156,6 +8514,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2087683796}
         m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
         m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1819140128}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

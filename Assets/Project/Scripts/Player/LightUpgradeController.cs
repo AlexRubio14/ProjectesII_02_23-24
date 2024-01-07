@@ -6,9 +6,11 @@ public class LightUpgradeController : MonoBehaviour
 {
     private int interactableMask;
 
+    [SerializeField]
+    private AudioClip findObjectClip;
+
     private void Start()
     {
-
         interactableMask = LayerMask.NameToLayer("InteractableObject");
     }
 
@@ -20,7 +22,10 @@ public class LightUpgradeController : MonoBehaviour
             //GetComponent de Interactable
             InteractableObject interactableObject = collision.gameObject.GetComponent<InteractableObject>();
             if (interactableObject.isHide)
+            {
                 interactableObject.UnHide();
+                AudioManager._instance.Play2dOneShotSound(findObjectClip, "Light");
+            }
 
         }
     }

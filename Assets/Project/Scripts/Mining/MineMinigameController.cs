@@ -91,6 +91,15 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private Image[] mineralTypeImages;
 
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip miningClip;
+    [SerializeField]
+    private AudioClip endMiningClip;
+    [SerializeField]
+    private AudioSource leftLaserSource;
+    [SerializeField]
+    private AudioSource rightLaserSource;
+
     private void Start()
     {
         startPos = oreBox.transform.localPosition;
@@ -99,8 +108,6 @@ public class MineMinigameController : MonoBehaviour
 
         endRotationRightLaser = rightLaserPivot.transform.rotation * Quaternion.Euler(0, 0, maxAngleRotation);
         endRotationLeftLaser = leftLaserPivot.transform.rotation * Quaternion.Euler(0, 0, -maxAngleRotation);
-
-
     }
 
     void OnEnable()
@@ -126,6 +133,9 @@ public class MineMinigameController : MonoBehaviour
         chargeLeftLaserAction.action.started += ChargeLeftLaserAction;
         chargeLeftLaserAction.action.canceled += ChargeLeftLaserAction;
 
+        AudioManager._instance.PlayLoopSound(rightLaserSource, miningClip, "Mining");
+        AudioManager._instance.PlayLoopSound(leftLaserSource, miningClip, "Mining");
+
     }
     private void OnDisable()
     {
@@ -134,6 +144,8 @@ public class MineMinigameController : MonoBehaviour
 
         chargeLeftLaserAction.action.started -= ChargeLeftLaserAction;
         chargeLeftLaserAction.action.canceled -= ChargeLeftLaserAction;
+
+
     }
 
     // Update is called once per frame
@@ -153,20 +165,22 @@ public class MineMinigameController : MonoBehaviour
 
     private void SetLasersValue() 
     {
-        ChangeCurrentLaser(leftLaser, chargingLeftLaser);
-        ChangeCurrentLaser(rightLaser, chargingRightLaser);
+        ChangeCurrentLaser(rightLaser, chargingRightLaser, rightLaserSource);
+        ChangeCurrentLaser(leftLaser, chargingLeftLaser, leftLaserSource);
     }
-    private void ChangeCurrentLaser(MinigameBarController _currentLaser, bool _chargingCurrentLaser)
+    private void ChangeCurrentLaser(MinigameBarController _currentLaser, bool _chargingCurrentLaser, AudioSource currentAudioSource)
     {
         float currentEnergy = _currentLaser.GetCurrentEnergy();
 
         if (_chargingCurrentLaser)
         {
             currentEnergy += laserChargeSpeed * Time.deltaTime;
+            currentAudioSource.pitch = 0.25f;
         }
         else
         {
             currentEnergy -= laserDischargeSpeed * Time.deltaTime;
+            currentAudioSource.pitch = 1.75f;
         }
         currentEnergy = Mathf.Clamp(currentEnergy, 0, 100);
         _currentLaser.SetCurrentEnergyLevel(currentEnergy);
@@ -283,6 +297,11 @@ public class MineMinigameController : MonoBehaviour
 
     private void EndMining()
     {
+        AudioManager._instance.StopLoopSound(rightLaserSource);
+        AudioManager._instance.StopLoopSound(leftLaserSource);
+
+        AudioManager._instance.Play2dOneShotSound(endMiningClip, "Mining", 0.2f);
+
         ThrowMinerals(CalculateMinerals(integrityValue));
 
         c_miningItem.gameObject.SetActive(false);
@@ -377,6 +396,8 @@ public class MineMinigameController : MonoBehaviour
         {
             chargingRightLaser = true;
         }
+
+        
     }
     private void ChargeLeftLaserAction(InputAction.CallbackContext obj)
     {
@@ -386,6 +407,7 @@ public class MineMinigameController : MonoBehaviour
         }
         else
         {
+            
             chargingLeftLaser = true;
         }
     }

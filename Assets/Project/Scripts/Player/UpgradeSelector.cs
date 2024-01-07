@@ -16,6 +16,20 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private InputActionReference rightUpgradeAction;
 
+    [Header("Audio Boost"), SerializeField]
+    private AudioClip startBoost;
+    [SerializeField]
+    private AudioClip boost;
+    [SerializeField]
+    private AudioClip finishBoost;
+    private AudioSource boostSource;
+
+    [Header("Light"), SerializeField]
+    private AudioClip SwitchLightClip;
+    [SerializeField]
+    private AudioClip loopLightClip;
+    private AudioSource loopLightSource;
+
     public enum Position { UP, DOWN, RIGHT, LEFT }
 
     [Header("Backgrounds"), SerializeField]
@@ -88,7 +102,6 @@ public class UpgradeSelector : MonoBehaviour
             {
                 currentSprite = item.Value.c_UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
-                
             }
             else
             {
@@ -102,7 +115,6 @@ public class UpgradeSelector : MonoBehaviour
             {
                 boostPos = item.Key;
             }
-
         }
 
         upgradesToggled = new bool[4];
@@ -183,9 +195,12 @@ public class UpgradeSelector : MonoBehaviour
     private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
+        
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
+            AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
+            boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
             webController.EraseAllWebs();
             ChangeBackground(_pos, true);
             playerController.externalMovementSpeed += boostMovementSpeed;
@@ -196,6 +211,8 @@ public class UpgradeSelector : MonoBehaviour
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
+            AudioManager._instance.StopLoopSound(boostSource);
+            AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
             ChangeBackground(_pos, false); 
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
@@ -238,14 +255,18 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
             //Sumar al consumo de fuel
             playerController.fuelConsume += lightConsume;
+            AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
+            loopLightSource = AudioManager._instance.Play2dLoop(loopLightClip, "Light");
         }
         else
         {
+            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(loopLightSource));
             lightUpgrade.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = false;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
             //Restar al consumo de fuel
             playerController.fuelConsume -= lightConsume;
+            AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
 

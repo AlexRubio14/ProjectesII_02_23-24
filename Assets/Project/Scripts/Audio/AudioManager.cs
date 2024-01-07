@@ -28,7 +28,7 @@ public class AudioManager : MonoBehaviour
         {
             if (_instance != this)
             {
-                Destroy(gameObject);
+                Destroy(_instance);
             }
         }
 
@@ -91,6 +91,7 @@ public class AudioManager : MonoBehaviour
         _as.minDistance = _radius;
         _as.maxDistance = _radius * 5;
         _as.gameObject.transform.position = new Vector3(_pos.x, _pos.y, -10);
+        _as.spatialBlend = 1;
         PlayOneShotSound(_as, _clip, mixerGroup, _minPitch, _maxPitch, _volume);
     }
 
@@ -98,11 +99,11 @@ public class AudioManager : MonoBehaviour
     {
         if (_as != null)
         {
-            _as.outputAudioMixerGroup = mixer.FindMatchingGroups(mixerGroup)[0];
-            _as.loop = false;
-            _as.pitch = Random.Range(_minPitch, _maxPitch);
-            _as.volume = _volume;
-            _as.PlayOneShot(_clip);
+            _as.outputAudioMixerGroup = mixer.FindMatchingGroups(mixerGroup)[0]; 
+            _as.loop = false; 
+            _as.pitch = Random.Range(_minPitch, _maxPitch); 
+            _as.volume = _volume; 
+            _as.PlayOneShot(_clip); 
         }
     }
     
@@ -130,10 +131,8 @@ public class AudioManager : MonoBehaviour
         return _as;
     }
 
-    private void PlayLoopSound(AudioSource _as, AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f)
-    {
-
-        _as.loop = true;
+    public void PlayLoopSound(AudioSource _as, AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f)
+    {   
         if (_as != null)
         {
             _as.outputAudioMixerGroup = mixer.FindMatchingGroups(mixerGroup)[0];
@@ -151,5 +150,11 @@ public class AudioManager : MonoBehaviour
         _as.loop = false;
         _as.clip = null;
         _as.Stop();
+    }
+
+    public IEnumerator FadeOutSFXLoop(AudioSource source, float  fadeSpeed = 0.01f)
+    {
+        yield return new WaitUntil(() => (source.volume -= fadeSpeed) <= 0);
+        StopLoopSound(source);
     }
 }

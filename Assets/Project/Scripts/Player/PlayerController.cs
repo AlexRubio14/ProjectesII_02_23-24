@@ -65,7 +65,9 @@ public class PlayerController : MonoBehaviour
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip collisionClip;
-    private AudioSource source;
+    [SerializeField]
+    private AudioClip engineClip;
+    private AudioSource engineSource;
 
     private InputController inputController;
     private SpriteRenderer spriteRenderer;
@@ -394,6 +396,12 @@ public class PlayerController : MonoBehaviour
     }
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
+        if (obj.started)
+           engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
+
+        if (obj.canceled)
+            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
+
         accelerationValue = obj.ReadValue<float>();
     }
 
