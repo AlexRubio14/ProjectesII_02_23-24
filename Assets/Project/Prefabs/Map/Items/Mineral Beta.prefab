@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6823452001241047539}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7745456955625772872
 SpriteRenderer:
@@ -107,6 +107,7 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   interactableParticles: {fileID: 6823452001241047501}
   vfxUnhideColor: {r: 0.5566038, g: 0.22316661, b: 0.22316661, a: 0.5176471}
+  vfxHideColor: {r: 1, g: 1, b: 1, a: 0.101960786}
   particlesSize: {x: 2, y: 2}
   particlesPosition: {x: 0, y: 0}
   hiddenParticlesRateOverTime: 6
@@ -115,6 +116,7 @@ MonoBehaviour:
   <c_currentItem>k__BackingField: {fileID: 0}
   <MaxItemsToReturn>k__BackingField: 0
   isBeta: 1
+  hideSprite: {fileID: 0}
 --- !u!61 &7220782329502496194
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -147,7 +149,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.017185867, y: -0.115145996}
+  m_Offset: {x: 0.017185867, y: -0.061950818}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -158,7 +160,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.68190944, y: 0.31855193}
+  m_Size: {x: 0.68190944, y: 0.42494228}
   m_EdgeRadius: 0
 --- !u!114 &8761210342464215935
 MonoBehaviour:
@@ -197,7 +199,7 @@ MonoBehaviour:
   - {x: 0.45841205, y: -0.2284627, z: 0}
   m_ShapePathHash: -1095257861
   m_Mesh: {fileID: 0}
-  m_InstanceId: 116124
+  m_InstanceId: 395780
   m_LocalBounds:
     m_Center: {x: -0.0021694899, y: -0.011515856, z: 0}
     m_Extent: {x: 0.46058154, y: 0.21694684, z: 0}

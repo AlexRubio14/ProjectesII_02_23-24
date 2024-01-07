@@ -316,6 +316,7 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   interactableParticles: {fileID: 674666399339947055}
   vfxUnhideColor: {r: 0.24443176, g: 0.0141509175, b: 1, a: 0.101960786}
+  vfxHideColor: {r: 1, g: 1, b: 1, a: 0.101960786}
   particlesSize: {x: 0, y: 0}
   particlesPosition: {x: 0, y: 0}
   hiddenParticlesRateOverTime: 0

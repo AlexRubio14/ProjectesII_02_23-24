@@ -39,9 +39,13 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     private bool showGizmos = true;
 
+    protected SpriteRenderer spriteR;
+
+
     public void InitEnemy()
     {
         c_rb2d = GetComponent<Rigidbody2D>();
+        spriteR = GetComponentInChildren<SpriteRenderer>();
         ChangeState(EnemyStates.PATROLLING);
         currentHealth = maxHealth;
     }
@@ -90,6 +94,21 @@ public abstract class Enemy : EnemyIA, IHealth
         }
         randomSpot = randomValue;
     }
+
+    protected void FlipSprite()
+    {
+        float rightDot = Vector2.Dot(Vector2.right, transform.right);
+        float leftDot = Vector2.Dot(Vector2.left, transform.right);
+        if (rightDot >= leftDot)
+        {
+            spriteR.flipY = false;
+        }
+        else
+        {
+            spriteR.flipY = true;
+        }
+    }
+
     #endregion
 
     public abstract void ChangeState(EnemyStates nextState);

@@ -199,26 +199,28 @@ public class UpgradeSelector : MonoBehaviour
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
-            AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
-            boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
-            webController.EraseAllWebs();
             ChangeBackground(_pos, true);
             playerController.externalMovementSpeed += boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = true;
             //Sumar al consumo de fuel
             playerController.fuelConsume += boostConsume;
             boostParticles.Play(true);
+            webController.EraseAllWebs();
+            AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
+            boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
+
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
-            AudioManager._instance.StopLoopSound(boostSource);
-            AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
+            
             ChangeBackground(_pos, false); 
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
             //Restar al consumo de fuel
             playerController.fuelConsume -= boostConsume;
             boostParticles.Stop(true);
+            AudioManager._instance.StopLoopSound(boostSource);
+            AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
         }
     }
     private void CheckBoostStamina()

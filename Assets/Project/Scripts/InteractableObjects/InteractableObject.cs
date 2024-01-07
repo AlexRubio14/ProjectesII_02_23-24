@@ -23,7 +23,8 @@ abstract public class InteractableObject : MonoBehaviour
     protected ParticleSystem interactableParticles;
     [SerializeField]
     protected Color vfxUnhideColor;
-    protected Color vfxHideColor = new Color(120, 0, 121, 0.1f);
+    [SerializeField]
+    protected Color vfxHideColor;
     [SerializeField]
     protected Vector2 particlesSize;
     [SerializeField]
@@ -47,7 +48,7 @@ abstract public class InteractableObject : MonoBehaviour
     {
         //Cambiar el color de las particulas
         ParticleSystem.MainModule color = interactableParticles.main;
-        color.startColor = _color;
+        color.startColor = new Color(_color.r, _color.g, _color.b, 0.1f);
         ParticleSystem.ShapeModule shape = interactableParticles.shape;
         shape.scale = particlesSize;
         interactableParticles.transform.localPosition = particlesPosition;
