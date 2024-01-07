@@ -15,6 +15,10 @@ public class HubTpController : InteractableObject
     private SpriteRenderer c_playerSR;
 
     private ParticleSystem c_tpParticles;
+
+    [SerializeField]
+    private AudioClip teleportClip;
+
     private void Start()
     {
         c_playerController = PlayerManager.Instance.player.GetComponent<PlayerController>();
@@ -24,6 +28,8 @@ public class HubTpController : InteractableObject
 
     public override void Interact()
     {
+        AudioManager._instance.Play2dOneShotSound(teleportClip, "Teleport");
+
         c_playerController.ChangeState(PlayerController.State.FREEZE);
         c_tpParticles = Instantiate(tpParticles, c_playerController.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         c_playerSR.enabled = false;

@@ -186,12 +186,14 @@ MonoBehaviour:
   <c_upgradeNeeded>k__BackingField: {fileID: 0}
   grid: {fileID: 0}
   tilemap: {fileID: 0}
-  hiddenParticlesPrefab: {fileID: 0}
-  hiddenParticlesSize: {x: 0, y: 0}
-  hiddenParticlesPosition: {x: 0, y: 0}
+  interactableParticles: {fileID: 0}
+  vfxUnhideColor: {r: 0, g: 0, b: 0, a: 0}
+  particlesSize: {x: 0, y: 0}
+  particlesPosition: {x: 0, y: 0}
   hiddenParticlesRateOverTime: 0
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
   timeToGoHub: 3
+  teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
 --- !u!61 &6824204765675086956
 BoxCollider2D:
   m_ObjectHideFlags: 0
