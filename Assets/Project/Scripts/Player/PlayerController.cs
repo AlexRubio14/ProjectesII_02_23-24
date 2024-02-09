@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private float lastTimeDash;
     [SerializeField]
     private float timeCanDash;
+    [SerializeField]
+    private float dashFuelConsume;
 
     public enum RotationType { OLD_ROTATION, NEW_ROTATION };
     [Space, Header("Rotation"), SerializeField]
@@ -218,6 +220,8 @@ public class PlayerController : MonoBehaviour
         currentState = State.DASHING;
 
         c_rb.AddForce(dashForce * movementDirection.normalized * Time.deltaTime, ForceMode2D.Impulse);
+
+        SubstractHealth(dashFuelConsume);
 
         currentState = State.IDLE;
     }
