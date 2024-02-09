@@ -214,6 +214,12 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         Debug.Log("Dash Method");
+
+        currentState = State.DASHING;
+
+        c_rb.AddForce(dashForce * movementDirection.normalized * Time.deltaTime, ForceMode2D.Impulse);
+
+        currentState = State.IDLE;
     }
 
     private void CheckIfCanDash()
