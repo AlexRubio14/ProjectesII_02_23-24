@@ -18,8 +18,6 @@ public class CannonController : MonoBehaviour
     private float currentDelay;
     private bool isShooting;
     [SerializeField]
-    private float fuelConsume;
-    [SerializeField]
     private PlayerController.State[] canShootStates;
     private Rigidbody2D nearestEnemy;
     [SerializeField]
@@ -129,7 +127,6 @@ public class CannonController : MonoBehaviour
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();
-            playerController.SubstractHealth(fuelConsume);
             shootinAnim.SetTrigger("Shoot");
             shootParticles.Play();
         }
