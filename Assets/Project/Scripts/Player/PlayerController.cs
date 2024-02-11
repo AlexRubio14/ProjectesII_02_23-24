@@ -36,6 +36,12 @@ public class PlayerController : MonoBehaviour
     private float timeCanDash;
     [SerializeField]
     private float dashFuelConsume;
+    [Space, SerializeField]
+    private float timeDashing;
+    private float currentDashTime;
+    private Vector2 dashDirection;
+    [Space, SerializeField]
+    private float dashSpeedDrag;
 
     public enum RotationType { OLD_ROTATION, NEW_ROTATION };
     [Space, Header("Rotation"), SerializeField]
@@ -102,6 +108,8 @@ public class PlayerController : MonoBehaviour
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
 
         canDash = true;
+
+        currentDashTime = 0;
     }
 
     private void OnEnable()
@@ -153,6 +161,9 @@ public class PlayerController : MonoBehaviour
                 CheckIdleOrMovingState();
                 LoseFuel();
                 CheckEnableEngineParticles();
+                break;
+            case State.DASHING:
+                DashingBehaviour();
                 break;
             case State.MINING:
                 break;
@@ -215,15 +226,27 @@ public class PlayerController : MonoBehaviour
     }
     private void Dash()
     {
-        Debug.Log("Dash Method");
-
         currentState = State.DASHING;
 
-        c_rb.AddForce(dashForce * movementDirection.normalized * Time.deltaTime, ForceMode2D.Impulse);
+        dashDirection = movementDirection.normalized * dashForce;
 
         SubstractHealth(dashFuelConsume);
+    }
 
-        currentState = State.IDLE;
+    private void DashingBehaviour()
+    {
+        currentDashTime += Time.fixedDeltaTime;
+
+        if(currentDashTime >= timeDashing)
+        {
+            c_rb.velocity = c_rb.velocity / dashSpeedDrag;
+            currentDashTime = 0;
+            currentState = State.IDLE;
+        }
+        else
+        {
+            c_rb.velocity = dashDirection;
+        }
     }
 
     private void CheckIfCanDash()
@@ -445,7 +468,6 @@ public class PlayerController : MonoBehaviour
 
     private void DashAction(InputAction.CallbackContext obj)
     {
-        Debug.Log("He dasheado");
         if(canDash)
         {
             canDash = false;
