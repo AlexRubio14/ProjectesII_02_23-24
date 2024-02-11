@@ -13,8 +13,10 @@ public class PlayerController : MonoBehaviour
     private InputActionReference rotationAction;
     [SerializeField]
     private InputActionReference accelerateAction;
+    [SerializeField]
+    private InputActionReference dashAction;
 
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
+    public enum State { IDLE, MOVING, DASHING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D c_rb;
@@ -25,7 +27,20 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float externalMovementSpeed;
 
-
+    [Space, Header("Dash"), SerializeField]
+    private float dashForce;
+    private bool canDash;
+    private float lastTimeDash;
+    [SerializeField]
+    private float timeCanDash;
+    [SerializeField]
+    private float dashFuelConsume;
+    [Space, SerializeField]
+    private float timeDashing;
+    private float currentDashTime;
+    private Vector2 dashDirection;
+    [Space, SerializeField]
+    private float dashSpeedDrag;
 
     public enum RotationType { OLD_ROTATION, NEW_ROTATION };
     [Space, Header("Rotation"), SerializeField]
@@ -90,6 +105,10 @@ public class PlayerController : MonoBehaviour
         currentState = State.IDLE;
 
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
+
+        canDash = true;
+
+        currentDashTime = 0;
     }
 
     private void OnEnable()
@@ -102,6 +121,7 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.performed += AccelerateAction;
         accelerateAction.action.canceled += AccelerateAction;
 
+        dashAction.action.performed += DashAction;
     }
 
     private void OnDisable()
@@ -113,6 +133,8 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.started -= AccelerateAction;
         accelerateAction.action.performed -= AccelerateAction;
         accelerateAction.action.canceled -= AccelerateAction;
+
+        dashAction.action.performed -= DashAction;
     }
 
     void Update()
@@ -123,6 +145,8 @@ public class PlayerController : MonoBehaviour
         {
             fuel += 50;
         }
+
+        CheckIfCanDash();
     }
 
     private void FixedUpdate()
@@ -136,6 +160,9 @@ public class PlayerController : MonoBehaviour
                 CheckIdleOrMovingState();
                 LoseFuel();
                 CheckEnableEngineParticles();
+                break;
+            case State.DASHING:
+                DashingBehaviour();
                 break;
             case State.MINING:
                 break;
@@ -186,6 +213,40 @@ public class PlayerController : MonoBehaviour
             c_rb.AddTorque(-movementDirection.x * rotationSpeed[(int)RotationType.NEW_ROTATION]);
         }
         
+    }
+    private void Dash()
+    {
+        currentState = State.DASHING;
+
+        dashDirection = movementDirection.normalized * dashForce;
+
+        SubstractHealth(dashFuelConsume);
+    }
+
+    private void DashingBehaviour()
+    {
+        currentDashTime += Time.fixedDeltaTime;
+
+        if(currentDashTime >= timeDashing)
+        {
+            c_rb.velocity = c_rb.velocity / dashSpeedDrag;
+            currentDashTime = 0;
+            currentState = State.IDLE;
+        }
+        else
+        {
+            c_rb.velocity = dashDirection;
+        }
+    }
+
+    private void CheckIfCanDash()
+    {
+        lastTimeDash += Time.deltaTime;
+
+        if (lastTimeDash >= timeCanDash) 
+        {
+            canDash = true;
+        }
     }
 
     private void CheckEnableEngineParticles()
@@ -395,14 +456,24 @@ public class PlayerController : MonoBehaviour
         accelerationValue = obj.ReadValue<float>();
     }
 
+    private void DashAction(InputAction.CallbackContext obj)
+    {
+        if(canDash)
+        {
+            canDash = false;
+            lastTimeDash = 0;
+            Dash();
+        }
+    }
+
     #endregion
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
-            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
             GetDamage(mapDamage, collision.contacts[0].point);
+            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
         }
 
         if(collision.collider.CompareTag("Enemy"))

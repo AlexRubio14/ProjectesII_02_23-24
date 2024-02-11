@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "d8599a73-bb2e-4077-b810-e3fd10ef7806",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap(tapTime=0.2,tapDelay=0.5,pressPoint=0.2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -358,6 +367,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftUpgradeSelected",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15c3d515-75b4-4c6c-a01e-ef3b9ff689e8",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
