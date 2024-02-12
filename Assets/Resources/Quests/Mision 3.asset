@@ -18,8 +18,10 @@ MonoBehaviour:
   <questDialogue>k__BackingField:
   - Buen trabajo nyamarada, cuando te vuelvas a tu nave ya tendras esta nueva mejora
     configurada.
-  - "Tu nueva mejora son unos laseres de mineria estos te serviran para perforar
-    las barreras que yacen entre nosotros y las capas m\xE1s profundas del planeta."
+  - Tu nueva mejora son unos laseres de mineria estos te serviran para romper las
+    paredes agrietadas.
+  - Estas paredes estan rodeados por polvo azul asi que si lo ves no dudes en atravesarlo
+    todo.
   - "En esas capas encontraras el material mas resistente del planeta: \xA1El Cattanium!"
   - "El Cattanium me servira para darte mejoras mas avanzadas para tu nave \xA1Si
     ves una mena no dudes en minarlo!"

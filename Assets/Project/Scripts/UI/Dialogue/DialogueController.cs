@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 
 public class DialogueController : MonoBehaviour
 {
-
+    [SerializeField]
+    private PlayerInput menuInput;
+    private string lastActionMap;
     [SerializeField]
     private InputActionReference dialogueAction;
 
@@ -44,12 +46,17 @@ public class DialogueController : MonoBehaviour
     {
         //Activar Input
         dialogueAction.action.started += InputPressed;
+
+        lastActionMap = menuInput.currentActionMap.name;
+        menuInput.SwitchCurrentActionMap("Dialogue");
+
     }
 
     private void OnDisable()
     {
         //Desactivar Input
         dialogueAction.action.started -= InputPressed;
+        menuInput.SwitchCurrentActionMap(lastActionMap);
     }
 
     private void InputPressed(InputAction.CallbackContext obj)
