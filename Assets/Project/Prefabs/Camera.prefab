@@ -151,6 +151,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   c_objectToFollow: {fileID: 0}
+  traumaReduction: 0.85
   maxShakePosition: 0.6
   maxShakeRotation: 0.2
   maxTraumaLevel: 1.5
+  minTraumaAdd: 0.5
+  midTraumaAdd: 0.65
+  maxTraumaAdd: 0.8

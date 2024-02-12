@@ -21,6 +21,8 @@ public class DisplayQuestController : MonoBehaviour
     public List<QuestObject> newQuests;
     [HideInInspector]
     public bool checkDisplayNewQuests = false;
+    [SerializeField]
+    private Button questBackButton;
 
     [Space, SerializeField]
     private DialogueController dialogue;
@@ -78,6 +80,7 @@ public class DisplayQuestController : MonoBehaviour
             if (newQuests.Count <= 0)
             {
                 checkDisplayNewQuests = false;
+                questBackButton.onClick.Invoke();
                 return;
             }
             else if (newQuests[0].obtainedQuest)
