@@ -16,17 +16,13 @@ MonoBehaviour:
   <questTitle>k__BackingField: Mision 3
   <questName>k__BackingField: Y se hizo la luz
   <questDialogue>k__BackingField:
-  - "Saludos. Ya tienes integrada la nueva mejora a tus l\xE1seres de miner\xEDa,
-    esta herramienta puede desintegrar algunas paredes fragiles que encuentres. "
-  - "Tu pr\xF3xima misi\xF3n es clara: emplear esos l\xE1seres mejorados para perforar
+  - Buen trabajo nyamarada, cuando te vuelvas a tu nave ya tendras esta nueva mejora
+    configurada.
+  - "Tu nueva mejora son unos laseres de mineria estos te serviran para perforar
     las barreras que yacen entre nosotros y las capas m\xE1s profundas del planeta."
-  - "En la capa mas profunda encontraras el material mas resistente del planeta:
-    \xA1El Cattanium!"
+  - "En esas capas encontraras el material mas resistente del planeta: \xA1El Cattanium!"
   - "El Cattanium me servira para darte mejoras mas avanzadas para tu nave \xA1Si
     ves una mena no dudes en minarlo!"
-  <questResume>k__BackingField: "Utiliza la mejora de los laseres de mineria para
-    destruir las paredes quebradas y bajar a la capa mas profunda. Es hora de obtener
-    un mineral muy valioso: \xA1El Cattanium! "
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

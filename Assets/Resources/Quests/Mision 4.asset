@@ -18,22 +18,16 @@ MonoBehaviour:
   <questDialogue>k__BackingField:
   - 'Has demostrado ser un explorador incansable y dedicado, y tus esfuerzos no han
     pasado desapercibidos. '
-  - "Como recompensa he intalado en tu nave esta luz ultravioleta, una herramienta
-    que revelar\xE1 secretos ocultos detr\xE1s de los polvos morados que se esconden
-    en las profundidades de este planeta."
-  - "Ahora, con esta luz, podr\xE1s descubrir conocimientos ocultos y caminos secretos. "
+  - "Ya sabes como va esto, en nada tendras tu nueva mejora instalada. \xA1Esta mejora
+    es una luz ultravioleta!"
+  - "Esta herramienta te revelar\xE1 secretos ocultos detr\xE1s de los polvos morados
+    que se esconden en las profundidades de este planeta."
   - "Pero m\xE1s all\xE1 de eso, quiero anunciarte que has alcanzado el punto culminante
     de tus mejoras. Posees todo lo necesario para adentrarte en las capas m\xE1s
     profundas y alcanzar el n\xFAcleo del planeta."
   - "Solo resta el recolector, el \xFAltimo eslab\xF3n en tu traves\xEDa c\xF3smica.
     Adelante, que tu misi\xF3n llegue a su apoteosis y que los secretos del n\xFAcleo
     te sean revelados. \xA1Hasta la pr\xF3xima, recolector de nucleos!"
-  <questResume>k__BackingField: 'Te he instalado una nueva luz ultravioleta en tu
-    nave, ahora con ella ya puedes ver los secretos ocultos tras el polvo morado,
-    y con ello ya puedes llegar al nucleo.
-
-    Completa esta ultima mision para
-    desbloquear el recolector de nucleos.'
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

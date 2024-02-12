@@ -19,8 +19,8 @@ public class QuestObject : ScriptableObject
     [field: TextArea, SerializeField]
     public string[] questDialogue { private set; get; }
 
-    [field: TextArea, SerializeField]
-    public string questResume { private set; get; }
+    //[field: TextArea, SerializeField]
+    //public string questResume { private set; get; }
 
     [SerializedDictionary("Item", "Amount")]
     public SerializedDictionary<ItemObject, short> neededItems;

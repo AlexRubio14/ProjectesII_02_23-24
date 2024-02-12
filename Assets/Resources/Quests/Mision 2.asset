@@ -16,17 +16,8 @@ MonoBehaviour:
   <questTitle>k__BackingField: Mision 2
   <questName>k__BackingField: Explorando
   <questDialogue>k__BackingField:
-  - " \xA1Saludos! Ya tienes el postquemador instalado en tu nave, un paso crucial
-    en tu b\xFAsqueda del n\xFAcleo planetario. "
-  - "Gracias a ello, ahora empieza la verdadera exploraci\xF3n, donde deberas superar
-    las barreras de Aire y llegar mas lejos y rapido de lo que antes eras capaz."
-  - "En tu b\xFAsqueda hacia lo inexplorado, te insto a recolectar los tesoros materiales
-    que aguardan en esas nuevas fronteras. Cada metal precioso, cada mineral raro,
-    son componentes cruciales para mejorar tu nave."
-  - "\xA1Que las estrellas gu\xEDen tus alas, y que la potencia del postquemador
-    te abra nuevos caminos en tu traves\xEDa!"
-  <questResume>k__BackingField: Utiliza tu nuevo postquemador para atravesar las
-    corrientes de aire y recolectar los nuevos materiales nuevos que encuentres.
+  - " \xA1Perfecto! Cuando te vuelvas a montar en tu nave ya tendras la mejora instalada
+    :3"
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
@@ -45,6 +36,6 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

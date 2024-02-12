@@ -10,6 +10,8 @@ public class CameraController : MonoBehaviour
     private GameObject c_objectToFollow;
 
     [Space, Header("Camera Shake"), SerializeField]
+    private float traumaReduction;
+    [SerializeField]
     private float maxShakePosition;
     [SerializeField]
     private float maxShakeRotation;
@@ -17,6 +19,13 @@ public class CameraController : MonoBehaviour
     private float traumaLevel;
     [SerializeField]
     private float maxTraumaLevel = 1;
+
+    [Space, Header("Add Trauma Levels"), SerializeField]
+    private float minTraumaAdd;
+    [SerializeField]
+    private float midTraumaAdd;
+    [SerializeField]
+    private float maxTraumaAdd;
 
     private void Awake()
     {
@@ -34,11 +43,18 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        traumaLevel -= Time.deltaTime / 1.3f;
-
-        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
-
+        UpdateTraumaValues();
     }
+
+    private void UpdateTraumaValues()
+    {
+        if (traumaLevel > 0)
+        {
+            traumaLevel -= Time.deltaTime * traumaReduction;
+            traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+        }
+    }
+
     private void LateUpdate()
     {
         SetRandomTraumaPosition();
@@ -82,24 +98,24 @@ public class CameraController : MonoBehaviour
 
     public void AddLowTrauma()
     {
-        traumaLevel += 0.6f;
-        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+        AddCustomTrauma(minTraumaAdd);
     }
     public void AddMediumTrauma()
     {
-        traumaLevel += 0.75f;
-        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+        AddCustomTrauma(midTraumaAdd);
     }
     public void AddHighTrauma()
     {
-        traumaLevel += 1.1f;
-        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+        AddCustomTrauma(maxTraumaAdd);
     }
 
     public void AddCustomTrauma(float _trauma)
     {
-        traumaLevel += _trauma;
-        traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+        if (traumaLevel < _trauma)
+        {
+            traumaLevel = _trauma;
+            traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
+        }
     }
     public void SetTrauma(float _trauma)
     {

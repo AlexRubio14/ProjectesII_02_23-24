@@ -7,8 +7,6 @@ public class QuestInfoMenu : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI titleMissionText;
-    [SerializeField]
-    private TextMeshProUGUI missionResumeText;
 
     [Space, Header("Requirements"), SerializeField]
     private LayoutGroup requirementsLayout;
@@ -18,6 +16,8 @@ public class QuestInfoMenu : MonoBehaviour
     [Space, Header("Rewards"), SerializeField]
     private LayoutGroup rewardLayout;
     private List<TextMeshProUGUI> rewardList;
+    [SerializeField]
+    private float rewardFontSize;
 
     [Space, SerializeField]
     private DialogueController dialogue;
@@ -35,7 +35,6 @@ public class QuestInfoMenu : MonoBehaviour
     {
         currentQuest = _quest;
         titleMissionText.text = currentQuest.questTitle.ToString() + ": " + currentQuest.questName.ToString();
-        missionResumeText.text = currentQuest.questResume;
 
         SetRequirementValues();
         SetRewardValues();
@@ -84,7 +83,7 @@ public class QuestInfoMenu : MonoBehaviour
         {
             GameObject newObj = new GameObject("Reward Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
-            newText.fontSize = 20;
+            newText.fontSize = rewardFontSize;
             newText.font = fontAsset; 
 
             switch (item.Value)
