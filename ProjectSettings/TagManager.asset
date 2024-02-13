@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - BreakableWall
   - Web
+  - Tutorial
   layers:
   - Default
   - TransparentFX
