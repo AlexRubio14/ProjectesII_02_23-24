@@ -116,6 +116,7 @@ public class CheckQuestController : MonoBehaviour
         RemoveQuestCardList();
         questCanvas.RemoveQuestInfo();
         UpdateQuestValues(currentQuest, false);
+        backButton.gameObject.SetActive(false);
     }
 
     private void SelectQuest()

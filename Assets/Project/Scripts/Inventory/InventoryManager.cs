@@ -17,7 +17,7 @@ public class InventoryManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             enabled = false;
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 

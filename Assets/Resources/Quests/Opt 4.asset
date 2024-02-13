@@ -17,8 +17,6 @@ MonoBehaviour:
   <questName>k__BackingField: Estudios Avanzados
   <questDialogue>k__BackingField:
   - PlaceHolder
-  <questResume>k__BackingField: Recolecta la cantidad necesaria de materiales y desbloquea
-    una mejora al apuntado de la nave
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}

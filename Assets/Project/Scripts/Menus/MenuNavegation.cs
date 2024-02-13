@@ -12,6 +12,17 @@ public class MenuNavegation : MonoBehaviour
     [SerializeField]
     private string gameScene;
 
+
+    private void Start()
+    {
+        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
+        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
+        neededControls.Add(MenuControlsHint.ActionType.GO_BACK);
+        neededControls.Add(MenuControlsHint.ActionType.MOVE_MENU);
+
+        MenuControlsHint.Instance.UpdateHintControls(neededControls);
+    }
+
     public void GoToHub()
     {
         SceneManager.LoadScene(hubScene); 

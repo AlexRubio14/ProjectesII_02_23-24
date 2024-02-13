@@ -21,11 +21,18 @@ public class QuestInfoMenu : MonoBehaviour
 
     [Space, SerializeField]
     private DialogueController dialogue;
-    public Button endDialogueButtonSelect;
+    public List<Button> onFirstQuestClosed; //El boton 0 sera en caso de que sea la primera vez que obtenemos una mision, el 1 sera el else
     private QuestObject currentQuest;
 
     [Space, SerializeField]
     private TMP_FontAsset fontAsset;
+
+    private DisplayQuestController displayQuestController;
+
+    private void Awake()
+    {
+        displayQuestController = GetComponentInParent<DisplayQuestController>();
+    }
 
     private void OnDisable()
     {
@@ -134,6 +141,19 @@ public class QuestInfoMenu : MonoBehaviour
 
     public void SelectEndFirtstTimeButton()
     {
-        endDialogueButtonSelect.Select();
+        if (displayQuestController.newQuests.Count > 1)
+        {
+            return;
+        }
+
+        if (currentQuest.questID != 0 )
+        {
+            Debug.Log("JIJI UwU");
+            onFirstQuestClosed[1].onClick.Invoke();
+        }
+        else
+        {
+            onFirstQuestClosed[0].Select();
+        }
     }
 }

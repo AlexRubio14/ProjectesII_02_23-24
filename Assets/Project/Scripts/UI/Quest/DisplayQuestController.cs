@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class DisplayQuestController : MonoBehaviour
 {
     [SerializeField]
+    private Button firstButtonSelected;
+    [Space, SerializeField]
     private GameObject shopButtons;
 
     [Space, Header("First Time Quest"), SerializeField]
@@ -31,19 +33,23 @@ public class DisplayQuestController : MonoBehaviour
     {
         newQuests = new List<QuestObject>();
 
+        //Esto solo funcionara si acabamos de empezar el juego, nos seleccionara la primera quest de todas y nos saltara el 
         QuestObject selectedQuest = QuestManager.Instance.GetSelectedQuest();
         if (selectedQuest && !selectedQuest.obtainedQuest)
         {
             firstTimeQuest.gameObject.SetActive(true);
             firstTimeQuest.SetValues(selectedQuest);
             shopButtons.SetActive(false);
-            dialogue.onDialogueEnd += OnDialogueEnd;
+        }
+        else
+        {
+            firstButtonSelected.Select();
         }
     }
 
     private void OnEnable()
     {
-            dialogue.onDialogueEnd += OnDialogueEnd;
+        dialogue.onDialogueEnd += OnDialogueEnd;
     }
 
     private void OnDisable()
@@ -61,7 +67,7 @@ public class DisplayQuestController : MonoBehaviour
 
         if (checkController.isActiveAndEnabled && newQuests.Count <= 1)
         {
-            firstTimeQuest.endDialogueButtonSelect = checkController.questBackButton;
+            firstTimeQuest.onFirstQuestClosed[1] = checkController.questBackButton;
         }
 
         StartCoroutine(WaitSelectFirstTimeButton());
