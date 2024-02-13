@@ -17,8 +17,6 @@ MonoBehaviour:
   <questName>k__BackingField: Se acabo ser buena onda
   <questDialogue>k__BackingField:
   - PlaceHolder
-  <questResume>k__BackingField: "Recolecta la cantidad necesaria de materiales y
-    desbloquea una mejora que aumentara ligeramente tu da\xF1o"
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

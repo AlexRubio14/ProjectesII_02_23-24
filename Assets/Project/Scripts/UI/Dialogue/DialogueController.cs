@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class DialogueController : MonoBehaviour
 {
@@ -50,6 +51,10 @@ public class DialogueController : MonoBehaviour
         lastActionMap = menuInput.currentActionMap.name;
         menuInput.SwitchCurrentActionMap("Dialogue");
 
+        List<MenuControlsHint.ActionType> actionList = new List<MenuControlsHint.ActionType>();
+        actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
+        MenuControlsHint.Instance.UpdateHintControls(actionList);
+
     }
 
     private void OnDisable()
@@ -57,6 +62,8 @@ public class DialogueController : MonoBehaviour
         //Desactivar Input
         dialogueAction.action.started -= InputPressed;
         menuInput.SwitchCurrentActionMap(lastActionMap);
+
+        MenuControlsHint.Instance.UpdateHintControls(MenuControlsHint.Instance.lastActions);
     }
 
     private void InputPressed(InputAction.CallbackContext obj)

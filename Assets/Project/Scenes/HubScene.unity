@@ -223,7 +223,7 @@ MonoBehaviour:
   rewardLayout: {fileID: 1411176573}
   rewardFontSize: 32
   dialogue: {fileID: 0}
-  endDialogueButtonSelect: {fileID: 0}
+  onFirstQuestClosed: []
   fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
 --- !u!1001 &89611158
 PrefabInstance:
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 965503680}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &150609317
@@ -3157,18 +3157,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1494817530}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1016562549}
         m_TargetAssemblyTypeName: QuestInfoMenu, Assembly-CSharp
         m_MethodName: SelectEndFirtstTimeButton
@@ -4165,7 +4153,9 @@ MonoBehaviour:
   rewardLayout: {fileID: 1797010713}
   rewardFontSize: 32
   dialogue: {fileID: 1688875427}
-  endDialogueButtonSelect: {fileID: 965503683}
+  onFirstQuestClosed:
+  - {fileID: 2087683796}
+  - {fileID: 1229400355}
   fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
 --- !u!1 &1026113540
 GameObject:
@@ -8829,6 +8819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85adb0d5decc05944bed28568a07de11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstButtonSelected: {fileID: 1928734250}
   shopButtons: {fileID: 1494817530}
   firstTimeQuest: {fileID: 1016562549}
   firstTimeSelectedButton: {fileID: 840389639}

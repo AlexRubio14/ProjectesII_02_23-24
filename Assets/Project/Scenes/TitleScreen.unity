@@ -3068,6 +3068,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1548571245337629579, guid: 7410e56619bdd844ca40225df192351f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5581171576067583087, guid: 7410e56619bdd844ca40225df192351f, type: 3}
       propertyPath: m_Name
       value: Managers

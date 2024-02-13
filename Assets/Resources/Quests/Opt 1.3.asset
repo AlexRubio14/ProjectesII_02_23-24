@@ -16,8 +16,6 @@ MonoBehaviour:
   <questTitle>k__BackingField: Opt. 1.3
   <questName>k__BackingField: Gato Arabe
   <questDialogue>k__BackingField: []
-  <questResume>k__BackingField: Recolecta la cantidad necesaria de materiales y desbloquea
-    una mejora que aumentara en gran medida el combustible de tu nave
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
