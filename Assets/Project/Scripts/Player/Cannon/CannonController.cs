@@ -114,7 +114,7 @@ public class CannonController : MonoBehaviour
     }
     public void Shoot()
     {
-        currentDelay += Time.fixedDeltaTime;
+        currentDelay += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
         if (autoShoot)
         {
             isShooting = nearestEnemy;
