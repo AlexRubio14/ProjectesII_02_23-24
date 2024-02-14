@@ -39,7 +39,6 @@ public class DisplayQuestController : MonoBehaviour
         {
             firstTimeQuest.gameObject.SetActive(true);
             firstTimeQuest.SetValues(selectedQuest);
-            shopButtons.SetActive(false);
         }
         else
         {

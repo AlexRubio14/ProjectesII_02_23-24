@@ -148,7 +148,6 @@ public class QuestInfoMenu : MonoBehaviour
 
         if (currentQuest.questID != 0 )
         {
-            Debug.Log("JIJI UwU");
             onFirstQuestClosed[1].onClick.Invoke();
         }
         else

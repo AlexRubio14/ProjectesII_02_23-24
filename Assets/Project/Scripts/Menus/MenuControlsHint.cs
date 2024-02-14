@@ -28,14 +28,20 @@ public class MenuControlsHint : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            enabled = false;
-            Destroy(this);
             return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(Instance);
     }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
 
     public void UpdateHintControls(List<ActionType> _actions)
     {
