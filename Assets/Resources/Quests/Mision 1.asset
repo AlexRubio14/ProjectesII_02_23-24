@@ -17,12 +17,14 @@ MonoBehaviour:
   <questName>k__BackingField: Nuevo Inicio
   <questDialogue>k__BackingField:
   - "\xA1Bienvenido intr\xE9pido recolector de nucleos!"
-  - "Veo que tu nave a\xFAn no est\xE1 preparada para la inmersi\xF3n en las entra\xF1as
-    del planeta."
-  - "Pero no temas recolector de n\xFAcleos, yo te ayudare a mejorar tu nave. "
-  - "Aunque las mejoras no se otorgan sin esfuerzo. Para optimizar tu nave, deber\xE1s
-    completar misiones espec\xEDficas que te encomendar\xE9."
-  - "\xA1Mucha suerte en tu aventura!"
+  - Nos encontramos en nuestra base terrestre desde donde podras visitar la tienda
+    y montarte en tu nave para que te inmerjas en las profundidades de este planeta.
+  - "Veo que tu nave a\xFAn no est\xE1 preparada para la inmersi\xF3n en las partes
+    mas profundas de este planeta."
+  - "Pero no temas, yo te ayudare a mejorar tu nave, a cambio deber\xE1s completar
+    misiones espec\xEDficas que te encomendar\xE9, para ello visitame en la tienda
+    cuando tengas todo lo que te pido."
+  - 'Esta sera tu primera mission:'
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
@@ -38,5 +40,5 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: bd806acfc0ed28343ac20594fda134c5, type: 2}
       Value: 1
   obtainedQuest: 1
-  completedQuest: 0
-  newQuest: 1
+  completedQuest: 1
+  newQuest: 0
