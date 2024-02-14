@@ -24,13 +24,12 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null)
+        if (_instance != null && _instance != this)
         {
-            if (_instance != this)
-            {
-                Destroy(_instance);
-            }
+            Destroy(this);
+            return;
         }
+        
 
         _instance = this;
 

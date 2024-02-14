@@ -25,6 +25,7 @@ public class CheckQuestController : MonoBehaviour
     [SerializeField]
     private Button completeButton;
     private TextMeshProUGUI completeText;
+    private ImageFloatEffect completeButtonFloatEffect;
     [SerializeField]
     private Button selectButton;
     [SerializeField]
@@ -37,7 +38,9 @@ public class CheckQuestController : MonoBehaviour
 
         displayQuestController = GetComponentInParent<DisplayQuestController>();
         completeText = completeButton.GetComponentInChildren<TextMeshProUGUI>();
+        completeButtonFloatEffect = completeButton.GetComponent<ImageFloatEffect>();
         selectText = selectButton.GetComponentInChildren<TextMeshProUGUI>();
+
 
         completeButton.onClick.AddListener(() => CompleteQuest());
         selectButton.onClick.AddListener(() => SelectQuest());
@@ -60,8 +63,11 @@ public class CheckQuestController : MonoBehaviour
         //Inicializar botones
         if (!currentQuest.completedQuest)
         {
-            completeButton.interactable = InventoryManager.Instance.CanBuy(_quest.neededItems);
+            bool canBuy = InventoryManager.Instance.CanBuy(_quest.neededItems);
+            completeButton.interactable = canBuy;
+            completeButtonFloatEffect.canFloat = canBuy;
             completeText.text = "Completar";
+
 
             selectButton.gameObject.SetActive(true);
 
@@ -116,7 +122,6 @@ public class CheckQuestController : MonoBehaviour
         RemoveQuestCardList();
         questCanvas.RemoveQuestInfo();
         UpdateQuestValues(currentQuest, false);
-        backButton.gameObject.SetActive(false);
     }
 
     private void SelectQuest()
