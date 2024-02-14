@@ -13,8 +13,10 @@ public abstract class Tutorial : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Tutorial"))
+        if (collision.CompareTag("Player"))
+        {
             TutorialMethod();
+        }
     }
 
     protected abstract void TutorialMethod();

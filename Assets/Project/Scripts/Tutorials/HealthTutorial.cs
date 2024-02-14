@@ -16,6 +16,6 @@ public class HealthTutorial : Tutorial
 
     private void StartHealthTutorial()
     {
-
+        Debug.Log("Salta el tutorial");
     }
 }
