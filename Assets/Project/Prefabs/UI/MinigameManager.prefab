@@ -1067,6 +1067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargeRightLaserAction: {fileID: 2389276025789361315, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeLeftLaserAction: {fileID: 6815837080457322733, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  cancelMinigameAction: {fileID: -752042838930278205, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   laserChargeSpeed: 25
   laserDischargeSpeed: 15
   neededSizes: {x: 30, y: 80}
