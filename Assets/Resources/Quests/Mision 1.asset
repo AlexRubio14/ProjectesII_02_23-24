@@ -18,19 +18,23 @@ MonoBehaviour:
   <questDialogue>k__BackingField:
   - "\xA1Bienvenido intr\xE9pido recolector de nucleos!"
   - Nos encontramos en nuestra base terrestre desde donde podras visitar la tienda
-    y montarte en tu nave para que te inmerjas en las profundidades de este planeta.
-  - "Veo que tu nave a\xFAn no est\xE1 preparada para la inmersi\xF3n en las partes
-    mas profundas de este planeta."
-  - "Pero no temas, yo te ayudare a mejorar tu nave, a cambio deber\xE1s completar
-    misiones espec\xEDficas que te encomendar\xE9, para ello visitame en la tienda
-    cuando tengas todo lo que te pido."
-  - 'Esta sera tu primera mission:'
+    y montarte en tu nave para que te adentres en este planeta.
+  - Cuando subas a un teletransportador o a tu nave sea destruida volveras aqui a
+    tu tranquila y reconfortante nave.
+  - "Por otro lado veo que tu nave a\xFAn no est\xE1 preparada para la inmersi\xF3n
+    en las partes mas profundas de este planeta."
+  - Ya sabes que si destruyen tu nave en medio de la inmersion perderas todos los
+    objetos que hayas recogido en ese momento.
+  - "Pero no temas, yo te ayudare a mejorar tu nave, pero necesitare que completes
+    unos peque\xF1os encargos que te encomendar\xE9."
+  - Visitame en la tienda cuando tengas todo lo que te pido, aqui puedes ver lo que
+    necesito para tu primera mejora.
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 0
+      Value: 1
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 0
+      Value: 1
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
@@ -39,6 +43,6 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: bd806acfc0ed28343ac20594fda134c5, type: 2}
       Value: 1
-  obtainedQuest: 0
-  completedQuest: 0
-  newQuest: 1
+  obtainedQuest: 1
+  completedQuest: 1
+  newQuest: 0

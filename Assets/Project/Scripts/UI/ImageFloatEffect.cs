@@ -6,21 +6,21 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class ImageFloatEffect : MonoBehaviour
 {
     [Range(0, 10), SerializeField]
-    private float speed = 1.0f;
+    public float speed = 1.0f;
 
     [Range(1, 2f), SerializeField]
-    private float maxExpand = 1.1f;
+    public float maxExpand = 1.1f;
 
     [Range(0.2f, 1.5f), SerializeField]
-    private float minExpand = 1.02f;
+    public float minExpand = 1.02f;
 
     private Vector3 scaleComp;
-    public bool canFloat; 
+    [field: SerializeField]
+    public bool canFloat { get;  set; }
 
     void Awake()
     {
         scaleComp = transform.localScale;
-        canFloat = false;
     }
 
     void Update()
@@ -34,4 +34,5 @@ public class ImageFloatEffect : MonoBehaviour
             transform.localScale = scaleComp;
         }
     }
+
 }
