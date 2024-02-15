@@ -18,6 +18,8 @@ public class QuestInfoMenu : MonoBehaviour
     private List<TextMeshProUGUI> rewardList;
     [SerializeField]
     private float rewardFontSize;
+    [SerializeField]
+    private bool showCurrentItems;
 
     [Space, SerializeField]
     private DialogueController dialogue;
@@ -79,7 +81,14 @@ public class QuestInfoMenu : MonoBehaviour
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
             newText.font = fontAsset; 
             requirementTexts.Add(newText);
-            newText.text = inventory[item.Key] + " / " + item.Value;
+            if (showCurrentItems)
+            {
+                newText.text = inventory[item.Key] + " / " + item.Value;
+            }
+            else
+            {
+                newText.text = " x" + item.Value;
+            }
             newText.enableAutoSizing = true;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;
             newText.verticalAlignment = VerticalAlignmentOptions.Middle;
