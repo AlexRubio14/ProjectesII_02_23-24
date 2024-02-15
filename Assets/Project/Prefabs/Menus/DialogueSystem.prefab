@@ -520,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7288904398597266915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -623,6 +623,7 @@ MonoBehaviour:
   dialogueObject: {fileID: 6644650429208912333}
   dialogues: []
   timeBetweenLetters: 0.02
-  catAnimations: []
+  catAnimations:
+  - {fileID: 1696231792222394414}
   catSound: {fileID: 8300000, guid: 68f3b41490195f74dbaf9a6ed76b243d, type: 3}
   catDialogueSound: {fileID: 8300000, guid: 1bd7be6afecc5094baa17f2ff77d15fe, type: 3}
