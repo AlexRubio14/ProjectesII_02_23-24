@@ -50,6 +50,16 @@ public abstract class Enemy : EnemyIA, IHealth
         currentHealth = maxHealth;
     }
 
+    protected void OnEnable()
+    {
+        TimeManager.Instance.pauseAction += EnemyPause;
+    }
+
+    protected void OnDisable()
+    {
+        TimeManager.Instance.pauseAction -= EnemyPause;
+
+    }
 
     #region Behaviours Functions
     protected abstract void Behaviour();
@@ -77,7 +87,7 @@ public abstract class Enemy : EnemyIA, IHealth
     {
         Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
 
-        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
+        c_rb2d.AddForce(direction * speed * TimeManager.Instance.timeParameter, ForceMode2D.Force);
 
         // ROTATION OF THE ENENMY WHILE FOLLOWING
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -108,7 +118,6 @@ public abstract class Enemy : EnemyIA, IHealth
             spriteR.flipY = true;
         }
     }
-
     #endregion
 
     public abstract void ChangeState(EnemyStates nextState);
@@ -147,6 +156,12 @@ public abstract class Enemy : EnemyIA, IHealth
         currItem.GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = c_currentDrop.EffectsColor;
     }
     #endregion
+
+    private void EnemyPause()
+    {
+        c_rb2d.velocity = Vector2.zero;
+        c_rb2d.angularVelocity = 0.0f;
+    }
 
 
     private void OnDrawGizmosSelected()

@@ -34,12 +34,23 @@ public class Laser : MonoBehaviour
         c_rb = GetComponent<Rigidbody2D>();
     }
 
+    private void OnEnable()
+    {
+        TimeManager.Instance.pauseAction += LaserPause;
+        TimeManager.Instance.resumeAction += LaserResume;
+    }
+
+    private void OnDestroy()
+    {
+        TimeManager.Instance.pauseAction -= LaserPause;
+        TimeManager.Instance.resumeAction -= LaserResume;
+    }
+
     private void Start()
     {
         startPosition = transform.position;
         c_rb.velocity = transform.up * speed;
     }
-
 
     private void Update()
     {
@@ -62,9 +73,8 @@ public class Laser : MonoBehaviour
         }
         else
         {
-            c_rb.velocity = (autoAimTarget.transform.position - transform.position).normalized * speed;
+            c_rb.velocity = (autoAimTarget.transform.position - transform.position).normalized * speed * TimeManager.Instance.timeParameter;
         }
-
     }
 
     private void CheckDestroyBullet()
@@ -194,6 +204,17 @@ public class Laser : MonoBehaviour
         //Crear el cosos que choca
         c_rb.velocity = Vector2.zero;
         Destroy(gameObject);
+    }
+
+    private void LaserPause()
+    {
+        c_rb.velocity = Vector2.zero;
+        c_rb.angularVelocity = 0.0f;
+    }
+
+    private void LaserResume()
+    {
+        c_rb.velocity = transform.up * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

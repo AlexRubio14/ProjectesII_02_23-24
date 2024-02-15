@@ -4,14 +4,24 @@ using UnityEngine;
 
 public abstract class Tutorial : MonoBehaviour
 {
+    [SerializeField]
     protected string tutorialkey;
+
+    [TextArea, SerializeField]
+    public string[] dialogues;
+
+    [SerializeField]
+    protected DialogueController dialogueController;
 
     private void Awake()
     {
-        tutorialkey = gameObject.name;
+        if (PlayerPrefs.HasKey(tutorialkey))
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -20,4 +30,6 @@ public abstract class Tutorial : MonoBehaviour
     }
 
     protected abstract void TutorialMethod();
+
+    protected abstract void EndTutorial();
 }

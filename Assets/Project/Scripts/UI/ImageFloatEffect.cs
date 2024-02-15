@@ -15,7 +15,7 @@ public class ImageFloatEffect : MonoBehaviour
     private float minExpand = 1.02f;
 
     private Vector3 scaleComp;
-    public bool canFloat { private get; set; } 
+    public bool canFloat; 
 
     void Awake()
     {
