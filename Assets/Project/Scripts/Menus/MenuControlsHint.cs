@@ -51,16 +51,20 @@ public class MenuControlsHint : MonoBehaviour
             actionsText[i].gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < _actions.Count; i++) 
+        if (_actions != null) 
         {
-            if (i > 4)
-                break;
+            for (int i = 0; i < _actions.Count; i++)
+            {
+                if (i > 4)
+                    break;
 
-            keysSprite[i].gameObject.SetActive(true);
-            keysSprite[i].sprite = actionsSprite[_actions[i]][1];
-            actionsText[i].gameObject.SetActive(true);
-            actionsText[i].text = actionsName[_actions[i]];
+                keysSprite[i].gameObject.SetActive(true);
+                keysSprite[i].sprite = actionsSprite[_actions[i]][1];
+                actionsText[i].gameObject.SetActive(true);
+                actionsText[i].text = actionsName[_actions[i]];
+            }
         }
+        
 
         lastActions = currentActions;
 

@@ -69,6 +69,11 @@ public class QuestInfoMenu : MonoBehaviour
             newImage.sprite = item.Key.c_PickableSprite;
 
             newObj.transform.SetParent(requirementsLayout.transform);
+            ImageFloatEffect floatFX = newObj.AddComponent<ImageFloatEffect>();
+            floatFX.canFloat = !currentQuest.obtainedQuest;
+            floatFX.speed = 1.4f;
+            floatFX.maxExpand = 1.5f;
+            floatFX.minExpand = 1.1f;
 
             newObj = new GameObject("Requirement Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();

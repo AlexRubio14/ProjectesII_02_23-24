@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.PackageManager.Requests;
 
 public class CheckQuestController : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class CheckQuestController : MonoBehaviour
 
     private DisplayQuestController displayQuestController;
 
+    
     [Header("Card List"), SerializeField]
+    private GameObject questListUi;
+    [SerializeField]
     private Transform cardLayout;
     [SerializeField]
     private Button cardListBackButton;
@@ -31,6 +35,9 @@ public class CheckQuestController : MonoBehaviour
     [SerializeField]
     private Button backButton;
     private TextMeshProUGUI selectText;
+
+    [Space, Header("Inventory"), SerializeField]
+    private InventoryMenuController inventoryMenu;
 
     private void Awake()
     {
@@ -54,7 +61,8 @@ public class CheckQuestController : MonoBehaviour
             cardListBackButton.gameObject.SetActive(false);
             backButton.Select();
         }
-        
+
+        questListUi.SetActive(false);
 
         currentQuest = _quest;
         questCanvas.gameObject.SetActive(true);
@@ -93,6 +101,14 @@ public class CheckQuestController : MonoBehaviour
         if (currentQuest.newQuest)
             currentQuest.newQuest = false;
 
+
+
+        //Settear que los items que necesita la quest hagan el efecto de flotar
+        foreach (KeyValuePair<ItemObject, short> item in _quest.neededItems)
+        {
+            inventoryMenu.SetItemFloaty(item.Key, true);
+        }
+
     }
     private void CompleteQuest()
     {
@@ -122,6 +138,12 @@ public class CheckQuestController : MonoBehaviour
         RemoveQuestCardList();
         questCanvas.RemoveQuestInfo();
         UpdateQuestValues(currentQuest, false);
+
+        foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
+        {
+            inventoryMenu.UpdateItemAmount(item.Key);
+        }
+
     }
 
     private void SelectQuest()
@@ -136,6 +158,16 @@ public class CheckQuestController : MonoBehaviour
         if (!gameObject.activeInHierarchy)
             return;
 
+        questListUi.SetActive(true);
+
+        if (currentQuest)
+        {
+            foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
+            {
+                inventoryMenu.SetItemFloaty(item.Key, false);
+            }
+        }
+        
         List<QuestObject> obtainedQuests = QuestManager.Instance.GetAllObtainedQuests();
 
         //Crear miniaturas de las quests

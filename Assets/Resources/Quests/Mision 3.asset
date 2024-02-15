@@ -22,9 +22,6 @@ MonoBehaviour:
     paredes agrietadas.
   - Estas paredes estan rodeados por polvo azul asi que si lo ves no dudes en atravesarlo
     todo.
-  - "En esas capas encontraras el material mas resistente del planeta: \xA1El Cattanium!"
-  - "El Cattanium me servira para darte mejoras mas avanzadas para tu nave \xA1Si
-    ves una mena no dudes en minarlo!"
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
