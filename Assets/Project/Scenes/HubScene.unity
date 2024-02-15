@@ -222,6 +222,7 @@ MonoBehaviour:
   requirementsLayout: {fileID: 965102525}
   rewardLayout: {fileID: 1411176573}
   rewardFontSize: 32
+  showCurrentItems: 1
   dialogue: {fileID: 0}
   onFirstQuestClosed: []
   fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -3518,6 +3519,7 @@ MonoBehaviour:
   requirementsLayout: {fileID: 609161611}
   rewardLayout: {fileID: 1797010713}
   rewardFontSize: 32
+  showCurrentItems: 0
   dialogue: {fileID: 1688875427}
   onFirstQuestClosed:
   - {fileID: 2087683796}
