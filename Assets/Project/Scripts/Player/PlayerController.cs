@@ -122,6 +122,9 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.canceled += AccelerateAction;
 
         dashAction.action.performed += DashAction;
+
+        TimeManager.Instance.pauseAction += PlayerPause;
+
     }
 
     private void OnDisable()
@@ -135,6 +138,8 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.canceled -= AccelerateAction;
 
         dashAction.action.performed -= DashAction;
+
+        TimeManager.Instance.pauseAction -= PlayerPause;
     }
 
     void Update()
@@ -182,7 +187,7 @@ public class PlayerController : MonoBehaviour
                         Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
                         Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
-        c_rb.AddForce(acceleration, ForceMode2D.Force);
+        c_rb.AddForce(acceleration * TimeManager.Instance.timeParameter, ForceMode2D.Force);
     }
     private void Rotation()
     {
@@ -201,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
             float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
 
-            c_rb.AddTorque(signedAngle * rotationSpeed[(int)RotationType.OLD_ROTATION]);
+            c_rb.AddTorque(signedAngle * rotationSpeed[(int)RotationType.OLD_ROTATION] * TimeManager.Instance.timeParameter);
 
         }
         else
@@ -269,7 +274,7 @@ public class PlayerController : MonoBehaviour
     #region Ship Fuel
     void LoseFuel()
     {
-        fuel = Mathf.Clamp(fuel - fuelConsume * Time.fixedDeltaTime, 0, GetMaxFuel());
+        fuel = Mathf.Clamp(fuel - fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
         CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
@@ -467,6 +472,13 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+    private void PlayerPause()
+    {
+        c_rb.velocity = Vector2.zero;
+        c_rb.angularVelocity = 0.0f;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

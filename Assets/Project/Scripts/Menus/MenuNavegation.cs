@@ -21,6 +21,8 @@ public class MenuNavegation : MonoBehaviour
         neededControls.Add(MenuControlsHint.ActionType.MOVE_MENU);
 
         MenuControlsHint.Instance.UpdateHintControls(neededControls);
+
+        PlayerPrefs.Save();
     }
 
     public void GoToHub()

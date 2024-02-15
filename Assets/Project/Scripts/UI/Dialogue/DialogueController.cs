@@ -135,7 +135,8 @@ public class DialogueController : MonoBehaviour
             //Si no hay mas dialogos
             showingText = false;
             displayingDialogue = false;
-            onDialogueEnd();
+            if(onDialogueEnd != null)
+                onDialogueEnd();
             gameObject.SetActive(false);
         }
 
