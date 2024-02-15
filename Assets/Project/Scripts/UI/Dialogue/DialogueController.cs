@@ -37,6 +37,8 @@ public class DialogueController : MonoBehaviour
     private int dialogueSoundIndex;
     [HideInInspector]
     public Action onDialogueEnd;
+    [HideInInspector]
+    public Action<int> onDialogueLineStart;
 
     private void Awake()
     {
@@ -53,7 +55,8 @@ public class DialogueController : MonoBehaviour
 
         List<MenuControlsHint.ActionType> actionList = new List<MenuControlsHint.ActionType>();
         actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
-        MenuControlsHint.Instance.UpdateHintControls(actionList);
+        if (MenuControlsHint.Instance)
+            MenuControlsHint.Instance.UpdateHintControls(actionList);
 
     }
 
@@ -63,7 +66,8 @@ public class DialogueController : MonoBehaviour
         dialogueAction.action.started -= InputPressed;
         menuInput.SwitchCurrentActionMap(lastActionMap);
 
-        MenuControlsHint.Instance.UpdateHintControls(MenuControlsHint.Instance.lastActions);
+        if(MenuControlsHint.Instance)
+            MenuControlsHint.Instance.UpdateHintControls(MenuControlsHint.Instance.lastActions);
     }
 
     private void InputPressed(InputAction.CallbackContext obj)
@@ -125,6 +129,9 @@ public class DialogueController : MonoBehaviour
             displayingDialogue = true;
             letterIndex = 0;
             c_dialogueText.text = dialogues[currentDialogueIndex];
+            if(onDialogueLineStart != null)
+                onDialogueLineStart(currentDialogueIndex);
+
             c_dialogueText.maxVisibleCharacters = letterIndex;
             Invoke("DisplayLetters", timeBetweenLetters);
             

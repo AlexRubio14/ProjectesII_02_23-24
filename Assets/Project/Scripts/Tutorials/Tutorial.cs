@@ -13,11 +13,11 @@ public abstract class Tutorial : MonoBehaviour
     [SerializeField]
     protected DialogueController dialogueController;
 
-    private void Awake()
+    protected void Awake()
     {
-        if (PlayerPrefs.HasKey(tutorialkey))
+        if (PlayerPrefs.HasKey(tutorialkey) && PlayerPrefs.GetInt(tutorialkey) == 1)
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 
