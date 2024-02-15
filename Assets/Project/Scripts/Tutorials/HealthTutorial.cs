@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class HealthTutorial : Tutorial
 {
     [SerializeField]
-    Canvas tutorialCanvas;
+    GameObject tutorialCanvas;
 
     protected override void TutorialMethod()
     {
@@ -17,6 +17,8 @@ public class HealthTutorial : Tutorial
 
     private void StartHealthTutorial()
     {
+        tutorialCanvas.SetActive(true);
+
         dialogueController.onDialogueEnd += EndTutorial;
 
         dialogueController.dialogues = dialogues;
@@ -33,7 +35,7 @@ public class HealthTutorial : Tutorial
 
     protected override void EndTutorial()
     {
-        //tutorialCanvas.enabled = false;
+        tutorialCanvas.SetActive(false);
         //MenuControlsHint.Instance.UpdateHintControls(null);
         TimeManager.Instance.ResumeGame();
 
