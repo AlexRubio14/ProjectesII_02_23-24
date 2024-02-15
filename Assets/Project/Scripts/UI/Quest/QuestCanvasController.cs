@@ -20,6 +20,8 @@ public class QuestCanvasController : MonoBehaviour
 
     private QuestObject currentQuest;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,12 +42,6 @@ public class QuestCanvasController : MonoBehaviour
         }
         questTitleText.text = currentQuest.questName;
 
-        for (int i = 0; i < currentQuest.neededItems.Count; i++)
-        {
-            
-
-        }
-
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
             Image newImage = Instantiate(needImagePrefab, layoutQuest.transform).GetComponent<Image>();
@@ -65,12 +61,13 @@ public class QuestCanvasController : MonoBehaviour
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
-  
+
+            if(item.Key == _itemType)
+
             prizeTexts[index].text = InventoryManager.Instance.GetTotalItemAmount(item.Key) + " / " + item.Value;
 
             index++;
         }
-
     }
 
     private void OnEnable()
