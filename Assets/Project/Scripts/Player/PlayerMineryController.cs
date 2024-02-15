@@ -19,5 +19,10 @@ public class PlayerMineryController : MonoBehaviour
         c_playerController.ChangeState(PlayerController.State.MINING);
         c_miningMinigame.SetMiningObject(_mineral);
         c_miningMinigame.gameObject.SetActive(true);
+
+        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
+        neededControls.Add(MenuControlsHint.ActionType.GO_BACK);
+
+        MenuControlsHint.Instance.UpdateHintControls(neededControls);
     }
 }

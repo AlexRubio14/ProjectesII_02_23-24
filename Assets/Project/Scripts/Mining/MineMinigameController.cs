@@ -11,6 +11,8 @@ public class MineMinigameController : MonoBehaviour
     private InputActionReference chargeRightLaserAction;
     [SerializeField]
     private InputActionReference chargeLeftLaserAction;
+    [SerializeField]
+    private InputActionReference cancelMinigameAction;
 
     [Space, Header(""), SerializeField]
     private float laserChargeSpeed;
@@ -133,6 +135,8 @@ public class MineMinigameController : MonoBehaviour
         chargeLeftLaserAction.action.started += ChargeLeftLaserAction;
         chargeLeftLaserAction.action.canceled += ChargeLeftLaserAction;
 
+        cancelMinigameAction.action.performed += CancelMinigame;
+
         AudioManager._instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
         AudioManager._instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
 
@@ -144,6 +148,8 @@ public class MineMinigameController : MonoBehaviour
 
         chargeLeftLaserAction.action.started -= ChargeLeftLaserAction;
         chargeLeftLaserAction.action.canceled -= ChargeLeftLaserAction;
+
+        cancelMinigameAction.action.performed -= CancelMinigame;
 
 
     }
@@ -312,6 +318,8 @@ public class MineMinigameController : MonoBehaviour
         PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
 
         gameObject.SetActive(false);
+
+        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
     private short CalculateMinerals(float _currentIntegrity)
@@ -410,6 +418,20 @@ public class MineMinigameController : MonoBehaviour
             
             chargingLeftLaser = true;
         }
+    }
+
+    private void CancelMinigame(InputAction.CallbackContext obj)
+    {
+        AudioManager._instance.StopLoopSound(rightLaserSource);
+        AudioManager._instance.StopLoopSound(leftLaserSource);
+
+        progressValue = 0;
+        integrityValue = 0;
+
+        PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
+
+        gameObject.SetActive(false);
+        MenuControlsHint.Instance.UpdateHintControls(null);
     }
     #endregion
 
