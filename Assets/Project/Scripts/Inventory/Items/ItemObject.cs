@@ -26,8 +26,6 @@ public class ItemObject : ScriptableObject
 
     [field: SerializeField]
     public Color EffectsColor { get; private set; }
-    
-
 
     [field: Tooltip("En caso de no tener power up, dejarlo en NONE"), SerializeField]
     public PowerUpManager.PowerUpType PowerUp { get; private set; }

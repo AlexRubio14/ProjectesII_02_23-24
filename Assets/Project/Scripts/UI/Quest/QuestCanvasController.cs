@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.UIElements;
+
 public class QuestCanvasController : MonoBehaviour
 {
     [SerializeField]
@@ -19,6 +21,9 @@ public class QuestCanvasController : MonoBehaviour
     private List<TextMeshProUGUI> prizeTexts;
 
     private QuestObject currentQuest;
+
+    [SerializeField]
+    private float timeToWaitForFloat;
 
 
 
@@ -63,13 +68,31 @@ public class QuestCanvasController : MonoBehaviour
         {
 
             if(item.Key == _itemType)
+            {
+                for(int i = 0; i < prizeImages.Count; i++)
+                {
+                    if (prizeImages[i].sprite == _itemType.c_PickableSprite) 
+                    {
+                        StopCoroutine("StopFloating");
+
+                        ImageFloatEffect temp = prizeImages[i].GetComponent<ImageFloatEffect>();
+                        temp.canFloat = true;
+                        StartCoroutine("StopFloating", temp);
+                    }
+                }
+            }
 
             prizeTexts[index].text = InventoryManager.Instance.GetTotalItemAmount(item.Key) + " / " + item.Value;
-
+                        
             index++;
         }
     }
 
+    private IEnumerator StopFloating(ImageFloatEffect imageFloatEffect)
+    {
+        yield return new WaitForSeconds(timeToWaitForFloat);
+        imageFloatEffect.canFloat = false;
+    }
     private void OnEnable()
     {
         InventoryManager.Instance.obtainItemAction += UpdateQuestCanvas;   

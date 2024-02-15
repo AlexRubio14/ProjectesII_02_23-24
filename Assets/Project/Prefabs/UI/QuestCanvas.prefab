@@ -198,6 +198,7 @@ MonoBehaviour:
   needTextPrefab: {fileID: 2167503751536523616, guid: 05213359fb84a0c4ab48caabfe9424c2, type: 3}
   questTitleText: {fileID: 4208057776069796656}
   layoutQuest: {fileID: 2479682784403872482}
+  timeToWaitForFloat: 2
 --- !u!1 &5250765973945060731
 GameObject:
   m_ObjectHideFlags: 0
