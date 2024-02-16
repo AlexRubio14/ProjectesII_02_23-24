@@ -8,11 +8,7 @@ public class QuestTutorial : Tutorial
     [SerializeField]
     private GameObject questTutorialCanvas;
     [SerializeField]
-    private GameObject allQuestTutorialCanvas;
-    [SerializeField]
     private GameObject requirementsTutorial;
-    [SerializeField]
-    private GameObject rewardsTutorial;
     [SerializeField]
     private GameObject selectButtonTutorial;
 
@@ -32,13 +28,15 @@ public class QuestTutorial : Tutorial
     protected override void TutorialMethod()
     {
         questTutorialCanvas.SetActive(true);
-
         dialogueController.dialogues = dialogues;
 
         dialogueController.onDialogueLineStart += OnDialogueLineStart;
         dialogueController.onDialogueEnd += EndTutorial;
         dialogueController.gameObject.SetActive(true);
         dialogueController.StartDialogue();
+
+        OnDialogueLineStart(0);
+
     }
 
     private void OnDialogueLineStart(int _dialogueLineID)
@@ -46,18 +44,10 @@ public class QuestTutorial : Tutorial
         switch (_dialogueLineID)
         {
             case 0:
-                //Tutorial de todo
-                AllTutorial();
-                break;
-            case 1:
                 //Tutorial de Requisitos
                 RequirementsTutorial();
                 break;
-            case 3:
-                //Tutorial de recompensas
-                RewardsTutorial();
-                break;
-            case 4:
+            case 1:
                 //Tutorial de seleccionar
                 SelectionTutorial();
                 break;
@@ -65,31 +55,13 @@ public class QuestTutorial : Tutorial
                 break;
         }
     }
-
-    private void AllTutorial()
-    {
-        allQuestTutorialCanvas.SetActive(true);
-    }
-
     private void RequirementsTutorial()
     {
-        allQuestTutorialCanvas.SetActive(false);
-
         requirementsTutorial.SetActive(true);
-
     }
-
-    private void RewardsTutorial()
-    {
-        requirementsTutorial.SetActive(false);
-
-        rewardsTutorial.SetActive(true);
-    }
-
     private void SelectionTutorial()
     {
-        rewardsTutorial.SetActive(false);
-
+        requirementsTutorial.SetActive(false);
         selectButtonTutorial.SetActive(true);
     }
 
