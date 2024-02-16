@@ -79,14 +79,12 @@ public class UpgradeSelector : MonoBehaviour
 
 
     private PlayerController playerController;
-    private PlayerWebController webController;
     private AutoHelpController autoHelpController;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();  
         drillController = GetComponent<DrillController>();
-        webController = GetComponent<PlayerWebController>();
         autoHelpController = GetComponent<AutoHelpController>();
     }
 
@@ -205,7 +203,6 @@ public class UpgradeSelector : MonoBehaviour
             //Sumar al consumo de fuel
             playerController.fuelConsume += boostConsume;
             boostParticles.Play(true);
-            webController.EraseAllWebs();
             AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
             boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
 
