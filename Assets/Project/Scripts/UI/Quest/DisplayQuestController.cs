@@ -65,11 +65,13 @@ public class DisplayQuestController : MonoBehaviour
 
 
         if (checkController.isActiveAndEnabled && newQuests.Count <= 1)
-        {
             firstTimeQuest.onFirstQuestClosed[1] = checkController.questBackButton;
-        }
+        
 
-        StartCoroutine(WaitSelectFirstTimeButton());
+        if (firstTimeQuest.gameObject.activeInHierarchy)
+            StartCoroutine(WaitSelectFirstTimeButton());
+
+        
 
     }
 

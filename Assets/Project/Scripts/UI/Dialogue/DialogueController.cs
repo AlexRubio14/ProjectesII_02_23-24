@@ -92,7 +92,8 @@ public class DialogueController : MonoBehaviour
         {
             showingText = false;
             displayingDialogue = false;
-            onDialogueEnd();
+            if(onDialogueEnd != null)
+                onDialogueEnd();
             gameObject.SetActive(false);
             return;
         }

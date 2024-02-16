@@ -18,7 +18,15 @@ public class QuestTutorial : Tutorial
 
     private void OnEnable()
     {
-        TutorialMethod();
+        if (PlayerPrefs.HasKey(tutorialkey) && PlayerPrefs.GetInt(tutorialkey) == 1)
+        {
+            Destroy(this);
+            return;
+        }
+        else
+        {
+            TutorialMethod();
+        }
     }
 
     protected override void TutorialMethod()
@@ -93,6 +101,5 @@ public class QuestTutorial : Tutorial
         dialogueController.onDialogueEnd -= EndTutorial;
 
         PlayerPrefs.SetInt(tutorialkey, 1);
-
     }
 }
