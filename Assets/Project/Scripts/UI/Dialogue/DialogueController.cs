@@ -27,6 +27,8 @@ public class DialogueController : MonoBehaviour
 
     private bool showingText = false;
     private bool displayingDialogue = false;
+    [SerializeField]
+    private MenuControlsHint.HintsPos hintsPos = MenuControlsHint.HintsPos.BOTTOM_LEFT;
 
     [Space, Header("Animator"), SerializeField]
     private Animator[] catAnimations;
@@ -35,6 +37,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField]
     private AudioClip catDialogueSound;
     private int dialogueSoundIndex;
+
     [HideInInspector]
     public Action onDialogueEnd;
     [HideInInspector]
@@ -57,7 +60,7 @@ public class DialogueController : MonoBehaviour
         actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
 
         if (MenuControlsHint.Instance)
-            MenuControlsHint.Instance.UpdateHintControls(actionList);
+            MenuControlsHint.Instance.UpdateHintControls(actionList, null, hintsPos);
 
     }
 

@@ -12,6 +12,7 @@ public class QuestInfoMenu : MonoBehaviour
     private LayoutGroup requirementsLayout;
     private List<Image> requirementImages;
     private List<TextMeshProUGUI> requirementTexts;
+    public bool canItemsFloat;
 
     [Space, Header("Rewards"), SerializeField]
     private LayoutGroup rewardLayout;
@@ -73,7 +74,7 @@ public class QuestInfoMenu : MonoBehaviour
 
             newObj.transform.SetParent(requirementsLayout.transform);
             ImageFloatEffect floatFX = newObj.AddComponent<ImageFloatEffect>();
-            floatFX.canFloat = !currentQuest.obtainedQuest;
+            floatFX.canFloat = canItemsFloat;
             floatFX.speed = 1.4f;
             floatFX.maxExpand = 1.5f;
             floatFX.minExpand = 1.1f;
