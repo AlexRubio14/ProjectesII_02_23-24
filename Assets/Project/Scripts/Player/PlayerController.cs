@@ -343,6 +343,11 @@ public class PlayerController : MonoBehaviour
     {
         return baseFuel + PowerUpManager.Instance.Fuel;
     }
+
+    public void RefillFuel()
+    {
+        fuel = GetMaxFuel() - 1;
+    }
     #endregion
 
     #region States
