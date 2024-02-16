@@ -6,7 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class ImageFloatEffect : MonoBehaviour
 {
     [Range(0, 10), SerializeField]
-    public float speed = 1.0f;
+    public float speed = 2.0f;
 
     [Range(1, 2f), SerializeField]
     public float maxExpand = 1.1f;
