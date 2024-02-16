@@ -69,6 +69,7 @@ public class QuestInfoMenu : MonoBehaviour
             Image newImage = newObj.AddComponent<Image>();
             requirementImages.Add(newImage);
             newImage.sprite = item.Key.c_PickableSprite;
+            
 
             newObj.transform.SetParent(requirementsLayout.transform);
             ImageFloatEffect floatFX = newObj.AddComponent<ImageFloatEffect>();
@@ -102,6 +103,9 @@ public class QuestInfoMenu : MonoBehaviour
         rewardList = new List<TextMeshProUGUI>();
         foreach (KeyValuePair<ScriptableObject, QuestObject.RewardType> item in currentQuest.rewards)
         {
+            if(item.Value == QuestObject.RewardType.NEW_QUEST) {
+                continue; 
+            }
             GameObject newObj = new GameObject("Reward Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
             newText.fontSize = rewardFontSize;
@@ -111,10 +115,6 @@ public class QuestInfoMenu : MonoBehaviour
             {
                 case QuestObject.RewardType.UPGRADE:
                     newText.text = ((UpgradeObject)item.Key).UpgradeName;
-                    break;
-                case QuestObject.RewardType.NEW_QUEST:
-                    QuestObject quest = (QuestObject)item.Key;
-                    newText.text = quest.questTitle + ": " + quest.questName;
                     break;
                 case QuestObject.RewardType.POWER_UP:
                     newText.text = ((ItemObject)item.Key).ItemName;

@@ -19,14 +19,19 @@ public class QuestCard : MonoBehaviour
     private Color selectedColor;
     [SerializeField]
     private Color newQuestColor;
-    
+
+    [SerializeField]
+    private Color completed;
+
     [HideInInspector]
     public QuestObject currentQuest;
 
     private Button checkCardButton;
+    private Image currentImage; 
 
     private void Awake()
     {
+        currentImage = GetComponent<Image>();
         checkCardButton = GetComponent<Button>();
     }
 
@@ -43,6 +48,7 @@ public class QuestCard : MonoBehaviour
         if (currentQuest.completedQuest)
         {
             //Completada
+            currentImage.color = completed; 
             questStateBackground.color = completeColor;
             questStateText.text = "Completada";
         }
