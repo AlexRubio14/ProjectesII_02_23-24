@@ -39,7 +39,7 @@ public class HealthTutorial : Tutorial
     {
         tutorialCanvas.SetActive(false);
         tpTutorial.SetActive(false);
-        //MenuControlsHint.Instance.UpdateHintControls(null);
+        MenuControlsHint.Instance.UpdateHintControls(null);
         TimeManager.Instance.ResumeGame();
 
         dialogueController.onDialogueEnd -= EndTutorial;
