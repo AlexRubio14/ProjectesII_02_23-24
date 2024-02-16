@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <type>k__BackingField: 3
   <UpgradeName>k__BackingField: Core Collector
-  <UpgradeDescription>k__BackingField: Chucla el nucleo :D
+  <UpgradeDescription>k__BackingField: absorb the core
   <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 9ba8af97f8bcbcf468afbeb4b6fcffe1, type: 3}
   prize:
     _serializedList:

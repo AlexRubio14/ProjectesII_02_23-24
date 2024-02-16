@@ -358,7 +358,7 @@ MonoBehaviour:
   requirementsLayout: {fileID: 965102525}
   canItemsFloat: 0
   rewardLayout: {fileID: 1411176573}
-  rewardFontSize: 26
+  rewardFontSize: 23
   showCurrentItems: 1
   dialogue: {fileID: 0}
   onFirstQuestClosed: []
@@ -884,7 +884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &226249115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,8 +1315,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -350.6875, y: 0, z: -373.95587, w: 0}
+  m_margin: {x: -350.6875, y: 0, z: -309.28387, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1382,7 +1382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -62}
+  m_AnchoredPosition: {x: 38, y: -67}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &334913697
@@ -1562,7 +1562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 74}
+  m_AnchoredPosition: {x: 0, y: 57}
   m_SizeDelta: {x: 188.254, y: 43.296005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &337114276
@@ -2108,7 +2108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 222, y: 74}
+  m_AnchoredPosition: {x: 222, y: 57}
   m_SizeDelta: {x: 188.254, y: 43.296005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365583562
@@ -2222,7 +2222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &390580924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2420,7 +2420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &422034180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3520,6 +3520,7 @@ GameObject:
   - component: {fileID: 625757412}
   - component: {fileID: 625757411}
   - component: {fileID: 625757415}
+  - component: {fileID: 625757416}
   m_Layer: 5
   m_Name: ButtonBack
   m_TagString: Untagged
@@ -3585,6 +3586,34 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
           m_MethodName: PlayOnHoverClip
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 625757416}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 625757416}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3759,6 +3788,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5988abe75aba3144bb8bc7812880f4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &625757416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625757409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  maxExpand: 1.1
+  minExpand: 1.02
+  <canFloat>k__BackingField: 0
 --- !u!1 &626107000
 GameObject:
   m_ObjectHideFlags: 0
@@ -4180,7 +4225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: -34}
   m_SizeDelta: {x: -100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &788734567
@@ -4230,8 +4275,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5515,7 +5560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
+  m_AnchoredPosition: {x: -17, y: -1}
   m_SizeDelta: {x: -80, y: -80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &965102525
@@ -5539,7 +5584,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 45, y: 45}
-  m_Spacing: {x: 20, y: 10}
+  m_Spacing: {x: 60, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 6
 --- !u!114 &965102526
@@ -5593,6 +5638,7 @@ GameObject:
   - component: {fileID: 965503684}
   - component: {fileID: 965503683}
   - component: {fileID: 965503682}
+  - component: {fileID: 965503686}
   m_Layer: 5
   m_Name: ButtonQuests
   m_TagString: Untagged
@@ -5658,6 +5704,34 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
           m_MethodName: PlayOnHoverClip
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 965503686}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 965503686}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5808,6 +5882,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965503680}
   m_CullTransparentMesh: 1
+--- !u!114 &965503686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965503680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  maxExpand: 1.1
+  minExpand: 1.02
+  <canFloat>k__BackingField: 0
 --- !u!1 &975779660
 GameObject:
   m_ObjectHideFlags: 0
@@ -6714,8 +6804,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282.49997, y: 8.999985}
-  m_SizeDelta: {x: 365, y: 187.738}
+  m_AnchoredPosition: {x: 342.2087, y: 1.7979}
+  m_SizeDelta: {x: 301.5596, y: 241.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1194572548
 MonoBehaviour:
@@ -6792,8 +6882,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -198.775, y: 9}
-  m_SizeDelta: {x: 532.459, y: 187.738}
+  m_AnchoredPosition: {x: -162.8773, y: 1.7974}
+  m_SizeDelta: {x: 681.7307, y: 241.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1194639324
 MonoBehaviour:
@@ -7029,7 +7119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -222, y: 74}
+  m_AnchoredPosition: {x: -222, y: 57}
   m_SizeDelta: {x: 188.25403, y: 43.296005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229400354
@@ -7662,7 +7752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 10, y: -51}
+  m_AnchoredPosition: {x: 32, y: -59}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1334238864
@@ -7712,8 +7802,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8105,8 +8195,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -12}
-  m_SizeDelta: {x: -80, y: -80}
+  m_AnchoredPosition: {x: 12.464, y: -12}
+  m_SizeDelta: {x: -75.073, y: -80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1411176573
 MonoBehaviour:
@@ -8128,7 +8218,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 280, y: 30}
+  m_CellSize: {x: 260, y: 30}
   m_Spacing: {x: 50, y: 15}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -8776,6 +8866,7 @@ GameObject:
   - component: {fileID: 1579659941}
   - component: {fileID: 1579659940}
   - component: {fileID: 1579659944}
+  - component: {fileID: 1579659945}
   m_Layer: 5
   m_Name: ButtonBack
   m_TagString: Untagged
@@ -8841,6 +8932,34 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
           m_MethodName: PlayOnHoverClip
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1579659945}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1579659945}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8967,6 +9086,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5988abe75aba3144bb8bc7812880f4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1579659945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579659938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  maxExpand: 1.1
+  minExpand: 1.02
+  <canFloat>k__BackingField: 0
 --- !u!1 &1652749904
 GameObject:
   m_ObjectHideFlags: 0
@@ -9436,7 +9571,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 9.999957, y: -108}
+  m_AnchoredPosition: {x: 31.999958, y: -98}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732159881
@@ -9486,8 +9621,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10839,7 +10974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   maxExpand: 1.1
   minExpand: 1.02
   <canFloat>k__BackingField: 0
@@ -11357,7 +11492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: -34}
   m_SizeDelta: {x: -100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969126561
@@ -11407,8 +11542,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11866,7 +12001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   maxExpand: 1.1
   minExpand: 1.02
   <canFloat>k__BackingField: 0
@@ -11884,6 +12019,7 @@ GameObject:
   - component: {fileID: 2116369077}
   - component: {fileID: 2116369076}
   - component: {fileID: 2116369080}
+  - component: {fileID: 2116369081}
   m_Layer: 5
   m_Name: ButtonHUB
   m_TagString: Untagged
@@ -11949,6 +12085,34 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
           m_MethodName: PlayOnHoverClip
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2116369081}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2116369081}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12099,6 +12263,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5988abe75aba3144bb8bc7812880f4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2116369081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116369074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  maxExpand: 1.1
+  minExpand: 1.02
+  <canFloat>k__BackingField: 0
 --- !u!1 &2122210607
 GameObject:
   m_ObjectHideFlags: 0

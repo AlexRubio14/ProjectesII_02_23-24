@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Rendering;
+
 public class QuestInfoMenu : MonoBehaviour
 {
     [SerializeField]
@@ -79,17 +81,18 @@ public class QuestInfoMenu : MonoBehaviour
             floatFX.maxExpand = 1.5f;
             floatFX.minExpand = 1.1f;
 
+
             newObj = new GameObject("Requirement Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
             newText.font = fontAsset; 
             requirementTexts.Add(newText);
             if (showCurrentItems)
             {
-                newText.text = inventory[item.Key] + " / " + item.Value;
+                newText.text = item.Key.ItemName + "   " + inventory[item.Key] + " / " + item.Value;
             }
             else
             {
-                newText.text = " x" + item.Value;
+                newText.text = item.Key.ItemName + " x" + item.Value;
             }
             newText.enableAutoSizing = true;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;
@@ -115,7 +118,7 @@ public class QuestInfoMenu : MonoBehaviour
             switch (item.Value)
             {
                 case QuestObject.RewardType.UPGRADE:
-                    newText.text = ((UpgradeObject)item.Key).UpgradeName;
+                    newText.text = ((UpgradeObject)item.Key).UpgradeName + ": " + ((UpgradeObject)item.Key).UpgradeDescription;
                     break;
                 case QuestObject.RewardType.POWER_UP:
                     newText.text = ((ItemObject)item.Key).ItemName;
