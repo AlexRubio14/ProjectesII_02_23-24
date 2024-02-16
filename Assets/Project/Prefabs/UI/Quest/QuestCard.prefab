@@ -808,6 +808,7 @@ MonoBehaviour:
   completeColor: {r: 0.04705883, g: 0, b: 0.1254902, a: 1}
   selectedColor: {r: 0.91372555, g: 0.54509807, b: 0.39607847, a: 1}
   newQuestColor: {r: 0, g: 0.48627454, b: 0.6, a: 1}
+  completed: {r: 1, g: 1, b: 1, a: 0.57254905}
   currentQuest: {fileID: 0}
 --- !u!114 &4172641516142809043
 MonoBehaviour:
