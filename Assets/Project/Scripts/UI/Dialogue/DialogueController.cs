@@ -55,6 +55,7 @@ public class DialogueController : MonoBehaviour
 
         List<MenuControlsHint.ActionType> actionList = new List<MenuControlsHint.ActionType>();
         actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
+
         if (MenuControlsHint.Instance)
             MenuControlsHint.Instance.UpdateHintControls(actionList);
 

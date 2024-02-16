@@ -251,10 +251,10 @@ RectTransform:
   m_Father: {fileID: 737074567143245543}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 300, y: 50}
-  m_SizeDelta: {x: 503.9977, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300, y: -50}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5755780190699173597
 MonoBehaviour:
@@ -662,7 +662,7 @@ RectTransform:
   m_Children:
   - {fileID: 2319969929307300626}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -744,6 +744,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d91c21c2a35d34688b28b6f5ef1f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hintsLayout: {fileID: 2319969929307300626}
+  hintsPos:
+    _serializedList:
+    - Key: 0
+      Value: {x: 300, y: -50}
+    - Key: 1
+      Value: {x: -300, y: -50}
+    - Key: 2
+      Value: {x: 300, y: 50}
+    - Key: 3
+      Value: {x: -300, y: 50}
   actionsSprite:
     _serializedList:
     - Key: 0
