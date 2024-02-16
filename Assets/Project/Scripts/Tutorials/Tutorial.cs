@@ -15,7 +15,7 @@ public abstract class Tutorial : MonoBehaviour
 
     protected void Awake()
     {
-        if (PlayerPrefs.HasKey(tutorialkey) && PlayerPrefs.GetInt(tutorialkey) == 1)
+        if (PlayerPrefs.HasKey(tutorialkey))
         {
             Destroy(this);
         }
@@ -25,6 +25,9 @@ public abstract class Tutorial : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            if (PlayerPrefs.HasKey(tutorialkey))
+                return;
+
             TutorialMethod();
         }
     }
