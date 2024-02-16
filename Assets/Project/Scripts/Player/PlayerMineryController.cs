@@ -22,7 +22,8 @@ public class PlayerMineryController : MonoBehaviour
 
         List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
         neededControls.Add(MenuControlsHint.ActionType.GO_BACK);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls);
+        List<string> nameList = new List<string>();
+        nameList.Add("Hold to Quit");
+        MenuControlsHint.Instance.UpdateHintControls(neededControls, nameList, MenuControlsHint.HintsPos.TOP_LEFT);
     }
 }

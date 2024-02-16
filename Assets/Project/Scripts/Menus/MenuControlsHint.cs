@@ -9,8 +9,15 @@ public class MenuControlsHint : MonoBehaviour
 {
     public static MenuControlsHint Instance;
     public enum ActionType { ACCEPT, GO_BACK, MOVE_MENU, SKIP_DIALOGUE };
+    public enum HintsPos { TOP_LEFT,  TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
 
-    [SerializedDictionary("Controls", "Sprites")]
+    [SerializeField]
+    private RectTransform hintsLayout;
+
+    [Space, SerializedDictionary("Position", "Coordinates")]
+    public SerializedDictionary<HintsPos, Vector2> hintsPos;
+
+    [Space, SerializedDictionary("Controls", "Sprites")]
     public SerializedDictionary<ActionType, List<Sprite>> actionsSprite;
     [SerializedDictionary("Controls", "Sprites")]
     public SerializedDictionary<ActionType, string> actionsName;
@@ -43,7 +50,7 @@ public class MenuControlsHint : MonoBehaviour
     }
 
 
-    public void UpdateHintControls(List<ActionType> _actions)
+    public void UpdateHintControls(List<ActionType> _actions, List<string> _actionName = null, HintsPos _pos = HintsPos.BOTTOM_LEFT)
     {
         for (int i = 0; i < keysSprite.Length; i++)
         {
@@ -61,10 +68,43 @@ public class MenuControlsHint : MonoBehaviour
                 keysSprite[i].gameObject.SetActive(true);
                 keysSprite[i].sprite = actionsSprite[_actions[i]][1];
                 actionsText[i].gameObject.SetActive(true);
-                actionsText[i].text = actionsName[_actions[i]];
+                if (_actionName != null && _actionName[i] != "")
+                    actionsText[i].text = _actionName[i];
+                else
+                    actionsText[i].text = actionsName[_actions[i]];
             }
         }
+        HorizontalLayoutGroup layout = hintsLayout.GetComponent<HorizontalLayoutGroup>();
+
+        switch (_pos)
+        {
+            case HintsPos.TOP_LEFT:
+                layout.childAlignment = TextAnchor.MiddleLeft;
+                hintsLayout.anchorMax = new Vector2(0, 1);
+                hintsLayout.anchorMin = new Vector2(0, 1);
+                break;
+            case HintsPos.TOP_RIGHT:
+                layout.childAlignment = TextAnchor.MiddleRight;
+                hintsLayout.anchorMax = new Vector2(1, 1);
+                hintsLayout.anchorMin = new Vector2(1, 1);
+                break;
+            case HintsPos.BOTTOM_LEFT:
+                layout.childAlignment = TextAnchor.MiddleLeft;
+                hintsLayout.anchorMax = new Vector2(0,0);
+                hintsLayout.anchorMin = new Vector2(0,0);
+                break;
+            case HintsPos.BOTTOM_RIGHT:
+                layout.childAlignment = TextAnchor.MiddleRight;
+                hintsLayout.anchorMax = new Vector2(1, 0);
+                hintsLayout.anchorMin = new Vector2(1, 0);
+                break;
+            default:
+                break;
+        }
+        hintsLayout.anchoredPosition = hintsPos[_pos];
         
+
+
 
         lastActions = currentActions;
 
