@@ -40,7 +40,6 @@ public class ShopTutorial : Tutorial
         dialogueController.onDialogueEnd -= EndTutorial;
 
         PlayerPrefs.SetInt(tutorialkey, 1);
-        PlayerPrefs.Save();
 
         Awake();
     }
