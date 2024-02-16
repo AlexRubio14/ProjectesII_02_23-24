@@ -23,13 +23,11 @@ public abstract class Tutorial : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            if (PlayerPrefs.HasKey(tutorialkey))
-                return;
+        if (PlayerPrefs.HasKey(tutorialkey))
+            return;
 
+        if (collision.CompareTag("Player"))
             TutorialMethod();
-        }
     }
 
     protected abstract void TutorialMethod();
