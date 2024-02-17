@@ -1038,6 +1038,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "NewMineryMinigame",
+            "id": "214eef23-3e28-4845-b4d2-e336f4db3762",
+            "actions": [
+                {
+                    "name": "AimLaser",
+                    "type": "PassThrough",
+                    "id": "f37d89aa-045e-4e51-ba33-895c7d5c40ab",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ShootRightLaser",
+                    "type": "Button",
+                    "id": "76b421ef-64e3-41b1-a436-a1b09aaa8438",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShootLeftLaser",
+                    "type": "Button",
+                    "id": "934eab80-288b-48ae-b6e8-4b9df7b23b2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fd8694b0-6f7b-42af-b35c-350f2f9b93f1",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AimLaser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efa938bd-0205-4c6b-82fe-a592c5f09254",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootRightLaser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b0112ce-47d6-4921-b57b-a722d60e5ee3",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootLeftLaser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

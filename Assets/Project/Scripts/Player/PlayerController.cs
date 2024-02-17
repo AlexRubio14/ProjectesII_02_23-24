@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
     private AudioClip engineClip;
     private AudioSource engineSource;
 
-    private InputController inputController;
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
     private AutoHelpController autoHelpController;
@@ -91,7 +90,6 @@ public class PlayerController : MonoBehaviour
     {
         c_rb = GetComponent<Rigidbody2D>();
 
-        inputController = GetComponent<InputController>();
         c_mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
@@ -392,7 +390,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
-                inputController.ChangeActionMap("Player");
+                InputController.Instance.ChangeActionMap("Player");
                 c_mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
@@ -415,7 +413,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
-                inputController.ChangeActionMap("MinigameMinery");
+                InputController.Instance.ChangeActionMap("MinigameMinery");
                 c_mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:

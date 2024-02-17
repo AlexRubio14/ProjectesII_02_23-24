@@ -5040,7 +5040,6 @@ GameObject:
   - component: {fileID: 4194747130575803385}
   - component: {fileID: 4773334804256877578}
   - component: {fileID: 175316033160939834}
-  - component: {fileID: 6238695941823710928}
   - component: {fileID: 6928186059841258854}
   - component: {fileID: 4196185413055272076}
   - component: {fileID: 697992122945508969}
@@ -5076,7 +5075,7 @@ Transform:
   - {fileID: 7750820820870471885}
   - {fileID: 568766594774729756}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4194747130575803385
 Rigidbody2D:
@@ -5226,18 +5225,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6238695941823710928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4270609692860242859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f5446b9a173604cb052aa5836ad5df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6928186059841258854
 MonoBehaviour:
   m_ObjectHideFlags: 0

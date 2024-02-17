@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MenuControlsHint : MonoBehaviour
 {
@@ -41,6 +42,21 @@ public class MenuControlsHint : MonoBehaviour
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnInputDeviceChanged;
+    }
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnInputDeviceChanged;
+    }
+    private void OnInputDeviceChanged(object arg1, InputActionChange arg2)
+    {
+        List<ActionType> currLastActions = lastActions;
+        UpdateHintControls(currentActions);
+        lastActions = currLastActions;
+    }
+
     private void OnDestroy()
     {
         if (Instance == this)
@@ -49,6 +65,16 @@ public class MenuControlsHint : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            List<ActionType> _actions = new List<ActionType>();
+            _actions.Add(ActionType.ACCEPT);
+
+            UpdateHintControls(_actions);
+        }
+    }
 
     public void UpdateHintControls(List<ActionType> _actions, List<string> _actionName = null, HintsPos _pos = HintsPos.BOTTOM_LEFT)
     {
@@ -66,7 +92,7 @@ public class MenuControlsHint : MonoBehaviour
                     break;
 
                 keysSprite[i].gameObject.SetActive(true);
-                keysSprite[i].sprite = actionsSprite[_actions[i]][1];
+                keysSprite[i].sprite = actionsSprite[_actions[i]][(int)InputController.Instance.GetCurrentControllerType()];
                 actionsText[i].gameObject.SetActive(true);
                 if (_actionName != null && _actionName[i] != "")
                     actionsText[i].text = _actionName[i];
