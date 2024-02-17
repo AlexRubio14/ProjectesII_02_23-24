@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Mandibula Purrforante
+  <ItemName>k__BackingField: Miaundibula
   <Weight>k__BackingField: 0
   <c_BetaSprite>k__BackingField: {fileID: 0}
   <c_MapSprite>k__BackingField: {fileID: 0}
