@@ -1086,10 +1086,21 @@
                 {
                     "name": "",
                     "id": "efa938bd-0205-4c6b-82fe-a592c5f09254",
-                    "path": "",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ShootRightLaser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1d65e06-705f-45ac-86a4-e1327053c1ba",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "Press(pressPoint=0.8)",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "ShootRightLaser",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1097,10 +1108,21 @@
                 {
                     "name": "",
                     "id": "7b0112ce-47d6-4921-b57b-a722d60e5ee3",
-                    "path": "",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ShootLeftLaser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc05b406-1a61-4266-bc7f-a318f01e1c70",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "Press(pressPoint=0.8)",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "ShootLeftLaser",
                     "isComposite": false,
                     "isPartOfComposite": false
