@@ -473,8 +473,8 @@ MonoBehaviour:
   unhideVFX: {fileID: 0}
   unhidePivot: {fileID: 0}
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
-  timeToGoHub: 1
-  timeToStopParticles: 0.5
+  timeToGoHub: 0.7
+  timeToStopParticles: 0.7
   teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
 --- !u!61 &6824204765675086956
 BoxCollider2D:
