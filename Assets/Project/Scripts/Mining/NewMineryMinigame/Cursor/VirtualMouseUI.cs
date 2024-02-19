@@ -7,7 +7,9 @@ using UnityEngine.InputSystem.UI;
 
 public class VirtualMouseUI : MonoBehaviour
 {
-
+    /// <RUIDO_MOUSE>
+    /// Hay que hacer un ruido para que la posicion del mouse vaya temblando
+    /// </RUIDO_MOUSE>
     private VirtualMouseInput virtualMouseInput;
 
     [SerializeField, Range(0f, 1f)]

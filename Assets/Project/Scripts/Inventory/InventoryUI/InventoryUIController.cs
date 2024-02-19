@@ -42,7 +42,6 @@ public class InventoryUIController : MonoBehaviour
     private void FixedUpdate()
     {
         RefreshInventoryItemAmount();
-        CalculateWeight();
     }
 
 
@@ -106,18 +105,6 @@ public class InventoryUIController : MonoBehaviour
             if (l_items.ContainsKey(item.GetItemType()))
                 item.RefreshItemData(l_items[item.GetItemType()]);
         }
-    }
-    private void CalculateWeight()
-    {
-        float weight = 0;
-
-        foreach (KeyValuePair<ItemObject, short> item in l_items)
-        {
-            weight += item.Key.Weight * item.Value;
-        }
-
-        c_totalWeightText.text = weight.ToString("F1");
-    }
-    
+    }    
 
 }
