@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Diamond
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Cattanium
-  <Weight>k__BackingField: 0
   <c_BetaSprite>k__BackingField: {fileID: 21300000, guid: 6810d6d54c2731541a8bb2fedccdf280, type: 3}
   <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 401f567118a390b4fa3606c3e40d2547, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 969b4a3646465de449ec2802a9a5168c, type: 3}
   <EffectsColor>k__BackingField: {r: 0.119199276, g: 1, b: 0, a: 1}
+  <BaseMineralHealth>k__BackingField: 200
   <PowerUp>k__BackingField: 0

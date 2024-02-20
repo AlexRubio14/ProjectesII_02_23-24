@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class SelectedMineralController : MonoBehaviour
 {
     [field: SerializeField]
     public Transform[] minerals {  get; private set; }
+    public Dictionary<Transform, bool> activeMinerals;
 
     [SerializeField]
     private float selectionRadius;
@@ -15,8 +17,8 @@ public class SelectedMineralController : MonoBehaviour
 
     public float SelectionRadius { get; private set; }
 
-    [SerializeField]
-    private Image selectionIcon;
+    [field: SerializeField]
+    public Image selectionIcon { private set; get; }
     [SerializeField]
     private float selectionIconAppearSpeed;
     [SerializeField]
@@ -35,15 +37,27 @@ public class SelectedMineralController : MonoBehaviour
 
     public Transform selectedMineral { get; private set; }
     private Outline mineralOutline;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SelectionRadius = selectionRadius + (selectionOffsetRadius * selectionRadius);
         selectionIcon.rectTransform.sizeDelta += selectionIcon.rectTransform.sizeDelta * selectionRadius;
-        selectionIcon.color = new Color(1, 1, 1, 0);
-        
+        activeMinerals = new Dictionary<Transform, bool>();
         ChangeSelectedMineral();
     }
+
+
+    private void OnEnable()
+    {
+        selectionIcon.color = Color.white.WithAlpha(0);
+        selectedIconShowProgress = 0;
+        showing = false;
+        hittableMineral = false;
+        mineralOutline.enabled = false;
+        Invoke("ChangeShowing", selectedIconHidingTime);
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -69,20 +83,13 @@ public class SelectedMineralController : MonoBehaviour
         {
             //Aumentar el alpha selectedIconShowProgress
             selectedIconShowProgress = Mathf.Clamp01(selectedIconShowProgress + selectionIconAppearSpeed * Time.deltaTime);
-
-            selectionIcon.color = new Color(1, 1, 1, selectedIconShowProgress);
-            mineralOutline.effectColor = new Color(
-                mineralOutline.effectColor.r,
-                mineralOutline.effectColor.g,
-                mineralOutline.effectColor.b,
-                selectedIconShowProgress
-                );
+            
+            selectionIcon.color = Color.white.WithAlpha(selectedIconShowProgress);
+            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(selectedIconShowProgress);
 
             if (selectedIconShowProgress >= 1)
-            {
-                //Invoke de funcion que cambie el bool showing
-                Invoke("ChangeShowing", selectedIconHidingTime);
-            }
+                Invoke("ChangeShowing", selectedIconShowingTime);//Invoke de funcion que cambie el bool showing
+            
         }
     }
 
@@ -93,18 +100,13 @@ public class SelectedMineralController : MonoBehaviour
             //Aumentar el alpha selectedIconShowProgress
             selectedIconShowProgress = Mathf.Clamp01(selectedIconShowProgress - selectionIconHideSpeed * Time.deltaTime);
 
-            selectionIcon.color = new Color(1, 1, 1, selectedIconShowProgress);
-            mineralOutline.effectColor = new Color(
-                mineralOutline.effectColor.r,
-                mineralOutline.effectColor.g,
-                mineralOutline.effectColor.b,
-                selectedIconShowProgress
-                );
+            selectionIcon.color = Color.white.WithAlpha(selectedIconShowProgress);
+            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(selectedIconShowProgress);
 
             if (selectedIconShowProgress <= 0)
             {
                 //Invoke de funcion que cambie el bool showing
-                Invoke("ChangeShowing", selectedIconShowingTime);
+                Invoke("ChangeShowing", selectedIconHidingTime);
                 hittableMineral = false;
             }
         }
@@ -121,15 +123,32 @@ public class SelectedMineralController : MonoBehaviour
         }
     }
 
-    private void ChangeSelectedMineral()
+    public void ChangeSelectedMineral()
     {
         if(mineralOutline)
             mineralOutline.enabled = false;
-        selectedMineral = minerals[Random.Range(0, minerals.Length)];
+        Transform randomMineral = minerals[Random.Range(0, minerals.Length)];
+
+        if (activeMinerals.ContainsKey(randomMineral) && !activeMinerals[randomMineral])
+        {
+            ChangeSelectedMineral();
+            return;
+        }
+
+        selectedMineral = randomMineral;
         selectionIcon.transform.position = selectedMineral.position;
         mineralOutline = selectedMineral.GetComponent<Outline>();
         mineralOutline.enabled = true;
     }
+
+    public void MineralMined()
+    {
+        hittableMineral = false;
+        selectionIcon.color = Color.white.WithAlpha(0);
+        ChangeShowing();
+
+    }
+
     private void OnDrawGizmosSelected()
     {
         foreach (Transform item in minerals)

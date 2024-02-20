@@ -413,7 +413,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
-                InputController.Instance.ChangeActionMap("MinigameMinery");
+                InputController.Instance.ChangeActionMap("NewMineryMinigame");
                 c_mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:

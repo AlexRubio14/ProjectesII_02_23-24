@@ -14,7 +14,11 @@ public class MineryLaserController : MonoBehaviour
     [SerializeField]
     private MineryMinigameController mineryController;
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        
+    }
+
     void Update()
     {
         SetLasersPosition();

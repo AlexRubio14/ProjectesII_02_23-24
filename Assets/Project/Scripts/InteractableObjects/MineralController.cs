@@ -22,6 +22,10 @@ public class MineralController : InteractableObject
     private SpriteRenderer c_spriteR;
 
     private BoxCollider2D c_boxCollider;
+
+    public float[] mineralsHealth {  get; private set; }
+
+
     private void Awake()
     {
         c_spriteR = GetComponent<SpriteRenderer>();
@@ -56,11 +60,18 @@ public class MineralController : InteractableObject
             SetupParticles(vfxUnhideColor);
         }
 
+        mineralsHealth = new float[MaxItemsToReturn];
+        for (int i = 0; i < MaxItemsToReturn; i++)
+        {
+            mineralsHealth[i] = c_currentItem.BaseMineralHealth;
+        }
+
     }
 
     public override void Interact()
     {
-        player.StartMinery(this);
+        player.StartNewMinery(this);
+        //player.StartMinery(this); ESTO ES PARA LA MINERIA VIEJA
     }
     public override void UnHide()
     {

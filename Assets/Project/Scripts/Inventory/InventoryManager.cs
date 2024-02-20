@@ -40,7 +40,8 @@ public class InventoryManager : MonoBehaviour
                 runItems[_itemType] = 0;
         }
 
-        obtainItemAction(_itemType, _itemsToAdd);
+        if(obtainItemAction != null)
+            obtainItemAction(_itemType, _itemsToAdd);
     }
 
 
