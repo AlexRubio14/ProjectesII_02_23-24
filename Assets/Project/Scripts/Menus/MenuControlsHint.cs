@@ -52,7 +52,7 @@ public class MenuControlsHint : MonoBehaviour
 
     public void UpdateHintControls(List<ActionType> _actions, List<string> _actionName = null, HintsPos _pos = HintsPos.BOTTOM_LEFT)
     {
-        for (int i = 0; i < keysSprite.Length; i++)
+         for (int i = 0; i < keysSprite.Length; i++)
         {
             keysSprite[i].gameObject.SetActive(false);
             actionsText[i].gameObject.SetActive(false);

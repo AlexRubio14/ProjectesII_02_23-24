@@ -37,6 +37,8 @@ public class DialogueController : MonoBehaviour
     [SerializeField]
     private AudioClip catDialogueSound;
     private int dialogueSoundIndex;
+    [SerializeField]
+    private bool changeDialoguesHint = true;
 
     [HideInInspector]
     public Action onDialogueEnd;
@@ -59,7 +61,7 @@ public class DialogueController : MonoBehaviour
         List<MenuControlsHint.ActionType> actionList = new List<MenuControlsHint.ActionType>();
         actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
 
-        if (MenuControlsHint.Instance)
+        if (MenuControlsHint.Instance && changeDialoguesHint)
             MenuControlsHint.Instance.UpdateHintControls(actionList, null, hintsPos);
 
     }
@@ -70,7 +72,7 @@ public class DialogueController : MonoBehaviour
         dialogueAction.action.started -= InputPressed;
         menuInput.SwitchCurrentActionMap(lastActionMap);
 
-        if(MenuControlsHint.Instance)
+        if(MenuControlsHint.Instance && changeDialoguesHint)
             MenuControlsHint.Instance.UpdateHintControls(MenuControlsHint.Instance.lastActions);
     }
 
