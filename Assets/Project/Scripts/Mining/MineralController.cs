@@ -22,6 +22,9 @@ public class MineralController : InteractableObject
     private SpriteRenderer c_spriteR;
 
     private BoxCollider2D c_boxCollider;
+    private Vector2 originalBoxSize;
+    private Vector2 originalBoxOffset;
+
     private void Awake()
     {
         c_spriteR = GetComponent<SpriteRenderer>();
@@ -30,7 +33,10 @@ public class MineralController : InteractableObject
         if(isHide)
         {
             c_spriteR.sprite = hideSprite;
-            c_boxCollider.isTrigger = true;
+            originalBoxSize = c_boxCollider.size;
+            originalBoxOffset = c_boxCollider.offset;
+            c_boxCollider.size = Vector2.one * 0.1f;
+            c_boxCollider.offset = originalBoxOffset;
         }
         else
         {
@@ -65,7 +71,8 @@ public class MineralController : InteractableObject
     public override void UnHide()
     {
         base.UnHide();
-        c_boxCollider.isTrigger = false;
+        c_boxCollider.size = originalBoxSize;
+        c_boxCollider.offset = originalBoxOffset;
 
         if (isBeta)
             c_spriteR.sprite = c_currentItem.c_BetaSprite;
