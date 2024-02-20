@@ -356,6 +356,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.416165, y: 5.9056206}
   m_EdgeRadius: 0
+--- !u!1 &7492676948855027737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2280407530471977184}
+  m_Layer: 0
+  m_Name: HintTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2280407530471977184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7492676948855027737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.62, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4629185832642424644}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8110475501071502052
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,8 +423,9 @@ Transform:
   - {fileID: 3895410429067587149}
   - {fileID: 4943805106611438627}
   - {fileID: 6182099563924342520}
+  - {fileID: 2280407530471977184}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2438612229382598180
 SpriteRenderer:
@@ -472,6 +504,8 @@ MonoBehaviour:
   hiddenParticlesRateOverTime: 0
   unhideVFX: {fileID: 0}
   unhidePivot: {fileID: 0}
+  controlHintPivot:
+  - {fileID: 2280407530471977184}
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
   timeToGoHub: 0.7
   timeToStopParticles: 0.7

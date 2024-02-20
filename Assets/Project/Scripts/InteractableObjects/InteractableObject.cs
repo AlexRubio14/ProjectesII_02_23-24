@@ -36,6 +36,9 @@ abstract public class InteractableObject : MonoBehaviour
     [SerializeField]
     private Transform unhidePivot;
 
+    [SerializeField]
+    protected Transform[] controlHintPivot; 
+
     abstract public void Interact();
     virtual public void UnHide()
     {
@@ -54,5 +57,25 @@ abstract public class InteractableObject : MonoBehaviour
         interactableParticles.transform.localPosition = particlesPosition;
         ParticleSystem.EmissionModule emission = interactableParticles.emission;
         emission.rateOverTime = hiddenParticlesRateOverTime;
+    }
+
+    public Transform GetNearestTransform()
+    {
+        Transform currentTransform = null;
+        float lastDistance = 100.0f;
+
+        foreach(Transform t in controlHintPivot)
+        {
+            float tempDistance = Vector2.Distance(t.position, PlayerManager.Instance.player.transform.position);
+
+            if (tempDistance < lastDistance)
+            {
+                currentTransform = t;
+                lastDistance = tempDistance;
+
+            }
+        }
+
+        return currentTransform;
     }
 }
