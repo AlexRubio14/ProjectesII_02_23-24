@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 6182099563924342520}
   - component: {fileID: 8724306160510114103}
   - component: {fileID: 8558158924435192088}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: FuelRechargeSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,7 @@ Transform:
   - {fileID: 6182099563924342520}
   - {fileID: 2280407530471977184}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2438612229382598180
 SpriteRenderer:
