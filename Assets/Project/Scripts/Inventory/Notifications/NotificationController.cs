@@ -21,7 +21,7 @@ public class NotificationController : MonoBehaviour
 
     private void Update()
     {
-        timeToDesapearWaited += Time.deltaTime;
+        timeToDesapearWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
         if (timeToDesapearWaited >= timeToDisapear)
         {
             Destroy(gameObject);

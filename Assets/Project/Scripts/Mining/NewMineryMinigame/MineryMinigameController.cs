@@ -109,6 +109,8 @@ public class MineryMinigameController : MonoBehaviour
     #region Minigame Gameplay
     public void StartMining(MineralController _mineral)
     {
+        TimeManager.Instance.PauseGame();
+
         currentMineral = _mineral;
         selectedMineralControler.enabled = true;
         mineralsHealth = new Dictionary<Transform, float>();
@@ -176,7 +178,7 @@ public class MineryMinigameController : MonoBehaviour
     }
     private void CheckIfMineralMined()
     {
-        if (mineralsHealth[selectedMineralControler.selectedMineral] <= 0)
+        if (mineralsHealth.ContainsKey(selectedMineralControler.selectedMineral) && mineralsHealth[selectedMineralControler.selectedMineral] <= 0)
         {
             MineMineral();
         }
@@ -227,6 +229,9 @@ public class MineryMinigameController : MonoBehaviour
         }
         virtualMoseObj.SetActive(false);
         gameObject.SetActive(false);
+
+        TimeManager.Instance.ResumeGame();
+
     }
 
     #endregion

@@ -143,9 +143,12 @@ public class SelectedMineralController : MonoBehaviour
 
     public void MineralMined()
     {
-        hittableMineral = false;
         selectionIcon.color = Color.white.WithAlpha(0);
-        ChangeShowing();
+        selectedIconShowProgress = 0;
+        showing = false;
+        hittableMineral = false;
+        mineralOutline.enabled = false;
+        Invoke("ChangeShowing", selectedIconHidingTime / 2);
 
     }
 
