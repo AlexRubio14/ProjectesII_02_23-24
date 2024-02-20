@@ -33,11 +33,21 @@ public class MineryMinigameController : MonoBehaviour
     [SerializeField]
     private Image mineralProgressCircle;
 
+    [Space, Header("Random Mineral Position"), SerializeField]
+    private Transform neutralPosition;
+    [SerializeField]
+    private Transform maxPosition;
+    [SerializeField]
+    private Transform minPosition;
+    [Space, SerializeField]
+    private float minDistanceBetweenMinerals;
+    [SerializeField]
+    private float randomRotation;
+
     [Space, Header("Minigame"), SerializeField]
     private float rockBreakSpeed;
-    [SerializeField]
-    private float rockBaseHealth;
-    private float currentRockHealth;
+    [field: SerializeField]
+    public float mineralMissedRockDamage {  get; private set; }
 
     [Space, SerializeField]
     private float mineralBreakSpeed;
@@ -49,13 +59,6 @@ public class MineryMinigameController : MonoBehaviour
     [SerializeField]
     private SelectedMineralController selectedMineralControler;
 
-    private void Start()
-    {
-        rockBreakBar.maxValue = rockBaseHealth;
-        rockBreakBar.value = rockBaseHealth;
-        currentRockHealth = rockBaseHealth;
-    }
-
     private void OnEnable()
     {
 
@@ -64,9 +67,6 @@ public class MineryMinigameController : MonoBehaviour
         leftLaserTrigger.action.canceled += LeftLaserAction; 
         rightLaserTrigger.action.started += RightLaserAction;
         rightLaserTrigger.action.canceled += RightLaserAction;        
-
-        //Settearlo todo
-        currentRockHealth = rockBaseHealth;
 
         foreach (Canvas item in otherCanvas)
         {
@@ -104,7 +104,61 @@ public class MineryMinigameController : MonoBehaviour
         SetLaserRaysProcess();
         BreakRock();
         UpdateUIInfo(usedLasers);
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StopMining(false);
+        }
+
     }
+
+    #region Place Minerals
+    private void SetRandomPositionMinerals()
+    {
+        //Primero Reiniciamos las posiciones de los minerales a un punto neutro
+        for (int i = 0; i < selectedMineralControler.minerals.Length; i++)
+        {
+            if (!mineralsHealth.ContainsKey(selectedMineralControler.minerals[i]))
+                break;
+
+            selectedMineralControler.minerals[i].position = neutralPosition.position;
+
+        }
+
+        for (int i = 0; i < selectedMineralControler.minerals.Length; i++)
+        {
+            if (!mineralsHealth.ContainsKey(selectedMineralControler.minerals[i]))
+                break;
+
+            selectedMineralControler.minerals[i].position = GetRandomPosition(selectedMineralControler.minerals[i]);
+            selectedMineralControler.minerals[i].rotation = Quaternion.Euler(0,0, Random.Range(-randomRotation, randomRotation));
+        }
+    }
+
+    private Vector3 GetRandomPosition(Transform _currentTransform)
+    {
+        float randomX = Random.Range(minPosition.position.x, maxPosition.position.x);
+        float randomY = Random.Range(minPosition.position.y, maxPosition.position.y);
+
+        Vector3 randomPos = new Vector3(randomX, randomY, _currentTransform.position.z);
+
+        for (int i = 0; i < selectedMineralControler.minerals.Length; i++)
+        {
+            if (!mineralsHealth.ContainsKey(selectedMineralControler.minerals[i]))
+                break;
+
+            if (selectedMineralControler.minerals[i] != _currentTransform &&
+                Vector2.Distance(selectedMineralControler.minerals[i].position, randomPos) < minDistanceBetweenMinerals)
+            {
+                return GetRandomPosition(_currentTransform);
+            }
+
+        }
+
+        return randomPos;
+    }
+
+    #endregion
 
     #region Minigame Gameplay
     public void StartMining(MineralController _mineral)
@@ -112,14 +166,15 @@ public class MineryMinigameController : MonoBehaviour
         TimeManager.Instance.PauseGame();
 
         currentMineral = _mineral;
+
+        rockBreakBar.maxValue = currentMineral.mineralRockBaseHealth;
+        rockBreakBar.value = currentMineral.currentRockHealth;
+
         selectedMineralControler.enabled = true;
         mineralsHealth = new Dictionary<Transform, float>();
 
         gameObject.SetActive(true);
         virtualMoseObj.SetActive(true);
-
-
-
 
         //Inicializamos el systema de mineria asignando todos los valores acorde al mineral que estamos minando
         for (int i = 0; i < selectedMineralControler.minerals.Length; i++)
@@ -133,13 +188,24 @@ public class MineryMinigameController : MonoBehaviour
                 itemImage.color = Color.white;
                 mineralsHealth.Add(selectedMineralControler.minerals[i], currentMineral.mineralsHealth[i]);
                 selectedMineralControler.activeMinerals[selectedMineralControler.minerals[i]] = true;
+
+                if (currentMineral.mineralsHealth[i] <= 0)
+                {
+                    itemImage.color = Color.white.WithAlpha(0.2f);
+                    selectedMineralControler.activeMinerals[selectedMineralControler.minerals[i]] = false;
+                }
             }
             else
             {
                 itemImage.enabled = false;
+                itemImage.color = Color.white;
                 selectedMineralControler.activeMinerals[selectedMineralControler.minerals[i]] = false;
             }
         }
+
+
+        SetRandomPositionMinerals();
+        selectedMineralControler.ChangeSelectedMineral();
         
     }
     private int CheckLasersHitted()
@@ -165,12 +231,12 @@ public class MineryMinigameController : MonoBehaviour
 
             //Si se usan los 2 laseres romper un poco la roca
             if (_usedLasers == 2)
-                currentRockHealth -= (rockBreakSpeed * 0.5f) * Time.deltaTime;
+                currentMineral.currentRockHealth -= (rockBreakSpeed * 0.5f) * Time.deltaTime;
         }
         else
         {
             //Romper aun mas la roca
-            currentRockHealth -= (rockBreakSpeed * 2 * _usedLasers) * Time.deltaTime;
+            currentMineral.currentRockHealth -= (rockBreakSpeed * 2 * _usedLasers) * Time.deltaTime;
         }
 
         CheckIfMineralMined();
@@ -196,30 +262,35 @@ public class MineryMinigameController : MonoBehaviour
         if (selectedMineralControler.activeMinerals.ContainsValue(true))
             selectedMineralControler.MineralMined();
         else
-            StopMining();//Parar de minar
+            StopMining(true);//Parar de minar
         
     }
 
     private void BreakRock()
     {
-        currentRockHealth -= rockBreakSpeed * Time.deltaTime;
+        currentMineral.currentRockHealth -= rockBreakSpeed * Time.deltaTime;
+        CheckIfRockCompletlyBroke();
     }
-    
-    private void StopMining()
+    private void CheckIfRockCompletlyBroke()
+    {
+        if (currentMineral.currentRockHealth <= 0)
+        {
+            StopMining(true);
+        }
+    }
+
+    private void StopMining(bool _destroyRock)
     {
         selectedMineralControler.enabled = false;
         PlayerManager.Instance.player.ChangeState(PlayerController.State.IDLE);
-        bool allMineralsMined = true;
         for (int i = 0; i < currentMineral.MaxItemsToReturn; i++)
         {
             currentMineral.mineralsHealth[i] = mineralsHealth[selectedMineralControler.minerals[i]];
-            if (mineralsHealth[selectedMineralControler.minerals[i]] > 0)
-            {
-                allMineralsMined = false;
-            }
+
         }
 
-        if (allMineralsMined)
+
+        if (_destroyRock)
         {
             currentMineral.gameObject.SetActive(false);
             CameraController.Instance.AddMediumTrauma();
@@ -230,8 +301,8 @@ public class MineryMinigameController : MonoBehaviour
         virtualMoseObj.SetActive(false);
         gameObject.SetActive(false);
 
-        TimeManager.Instance.ResumeGame();
 
+        TimeManager.Instance.ResumeGame();
     }
 
     #endregion
@@ -250,7 +321,7 @@ public class MineryMinigameController : MonoBehaviour
     #region UI
     private void UpdateUIInfo(int _userLasers)
     {
-        rockBreakBar.value = currentRockHealth;
+        rockBreakBar.value = currentMineral.currentRockHealth;
         if (mineralsHealth.ContainsKey(selectedMineralControler.selectedMineral))
             selectedMineralControler.selectionIcon.fillAmount = mineralsHealth[selectedMineralControler.selectedMineral] / currentMineral.c_currentItem.BaseMineralHealth;        
     }
@@ -260,7 +331,7 @@ public class MineryMinigameController : MonoBehaviour
     #region Input
     private void LeftLaserAction(InputAction.CallbackContext obj)
     {
-        leftLaserOn = obj.action.IsPressed();
+        leftLaserOn = obj.action.IsInProgress();
     }
     private void RightLaserAction(InputAction.CallbackContext obj)
     {

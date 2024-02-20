@@ -24,7 +24,10 @@ public class MineralController : InteractableObject
     private BoxCollider2D c_boxCollider;
 
     public float[] mineralsHealth {  get; private set; }
+    [field: SerializeField]
+    public float mineralRockBaseHealth {  get; private set; }
 
+    public float currentRockHealth {  get; set; }
 
     private void Awake()
     {
@@ -43,11 +46,14 @@ public class MineralController : InteractableObject
             else
                 c_spriteR.sprite = c_currentItem.c_MapSprite;
         }
+
+        currentRockHealth = mineralRockBaseHealth;
     }
     private void Start()
     {
         player = PlayerManager.Instance.player.gameObject.GetComponent<PlayerMineryController>();
 
+        
         vfxUnhideColor = new Color(c_currentItem.EffectsColor.r, c_currentItem.EffectsColor.g, c_currentItem.EffectsColor.b, 0.1f);
 
         if (isHide)

@@ -23,12 +23,17 @@ public class SelectedMineralController : MonoBehaviour
     private float selectionIconAppearSpeed;
     [SerializeField]
     private float selectionIconHideSpeed;
+    [SerializeField]
+    private float hideBlinkEffectSpeed;
+    private float blinkTime = 0;
+
     private float selectedIconShowProgress = 0;
 
     [SerializeField]
     private float selectedIconShowingTime;
     [SerializeField]
     private float selectedIconHidingTime;
+    private float timeWaited = 0;
 
     private bool showing = true;
 
@@ -38,13 +43,17 @@ public class SelectedMineralController : MonoBehaviour
     public Transform selectedMineral { get; private set; }
     private Outline mineralOutline;
 
+    private MineryMinigameController mineryController;
+
+
     // Start is called before the first frame update
     void Awake()
     {
+        mineryController = GetComponentInParent<MineryMinigameController>();
+
         SelectionRadius = selectionRadius + (selectionOffsetRadius * selectionRadius);
         selectionIcon.rectTransform.sizeDelta += selectionIcon.rectTransform.sizeDelta * selectionRadius;
         activeMinerals = new Dictionary<Transform, bool>();
-        ChangeSelectedMineral();
     }
 
 
@@ -54,8 +63,8 @@ public class SelectedMineralController : MonoBehaviour
         selectedIconShowProgress = 0;
         showing = false;
         hittableMineral = false;
-        mineralOutline.enabled = false;
-        Invoke("ChangeShowing", selectedIconHidingTime);
+        if (mineralOutline)
+            mineralOutline.enabled = false;
     }
 
 
@@ -83,13 +92,22 @@ public class SelectedMineralController : MonoBehaviour
         {
             //Aumentar el alpha selectedIconShowProgress
             selectedIconShowProgress = Mathf.Clamp01(selectedIconShowProgress + selectionIconAppearSpeed * Time.deltaTime);
-            
             selectionIcon.color = Color.white.WithAlpha(selectedIconShowProgress);
             mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(selectedIconShowProgress);
 
-            if (selectedIconShowProgress >= 1)
-                Invoke("ChangeShowing", selectedIconShowingTime);//Invoke de funcion que cambie el bool showing
-            
+        }
+        else
+        {
+            selectionIcon.color = Color.white.WithAlpha(1);
+            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(1);
+
+            //Timer para que se deje de ver el mineral
+            timeWaited += Time.deltaTime;
+            if (timeWaited >= selectedIconShowingTime)
+            {
+                timeWaited = 0;
+                showing = false;
+            }
         }
     }
 
@@ -99,27 +117,35 @@ public class SelectedMineralController : MonoBehaviour
         {
             //Aumentar el alpha selectedIconShowProgress
             selectedIconShowProgress = Mathf.Clamp01(selectedIconShowProgress - selectionIconHideSpeed * Time.deltaTime);
-
-            selectionIcon.color = Color.white.WithAlpha(selectedIconShowProgress);
-            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(selectedIconShowProgress);
+            float blinkSpeed = (1 - selectedIconShowProgress) * hideBlinkEffectSpeed;
+            blinkTime += Time.deltaTime;
+            float pingPongProgress = Mathf.PingPong(blinkTime * blinkSpeed, 0.8f) + 0.2f;
+            selectionIcon.color = Color.white.WithAlpha(pingPongProgress);
+            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(pingPongProgress);
 
             if (selectedIconShowProgress <= 0)
             {
-                //Invoke de funcion que cambie el bool showing
-                Invoke("ChangeShowing", selectedIconHidingTime);
-                hittableMineral = false;
+                //Perder vida de la roca
+                mineryController.currentMineral.currentRockHealth -= mineryController.mineralMissedRockDamage;
             }
         }
-    }
-
-    private void ChangeShowing()
-    {
-        showing = !showing;
-        
-        if (showing)
+        else
         {
-            ChangeSelectedMineral();
-            hittableMineral = true;
+            selectionIcon.color = Color.white.WithAlpha(0);
+            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(0);
+            hittableMineral = false;
+            //Timer para que se vuelva a ver el mineral 
+            timeWaited += Time.deltaTime;
+            if (timeWaited >= selectedIconHidingTime)
+            {
+                timeWaited = 0;
+                blinkTime = 0;
+                showing = true;
+                ChangeSelectedMineral();
+                hittableMineral = true;
+                if (mineralOutline)
+                    mineralOutline.enabled = true;
+            }
         }
     }
 
@@ -138,7 +164,6 @@ public class SelectedMineralController : MonoBehaviour
         selectedMineral = randomMineral;
         selectionIcon.transform.position = selectedMineral.position;
         mineralOutline = selectedMineral.GetComponent<Outline>();
-        mineralOutline.enabled = true;
     }
 
     public void MineralMined()
@@ -146,10 +171,8 @@ public class SelectedMineralController : MonoBehaviour
         selectionIcon.color = Color.white.WithAlpha(0);
         selectedIconShowProgress = 0;
         showing = false;
-        hittableMineral = false;
-        mineralOutline.enabled = false;
-        Invoke("ChangeShowing", selectedIconHidingTime / 2);
-
+        timeWaited = selectedIconHidingTime * 0.5f;
+        ChangeSelectedMineral();
     }
 
     private void OnDrawGizmosSelected()

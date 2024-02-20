@@ -84,22 +84,25 @@ public class MenuControlsHint : MonoBehaviour
             actionsText[i].gameObject.SetActive(false);
         }
 
-        if (_actions != null) 
-        {
-            for (int i = 0; i < _actions.Count; i++)
-            {
-                if (i > 4)
-                    break;
+        if (_actions == null) 
+            return;
+        
 
-                keysSprite[i].gameObject.SetActive(true);
-                keysSprite[i].sprite = actionsSprite[_actions[i]][(int)InputController.Instance.GetCurrentControllerType()];
-                actionsText[i].gameObject.SetActive(true);
-                if (_actionName != null && _actionName[i] != "")
-                    actionsText[i].text = _actionName[i];
-                else
-                    actionsText[i].text = actionsName[_actions[i]];
-            }
+        for (int i = 0; i < _actions.Count; i++)
+        {
+            if (i > 4)
+                break;
+
+            keysSprite[i].gameObject.SetActive(true);
+            keysSprite[i].sprite = actionsSprite[_actions[i]][(int)InputController.Instance.GetCurrentControllerType()];
+            actionsText[i].gameObject.SetActive(true);
+            if (_actionName != null && _actionName[i] != "")
+                actionsText[i].text = _actionName[i];
+            else
+                actionsText[i].text = actionsName[_actions[i]];
         }
+
+
         HorizontalLayoutGroup layout = hintsLayout.GetComponent<HorizontalLayoutGroup>();
 
         switch (_pos)

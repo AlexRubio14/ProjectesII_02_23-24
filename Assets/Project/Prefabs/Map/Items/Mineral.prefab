@@ -117,6 +117,7 @@ MonoBehaviour:
   <MaxItemsToReturn>k__BackingField: 4
   isBeta: 0
   hideSprite: {fileID: 0}
+  <mineralRockBaseHealth>k__BackingField: 90
 --- !u!61 &3422622027868929553
 BoxCollider2D:
   m_ObjectHideFlags: 0
