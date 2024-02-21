@@ -32,7 +32,8 @@ public class TimeManager : MonoBehaviour
     public void PauseGame()
     {
         timeParameter = 0.0f;
-        pauseAction();
+        if (pauseAction != null)
+            pauseAction();
     }
 
     public void ResumeGame()
@@ -40,8 +41,7 @@ public class TimeManager : MonoBehaviour
         timeParameter = 1.0f;
 
         if(resumeAction != null)
-        {
             resumeAction();
-        }
+        
     }
 }

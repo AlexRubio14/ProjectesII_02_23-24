@@ -13,9 +13,6 @@ public class ItemObject : ScriptableObject
     public string ItemName { get; private set; }
 
     [field: SerializeField]
-    public float Weight { get; private set; }
-
-    [field: SerializeField]
     public Sprite c_BetaSprite { get; private set; }
 
     [field: SerializeField]
@@ -26,6 +23,9 @@ public class ItemObject : ScriptableObject
 
     [field: SerializeField]
     public Color EffectsColor { get; private set; }
+
+    [field: SerializeField]
+    public float BaseMineralHealth {  get; private set; } 
 
     [field: Tooltip("En caso de no tener power up, dejarlo en NONE"), SerializeField]
     public PowerUpManager.PowerUpType PowerUp { get; private set; }

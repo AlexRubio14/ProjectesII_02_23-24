@@ -25,6 +25,13 @@ public class MineralController : InteractableObject
     private Vector2 originalBoxSize;
     private Vector2 originalBoxOffset;
 
+
+    public float[] mineralsHealth {  get; private set; }
+    [field: SerializeField]
+    public float mineralRockBaseHealth {  get; private set; }
+
+    public float currentRockHealth {  get; set; }
+
     private void Awake()
     {
         c_spriteR = GetComponent<SpriteRenderer>();
@@ -45,11 +52,14 @@ public class MineralController : InteractableObject
             else
                 c_spriteR.sprite = c_currentItem.c_MapSprite;
         }
+
+        currentRockHealth = mineralRockBaseHealth;
     }
     private void Start()
     {
         player = PlayerManager.Instance.player.gameObject.GetComponent<PlayerMineryController>();
 
+        
         vfxUnhideColor = new Color(c_currentItem.EffectsColor.r, c_currentItem.EffectsColor.g, c_currentItem.EffectsColor.b, 0.1f);
 
         if (isHide)
@@ -62,11 +72,18 @@ public class MineralController : InteractableObject
             SetupParticles(vfxUnhideColor);
         }
 
+        mineralsHealth = new float[MaxItemsToReturn];
+        for (int i = 0; i < MaxItemsToReturn; i++)
+        {
+            mineralsHealth[i] = c_currentItem.BaseMineralHealth;
+        }
+
     }
 
     public override void Interact()
     {
-        player.StartMinery(this);
+        player.StartNewMinery(this);
+        //player.StartMinery(this); ESTO ES PARA LA MINERIA VIEJA
     }
     public override void UnHide()
     {
