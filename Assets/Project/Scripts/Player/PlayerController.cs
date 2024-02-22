@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
+    [SerializeField]
+    private ParticleSystem hitParticles;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -326,9 +328,20 @@ public class PlayerController : MonoBehaviour
         }
 
         CameraController.Instance.AddHighTrauma();
+        PlayHitParticles(damagePos);
+
         Knockback(damagePos);
+
         fuel -= value / PowerUpManager.Instance.Armor;
+
     }
+
+    private void PlayHitParticles(Vector2 damagePos)
+    {
+        hitParticles.transform.forward = ((Vector3)damagePos - transform.position).normalized;
+        hitParticles.Play();
+    }
+
     public void SubstractHealth(float value)
     {
         fuel -= value;

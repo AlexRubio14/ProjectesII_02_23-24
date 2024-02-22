@@ -34,6 +34,12 @@ public class FuelCanvasController : MonoBehaviour
     private float shakeMagnitude;
     private Vector2[] starterPos;
 
+    [Space, Header("Hitted"), SerializeField]
+    private float hitShakeForce;
+    private float hitShakeProcess;
+    [SerializeField]
+    private float hitShakeReduction;
+    private bool hitted = false;
 
 
     private void Start()
@@ -64,7 +70,11 @@ public class FuelCanvasController : MonoBehaviour
         currentFuel.text = currFuel.ToString("0.0");
         fuelSlider.value = currFuel;
         totalConsumePerSecond.text = playerController.fuelConsume.ToString("0.0");
-        ShowLowFuel(currFuel);
+
+        if (hitted)
+            HitShake();
+        else
+            ShowLowFuel(currFuel);
 
     }
 
@@ -72,15 +82,15 @@ public class FuelCanvasController : MonoBehaviour
     {
         if (_currFuel <= fuelPercent)
         {
-            ShakeCanvas();
+            ShakeCanvas(shakeMagnitude);
             ChangeBackgroundColor(_currFuel);
         }
     }
 
-    private void ShakeCanvas()
+    private void ShakeCanvas(float _shakeMagnitude)
     {
-        float shakeX = Random.Range(-shakeMagnitude, shakeMagnitude);
-        float shakeY = Random.Range(-shakeMagnitude, shakeMagnitude); 
+        float shakeX = Random.Range(-_shakeMagnitude, _shakeMagnitude);
+        float shakeY = Random.Range(-_shakeMagnitude, _shakeMagnitude); 
         for (int i = 0; i < backgrounds.Length; i++)
         {
             backgrounds[i].transform.parent.transform.localPosition = 
@@ -127,5 +137,19 @@ public class FuelCanvasController : MonoBehaviour
         }
 
     }
+
+
+    private void HitShake()
+    {
+        ShakeCanvas(hitShakeProcess);
+
+    }
+    public void Hitted()
+    {
+        hitted = true;
+        hitShakeProcess = hitShakeForce;
+
+    }
+
 
 }
