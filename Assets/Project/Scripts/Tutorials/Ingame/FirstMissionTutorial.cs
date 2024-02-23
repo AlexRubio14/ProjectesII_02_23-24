@@ -49,6 +49,9 @@ public class FirstMissionTutorial : MonoBehaviour
 
     private void StartFirstMissionTutorial()
     {
+        if (PlayerPrefs.HasKey(tutorialkey))
+            return;
+
         tutorialHasShown = true;
 
         dialogueController.onDialogueEnd += EndTutorial;
