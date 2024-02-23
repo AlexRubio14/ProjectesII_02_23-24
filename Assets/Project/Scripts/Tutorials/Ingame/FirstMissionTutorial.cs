@@ -82,15 +82,20 @@ public class FirstMissionTutorial : MonoBehaviour
     {
         if(obtainedOres.ContainsKey(type))
         {
-            obtainedOres[type] = s;
+            obtainedOres[type] = InventoryManager.Instance.GetTotalItemAmount(type);
             CheckIfEnoughItems();
         }
     }
 
     private void CheckIfEnoughItems()
     {
+        Debug.Log("Entra");
+
         if (tutorialHasShown)
             return;
+
+        Debug.Log("Entra Mas");
+
 
         int acumulator = 0;
 

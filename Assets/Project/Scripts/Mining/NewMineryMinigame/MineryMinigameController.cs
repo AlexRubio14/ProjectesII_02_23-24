@@ -190,7 +190,7 @@ public class MineryMinigameController : MonoBehaviour
 
                 if (currentMineral.mineralsHealth[i] <= 0)
                 {
-                    itemImage.color = Color.white.WithAlpha(0.2f);
+                    itemImage.color = new Color(1, 1, 1, 0.2f);
                     selectedMineralControler.activeMinerals[selectedMineralControler.minerals[i]] = false;
                 }
             }
@@ -256,7 +256,7 @@ public class MineryMinigameController : MonoBehaviour
         
 
         InventoryManager.Instance.ChangeRunItemAmount(currentMineral.c_currentItem, 1);
-        selectedMineralControler.selectedMineral.GetComponent<Image>().color = Color.white.WithAlpha(0.2f);
+        selectedMineralControler.selectedMineral.GetComponent<Image>().color = new Color(1,1,1, 0.2f);
         selectedMineralControler.activeMinerals[selectedMineralControler.selectedMineral] = false;
         if (selectedMineralControler.activeMinerals.ContainsValue(true))
             selectedMineralControler.MineralMined();

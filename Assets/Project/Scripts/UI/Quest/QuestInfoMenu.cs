@@ -92,7 +92,7 @@ public class QuestInfoMenu : MonoBehaviour
             }
             else
             {
-                newText.text = item.Key.ItemName + " x" + item.Value;
+                newText.text = item.Key.ItemName + " x " + item.Value;
             }
             newText.enableAutoSizing = true;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;

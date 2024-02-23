@@ -1485,7 +1485,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 822479611
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &9203762746689573574
 MonoBehaviour:
@@ -1553,7 +1553,7 @@ MonoBehaviour:
   shakeMagnitude: 3
   maxFloatSpeed: 3
   baseFloatSpeed: 2
-  dangerBorderAlpha: {x: 0.05, y: 0.265}
+  dangerBorderAlpha: {x: 0.01, y: 0.2}
   dangerBorderSpeed: 1
   borderFuelInfluence: 4.5
   hitShakeForce: 4
