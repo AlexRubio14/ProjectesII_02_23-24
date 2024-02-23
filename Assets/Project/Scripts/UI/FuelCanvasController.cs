@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using TMPro;
+using Unity.VisualScripting;
 
 public class FuelCanvasController : MonoBehaviour
 {
@@ -25,14 +28,26 @@ public class FuelCanvasController : MonoBehaviour
     [SerializeField]
     private Color warningColor;
     private Color starterColor;
-    [SerializeField]
+    [Space, SerializeField]
     private float blinkSpeed;
     private float colorFadeProgress;
     private bool turningRed;
-
     [SerializeField]
     private float shakeMagnitude;
     private Vector2[] starterPos;
+    
+    private ImageFloatEffect sliderFloatEffect;
+    [Space, SerializeField]
+    private float maxFloatSpeed;
+    [SerializeField]
+    private float baseFloatSpeed;
+
+    [Space, SerializeField]
+    private Vector2 dangerVignetteIntensity;
+    [SerializeField]
+    private float dangerVignetteSpeed;
+    private float dangerVignetteProcess;
+
 
     [Space, Header("Hitted"), SerializeField]
     private float hitShakeForce;
@@ -40,7 +55,25 @@ public class FuelCanvasController : MonoBehaviour
     [SerializeField]
     private float hitShakeReduction;
     private bool hitted = false;
+    [Space, SerializeField]
+    private float hitVignetteMaxIntensity;
+    [SerializeField]
+    private Vector2 hitVignetteEnableSpeed;
+    private float hitVignetteProcess;
+    private bool hitVignetteEnable;
 
+    [Space, Header("PostProces"), SerializeField]
+    private Volume postProcess;
+    private Vignette vignetteEffect;
+    private bool canDisplayVignetteFX;
+
+    private void Awake()
+    {
+        sliderFloatEffect = GetComponentInChildren<ImageFloatEffect>();
+        postProcess.profile.TryGet(out vignetteEffect);
+        vignetteEffect.active = true;
+        vignetteEffect.intensity.value = 0;
+    }
 
     private void Start()
     {
@@ -63,6 +96,17 @@ public class FuelCanvasController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        PlayerManager.Instance.player.OnHit += Hitted;
+    }
+
+    private void OnDisable()
+    {
+        playerController.OnHit -= Hitted;
+    }
+
+
     // Update is called once per frame
     void LateUpdate()
     {
@@ -71,22 +115,38 @@ public class FuelCanvasController : MonoBehaviour
         fuelSlider.value = currFuel;
         totalConsumePerSecond.text = playerController.fuelConsume.ToString("0.0");
 
-        if (hitted)
-            HitShake();
-        else
-            ShowLowFuel(currFuel);
-
+        LowFuelFeedback(currFuel);
+        VignetteHitEffect();
     }
 
-    private void ShowLowFuel(float _currFuel)
+    private void LowFuelFeedback(float _currFuel)
     {
-        if (_currFuel <= fuelPercent)
+        if (_currFuel <= fuelPercent && hitShakeProcess < shakeMagnitude)
         {
+            sliderFloatEffect.canFloat = true;
+            sliderFloatEffect.speed = Mathf.Clamp(baseFloatSpeed / (_currFuel / 4), 0, maxFloatSpeed);
+
             ShakeCanvas(shakeMagnitude);
             ChangeBackgroundColor(_currFuel);
         }
-    }
+        else if (hitted) 
+        {
+            float shakeValue = Mathf.Lerp(0, hitShakeForce, hitShakeProcess);
+            ShakeCanvas(shakeValue);
 
+            hitShakeProcess -= Time.deltaTime * hitShakeReduction;
+
+            if (hitShakeProcess <= 0)
+            {
+                hitShakeProcess = 0;
+                hitted = false;
+            }
+        }
+        else
+        {
+            RestoreDefaultValues();
+        }
+    }
     private void ShakeCanvas(float _shakeMagnitude)
     {
         float shakeX = Random.Range(-_shakeMagnitude, _shakeMagnitude);
@@ -105,25 +165,19 @@ public class FuelCanvasController : MonoBehaviour
         if (_currFuel <= 0)
         {
             foreach (Image item in backgrounds)
-            {
                 item.color = warningColor;
-            }
+
             return;
         }
 
         if (turningRed)
-        {
-            colorFadeProgress += (blinkSpeed / (_currFuel / 4)) * Time.deltaTime;
-        }
+            colorFadeProgress = Mathf.Clamp(colorFadeProgress + (blinkSpeed / (_currFuel / 4)) * Time.deltaTime, 0, 1);
         else
-        {
-            colorFadeProgress -= (blinkSpeed / (_currFuel / 4)) * Time.deltaTime;
-        }
+            colorFadeProgress = Mathf.Clamp(colorFadeProgress - (blinkSpeed / (_currFuel / 4)) * Time.deltaTime, 0, 1);
 
         foreach (Image item in backgrounds)
-        {
             item.color = Color.Lerp(starterColor, warningColor, colorFadeProgress);
-        }
+        
 
         if (colorFadeProgress >= 1)
         {
@@ -137,19 +191,65 @@ public class FuelCanvasController : MonoBehaviour
         }
 
     }
-
-
-    private void HitShake()
-    {
-        ShakeCanvas(hitShakeProcess);
-
-    }
-    public void Hitted()
+    private void Hitted()
     {
         hitted = true;
         hitShakeProcess = hitShakeForce;
+        canDisplayVignetteFX = true;
+        hitVignetteEnable = true;
+        vignetteEffect.intensity.value = 0;
+    }
+
+    private void VignetteHitEffect()
+    {
+        if (!canDisplayVignetteFX)
+            return;
+        
+        if (hitVignetteEnable) 
+        {
+            hitVignetteProcess = Mathf.Clamp(hitVignetteProcess + hitVignetteEnableSpeed[0] * Time.deltaTime, 0 , hitVignetteMaxIntensity);
+            vignetteEffect.intensity.value = hitVignetteProcess;
+
+            if (hitVignetteProcess >= hitVignetteMaxIntensity)
+                hitVignetteEnable = false;
+
+        }
+        else
+        {
+            hitVignetteProcess = Mathf.Clamp(hitVignetteProcess - hitVignetteEnableSpeed[1] * Time.deltaTime, 0, hitVignetteMaxIntensity);
+            vignetteEffect.intensity.value = hitVignetteProcess;
+
+            if (hitVignetteProcess <= 0)
+            {
+                canDisplayVignetteFX = false;
+                hitVignetteEnable = true;
+                hitVignetteProcess = 0;
+                vignetteEffect.intensity.value = 0;
+                return;
+            }
+            //else if (hitVignetteProcess <= )
+            //{
+
+            //}
+
+        }
 
     }
 
+
+
+    private void RestoreDefaultValues()
+    {
+        //Reseteamos posiciones
+        for (int i = 0; i < backgrounds.Length; i++)
+            backgrounds[i].transform.parent.transform.localPosition = starterPos[i];
+
+        //Reseteamos color
+        foreach (Image item in backgrounds)
+            item.color = starterColor;
+        //Reseteamos Flotacion
+        sliderFloatEffect.canFloat = false;
+
+    }
 
 }
