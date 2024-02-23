@@ -30,8 +30,15 @@ public class MenuControlsHint : MonoBehaviour
 
     [HideInInspector]
     public List<ActionType> currentActions;
+    private List<string> currentActionName;
+    private HintsPos currentHintPosition;  
+    
     [HideInInspector]
     public List<ActionType> lastActions;
+    private List<string> lastActionName;
+    private HintsPos lastHintPosition;  
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -44,16 +51,16 @@ public class MenuControlsHint : MonoBehaviour
 
     private void OnEnable()
     {
-        InputSystem.onActionChange += OnInputDeviceChanged;
+        InputSystem.onDeviceChange += OnInputDeviceChanged;
     }
     private void OnDisable()
     {
-        InputSystem.onActionChange -= OnInputDeviceChanged;
+        InputSystem.onDeviceChange -= OnInputDeviceChanged;
     }
-    private void OnInputDeviceChanged(object arg1, InputActionChange arg2)
+    private void OnInputDeviceChanged(InputDevice arg1, InputDeviceChange arg2)
     {
         List<ActionType> currLastActions = lastActions;
-        UpdateHintControls(currentActions);
+        UpdateHintControls(currentActions, currentActionName, currentHintPosition);
         lastActions = currLastActions;
     }
 
@@ -78,7 +85,7 @@ public class MenuControlsHint : MonoBehaviour
 
     public void UpdateHintControls(List<ActionType> _actions, List<string> _actionName = null, HintsPos _pos = HintsPos.BOTTOM_LEFT)
     {
-         for (int i = 0; i < keysSprite.Length; i++)
+        for (int i = 0; i < keysSprite.Length; i++)
         {
             keysSprite[i].gameObject.SetActive(false);
             actionsText[i].gameObject.SetActive(false);
@@ -87,7 +94,6 @@ public class MenuControlsHint : MonoBehaviour
         if (_actions == null) 
             return;
         
-
         for (int i = 0; i < _actions.Count; i++)
         {
             if (i > 4)
@@ -101,7 +107,6 @@ public class MenuControlsHint : MonoBehaviour
             else
                 actionsText[i].text = actionsName[_actions[i]];
         }
-
 
         HorizontalLayoutGroup layout = hintsLayout.GetComponent<HorizontalLayoutGroup>();
 
@@ -131,15 +136,13 @@ public class MenuControlsHint : MonoBehaviour
                 break;
         }
         hintsLayout.anchoredPosition = hintsPos[_pos];
-        
 
-
-
+        lastActionName = currentActionName;
+        lastHintPosition = currentHintPosition;
         lastActions = currentActions;
 
         currentActions = _actions;
-
-
+        currentActionName = _actionName;
+        currentHintPosition = _pos;
     }
-
 }
