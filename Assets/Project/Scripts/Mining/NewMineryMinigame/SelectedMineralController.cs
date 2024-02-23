@@ -59,7 +59,7 @@ public class SelectedMineralController : MonoBehaviour
 
     private void OnEnable()
     {
-        selectionIcon.color = Color.white.WithAlpha(0);
+        selectionIcon.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
         selectedIconShowProgress = 0;
         showing = false;
         hittableMineral = false;
@@ -92,14 +92,14 @@ public class SelectedMineralController : MonoBehaviour
         {
             //Aumentar el alpha selectedIconShowProgress
             selectedIconShowProgress = Mathf.Clamp01(selectedIconShowProgress + selectionIconAppearSpeed * Time.deltaTime);
-            selectionIcon.color = Color.white.WithAlpha(selectedIconShowProgress);
-            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(selectedIconShowProgress);
+            selectionIcon.color = new Color(Color.white.r, Color.white.g, Color.white.b, selectedIconShowProgress);
+            mineralOutline.effectColor = new Color(mineralOutline.effectColor.r, mineralOutline.effectColor.g, mineralOutline.effectColor.b, selectedIconShowProgress);
 
         }
         else
         {
-            selectionIcon.color = Color.white.WithAlpha(1);
-            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(1);
+            selectionIcon.color = new Color(Color.white.r, Color.white.g, Color.white.b, 1);
+            mineralOutline.effectColor = new Color(mineralOutline.effectColor.r, mineralOutline.effectColor.g, mineralOutline.effectColor.b, 1);
 
             //Timer para que se deje de ver el mineral
             timeWaited += Time.deltaTime;
@@ -120,8 +120,8 @@ public class SelectedMineralController : MonoBehaviour
             float blinkSpeed = (1 - selectedIconShowProgress) * hideBlinkEffectSpeed;
             blinkTime += Time.deltaTime;
             float pingPongProgress = Mathf.PingPong(blinkTime * blinkSpeed, 0.8f) + 0.2f;
-            selectionIcon.color = Color.white.WithAlpha(pingPongProgress);
-            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(pingPongProgress);
+            selectionIcon.color = new Color(Color.white.r, Color.white.g, Color.white.b, pingPongProgress);
+            mineralOutline.effectColor = new Color(mineralOutline.effectColor.r, mineralOutline.effectColor.g, mineralOutline.effectColor.b, pingPongProgress);
 
             if (selectedIconShowProgress <= 0)
             {
@@ -131,8 +131,8 @@ public class SelectedMineralController : MonoBehaviour
         }
         else
         {
-            selectionIcon.color = Color.white.WithAlpha(0);
-            mineralOutline.effectColor = mineralOutline.effectColor.WithAlpha(0);
+            selectionIcon.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
+            mineralOutline.effectColor = new Color(mineralOutline.effectColor.r, mineralOutline.effectColor.g, mineralOutline.effectColor.b, 0);
             hittableMineral = false;
             //Timer para que se vuelva a ver el mineral 
             timeWaited += Time.deltaTime;
@@ -168,7 +168,7 @@ public class SelectedMineralController : MonoBehaviour
 
     public void MineralMined()
     {
-        selectionIcon.color = Color.white.WithAlpha(0);
+        selectionIcon.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
         selectedIconShowProgress = 0;
         showing = false;
         timeWaited = selectedIconHidingTime * 0.5f;

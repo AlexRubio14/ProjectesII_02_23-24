@@ -27,7 +27,7 @@ public class MenuNavegation : MonoBehaviour
 
     public void GoToHub()
     {
-        SceneManager.LoadScene(hubScene); 
+        SceneManager.LoadScene(hubScene);
     }
 
     public void GoToTitleScreen()

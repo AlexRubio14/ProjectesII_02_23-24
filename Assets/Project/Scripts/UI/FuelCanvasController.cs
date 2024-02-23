@@ -189,10 +189,6 @@ public class FuelCanvasController : MonoBehaviour
         float maxFuelInfluence = 6;
         float minFuelInfluence = 1.1f;
 
-        float result = Mathf.Clamp(_currFuel / backgroundFuelInfluence, minFuelInfluence, maxFuelInfluence);
-
-        Debug.Log(result);
-
         // A la hora de hacer que el fuel actual influya en en la velocidad la limitaremos a un maximo que puede afectar
         if (turningRedUI)
             colorFadeProgress = Mathf.Clamp(
@@ -219,7 +215,7 @@ public class FuelCanvasController : MonoBehaviour
     {
         if (_currFuel <= 0)
         {
-            lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
+            lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, 0);
             return;
         }
         // A la hora de hacer que el fuel actual influya en en la velocidad la limitaremos a un maximo que puede afectar
@@ -237,7 +233,7 @@ public class FuelCanvasController : MonoBehaviour
                 dangerBorderAlpha[0],
                 dangerBorderAlpha[1]);
 
-        lowFuelBorder.color = lowFuelBorder.color.WithAlpha(dangerBorderProcess);
+        lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, dangerBorderProcess); 
 
         if (dangerBorderProcess >= dangerBorderAlpha[1])
             turningRedBorder = false;
@@ -252,7 +248,7 @@ public class FuelCanvasController : MonoBehaviour
         hitShakeProcess = hitShakeForce;
         canFuelBorder = true;
         hitBorderEnable = true;
-        lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
+        lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, 0);
     }
 
     private void BorderHitEffect()
@@ -263,7 +259,7 @@ public class FuelCanvasController : MonoBehaviour
         if (hitBorderEnable) 
         {
             hitBorderProcess = Mathf.Clamp(hitBorderProcess + hitBorderEnableSpeed[0] * Time.deltaTime, 0 , hitBorderMaxAlpha);
-            lowFuelBorder.color = lowFuelBorder.color.WithAlpha(hitBorderProcess);
+            lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, hitBorderProcess);
 
             if (hitBorderProcess >= hitBorderMaxAlpha)
                 hitBorderEnable = false;
@@ -272,14 +268,14 @@ public class FuelCanvasController : MonoBehaviour
         else
         {
             hitBorderProcess = Mathf.Clamp(hitBorderProcess - hitBorderEnableSpeed[1] * Time.deltaTime, 0, hitBorderMaxAlpha);
-            lowFuelBorder.color = lowFuelBorder.color.WithAlpha(hitBorderProcess);
+            lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, hitBorderProcess);
 
             if (hitBorderProcess <= 0)
             {
                 canFuelBorder = false;
                 hitBorderEnable = true;
                 hitBorderProcess = 0;
-                lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
+                lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, 0);
                 return;
             }
             else if (hitBorderProcess <= dangerBorderProcess)
@@ -292,8 +288,6 @@ public class FuelCanvasController : MonoBehaviour
 
     }
 
-
-
     private void RestoreDefaultValues()
     {
         //Reseteamos posiciones
@@ -305,9 +299,6 @@ public class FuelCanvasController : MonoBehaviour
             item.color = starterColor;
         //Reseteamos Flotacion
         sliderFloatEffect.canFloat = false;
-        lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
-
-
+        lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, 0);
     }
-
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Emerald
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Nekonium
-  <Weight>k__BackingField: 0
   <c_BetaSprite>k__BackingField: {fileID: 21300000, guid: 0092b77ddb4490b45a83b76fba638181, type: 3}
   <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 2afa5fa2059de13409f4beac4c6824fd, type: 3}
   <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 9b9e9dda6afd17c438450ef0f2ce7c4f, type: 3}
   <EffectsColor>k__BackingField: {r: 1, g: 0.01881078, b: 0, a: 1}
+  <BaseMineralHealth>k__BackingField: 200
   <PowerUp>k__BackingField: 0

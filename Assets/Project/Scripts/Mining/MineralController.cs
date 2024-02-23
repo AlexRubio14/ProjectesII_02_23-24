@@ -82,8 +82,8 @@ public class MineralController : InteractableObject
 
     public override void Interact()
     {
-        player.StartNewMinery(this);
-        //player.StartMinery(this); ESTO ES PARA LA MINERIA VIEJA
+        //player.StartNewMinery(this);
+        player.StartMinery(this);
     }
     public override void UnHide()
     {

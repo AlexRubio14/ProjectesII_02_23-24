@@ -278,7 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777bfd03ed19e0c4a838ea105bc9202f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
 --- !u!1 &7101442061328941082
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943805106611438627}
   - component: {fileID: 7941481099497301587}
+  - component: {fileID: 8008450455787134437}
   m_Layer: 0
   m_Name: TutorialTrigger
   m_TagString: Untagged
@@ -356,6 +356,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.416165, y: 5.9056206}
   m_EdgeRadius: 0
+--- !u!114 &8008450455787134437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101442061328941082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eba4238904947e459a7b3c06ffe5408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialkey: TpTutorial
+  dialogues:
+  - Recuerda que siempre puedes utilizar los teletransportadores para volver a base,
+    guardar los objetos y no quedarte sin combustible
+  dialogueController: {fileID: 0}
 --- !u!1 &7492676948855027737
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +416,6 @@ GameObject:
   - component: {fileID: 2438612229382598180}
   - component: {fileID: 8250807549292774234}
   - component: {fileID: 6824204765675086956}
-  - component: {fileID: 5520052317752791520}
   m_Layer: 10
   m_Name: Hub Tp
   m_TagString: Untagged
@@ -425,7 +441,7 @@ Transform:
   - {fileID: 6182099563924342520}
   - {fileID: 2280407530471977184}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2438612229382598180
 SpriteRenderer:
@@ -555,20 +571,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5245876, y: 2.7}
   m_EdgeRadius: 0
---- !u!114 &5520052317752791520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8110475501071502052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eba4238904947e459a7b3c06ffe5408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialkey: TpTutorial
-  dialogues:
-  - Recuerda que siempre puedes utilizar los teletransportadores para volver a base,
-    guardar los objetos y no quedarte sin combustible
-  dialogueController: {fileID: 0}
