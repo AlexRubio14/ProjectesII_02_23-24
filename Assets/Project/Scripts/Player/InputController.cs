@@ -12,12 +12,6 @@ public class InputController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(Instance);
-        }
-
-
         Instance = this;
     }
 
