@@ -5,14 +5,22 @@ using UnityEngine;
 public class Music : MonoBehaviour
 {
     [SerializeField]
-    AudioClip titleScreen;
+    AudioClip titleScreenAudio;
+
+    private AudioSource audioSource;
 
     private string mixerGroup;
 
-    private void Start()
+
+    private void OnEnable()
     {
         mixerGroup = "Music";
 
-        AudioManager._instance.Play2dLoop(titleScreen, mixerGroup);
+        audioSource = AudioManager._instance.Play2dLoop(titleScreenAudio, mixerGroup);
+    }
+
+    private void OnDisable()
+    {
+        AudioManager._instance.StopLoopSound(audioSource);
     }
 }

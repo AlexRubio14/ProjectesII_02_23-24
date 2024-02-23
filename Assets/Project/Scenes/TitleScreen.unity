@@ -5504,7 +5504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 157ae228da987334c97888b49c3867ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleScreen: {fileID: 8300000, guid: fb76d12bdcb511245a62bffcb1b57e52, type: 3}
+  titleScreenAudio: {fileID: 8300000, guid: fb76d12bdcb511245a62bffcb1b57e52, type: 3}
 --- !u!1 &1547340047
 GameObject:
   m_ObjectHideFlags: 0

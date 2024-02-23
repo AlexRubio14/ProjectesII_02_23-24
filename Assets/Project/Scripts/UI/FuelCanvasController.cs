@@ -292,8 +292,6 @@ public class FuelCanvasController : MonoBehaviour
 
     }
 
-
-
     private void RestoreDefaultValues()
     {
         //Reseteamos posiciones
@@ -306,8 +304,5 @@ public class FuelCanvasController : MonoBehaviour
         //Reseteamos Flotacion
         sliderFloatEffect.canFloat = false;
         lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
-
-
     }
-
 }
