@@ -1531,14 +1531,16 @@ MonoBehaviour:
   - {fileID: 3172924185371350793}
   - {fileID: 4632951066787994018}
   warningColor: {r: 0.7647059, g: 0.28627452, b: 0.28627452, a: 1}
-  blinkSpeed: 5
+  blinkSpeed: 2
+  backgroundFuelInfluence: 4
   shakeMagnitude: 3
-  maxFloatSpeed: 4
-  baseFloatSpeed: 5
-  dangerVignetteIntensity: {x: 0, y: 0}
-  dangerVignetteSpeed: 0
+  maxFloatSpeed: 3
+  baseFloatSpeed: 2
+  dangerBorderAlpha: {x: 0.05, y: 0.265}
+  dangerBorderSpeed: 1
+  borderFuelInfluence: 4.5
   hitShakeForce: 4
   hitShakeReduction: 2
-  hitVignetteMaxIntensity: 0.5
-  hitVignetteEnableSpeed: {x: 6, y: 1}
-  postProcess: {fileID: 0}
+  hitBorderMaxAlpha: 0.5
+  hitBorderEnableSpeed: {x: 6, y: 1}
+  lowFuelBorder: {fileID: 0}
