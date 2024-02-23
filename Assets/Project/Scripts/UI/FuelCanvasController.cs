@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using TMPro;
+using Unity.VisualScripting;
 
 public class FuelCanvasController : MonoBehaviour
 {
@@ -25,16 +28,54 @@ public class FuelCanvasController : MonoBehaviour
     [SerializeField]
     private Color warningColor;
     private Color starterColor;
-    [SerializeField]
+    [Space, SerializeField]
     private float blinkSpeed;
     private float colorFadeProgress;
-    private bool turningRed;
-
+    private bool turningRedUI;
     [SerializeField]
+    private float backgroundFuelInfluence;
+
+    [Space, SerializeField]
     private float shakeMagnitude;
     private Vector2[] starterPos;
+    
+    private ImageFloatEffect sliderFloatEffect;
+    [Space, SerializeField]
+    private float maxFloatSpeed;
+    [SerializeField]
+    private float baseFloatSpeed;
 
+    [Space, SerializeField]
+    private Vector2 dangerBorderAlpha;
+    [SerializeField]
+    private float dangerBorderSpeed;
+    private float dangerBorderProcess;
+    private bool turningRedBorder = false;
+    [SerializeField]
+    private float borderFuelInfluence;
 
+    [Space, Header("Hitted"), SerializeField]
+    private float hitShakeForce;
+    private float hitShakeProcess;
+    [SerializeField]
+    private float hitShakeReduction;
+    private bool hitted = false;
+
+    [Space, SerializeField]
+    private float hitBorderMaxAlpha;
+    [SerializeField]
+    private Vector2 hitBorderEnableSpeed;
+    private float hitBorderProcess;
+    private bool hitBorderEnable;
+
+    [SerializeField]
+    private Image lowFuelBorder;
+    private bool canFuelBorder;
+
+    private void Awake()
+    {
+        sliderFloatEffect = GetComponentInChildren<ImageFloatEffect>();
+    }
 
     private void Start()
     {
@@ -57,6 +98,17 @@ public class FuelCanvasController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        PlayerManager.Instance.player.OnHit += Hitted;
+    }
+
+    private void OnDisable()
+    {
+        playerController.OnHit -= Hitted;
+    }
+
+
     // Update is called once per frame
     void LateUpdate()
     {
@@ -64,23 +116,55 @@ public class FuelCanvasController : MonoBehaviour
         currentFuel.text = currFuel.ToString("0.0");
         fuelSlider.value = currFuel;
         totalConsumePerSecond.text = playerController.fuelConsume.ToString("0.0");
-        ShowLowFuel(currFuel);
 
+        if (currFuel <= 0)
+        {
+            RestoreDefaultValues();
+            return;
+        }
+
+        LowFuelFeedback(currFuel);
+        BorderHitEffect();
     }
 
-    private void ShowLowFuel(float _currFuel)
+    private void LowFuelFeedback(float _currFuel)
     {
-        if (_currFuel <= fuelPercent)
+        if (_currFuel <= fuelPercent && hitShakeProcess < shakeMagnitude)
         {
-            ShakeCanvas();
+            float maxFuelInfluence = 6;
+            float minFuelInfluence = 1.1f;
+            sliderFloatEffect.canFloat = true;
+            sliderFloatEffect.speed = Mathf.Clamp(
+                baseFloatSpeed / Mathf.Clamp(_currFuel / backgroundFuelInfluence, minFuelInfluence, maxFuelInfluence),
+                0,
+                maxFloatSpeed);
+
+            ShakeCanvas(shakeMagnitude);
             ChangeBackgroundColor(_currFuel);
+            BorderColorLowFuel(_currFuel);
+        }
+        else if (hitted) 
+        {
+            float shakeValue = Mathf.Lerp(0, hitShakeForce, hitShakeProcess);
+            ShakeCanvas(shakeValue);
+
+            hitShakeProcess -= Time.deltaTime * hitShakeReduction;
+
+            if (hitShakeProcess <= 0)
+            {
+                hitShakeProcess = 0;
+                hitted = false;
+            }
+        }
+        else
+        {
+            RestoreDefaultValues();
         }
     }
-
-    private void ShakeCanvas()
+    private void ShakeCanvas(float _shakeMagnitude)
     {
-        float shakeX = Random.Range(-shakeMagnitude, shakeMagnitude);
-        float shakeY = Random.Range(-shakeMagnitude, shakeMagnitude); 
+        float shakeX = Random.Range(-_shakeMagnitude, _shakeMagnitude);
+        float shakeY = Random.Range(-_shakeMagnitude, _shakeMagnitude); 
         for (int i = 0; i < backgrounds.Length; i++)
         {
             backgrounds[i].transform.parent.transform.localPosition = 
@@ -95,36 +179,134 @@ public class FuelCanvasController : MonoBehaviour
         if (_currFuel <= 0)
         {
             foreach (Image item in backgrounds)
-            {
                 item.color = warningColor;
-            }
+
+            sliderFloatEffect.canFloat = false;
+
             return;
         }
 
-        if (turningRed)
+        float maxFuelInfluence = 6;
+        float minFuelInfluence = 1.1f;
+
+        float result = Mathf.Clamp(_currFuel / backgroundFuelInfluence, minFuelInfluence, maxFuelInfluence);
+
+        Debug.Log(result);
+
+        // A la hora de hacer que el fuel actual influya en en la velocidad la limitaremos a un maximo que puede afectar
+        if (turningRedUI)
+            colorFadeProgress = Mathf.Clamp(
+                colorFadeProgress + blinkSpeed / Mathf.Clamp(_currFuel / backgroundFuelInfluence, minFuelInfluence, maxFuelInfluence) * Time.deltaTime,
+                0,
+                1);
+        else
+            colorFadeProgress = Mathf.Clamp(
+                colorFadeProgress - blinkSpeed / Mathf.Clamp(_currFuel / backgroundFuelInfluence, minFuelInfluence, maxFuelInfluence) * Time.deltaTime,
+                0,
+                1);
+
+        foreach (Image item in backgrounds)
+            item.color = Color.Lerp(starterColor, warningColor, colorFadeProgress);
+        
+
+        if (colorFadeProgress >= 1)
+            turningRedUI = false;
+        else if (colorFadeProgress <= 0)
+            turningRedUI = true;
+
+    }
+    private void BorderColorLowFuel(float _currFuel)
+    {
+        if (_currFuel <= 0)
         {
-            colorFadeProgress += (blinkSpeed / (_currFuel / 4)) * Time.deltaTime;
+            lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
+            return;
+        }
+        // A la hora de hacer que el fuel actual influya en en la velocidad la limitaremos a un maximo que puede afectar
+        float maxFuelInfluence = 6f;
+        float minFuelInfluence = 1.5f;
+
+        if (turningRedBorder)
+            dangerBorderProcess = Mathf.Clamp(
+                dangerBorderProcess + dangerBorderSpeed / Mathf.Clamp(_currFuel / borderFuelInfluence, minFuelInfluence, maxFuelInfluence) * Time.deltaTime,
+                dangerBorderAlpha[0], 
+                dangerBorderAlpha[1]);
+        else
+            dangerBorderProcess = Mathf.Clamp(
+                dangerBorderProcess - dangerBorderSpeed / Mathf.Clamp(_currFuel / borderFuelInfluence, minFuelInfluence, maxFuelInfluence) * Time.deltaTime,
+                dangerBorderAlpha[0],
+                dangerBorderAlpha[1]);
+
+        lowFuelBorder.color = lowFuelBorder.color.WithAlpha(dangerBorderProcess);
+
+        if (dangerBorderProcess >= dangerBorderAlpha[1])
+            turningRedBorder = false;
+        else if (dangerBorderProcess <= dangerBorderAlpha[0])
+            turningRedBorder = true;
+
+
+    }
+    private void Hitted()
+    {
+        hitted = true;
+        hitShakeProcess = hitShakeForce;
+        canFuelBorder = true;
+        hitBorderEnable = true;
+        lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
+    }
+
+    private void BorderHitEffect()
+    {
+        if (!canFuelBorder)
+            return;
+        
+        if (hitBorderEnable) 
+        {
+            hitBorderProcess = Mathf.Clamp(hitBorderProcess + hitBorderEnableSpeed[0] * Time.deltaTime, 0 , hitBorderMaxAlpha);
+            lowFuelBorder.color = lowFuelBorder.color.WithAlpha(hitBorderProcess);
+
+            if (hitBorderProcess >= hitBorderMaxAlpha)
+                hitBorderEnable = false;
+
         }
         else
         {
-            colorFadeProgress -= (blinkSpeed / (_currFuel / 4)) * Time.deltaTime;
+            hitBorderProcess = Mathf.Clamp(hitBorderProcess - hitBorderEnableSpeed[1] * Time.deltaTime, 0, hitBorderMaxAlpha);
+            lowFuelBorder.color = lowFuelBorder.color.WithAlpha(hitBorderProcess);
+
+            if (hitBorderProcess <= 0)
+            {
+                canFuelBorder = false;
+                hitBorderEnable = true;
+                hitBorderProcess = 0;
+                lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
+                return;
+            }
+            else if (hitBorderProcess <= dangerBorderProcess)
+            {
+                canFuelBorder = false;
+                hitBorderEnable = true;
+                hitBorderProcess = 0;
+            }
         }
 
+    }
+
+
+
+    private void RestoreDefaultValues()
+    {
+        //Reseteamos posiciones
+        for (int i = 0; i < backgrounds.Length; i++)
+            backgrounds[i].transform.parent.transform.localPosition = starterPos[i];
+
+        //Reseteamos color
         foreach (Image item in backgrounds)
-        {
-            item.color = Color.Lerp(starterColor, warningColor, colorFadeProgress);
-        }
+            item.color = starterColor;
+        //Reseteamos Flotacion
+        sliderFloatEffect.canFloat = false;
+        lowFuelBorder.color = lowFuelBorder.color.WithAlpha(0);
 
-        if (colorFadeProgress >= 1)
-        {
-            turningRed = false;
-            colorFadeProgress = 1;
-        }
-        else if (colorFadeProgress <= 0)
-        {
-            turningRed = true;
-            colorFadeProgress = 0;
-        }
 
     }
 

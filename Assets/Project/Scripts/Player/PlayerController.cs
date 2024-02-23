@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,6 +67,10 @@ public class PlayerController : MonoBehaviour
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
+    [SerializeField]
+    private ParticleSystem hitParticles;
+    [HideInInspector]
+    public Action OnHit;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -326,9 +331,23 @@ public class PlayerController : MonoBehaviour
         }
 
         CameraController.Instance.AddHighTrauma();
+        PlayHitParticles(damagePos);
+
         Knockback(damagePos);
+
         fuel -= value / PowerUpManager.Instance.Armor;
+
+
+        if (OnHit != null)
+            OnHit();
     }
+
+    private void PlayHitParticles(Vector2 damagePos)
+    {
+        hitParticles.transform.forward = ((Vector3)damagePos - transform.position).normalized;
+        hitParticles.Play();
+    }
+
     public void SubstractHealth(float value)
     {
         fuel -= value;
@@ -374,7 +393,7 @@ public class PlayerController : MonoBehaviour
         direction.Normalize();
 
         c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
-        c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+        c_rb.AddTorque(UnityEngine.Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
 
         Invoke("WaitForKnockbackTime", knockbackTime);
     }
