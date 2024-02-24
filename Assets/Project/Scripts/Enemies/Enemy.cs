@@ -6,9 +6,9 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected Rigidbody2D c_rb2d;
 
-    [Space, Header("--- BASE ENEMY"), SerializeField]
-    protected float maxHealth;
-    protected float currentHealth;
+    [field: Space, Header("--- BASE ENEMY"), SerializeField]
+    public float maxHealth { get; protected set; }
+    public float currentHealth { get; protected set; }
     [SerializeField]
     protected float speed;
 
@@ -40,7 +40,6 @@ public abstract class Enemy : EnemyIA, IHealth
     private bool showGizmos = true;
 
     protected SpriteRenderer spriteR;
-
 
     public void InitEnemy()
     {
@@ -126,7 +125,6 @@ public abstract class Enemy : EnemyIA, IHealth
     public void GetHit(float _damageAmount)
     {
         currentHealth -= _damageAmount;
-
         if (currentHealth <= 0)
             Die();
     }

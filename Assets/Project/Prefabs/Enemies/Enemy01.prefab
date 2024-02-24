@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 334274823621980755}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.67, y: 1.67, z: 1.67}
+  m_LocalScale: {x: 1.67, y: 1.6699998, z: 1.67}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6161894378625804264}
@@ -575,10 +575,11 @@ MonoBehaviour:
   - {fileID: 2450130724856854608}
   iaData: {fileID: 6668970655071454642}
   movementDirectionSolver: {fileID: 8942317131287401040}
-  maxHealth: 100
+  <maxHealth>k__BackingField: 100
   speed: 15
   <damage>k__BackingField: 10
   moveSpots:
+  - {fileID: 6161894378625804264}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
