@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI; 
 
 public class CannonController : MonoBehaviour
 {
@@ -41,11 +42,14 @@ public class CannonController : MonoBehaviour
 
     private PlayerController playerController;
 
+    Slider sliderHealthBar;
+
 
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
         shootinAnim = GetComponentInChildren<Animator>();
+        sliderHealthBar = aimTarget.GetComponentInChildren<Slider>();
         isShooting = false;
     }
 
@@ -100,6 +104,8 @@ public class CannonController : MonoBehaviour
             }
 
             aimTarget.transform.position = nearestEnemy.transform.position;
+            Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
+            sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
         }
         else if (aimTarget.activeInHierarchy)
             aimTarget.SetActive(false);
