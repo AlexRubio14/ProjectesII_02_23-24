@@ -43,11 +43,8 @@ public class PlayerController : MonoBehaviour
     [Space, SerializeField]
     private float dashSpeedDrag;
 
-    public enum RotationType { OLD_ROTATION, NEW_ROTATION };
     [Space, Header("Rotation"), SerializeField]
-    private RotationType currentRotation;
-    [SerializeField]
-    private float[] rotationSpeed;
+    private float rotationSpeed;
 
     [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
@@ -104,7 +101,7 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
-        fuelConsume = idleFuelConsume;
+        fuelConsume = -idleFuelConsume;
         currentState = State.IDLE;
 
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
@@ -194,33 +191,16 @@ public class PlayerController : MonoBehaviour
     }
     private void Rotation()
     {
-        if (currentRotation == RotationType.OLD_ROTATION)
-        {
-            Vector2 autoHelp = autoHelpController.autoHelpDirection;
+        Vector2 autoHelp = autoHelpController.autoHelpDirection;
             float autoHelpMutliplier = 3;
             //En caso de que se tenga que aplicar la auto ayuda
             //Y el player no este tocando ningun input
             //Y la ultima direccion no este mirando directo a la pared
             //Se usara la ultima direccion de movimiento
-
-            Vector2 movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
-
-            Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
-
-            float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
-
-            c_rb.AddTorque(signedAngle * rotationSpeed[(int)RotationType.OLD_ROTATION] * TimeManager.Instance.timeParameter);
-
-        }
-        else
-        {
-            Vector2 movementAndAutoHelpDirection = new Vector2(movementDirection.x, 0).normalized + autoHelpController.autoHelpDirection.normalized;
-
-            float signedAngle = Vector2.SignedAngle(transform.right, movementAndAutoHelpDirection);
-
-            c_rb.AddTorque(-movementDirection.x * rotationSpeed[(int)RotationType.NEW_ROTATION]);
-        }
-        
+        Vector2 movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
+        Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+        float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+        c_rb.AddTorque(signedAngle * rotationSpeed * TimeManager.Instance.timeParameter);
     }
     private void Dash()
     {
@@ -277,7 +257,7 @@ public class PlayerController : MonoBehaviour
     #region Ship Fuel
     void LoseFuel()
     {
-        fuel = Mathf.Clamp(fuel - fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
+        fuel = Mathf.Clamp(fuel + fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
         CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
@@ -402,10 +382,10 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case State.IDLE:
-                fuelConsume -= idleFuelConsume;
+                fuelConsume += idleFuelConsume;
                 break;
             case State.MOVING:
-                fuelConsume -= movingFuelConsume;
+                fuelConsume += movingFuelConsume;
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
@@ -425,10 +405,10 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.IDLE:
-                fuelConsume += idleFuelConsume;
+                fuelConsume -= idleFuelConsume;
                 break;
             case State.MOVING:
-                fuelConsume += movingFuelConsume;
+                fuelConsume -= movingFuelConsume;
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
