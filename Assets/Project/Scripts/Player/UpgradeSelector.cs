@@ -200,8 +200,8 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, true);
             playerController.externalMovementSpeed += boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = true;
-            //Sumar al consumo de fuel
-            playerController.fuelConsume += boostConsume;
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= boostConsume;
             boostParticles.Play(true);
             AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
             boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
@@ -213,8 +213,8 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, false); 
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
-            //Restar al consumo de fuel
-            playerController.fuelConsume -= boostConsume;
+            //Resetear el consumo de fuel sumando
+            playerController.fuelConsume += boostConsume;
             boostParticles.Stop(true);
             AudioManager._instance.StopLoopSound(boostSource);
             AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
@@ -252,8 +252,8 @@ public class UpgradeSelector : MonoBehaviour
             lightUpgrade.SetActive(true);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = true;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
-            //Sumar al consumo de fuel
-            playerController.fuelConsume += lightConsume;
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= lightConsume;
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
             loopLightSource = AudioManager._instance.Play2dLoop(loopLightClip, "Light");
         }
@@ -263,8 +263,9 @@ public class UpgradeSelector : MonoBehaviour
             lightUpgrade.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = false;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
-            //Restar al consumo de fuel
-            playerController.fuelConsume -= lightConsume;
+            //Resetear el consumo de fuel sumando
+
+            playerController.fuelConsume += lightConsume;
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
@@ -279,8 +280,8 @@ public class UpgradeSelector : MonoBehaviour
             drillSprite.SetActive(true);
             upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL] = true;
             ChangeBackground(_pos, true);
-            //Sumar al consumo de fuel
-            playerController.fuelConsume += drillConsume;
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= drillConsume;
             autoHelpController.enabled = false;
             
         }
@@ -292,8 +293,8 @@ public class UpgradeSelector : MonoBehaviour
             drillSprite.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL] = false;
             ChangeBackground(_pos, false);
-            //Restar al consumo de fuel
-            playerController.fuelConsume -= drillConsume;
+            //Resetear el consumo de fuel sumando
+            playerController.fuelConsume += drillConsume;
             autoHelpController.enabled = true;
         }
     }

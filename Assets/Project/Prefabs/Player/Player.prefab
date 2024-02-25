@@ -5291,10 +5291,7 @@ MonoBehaviour:
   dashFuelConsume: 3
   timeDashing: 0.1
   dashSpeedDrag: 2.5
-  currentRotation: 0
-  rotationSpeed:
-  - 0.55
-  - 15
+  rotationSpeed: 0.55
   knockbackScale: 10
   knockbackRotation: 1
   knockbackTime: 0.3
