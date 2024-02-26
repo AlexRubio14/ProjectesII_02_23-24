@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7162164947849123062}
   - component: {fileID: 2359334032615030326}
   - component: {fileID: 2248746174272144145}
+  - component: {fileID: 286312467023834906}
   m_Layer: 10
   m_Name: Core
   m_TagString: Map
@@ -60,13 +61,13 @@ Transform:
   m_GameObject: {fileID: 2458673022549271253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.75, y: -87.25, z: 0.09955555}
-  m_LocalScale: {x: 35.15, y: 35.15, z: 35.15}
+  m_LocalScale: {x: 29.04796, y: 28.703491, z: 35.15}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8307637593128823090}
   - {fileID: 807789713305814467}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5779246795071984872
 SpriteRenderer:
@@ -229,6 +230,22 @@ MonoBehaviour:
   - {fileID: 807789713305814467}
   glowUpSpeed: 3
   timeToChangeScene: 4
+--- !u!114 &286312467023834906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2458673022549271253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  maxExpand: 1.1
+  minExpand: 0.951
+  <canFloat>k__BackingField: 1
 --- !u!1 &7359500315424215698
 GameObject:
   m_ObjectHideFlags: 0
