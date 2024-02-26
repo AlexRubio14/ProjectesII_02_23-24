@@ -50,7 +50,7 @@ public class QuestCanvasController : MonoBehaviour
         {
             Image newImage = Instantiate(needImagePrefab, layoutQuest.transform).GetComponent<Image>();
             prizeImages.Add(newImage);
-            newImage.sprite = item.Key.c_PickableSprite;
+            newImage.sprite = item.Key.PickableSprite;
             TextMeshProUGUI newText = Instantiate(needTextPrefab, layoutQuest.transform).GetComponent<TextMeshProUGUI>();
             prizeTexts.Add(newText);
         }
@@ -70,7 +70,7 @@ public class QuestCanvasController : MonoBehaviour
             {
                 for(int i = 0; i < prizeImages.Count; i++)
                 {
-                    if (prizeImages[i].sprite == _itemType.c_PickableSprite) 
+                    if (prizeImages[i].sprite == _itemType.PickableSprite) 
                     {
                         StopCoroutine("StopFloating");
 

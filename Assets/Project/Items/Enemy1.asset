@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Miaundibula
-  <Weight>k__BackingField: 0
-  <c_BetaSprite>k__BackingField: {fileID: 0}
-  <c_MapSprite>k__BackingField: {fileID: 0}
-  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 14d68de9280833d4c9ce83a1896b592a, type: 3}
+  <BetaSprite>k__BackingField: {fileID: 0}
+  <MapSprite>k__BackingField: {fileID: 0}
+  <PickableSprite>k__BackingField: {fileID: 21300000, guid: 14d68de9280833d4c9ce83a1896b592a, type: 3}
   <EffectsColor>k__BackingField: {r: 0.93819284, g: 0, b: 1, a: 1}
+  <BaseMineralHealth>k__BackingField: 0
+  <EnergyLevelSize>k__BackingField: {x: 0, y: 0}
   <PowerUp>k__BackingField: 0

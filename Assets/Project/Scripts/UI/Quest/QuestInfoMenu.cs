@@ -71,7 +71,7 @@ public class QuestInfoMenu : MonoBehaviour
 
             Image newImage = newObj.AddComponent<Image>();
             requirementImages.Add(newImage);
-            newImage.sprite = item.Key.c_PickableSprite;
+            newImage.sprite = item.Key.PickableSprite;
             
 
             newObj.transform.SetParent(requirementsLayout.transform);
