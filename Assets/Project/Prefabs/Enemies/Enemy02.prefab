@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777b6d11e1883224babaac0a17269776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeVision: 7.5
+  rangeVision: 12
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
