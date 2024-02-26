@@ -183,7 +183,7 @@ public class MineryMinigameController : MonoBehaviour
             if (i < currentMineral.MaxItemsToReturn)
             {
                 itemImage.enabled = true;
-                itemImage.sprite = currentMineral.c_currentItem.c_PickableSprite;
+                itemImage.sprite = currentMineral.c_currentItem.PickableSprite;
                 itemImage.color = Color.white;
                 mineralsHealth.Add(selectedMineralControler.minerals[i], currentMineral.mineralsHealth[i]);
                 selectedMineralControler.activeMinerals[selectedMineralControler.minerals[i]] = true;

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,7 +13,7 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private InputActionReference cancelMinigameAction;
 
-    [Space, Header(""), SerializeField]
+    [Space, Header("Lasers"), SerializeField]
     private float laserChargeSpeed;
     [SerializeField]
     private float laserDischargeSpeed;
@@ -47,9 +46,9 @@ public class MineMinigameController : MonoBehaviour
     private ParticleSystem rightLaserParticles;
 
     [Space, Header("Mine"), SerializeField]
-    private Slider c_progressBarSlider;
+    private Slider progressBarSlider;
     [SerializeField]
-    private Slider c_integrity;
+    private Slider integrity;
     [SerializeField]
     private float progressSpeed;
     [SerializeField]
@@ -83,11 +82,11 @@ public class MineMinigameController : MonoBehaviour
     private Quaternion endRotationLeftLaser;
 
     [Space, Header("Minerals"), SerializeField]
-    private GameObject c_pickableItemPrefab;
+    private GameObject pickableItemPrefab;
     [SerializeField]
     private float maxThrowSpeed;
 
-    private MineralController c_miningItem;
+    private MineralController miningItem;
     [SerializeField]
     private TextMeshProUGUI[] percentText;
     [SerializeField]
@@ -115,7 +114,7 @@ public class MineMinigameController : MonoBehaviour
     void OnEnable()
     {
         integrityValue = maxIntegrity;
-        c_progressBarSlider.maxValue = maxIntegrity;
+        progressBarSlider.maxValue = maxIntegrity;
 
         currentMultiplierSpeed = 1;
 
@@ -137,9 +136,11 @@ public class MineMinigameController : MonoBehaviour
 
         cancelMinigameAction.action.performed += CancelMinigame;
 
+
+        TimeManager.Instance.PauseGame();
+
         AudioManager._instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
         AudioManager._instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
-
     }
     private void OnDisable()
     {
@@ -152,6 +153,7 @@ public class MineMinigameController : MonoBehaviour
         cancelMinigameAction.action.performed -= CancelMinigame;
 
 
+        TimeManager.Instance.ResumeGame();
     }
 
     // Update is called once per frame
@@ -239,8 +241,8 @@ public class MineMinigameController : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
-        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(neededSizes.x, neededSizes.y));
-        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(neededSizes.x, neededSizes.y));
+        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.EnergyLevelSize.x, miningItem.c_currentItem.EnergyLevelSize.y));
+        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.EnergyLevelSize.x, miningItem.c_currentItem.EnergyLevelSize.y));
     }
 
     private void CheckAdvanceProgress()
@@ -269,8 +271,8 @@ public class MineMinigameController : MonoBehaviour
             integrityValue -= (breakSpeed * 2) * Time.deltaTime;
         }
 
-        c_progressBarSlider.value = progressValue;
-        c_integrity.value = integrityValue;
+        progressBarSlider.value = progressValue;
+        integrity.value = integrityValue;
 
         MultiplierFeedback();
 
@@ -310,7 +312,7 @@ public class MineMinigameController : MonoBehaviour
 
         ThrowMinerals(CalculateMinerals(integrityValue));
 
-        c_miningItem.gameObject.SetActive(false);
+        miningItem.gameObject.SetActive(false);
         CameraController.Instance.AddMediumTrauma();
         progressValue = 0;
         integrityValue = 0;
@@ -329,19 +331,19 @@ public class MineMinigameController : MonoBehaviour
         short itemsToReturn; 
         if (_currentIntegrity >= quarterIntegrity * 3) //100% de minerales
         {
-            itemsToReturn = c_miningItem.MaxItemsToReturn;
+            itemsToReturn = miningItem.MaxItemsToReturn;
         }
         else if (_currentIntegrity >= quarterIntegrity * 2) //75% de minerales
         {
-            itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.75f);
+            itemsToReturn = (short)Mathf.CeilToInt(miningItem.MaxItemsToReturn * 0.75f);
         }
         else if (_currentIntegrity >= quarterIntegrity) //50% de minerales
         {
-            itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.5f);
+            itemsToReturn = (short)Mathf.CeilToInt(miningItem.MaxItemsToReturn * 0.5f);
         }
         else if (_currentIntegrity > 0) //25% de minerales
         {
-            itemsToReturn = (short)Mathf.CeilToInt(c_miningItem.MaxItemsToReturn * 0.25f);
+            itemsToReturn = (short)Mathf.CeilToInt(miningItem.MaxItemsToReturn * 0.25f);
         }
         else // 0% de minerales
         {
@@ -357,9 +359,9 @@ public class MineMinigameController : MonoBehaviour
     {
         for (int i = 0; i < _itemsToReturn; i++)
         {
-            PickableItemController currItem = Instantiate(c_pickableItemPrefab, c_miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
+            PickableItemController currItem = Instantiate(pickableItemPrefab, miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.c_currentItem = c_miningItem.c_currentItem;
+            currItem.c_currentItem = miningItem.c_currentItem;
 
             float randomX = Random.Range(-1, 2);
             float randomY = Random.Range(-1, 2);
@@ -374,7 +376,7 @@ public class MineMinigameController : MonoBehaviour
     }
     public void SetMiningObject(MineralController _mineral)
     {
-        c_miningItem = _mineral;
+        miningItem = _mineral;
     }
 
     private void SetupQuantityText()
@@ -388,7 +390,7 @@ public class MineMinigameController : MonoBehaviour
     {
         for (int i = 0; i < mineralTypeImages.Length; i++)
         {
-            mineralTypeImages[i].sprite = c_miningItem.c_currentItem.c_PickableSprite;
+            mineralTypeImages[i].sprite = miningItem.c_currentItem.PickableSprite;
         }
     }
 

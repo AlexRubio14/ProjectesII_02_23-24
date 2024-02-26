@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4087865223996663104}
   m_Layer: 5
-  m_Name: CurrentEnergyLeve
+  m_Name: CurrentEnergyLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -484,8 +484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49462a71c1671bf4d864851e3aae4074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  c_currentEnergyLevelPointer: {fileID: 5376053008333232036}
-  c_needEnergyLevelPointer: {fileID: 8227475482437155795}
+  currentEnergyLevelPointer: {fileID: 5376053008333232036}
+  needEnergyLevelPointer: {fileID: 8227475482437155795}
   CorrectEnergy: 0
 --- !u!1 &971296759122435226
 GameObject:
@@ -1080,10 +1080,10 @@ MonoBehaviour:
   rightLaser: {fileID: 129375026606737271}
   rightLaserSlider: {fileID: 5051201803688919494}
   rightLaserParticles: {fileID: 3779498173179561672}
-  c_progressBarSlider: {fileID: 6991850848142364571}
-  c_integrity: {fileID: 2034922421588692019}
+  progressBarSlider: {fileID: 6991850848142364571}
+  integrity: {fileID: 2034922421588692019}
   progressSpeed: 4
-  breakSpeed: 2
+  breakSpeed: 7
   maxIntegrity: 100
   maxMultiplierSpeed: 4
   multiplierUpSpeed: 1.5
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   rightLaserPivot: {fileID: 8906084340829743810}
   leftLaserPivot: {fileID: 4009990243727180844}
   maxAngleRotation: 10
-  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 3.5
   percentText:
   - {fileID: 6824661381988163203}
@@ -2526,7 +2526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8193324810005831337}
   m_Layer: 5
-  m_Name: CurrentEnergyLeve
+  m_Name: CurrentEnergyLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3605,8 +3605,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49462a71c1671bf4d864851e3aae4074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  c_currentEnergyLevelPointer: {fileID: 2144074295102663339}
-  c_needEnergyLevelPointer: {fileID: 8383994242261416462}
+  currentEnergyLevelPointer: {fileID: 2144074295102663339}
+  needEnergyLevelPointer: {fileID: 8383994242261416462}
   CorrectEnergy: 0
 --- !u!1 &7546343655627401394
 GameObject:

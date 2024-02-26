@@ -42,6 +42,5 @@ public class TimeManager : MonoBehaviour
 
         if(resumeAction != null)
             resumeAction();
-        
     }
 }

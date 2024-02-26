@@ -68,7 +68,7 @@ public class UpgradeInfo : MonoBehaviour
 
         foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
         {
-            prizeImages[index].sprite = item.Key.c_PickableSprite;
+            prizeImages[index].sprite = item.Key.PickableSprite;
 
             prizeTexts[index].text = inventoryMap[item.Key] + " / " + item.Value;
 
@@ -118,7 +118,7 @@ public class UpgradeInfo : MonoBehaviour
             {
                 for (int i = 0; i < prizeTexts.Count; i++)
                 {
-                    if (item.Key.c_PickableSprite == prizeImages[i].sprite)
+                    if (item.Key.PickableSprite == prizeImages[i].sprite)
                     {
                         prizeImages[i].color = Color.red;
                         prizeTexts[i].color = Color.red;

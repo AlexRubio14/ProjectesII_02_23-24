@@ -48,9 +48,9 @@ public class MineralController : InteractableObject
         else
         {
             if (isBeta)
-                c_spriteR.sprite = c_currentItem.c_BetaSprite;
+                c_spriteR.sprite = c_currentItem.BetaSprite;
             else
-                c_spriteR.sprite = c_currentItem.c_MapSprite;
+                c_spriteR.sprite = c_currentItem.MapSprite;
         }
 
         currentRockHealth = mineralRockBaseHealth;
@@ -92,9 +92,9 @@ public class MineralController : InteractableObject
         c_boxCollider.offset = originalBoxOffset;
 
         if (isBeta)
-            c_spriteR.sprite = c_currentItem.c_BetaSprite;
+            c_spriteR.sprite = c_currentItem.BetaSprite;
         else
-            c_spriteR.sprite = c_currentItem.c_MapSprite;
+            c_spriteR.sprite = c_currentItem.MapSprite;
 
         isInteractable = true;
         isHide = false;

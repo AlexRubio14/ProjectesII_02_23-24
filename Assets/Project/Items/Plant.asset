@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Plant
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Purrrlanum
-  <c_BetaSprite>k__BackingField: {fileID: 21300000, guid: 61232341dcf68a045a728b24b4642c93, type: 3}
-  <c_MapSprite>k__BackingField: {fileID: 21300000, guid: 1763fbed983728a42a89247830cb2fad, type: 3}
-  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 1fed3e9c4c7fd9946ad9bf546278c54f, type: 3}
+  <BetaSprite>k__BackingField: {fileID: 21300000, guid: 61232341dcf68a045a728b24b4642c93, type: 3}
+  <MapSprite>k__BackingField: {fileID: 21300000, guid: 1763fbed983728a42a89247830cb2fad, type: 3}
+  <PickableSprite>k__BackingField: {fileID: 21300000, guid: 1fed3e9c4c7fd9946ad9bf546278c54f, type: 3}
   <EffectsColor>k__BackingField: {r: 1, g: 0, b: 0.79884434, a: 1}
   <BaseMineralHealth>k__BackingField: 150
+  <EnergyLevelSize>k__BackingField: {x: 80, y: 100}
   <PowerUp>k__BackingField: 0

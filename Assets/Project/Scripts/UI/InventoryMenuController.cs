@@ -22,7 +22,7 @@ public class InventoryMenuController : MonoBehaviour
         foreach (KeyValuePair<ItemObject, short> item in inventory)
         {
             Image newItem = Instantiate(menuItemPrefab, transform).GetComponent<Image>();
-            newItem.sprite = item.Key.c_PickableSprite;
+            newItem.sprite = item.Key.PickableSprite;
             newItem.GetComponentInChildren<TextMeshProUGUI>().text = item.Value.ToString();
 
             itemsImages.Add(item.Key, newItem);
