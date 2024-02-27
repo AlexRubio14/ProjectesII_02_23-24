@@ -70,12 +70,17 @@ public class UpgradeSelector : MonoBehaviour
     [Space, Header("Light"), SerializeField]
     private GameObject lightUpgrade;
 
+    //[Space, Header("Size Changer"), SerializeField]
+    private SizeUpgradeController sizeUpgrade;
+
     [Space, Header("Fuel Consume"), SerializeField]
     private float boostConsume;
     [SerializeField]
     private float drillConsume;
     [SerializeField]
     private float lightConsume;
+    [SerializeField]
+    private float sizeChangerConsume;
 
 
     private PlayerController playerController;
@@ -86,6 +91,7 @@ public class UpgradeSelector : MonoBehaviour
         playerController = GetComponent<PlayerController>();  
         drillController = GetComponent<DrillController>();
         autoHelpController = GetComponent<AutoHelpController>();
+        sizeUpgrade = GetComponent<SizeUpgradeController>();
     }
 
     private void Start()
@@ -98,7 +104,7 @@ public class UpgradeSelector : MonoBehaviour
             Sprite currentSprite;
             if (UpgradeManager.Instance.CheckObtainedUpgrade(item.Value))
             {
-                currentSprite = item.Value.c_UpgradeSprite;
+                currentSprite = item.Value.UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
             }
             else
@@ -110,9 +116,8 @@ public class UpgradeSelector : MonoBehaviour
             upgradeImagePositions[item.Key].sprite = currentSprite;
 
             if (item.Value.type == UpgradeObject.UpgradeType.BOOST)
-            {
                 boostPos = item.Key;
-            }
+            
         }
 
         upgradesToggled = new bool[4];
@@ -157,7 +162,7 @@ public class UpgradeSelector : MonoBehaviour
         {
             foreach (KeyValuePair<Position, UpgradeObject> item in upgradePositions)
             {
-                upgradeImagePositions[item.Key].sprite = item.Value.c_UpgradeSprite;
+                upgradeImagePositions[item.Key].sprite = item.Value.UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
             }
         }
@@ -182,8 +187,8 @@ public class UpgradeSelector : MonoBehaviour
             case UpgradeObject.UpgradeType.DRILL:
                 ToggleDrill(_pos);
                 break;
-            case UpgradeObject.UpgradeType.CORE_COLLECTOR:
-                ToggleCoreCollector(_pos);
+            case UpgradeObject.UpgradeType.SIZE_CHANGER:
+                ToggleSizeChanger(_pos);
                 break;
             default:
                 break;
@@ -193,7 +198,6 @@ public class UpgradeSelector : MonoBehaviour
     private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
-        
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
@@ -244,7 +248,6 @@ public class UpgradeSelector : MonoBehaviour
             ToggleBoost(boostPos, false);
         }
     }
-
     private void ToggleLight(Position _pos)
     {
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT])
@@ -269,7 +272,6 @@ public class UpgradeSelector : MonoBehaviour
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
-
     private void ToggleDrill(Position _pos)
     {
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL])
@@ -298,11 +300,31 @@ public class UpgradeSelector : MonoBehaviour
             autoHelpController.enabled = true;
         }
     }
-
-    private void ToggleCoreCollector(Position _pos)
+    private void ToggleSizeChanger(Position _pos)
     {
         //Upgrade 3
-        Debug.LogWarning("Core Collector no implementado");
+        if (!upgradesToggled[(int)UpgradeObject.UpgradeType.SIZE_CHANGER])
+        {
+            //ACTIVAMOS LA MEJORA
+            upgradesToggled[(int)UpgradeObject.UpgradeType.SIZE_CHANGER] = true;
+            sizeUpgrade.enabled = true;
+            sizeUpgrade.SetGrowing(false);
+            ChangeBackground(_pos, true);
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= sizeChangerConsume;
+            autoHelpController.enabled = false;
+        }
+        else
+        {
+            //DESACTIVAMOS LA MEJORA
+            upgradesToggled[(int)UpgradeObject.UpgradeType.SIZE_CHANGER] = false;
+            sizeUpgrade.SetGrowing(true);
+
+            ChangeBackground(_pos, false);
+            //Resetear el consumo de fuel sumando
+            playerController.fuelConsume += sizeChangerConsume;
+        }
+        
     }
 
     private void ChangeBackground(Position _pos, bool _on)

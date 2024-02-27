@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction c_mapInteraction;
     private AutoHelpController autoHelpController;
+    private SizeUpgradeController sizeUpgrade;
+
     private void Awake()
     {
         c_rb = GetComponent<Rigidbody2D>();
@@ -96,6 +98,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
+        sizeUpgrade = GetComponent<SizeUpgradeController>();    
 
     }
     
@@ -187,7 +190,7 @@ public class PlayerController : MonoBehaviour
                         Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
                         Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
-        c_rb.AddForce(acceleration * TimeManager.Instance.timeParameter, ForceMode2D.Force);
+        c_rb.AddForce(acceleration * TimeManager.Instance.timeParameter * sizeUpgrade.sizeMultiplyer, ForceMode2D.Force);
     }
     private void Rotation()
     {
@@ -200,7 +203,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
         Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
         float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
-        c_rb.AddTorque(signedAngle * rotationSpeed * TimeManager.Instance.timeParameter);
+        c_rb.AddTorque(signedAngle * (rotationSpeed * sizeUpgrade.sizeMultiplyer) * TimeManager.Instance.timeParameter);
     }
     private void Dash()
     {
