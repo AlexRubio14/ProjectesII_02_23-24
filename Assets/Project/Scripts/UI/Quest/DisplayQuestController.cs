@@ -7,8 +7,6 @@ public class DisplayQuestController : MonoBehaviour
 {
     [SerializeField]
     private Button firstButtonSelected;
-    [Space, SerializeField]
-    private GameObject shopButtons;
 
     [Space, Header("First Time Quest"), SerializeField]
     private QuestInfoMenu firstTimeQuest;
@@ -20,8 +18,6 @@ public class DisplayQuestController : MonoBehaviour
     [SerializeField]
     private Button checkListSelectedButton;
     [HideInInspector]
-    public List<QuestObject> newQuests;
-    [HideInInspector]
     public bool checkDisplayNewQuests = false;
     [SerializeField]
     private Button questBackButton;
@@ -31,7 +27,6 @@ public class DisplayQuestController : MonoBehaviour
 
     private void Start()
     {
-        newQuests = new List<QuestObject>();
 
         //Esto solo funcionara si acabamos de empezar el juego, nos seleccionara la primera quest de todas y nos saltara el 
         QuestObject selectedQuest = QuestManager.Instance.GetSelectedQuest();
@@ -64,42 +59,12 @@ public class DisplayQuestController : MonoBehaviour
         }
 
 
-        if (checkController.isActiveAndEnabled && newQuests.Count <= 1)
+        if (checkController.isActiveAndEnabled)
             firstTimeQuest.onFirstQuestClosed[1] = checkController.questBackButton;
         
 
         if (firstTimeQuest.gameObject.activeInHierarchy)
-            StartCoroutine(WaitSelectFirstTimeButton());
-
-        
-
-    }
-
-    private void Update()
-    {
-        CheckForNewQuests();
-    }
-    
-    private void CheckForNewQuests()
-    {
-        if (checkDisplayNewQuests && !firstTimeQuest.gameObject.activeInHierarchy)
-        {
-            if (newQuests.Count <= 0)
-            {
-                checkDisplayNewQuests = false;
-                questBackButton.onClick.Invoke();
-                return;
-            }
-            else if (newQuests[0].obtainedQuest)
-            {
-                newQuests.RemoveAt(0);
-                return;
-            }
-
-            firstTimeQuest.gameObject.SetActive(true);
-            firstTimeQuest.SetValues(newQuests[0]);
-            shopButtons.SetActive(false);
-        }
+            StartCoroutine(WaitSelectFirstTimeButton()); 
     }
 
     public void DisplayQuestList()
@@ -108,7 +73,4 @@ public class DisplayQuestController : MonoBehaviour
         checkController.DisplayQuestCardList();
         checkListSelectedButton.Select();
     }
-
-
-
 }

@@ -19,6 +19,9 @@ public class QuestObject : ScriptableObject
     [field: TextArea, SerializeField]
     public string[] questDialogue { private set; get; }
 
+    [field: TextArea, SerializeField]
+    public string[] questDialogueEnd { private set; get; }
+
     //[field: TextArea, SerializeField]
     //public string questResume { private set; get; }
 

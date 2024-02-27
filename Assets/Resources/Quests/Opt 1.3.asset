@@ -16,6 +16,7 @@ MonoBehaviour:
   <questTitle>k__BackingField: Opt. 1.3
   <questName>k__BackingField: Gato Arabe
   <questDialogue>k__BackingField: []
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}

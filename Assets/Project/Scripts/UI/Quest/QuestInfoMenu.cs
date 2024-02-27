@@ -159,18 +159,11 @@ public class QuestInfoMenu : MonoBehaviour
 
     public void SelectEndFirtstTimeButton()
     {
-        if (displayQuestController.newQuests.Count > 1)
-        {
-            return;
-        }
-
-        if (currentQuest.questID != 0 )
-        {
-            onFirstQuestClosed[1].onClick.Invoke();
-        }
-        else
+        if (currentQuest.questID == 0 )
         {
             onFirstQuestClosed[0].Select();
         }
     }
+
+
 }

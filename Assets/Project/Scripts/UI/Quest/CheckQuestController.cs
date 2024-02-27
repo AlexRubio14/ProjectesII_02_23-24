@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CheckQuestController : MonoBehaviour
 {
@@ -28,12 +29,17 @@ public class CheckQuestController : MonoBehaviour
     [SerializeField]
     private Button completeButton;
     private TextMeshProUGUI completeText;
-    private ImageFloatEffect completeButtonFloatEffect;
     [SerializeField]
     private Button selectButton;
     [SerializeField]
     private Button backButton;
     private TextMeshProUGUI selectText;
+    [SerializeField]
+    private DialogueController dialogueController;
+    [SerializeField]
+    private UpgradeInstructionController upgradeInstruction;
+    [SerializeField]
+    private Button upgradeInstructionObtainButton;
 
     [Space, Header("Inventory"), SerializeField]
     private InventoryMenuController inventoryMenu;
@@ -44,7 +50,6 @@ public class CheckQuestController : MonoBehaviour
 
         displayQuestController = GetComponentInParent<DisplayQuestController>();
         completeText = completeButton.GetComponentInChildren<TextMeshProUGUI>();
-        completeButtonFloatEffect = completeButton.GetComponent<ImageFloatEffect>();
         selectText = selectButton.GetComponentInChildren<TextMeshProUGUI>();
 
 
@@ -56,8 +61,6 @@ public class CheckQuestController : MonoBehaviour
     {
         if (_selectButton)
         {
-            cardLayout.gameObject.SetActive(false);
-            cardListBackButton.gameObject.SetActive(false);
             backButton.Select();
         }
 
@@ -119,11 +122,22 @@ public class CheckQuestController : MonoBehaviour
             switch (item.Value)
             {
                 case QuestObject.RewardType.UPGRADE:
-                    UpgradeManager.Instance.ObtainUpgrade((UpgradeObject)item.Key);
+                    UpgradeObject currentUpgrade = (UpgradeObject)item.Key; 
+                    UpgradeManager.Instance.ObtainUpgrade(currentUpgrade);
+
+                    IEnumerator DisplayUpgradeInstructions()
+                    {
+                        yield return new WaitForEndOfFrame();
+
+                        upgradeInstruction.gameObject.SetActive(true);
+                        upgradeInstruction.SetUpgradeInstructions(currentUpgrade);
+
+                        upgradeInstructionObtainButton.Select(); 
+                    }
+                    StartCoroutine(DisplayUpgradeInstructions());
                     break;
                 case QuestObject.RewardType.NEW_QUEST:
-                    displayQuestController.checkDisplayNewQuests = true;
-                    displayQuestController.newQuests.Add((QuestObject)item.Key);
+                    ((QuestObject)item.Key).obtainedQuest = true;
                     break;
                 case QuestObject.RewardType.POWER_UP:
                     ItemObject currentItem = (ItemObject)item.Key;
@@ -143,6 +157,11 @@ public class CheckQuestController : MonoBehaviour
             inventoryMenu.UpdateItemAmount(item.Key);
         }
 
+
+
+        dialogueController.dialogues = currentQuest.questDialogueEnd;
+        dialogueController.gameObject.SetActive(true);
+        dialogueController.StartDialogue();
     }
 
     private void SelectQuest()

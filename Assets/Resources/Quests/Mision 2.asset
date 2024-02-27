@@ -15,12 +15,12 @@ MonoBehaviour:
   <questID>k__BackingField: 4
   <questTitle>k__BackingField: Mision 2
   <questName>k__BackingField: Explorando
-  <questDialogue>k__BackingField:
-  - " \xA1Perfecto! Cuando te vuelvas a montar en tu nave ya tendras la mejora instalada."
+  <questDialogue>k__BackingField: []
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 30
+      Value: 20
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
       Value: 8
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
@@ -31,6 +31,6 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
       Value: 1
-  obtainedQuest: 0
-  completedQuest: 0
-  newQuest: 1
+  obtainedQuest: 1
+  completedQuest: 1
+  newQuest: 0

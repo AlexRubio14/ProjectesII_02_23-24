@@ -21,6 +21,7 @@ MonoBehaviour:
   - "No solo puedo crearte mejoras funcionales para tu nave, sino tambi\xE9n mejoras
     b\xE1sicas que transformar\xE1n tu experiencia en tu travesia a traves de las
     cuevas mas profundas de este planeta."
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
@@ -33,6 +34,6 @@ MonoBehaviour:
       Value: 2
     - Key: {fileID: 11400000, guid: 193e1c8766041d74f8115e8a7f78ad76, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

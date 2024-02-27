@@ -22,6 +22,7 @@ MonoBehaviour:
     paredes agrietadas.
   - Estas paredes estan rodeados por polvo azul asi que si lo ves no dudes en atravesarlo
     todo.
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}

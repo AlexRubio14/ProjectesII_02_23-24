@@ -21,6 +21,9 @@ MonoBehaviour:
   - Aqui tienes tu nave para poder realizar tu primera inmersion.
   - Pero pareces muy novato, asi que para ponerte a prueba. Mina con la nave estos
     materiales, completa este encargo y tendras una recompensa. Buena suerte.
+  <questDialogueEnd>k__BackingField:
+  - "\xA1Puurrrfecto! Cuando te vuelvas a montar en tu nave ya tendras la mejora
+    instalada."
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
@@ -35,6 +38,6 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: bd806acfc0ed28343ac20594fda134c5, type: 2}
       Value: 1
-  obtainedQuest: 0
-  completedQuest: 0
-  newQuest: 1
+  obtainedQuest: 1
+  completedQuest: 1
+  newQuest: 0
