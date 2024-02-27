@@ -5076,7 +5076,7 @@ Transform:
   - {fileID: 568766594774729756}
   - {fileID: 6731831567605306346}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4194747130575803385
 Rigidbody2D:
@@ -5265,6 +5265,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0dd457ca-4067-449a-ad9e-36d9711216d5
     m_ActionName: Menu/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f37d89aa-045e-4e51-ba33-895c7d5c40ab
+    m_ActionName: NewMineryMinigame/AimLaser
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 76b421ef-64e3-41b1-a436-a1b09aaa8438
+    m_ActionName: NewMineryMinigame/ShootRightLaser
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 934eab80-288b-48ae-b6e8-4b9df7b23b2e
+    m_ActionName: NewMineryMinigame/ShootLeftLaser
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5542,6 +5554,7 @@ MonoBehaviour:
   smallSize: 0.2
   shrinkSpeed: 2
   growthSpeed: 0.8
+  shipSpriteFloatFX: {fileID: 7995032489129776164}
   smallCamSize: 2
 --- !u!1 &4329926445472445026
 GameObject:
@@ -5553,6 +5566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 891768667410726803}
   - component: {fileID: 7617439251563457418}
+  - component: {fileID: 7995032489129776164}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -5627,6 +5641,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7995032489129776164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329926445472445026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  maxExpand: 1.2
+  minExpand: 1
+  <canFloat>k__BackingField: 0
 --- !u!1 &5233284740093521197
 GameObject:
   m_ObjectHideFlags: 0

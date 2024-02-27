@@ -17,8 +17,10 @@ public class SizeUpgradeController : MonoBehaviour
 
     private bool growing;
     private float growProcess;
-
     public float sizeMultiplyer { set; get; }
+    [SerializeField]
+    private ImageFloatEffect shipSpriteFloatFX;
+
 
     [Space, Header("Camera Size"), SerializeField]
     private float smallCamSize;
@@ -55,12 +57,18 @@ public class SizeUpgradeController : MonoBehaviour
         {
             ChangeSize(-Time.deltaTime, shrinkSpeed);
         }
+        else
+        {
+            shipSpriteFloatFX.canFloat = false;
+        }
 
 
     }
 
     private void ChangeSize(float _signedDelta, float _speed)
     {
+        shipSpriteFloatFX.canFloat = true;
+
         growProcess = Mathf.Clamp01(growProcess + _speed * _signedDelta);
 
         transform.localScale = Vector3.Lerp(Vector3.one * smallSize, Vector3.one * normalSize, growProcess);
