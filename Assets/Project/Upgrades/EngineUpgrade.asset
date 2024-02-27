@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EngineUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 0
-  <UpgradeName>k__BackingField: Engine Upgrade
-  <UpgradeDescription>k__BackingField: to cross air streams
-  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 0ffcfa13211d521498098f523e10bd1d, type: 3}
+  <UpgradeName>k__BackingField: Postquemador
+  <UpgradeDescription>k__BackingField: Permite cruzar corrientes de aire
+  <UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 0ffcfa13211d521498098f523e10bd1d, type: 3}
   prize:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

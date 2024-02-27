@@ -27,6 +27,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float maxTraumaAdd;
 
+    private SizeUpgradeController sizeUpgrade;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,6 +40,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        sizeUpgrade = FindObjectOfType<SizeUpgradeController>();
+
         starterRotation = transform.rotation;
     }
 
@@ -75,8 +79,8 @@ public class CameraController : MonoBehaviour
         float offsetY = maxShakePosition * positionShake.y * positionY * (traumaLevel * traumaLevel);
 
         transform.position = new Vector3(
-            c_objectToFollow.transform.position.x + offsetX,
-            c_objectToFollow.transform.position.y + offsetY,
+            c_objectToFollow.transform.position.x + offsetX * sizeUpgrade.sizeMultiplyer,
+            c_objectToFollow.transform.position.y + offsetY * sizeUpgrade.sizeMultiplyer,
             transform.position.z
             );
     }
@@ -91,7 +95,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = new Quaternion(
             starterRotation.x,
             starterRotation.y,
-            starterRotation.z + angle,
+            starterRotation.z + angle * sizeUpgrade.sizeMultiplyer,
             starterRotation.w
             );
     }

@@ -4,7 +4,7 @@ using AYellowpaper.SerializedCollections;
 
 public class UpgradeObject : ScriptableObject
 {
-    public enum UpgradeType { BOOST, LIGHT, DRILL, CORE_COLLECTOR }
+    public enum UpgradeType { BOOST, LIGHT, DRILL, SIZE_CHANGER, CORE_COLLECTOR }
 
     [field : SerializeField]
     public UpgradeType type { get; private set; }
@@ -15,9 +15,6 @@ public class UpgradeObject : ScriptableObject
     public string UpgradeDescription { get; private set; }
 
     [field : SerializeField]
-    public Sprite c_UpgradeSprite { get; private set; }
-
-    [SerializedDictionary("Item", "Amount")]
-    public SerializedDictionary<ItemObject, short> prize;
+    public Sprite UpgradeSprite { get; private set; }
 
 }

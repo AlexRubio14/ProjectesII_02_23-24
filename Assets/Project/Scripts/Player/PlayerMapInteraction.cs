@@ -74,7 +74,7 @@ public class PlayerMapInteraction : MonoBehaviour
             interactHint.gameObject.SetActive(false);
             return;
         }
-        else if (nearestObject && !interactHint.gameObject.activeInHierarchy)
+        else if (nearestObject)
         {
             interactHint.gameObject.SetActive(true);
             interactHint.transform.position = nearestObject.GetNearestTransform().position;
@@ -94,7 +94,7 @@ public class PlayerMapInteraction : MonoBehaviour
         }
         else if(nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
         {
-            interactHint.sprite = nearestObject.c_upgradeNeeded.c_UpgradeSprite;
+            interactHint.sprite = nearestObject.c_upgradeNeeded.UpgradeSprite;
         }
         else
         {

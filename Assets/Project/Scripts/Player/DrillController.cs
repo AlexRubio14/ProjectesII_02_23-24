@@ -75,6 +75,7 @@ public class DrillController : MonoBehaviour
     [Space, SerializeField]
     private AudioClip drillClip;
 
+    private SizeUpgradeController sizeUpgrade;
 
     private void Awake()
     {
@@ -93,6 +94,9 @@ public class DrillController : MonoBehaviour
             currLaser.sortingLayerName = "Player";
             lasers[i] = currLaser;
         }
+
+
+        sizeUpgrade = GetComponent<SizeUpgradeController>();    
     }
 
     private void FixedUpdate()
@@ -116,12 +120,12 @@ public class DrillController : MonoBehaviour
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        float raysOffset = (raysDelimiter * 2) / totalRays;
+        float raysOffset = (raysDelimiter * 2 * sizeUpgrade.sizeMultiplyer) / totalRays;
         Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset * Mathf.Floor(totalRays / 2)));
 
         for (int i = 1; i < totalRays + 1; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.right, raysDistance, breakableWallLayer);
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.right, raysDistance * sizeUpgrade.sizeMultiplyer, breakableWallLayer);
             if (hit)
                 hits.Add(hit);
 
@@ -364,8 +368,8 @@ public class DrillController : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         
-        float raysOffset = (raysDelimiter * 2) / totalRays;
-        Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset * Mathf.Floor(totalRays/2)));
+        float raysOffset = (raysDelimiter * 2 * sizeUpgrade.sizeMultiplyer) / totalRays;
+        Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset  * Mathf.Floor(totalRays/2)));
 
         for (int i = 1; i < totalRays + 1; i++)
         {

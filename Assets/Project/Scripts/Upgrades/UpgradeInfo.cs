@@ -45,17 +45,17 @@ public class UpgradeInfo : MonoBehaviour
         prizeImages = new List<Image>();
         prizeTexts = new List<TextMeshProUGUI>();
 
-        upgradeImage.sprite = currentUpgrade.c_UpgradeSprite;
+        upgradeImage.sprite = currentUpgrade.UpgradeSprite;
         upgradeText.text = currentUpgrade.UpgradeName;
 
-        for (int i = 0; i < currentUpgrade.prize.Count; i++)
-        {
-            Image newImage = Instantiate(upgradeImagePrefab, layoutUpgrade.transform).GetComponent<Image>();
-            prizeImages.Add(newImage);
+        //for (int i = 0; i < currentUpgrade.prize.Count; i++)
+        //{
+        //    Image newImage = Instantiate(upgradeImagePrefab, layoutUpgrade.transform).GetComponent<Image>();
+        //    prizeImages.Add(newImage);
 
-            TextMeshProUGUI newText = Instantiate(upgradeTextPrefab, layoutUpgrade.transform).GetComponent<TextMeshProUGUI>();
-            prizeTexts.Add(newText);
-        }
+        //    TextMeshProUGUI newText = Instantiate(upgradeTextPrefab, layoutUpgrade.transform).GetComponent<TextMeshProUGUI>();
+        //    prizeTexts.Add(newText);
+        //}
 
         UpdatePrizeValues();
 
@@ -66,14 +66,14 @@ public class UpgradeInfo : MonoBehaviour
         Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
         int index = 0;
 
-        foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
-        {
-            prizeImages[index].sprite = item.Key.PickableSprite;
+        //foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
+        //{
+        //    prizeImages[index].sprite = item.Key.PickableSprite;
 
-            prizeTexts[index].text = inventoryMap[item.Key] + " / " + item.Value;
+        //    prizeTexts[index].text = inventoryMap[item.Key] + " / " + item.Value;
 
-            index++;
-        }
+        //    index++;
+        //}
     }
 
     private void SetButtonValues()
@@ -94,15 +94,15 @@ public class UpgradeInfo : MonoBehaviour
 
     public void BuyUpgrade()
     {
-        if (InventoryManager.Instance.CanBuy(currentUpgrade.prize))
-        {
-            InventoryManager.Instance.Buy(currentUpgrade.prize);
-            UpgradeManager.Instance.ObtainUpgrade(currentUpgrade);
-        }
-        else
-        {
-            SetPrizesRed();
-        }
+        //if (InventoryManager.Instance.CanBuy(currentUpgrade.prize))
+        //{
+        //    InventoryManager.Instance.Buy(currentUpgrade.prize);
+        //    UpgradeManager.Instance.ObtainUpgrade(currentUpgrade);
+        //}
+        //else
+        //{
+        //    SetPrizesRed();
+        //}
 
         SetButtonValues();
         UpdatePrizeValues();
@@ -112,21 +112,21 @@ public class UpgradeInfo : MonoBehaviour
     {
         Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
 
-        foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
-        {
-            if (item.Value > inventoryMap[item.Key])
-            {
-                for (int i = 0; i < prizeTexts.Count; i++)
-                {
-                    if (item.Key.PickableSprite == prizeImages[i].sprite)
-                    {
-                        prizeImages[i].color = Color.red;
-                        prizeTexts[i].color = Color.red;
-                    }
+        //foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
+        //{
+        //    if (item.Value > inventoryMap[item.Key])
+        //    {
+        //        for (int i = 0; i < prizeTexts.Count; i++)
+        //        {
+        //            if (item.Key.PickableSprite == prizeImages[i].sprite)
+        //            {
+        //                prizeImages[i].color = Color.red;
+        //                prizeTexts[i].color = Color.red;
+        //            }
                     
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         
 

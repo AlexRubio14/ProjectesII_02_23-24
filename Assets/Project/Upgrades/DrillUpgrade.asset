@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DrillUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 2
-  <UpgradeName>k__BackingField: Drill Upgrade
+  <UpgradeName>k__BackingField: Laseres potenciados
   <UpgradeDescription>k__BackingField: destroy cracked walls
-  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 2177c061fc46af948af03094e54e28b9, type: 3}
+  <UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 2177c061fc46af948af03094e54e28b9, type: 3}
   prize:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
