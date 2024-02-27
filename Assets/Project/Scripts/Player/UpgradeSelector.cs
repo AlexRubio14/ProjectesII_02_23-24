@@ -24,7 +24,7 @@ public class UpgradeSelector : MonoBehaviour
     private AudioClip finishBoost;
     private AudioSource boostSource;
 
-    [Header("Light"), SerializeField]
+    [Header("Audio Light"), SerializeField]
     private AudioClip SwitchLightClip;
     [SerializeField]
     private AudioClip loopLightClip;
@@ -70,8 +70,13 @@ public class UpgradeSelector : MonoBehaviour
     [Space, Header("Light"), SerializeField]
     private GameObject lightUpgrade;
 
-    //[Space, Header("Size Changer"), SerializeField]
+    [Space, Header("Size Changer"), SerializeField]
     private SizeUpgradeController sizeUpgrade;
+    [SerializeField]
+    private AudioClip shrinkSizeAudioClip;
+    [SerializeField]
+    private AudioClip growUpSizeAudioClip;
+    private AudioSource sizeAudioSource;
 
     [Space, Header("Fuel Consume"), SerializeField]
     private float boostConsume;
@@ -92,6 +97,8 @@ public class UpgradeSelector : MonoBehaviour
         drillController = GetComponent<DrillController>();
         autoHelpController = GetComponent<AutoHelpController>();
         sizeUpgrade = GetComponent<SizeUpgradeController>();
+
+        sizeAudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -257,6 +264,7 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
             //Restar el consumo de fuel
             playerController.fuelConsume -= lightConsume;
+
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
             loopLightSource = AudioManager._instance.Play2dLoop(loopLightClip, "Light");
         }
@@ -269,6 +277,7 @@ public class UpgradeSelector : MonoBehaviour
             //Resetear el consumo de fuel sumando
 
             playerController.fuelConsume += lightConsume;
+
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
@@ -313,6 +322,11 @@ public class UpgradeSelector : MonoBehaviour
             //Restar el consumo de fuel
             playerController.fuelConsume -= sizeChangerConsume;
             autoHelpController.enabled = false;
+
+            sizeAudioSource.Stop();
+            sizeAudioSource.clip = shrinkSizeAudioClip;
+            sizeAudioSource.pitch = Random.Range(0.85f, 1.1f);
+            sizeAudioSource.Play();
         }
         else
         {
@@ -323,6 +337,11 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, false);
             //Resetear el consumo de fuel sumando
             playerController.fuelConsume += sizeChangerConsume;
+
+            sizeAudioSource.Stop();
+            sizeAudioSource.clip = growUpSizeAudioClip;
+            sizeAudioSource.pitch = Random.Range(0.85f, 1.1f);
+            sizeAudioSource.Play();
         }
         
     }
