@@ -24,6 +24,7 @@ MonoBehaviour:
     que se esconden en las profundidades de este planeta."
   - Durante tu aventura te habras cruzado con varios de estas zonas, revisa las zonas
     por donde has pasado ya anteriormente, puede que encuentres cosas realmente utiles.
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}

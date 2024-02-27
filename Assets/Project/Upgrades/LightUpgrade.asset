@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LightUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 1
-  <UpgradeName>k__BackingField: Light Upgrade
-  <UpgradeDescription>k__BackingField: see hidden objects
+  <UpgradeName>k__BackingField: Luz Ultravioleta
+  <UpgradeDescription>k__BackingField: Buscar objetos ocultos
   <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: b8a0ad0bee1fd594896ccf61b3669f32, type: 3}
   prize:
     _serializedList:

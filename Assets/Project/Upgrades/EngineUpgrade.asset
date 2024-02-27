@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EngineUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 0
-  <UpgradeName>k__BackingField: Engine Upgrade
-  <UpgradeDescription>k__BackingField: to cross air streams
+  <UpgradeName>k__BackingField: Turbo
+  <UpgradeDescription>k__BackingField: Para cruzar corrientes de aire
   <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 0ffcfa13211d521498098f523e10bd1d, type: 3}
   prize:
     _serializedList:

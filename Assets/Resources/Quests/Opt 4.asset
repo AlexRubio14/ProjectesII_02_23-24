@@ -17,6 +17,7 @@ MonoBehaviour:
   <questName>k__BackingField: Estudios Avanzados
   <questDialogue>k__BackingField:
   - PlaceHolder
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
