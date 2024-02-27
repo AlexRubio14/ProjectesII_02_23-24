@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 35765339}
   - component: {fileID: 35765341}
   - component: {fileID: 35765342}
+  - component: {fileID: 35765343}
   m_Layer: 5
   m_Name: Quest
   m_TagString: Untagged
@@ -225,7 +226,7 @@ MonoBehaviour:
   rewardLayout: {fileID: 1411176573}
   rewardFontSize: 20
   showCurrentItems: 1
-  dialogue: {fileID: 1688875427}
+  dialogue: {fileID: 0}
   onFirstQuestClosed: []
   fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
 --- !u!114 &35765342
@@ -250,6 +251,39 @@ MonoBehaviour:
   questTutorialCanvas: {fileID: 1271392436}
   requirementsTutorial: {fileID: 699557413}
   selectButtonTutorial: {fileID: 325080813}
+--- !u!114 &35765343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35765337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2049a27722ab87469ad7b32ee88ca30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeInstructions:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
+      Value:
+      - {fileID: 21300000, guid: a31452ea99e028e4b830f8fcba244f92, type: 3}
+      - {fileID: 21300000, guid: 06ac435e1f00a1f45ac3616408136901, type: 3}
+      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+    - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
+      Value:
+      - {fileID: 21300000, guid: 164b7cf86f746de4c80dc84969aed9fa, type: 3}
+      - {fileID: 21300000, guid: 60b89a9b309344443ad7309666ec76ef, type: 3}
+      - {fileID: 21300000, guid: 101d2664033fafd48800a1d0ddc89af0, type: 3}
+    - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
+      Value:
+      - {fileID: 21300000, guid: c206b06a80031114abb9549162d62a95, type: 3}
+      - {fileID: 21300000, guid: 2c09705686aad534fb868d3805c913fc, type: 3}
+      - {fileID: 21300000, guid: d063df0f8c743b84b86a097a06ff6693, type: 3}
+  questNameText: {fileID: 0}
+  questDescriptionText: {fileID: 0}
+  questInstructionImage: {fileID: 0}
+  questInputImage: {fileID: 0}
 --- !u!224 &42760494 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
@@ -2393,6 +2427,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391344610}
   m_CullTransparentMesh: 1
+--- !u!114 &413458288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4329591962369908415, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+  m_PrefabInstance: {fileID: 3827181904887717906}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2049a27722ab87469ad7b32ee88ca30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &422034179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,9 +2506,11 @@ MonoBehaviour:
   cardPrefab: {fileID: 9126330276772748410, guid: b596d2cb2e2ca1c449df9c65e3a0a946, type: 3}
   questCanvas: {fileID: 35765341}
   completeButton: {fileID: 365583557}
-  completeButtonFloatEffect: {fileID: 0}
   selectButton: {fileID: 334913698}
   backButton: {fileID: 1229400355}
+  dialogueController: {fileID: 1688875427}
+  upgradeInstruction: {fileID: 413458288}
+  upgradeInstructionObtainButton: {fileID: 710240343}
   inventoryMenu: {fileID: 153950809}
 --- !u!1 &444042657
 GameObject:
@@ -3980,6 +4027,17 @@ RectTransform:
   m_AnchoredPosition: {x: 139.22473, y: 283.177}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &710240343 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+  m_PrefabInstance: {fileID: 3827181904887717906}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &788734565
 GameObject:
   m_ObjectHideFlags: 0
@@ -6435,7 +6493,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1169771517}
+      - m_Target: {fileID: 340162845}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -6447,22 +6505,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 625757409}
+      - m_Target: {fileID: 35765337}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 625757412}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: Select
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6471,10 +6517,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 35765337}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 625757412}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: Select
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8312,7 +8358,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -300, y: 100}
-  m_SizeDelta: {x: 358.9708, y: 82.308}
+  m_SizeDelta: {x: 358.97083, y: 82.30798}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1579659940
 MonoBehaviour:
@@ -11950,30 +11996,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeIlustration
       objectReference: {fileID: 0}
-    - target: {fileID: 2378520975804106174, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3718238106471669552, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1819140128}
-    - target: {fileID: 4385501788745681345, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: dialogueController
+    - target: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1688875427}
-    - target: {fileID: 4385501788745681345, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: questTutorialCanvas
+      objectReference: {fileID: 340162845}
+    - target: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1271392436}
-    - target: {fileID: 4385501788745681345, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: requirementsTutorial
+      objectReference: {fileID: 35765337}
+    - target: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 699557413}
-    - target: {fileID: 4385501788745681345, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: selectButtonTutorial
+      objectReference: {fileID: 625757412}
+    - target: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 325080813}
+      objectReference: {fileID: 422034184}
+    - target: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      value: 
+      objectReference: {fileID: 422034184}
+    - target: {fileID: 6683704030692728148, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
+      value: 
+      objectReference: {fileID: 1819140128}
     - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12058,10 +12108,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8190944359632008593, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: dialogue
-      value: 
-      objectReference: {fileID: 1688875427}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

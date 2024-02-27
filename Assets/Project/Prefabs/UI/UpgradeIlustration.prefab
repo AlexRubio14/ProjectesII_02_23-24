@@ -163,15 +163,14 @@ GameObject:
   - component: {fileID: 8180925324940427738}
   - component: {fileID: 6072632458898286182}
   - component: {fileID: 6434823858757158713}
-  - component: {fileID: 8190944359632008593}
-  - component: {fileID: 4385501788745681345}
+  - component: {fileID: 4329591962369908415}
   m_Layer: 5
   m_Name: UpgradeIlustration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8180925324940427738
 RectTransform:
   m_ObjectHideFlags: 0
@@ -179,7 +178,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2378520975804106174}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -233,7 +232,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.2
---- !u!114 &8190944359632008593
+--- !u!114 &4329591962369908415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,40 +241,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 2378520975804106174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d812dfa5ec9bf8a43952b1c2557231dd, type: 3}
+  m_Script: {fileID: 11500000, guid: a2049a27722ab87469ad7b32ee88ca30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleMissionText: {fileID: 0}
-  requirementsLayout: {fileID: 0}
-  canItemsFloat: 0
-  rewardLayout: {fileID: 0}
-  rewardFontSize: 20
-  showCurrentItems: 1
-  dialogue: {fileID: 0}
-  onFirstQuestClosed: []
-  fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
---- !u!114 &4385501788745681345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2378520975804106174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a18265556699f2439d0dce5332aeecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialkey: QuestTutorial
-  dialogues:
-  - Este de aqui es el boton de completar, si lo pulsas y tienes los materiales necesarios,
-    me quedare con los materiales que te indico.
-  - Y por ultimo desde aqui puedes seleccionar el encargo que quieras seguir en este
-    momento, asi podras ver facilmente los materiales necesarios durante la inmersion.
-  dialogueController: {fileID: 0}
-  questTutorialCanvas: {fileID: 0}
-  requirementsTutorial: {fileID: 0}
-  selectButtonTutorial: {fileID: 0}
+  upgradeInstructions:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
+      Value:
+      - {fileID: 21300000, guid: a31452ea99e028e4b830f8fcba244f92, type: 3}
+      - {fileID: 21300000, guid: 06ac435e1f00a1f45ac3616408136901, type: 3}
+      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+    - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
+      Value:
+      - {fileID: 21300000, guid: 164b7cf86f746de4c80dc84969aed9fa, type: 3}
+      - {fileID: 21300000, guid: 60b89a9b309344443ad7309666ec76ef, type: 3}
+      - {fileID: 21300000, guid: 101d2664033fafd48800a1d0ddc89af0, type: 3}
+    - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
+      Value:
+      - {fileID: 21300000, guid: c206b06a80031114abb9549162d62a95, type: 3}
+      - {fileID: 21300000, guid: 2c09705686aad534fb868d3805c913fc, type: 3}
+      - {fileID: 21300000, guid: d063df0f8c743b84b86a097a06ff6693, type: 3}
+  questNameText: {fileID: 4385792382227364358}
+  questDescriptionText: {fileID: 6989817087509194779}
+  questInstructionImage: {fileID: 1461205832995236084}
+  questInputImage: {fileID: 1661326708216682499}
 --- !u!1 &2814811579535902934
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -572,7 +561,91 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 501612277977688962}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2378520975804106174}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CheckQuestController, Assembly-CSharp
+        m_MethodName: RemoveQuestCardList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CheckQuestController, Assembly-CSharp
+        m_MethodName: DisplayQuestCardList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
+        m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3718238106471669552
 MonoBehaviour:
   m_ObjectHideFlags: 0
