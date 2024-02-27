@@ -20,11 +20,11 @@ MonoBehaviour:
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 20
+      Value: 15
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-      Value: 8
-    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-      Value: 7
+      Value: 4
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 10
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
@@ -32,5 +32,5 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
       Value: 1
   obtainedQuest: 1
-  completedQuest: 1
+  completedQuest: 0
   newQuest: 0

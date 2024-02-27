@@ -28,11 +28,9 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
       Value: 30
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-      Value: 22
+      Value: 10
     - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 8
-    - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
-      Value: 8
+      Value: 6
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
