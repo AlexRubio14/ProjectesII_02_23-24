@@ -2,28 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
-using UnityEditor.PackageManager.Requests;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class PauseMenuController : MonoBehaviour
 {
     [Header("Inputs"), SerializeField]
     private InputActionReference pauseAction;
-    [SerializeField]
-    private InputActionReference changeWindowRightAction;
-    [SerializeField]
-    private InputActionReference changeWindowLeftAction;
-
+   
     [Space, Header("Pause Menu"), SerializeField]
     private Canvas pauseMenuCanvas;
     [SerializeField]
     private Button continueButton;
-
 
     [Space, Header("Quest List"), SerializeField]
     private Transform cardLayout;
@@ -46,6 +37,7 @@ public class PauseMenuController : MonoBehaviour
     private float rewardFontSize;
     [SerializeField]
     private TMP_FontAsset fontAsset;
+
     private void Start()
     {
         cardList = new List<PauseMenuQuestCard>();
@@ -240,12 +232,17 @@ public class PauseMenuController : MonoBehaviour
     }
     #endregion
 
+
     private void PauseGame(InputAction.CallbackContext obj)
     {
         InputController.Instance.ChangeActionMap("Menu");
         TimeManager.Instance.PauseGame();
         pauseMenuCanvas.gameObject.SetActive(true);
 
+        SelectFirstQuestButon();
+    }
+    public void SelectFirstQuestButon()
+    {
         QuestObject selectedQuest = QuestManager.Instance.GetSelectedQuest();
 
         foreach (PauseMenuQuestCard card in cardList)
@@ -260,14 +257,22 @@ public class PauseMenuController : MonoBehaviour
 
         if (!selectedQuest)
             continueButton.Select();
-        
     }
+
 
     public void ResumeGame()
     {
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
         pauseMenuCanvas.gameObject.SetActive(false);
+    }
+
+    public void AbortMission()
+    {
+        PlayerManager.Instance.player.SubstractFuel(1000);
+        PlayerManager.Instance.player.fuelConsume -= 10;
+        ResumeGame();
+
     }
 }
 
