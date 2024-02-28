@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Music : MonoBehaviour
@@ -9,18 +8,22 @@ public class Music : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private string mixerGroup;
-
 
     private void OnEnable()
     {
-        mixerGroup = "Music";
 
-        audioSource = AudioManager._instance.Play2dLoop(titleScreenAudio, mixerGroup);
+        IEnumerator waitAudioManager()
+        {
+            yield return new WaitForEndOfFrame();
+            audioSource = AudioManager._instance.Play2dLoop(titleScreenAudio, "Music", 1, 1, 1);
+        }
+
+        StartCoroutine(waitAudioManager());
     }
 
     private void OnDisable()
     {
         AudioManager._instance.StopLoopSound(audioSource);
     }
+
 }
