@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
         dashDirection = movementDirection.normalized * dashForce;
 
-        SubstractHealth(dashFuelConsume);
+        SubstractFuel(dashFuelConsume);
     }
 
     private void DashingBehaviour()
@@ -331,7 +331,7 @@ public class PlayerController : MonoBehaviour
         hitParticles.Play();
     }
 
-    public void SubstractHealth(float value)
+    public void SubstractFuel(float value)
     {
         fuel -= value;
     }
@@ -344,10 +344,6 @@ public class PlayerController : MonoBehaviour
         return baseFuel + PowerUpManager.Instance.Fuel;
     }
 
-    public void RefillFuel()
-    {
-        fuel = GetMaxFuel() - 1;
-    }
     #endregion
 
     #region States
