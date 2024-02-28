@@ -878,6 +878,7 @@ GameObject:
   - component: {fileID: 226249116}
   - component: {fileID: 226249115}
   - component: {fileID: 226249119}
+  - component: {fileID: 226249120}
   m_Layer: 5
   m_Name: HubCanvas
   m_TagString: Untagged
@@ -984,6 +985,19 @@ MonoBehaviour:
   hubScene: HubScene
   titleScene: TitleScreen
   gameScene: NewMap
+--- !u!114 &226249120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226249114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59c18db4ed968546ab853aecdadc501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopMusic: {fileID: 8300000, guid: 6dcaa18d676ea87418d8ca4f54bb341f, type: 3}
 --- !u!1 &278588212
 GameObject:
   m_ObjectHideFlags: 0
@@ -9802,7 +9816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -209.48535, y: 105.15399}
+  m_AnchoredPosition: {x: -209.48535, y: 0}
   m_SizeDelta: {x: 358.9708, y: 82.308}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1579659940
@@ -11942,6 +11956,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1819140128}
         m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
         m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 226249120}
+        m_TargetAssemblyTypeName: ShopMusic, Assembly-CSharp
+        m_MethodName: StopMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

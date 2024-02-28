@@ -16,7 +16,7 @@ public class Music : MonoBehaviour
     {
         mixerGroup = "Music";
 
-        audioSource = AudioManager._instance.Play2dLoop(titleScreenAudio, mixerGroup);
+        audioSource = AudioManager._instance.Play2dLoop(titleScreenAudio, mixerGroup, 1,1,1);
     }
 
     private void OnDisable()
