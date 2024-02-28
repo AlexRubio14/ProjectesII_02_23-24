@@ -1,10 +1,10 @@
 using AYellowpaper.SerializedCollections;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class MenuControlsHint : MonoBehaviour
 {
@@ -85,6 +85,7 @@ public class MenuControlsHint : MonoBehaviour
 
     public void UpdateHintControls(List<ActionType> _actions, List<string> _actionName = null, HintsPos _pos = HintsPos.BOTTOM_LEFT)
     {
+  
         for (int i = 0; i < keysSprite.Length; i++)
         {
             keysSprite[i].gameObject.SetActive(false);
