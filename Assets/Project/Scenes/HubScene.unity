@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 35765339}
   - component: {fileID: 35765341}
   - component: {fileID: 35765342}
-  - component: {fileID: 35765343}
   m_Layer: 5
   m_Name: Quest
   m_TagString: Untagged
@@ -251,39 +250,6 @@ MonoBehaviour:
   questTutorialCanvas: {fileID: 1271392436}
   requirementsTutorial: {fileID: 699557413}
   selectButtonTutorial: {fileID: 325080813}
---- !u!114 &35765343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35765337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2049a27722ab87469ad7b32ee88ca30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeInstructions:
-    _serializedList:
-    - Key: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
-      Value:
-      - {fileID: 21300000, guid: a31452ea99e028e4b830f8fcba244f92, type: 3}
-      - {fileID: 21300000, guid: 06ac435e1f00a1f45ac3616408136901, type: 3}
-      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
-    - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
-      Value:
-      - {fileID: 21300000, guid: 164b7cf86f746de4c80dc84969aed9fa, type: 3}
-      - {fileID: 21300000, guid: 60b89a9b309344443ad7309666ec76ef, type: 3}
-      - {fileID: 21300000, guid: 101d2664033fafd48800a1d0ddc89af0, type: 3}
-    - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
-      Value:
-      - {fileID: 21300000, guid: c206b06a80031114abb9549162d62a95, type: 3}
-      - {fileID: 21300000, guid: 2c09705686aad534fb868d3805c913fc, type: 3}
-      - {fileID: 21300000, guid: d063df0f8c743b84b86a097a06ff6693, type: 3}
-  questNameText: {fileID: 0}
-  questDescriptionText: {fileID: 0}
-  questInstructionImage: {fileID: 0}
-  questInputImage: {fileID: 0}
 --- !u!224 &42760494 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
