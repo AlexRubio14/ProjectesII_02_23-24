@@ -1927,6 +1927,7 @@ GameObject:
   - component: {fileID: 365583559}
   - component: {fileID: 365583562}
   - component: {fileID: 365583563}
+  - component: {fileID: 365583564}
   m_Layer: 5
   m_Name: ButtonComplete
   m_TagString: Untagged
@@ -1981,6 +1982,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1819140128}
         m_TargetAssemblyTypeName: UiButtonHandler, Assembly-CSharp
         m_MethodName: PlayOnClickClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 365583564}
+        m_TargetAssemblyTypeName: CompleteMission, Assembly-CSharp
+        m_MethodName: PlayClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2131,6 +2144,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &365583564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365583556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67422c37a3bad68409b455b0a43815a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionCompletedClip: {fileID: 8300000, guid: 20041270510d5c842a9aa9fbf9b526d4, type: 3}
 --- !u!1 &378497045
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,6 +2517,7 @@ MonoBehaviour:
   dialogueController: {fileID: 1688875427}
   upgradeInstruction: {fileID: 413458288}
   upgradeInstructionObtainButton: {fileID: 710240343}
+  missionCompletedClip: {fileID: 8300000, guid: 20041270510d5c842a9aa9fbf9b526d4, type: 3}
   inventoryMenu: {fileID: 153950809}
 --- !u!1 &444042657
 GameObject:
@@ -11419,6 +11446,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2087683800}
+        m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+        m_MethodName: set_canFloat
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2087683797
 MonoBehaviour:
