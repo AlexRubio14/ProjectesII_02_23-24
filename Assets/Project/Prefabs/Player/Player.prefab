@@ -5590,6 +5590,9 @@ MonoBehaviour:
   growthSpeed: 0.8
   shipSpriteFloatFX: {fileID: 7995032489129776164}
   smallCamSize: 2
+  audioMixer: {fileID: 24100000, guid: 2d5daf61585e8fb43861eb1128e64c99, type: 2}
+  pitchVolumeBigSize: 1
+  pitchVolumeSmallSize: 3
 --- !u!82 &2710599507721073680
 AudioSource:
   m_ObjectHideFlags: 0

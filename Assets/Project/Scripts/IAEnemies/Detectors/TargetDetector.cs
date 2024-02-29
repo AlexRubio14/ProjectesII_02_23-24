@@ -13,6 +13,10 @@ public class TargetDetector : Detector
     [SerializeField]
     private LayerMask playerLayer, collidersLayer;
 
+    [SerializeField]
+    private AudioClip spottedPlayerClip;
+
+
     // DEBUG
     [SerializeField]
     private bool showGizmos = false;
@@ -58,6 +62,7 @@ public class TargetDetector : Detector
 
                 _iaData.canSeeTarget = true;
                 _iaData.m_currentTarget = playerCollider.transform;
+                AudioManager._instance.Play2dOneShotSound(spottedPlayerClip, "Enemy");
             }
         }
     }

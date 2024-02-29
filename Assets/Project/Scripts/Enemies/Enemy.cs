@@ -35,8 +35,12 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     protected float maxThrowSpeed;
 
+    [Header("--- DEATH"), SerializeField]
+    protected AudioClip deathClip;
+    private string enemyAudioSourceName = "Enemy";
+
     //DEBUG
-    [SerializeField]
+    [Space, SerializeField]
     private bool showGizmos = true;
 
     protected SpriteRenderer spriteR;
@@ -132,6 +136,8 @@ public abstract class Enemy : EnemyIA, IHealth
     {
         if (c_currentDrop)
             DropItem();
+
+        AudioManager._instance.Play2dOneShotSound(deathClip, enemyAudioSourceName);
 
         Destroy(gameObject);
     }
