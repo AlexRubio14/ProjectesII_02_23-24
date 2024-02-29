@@ -42,7 +42,7 @@ public class SizeUpgradeController : MonoBehaviour
     }
 
     private void CheckGrowOrShrink()
-    {
+    {    
         if (growing && transform.localScale.x != normalSize)
         {
             ChangeSize(Time.deltaTime, growthSpeed);
@@ -74,6 +74,8 @@ public class SizeUpgradeController : MonoBehaviour
 
     private void ChangeCamSize()
     {
+        if (cam.orthographicSize > normalCamSize)
+            return;
         cam.orthographicSize = Mathf.Lerp(smallCamSize, normalCamSize, growProcess);
     }
     public void SetGrowing(bool _growing)
