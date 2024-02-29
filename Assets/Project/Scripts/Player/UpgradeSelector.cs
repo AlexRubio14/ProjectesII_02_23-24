@@ -36,10 +36,13 @@ public class UpgradeSelector : MonoBehaviour
     private Sprite unselectedBackground;
     [SerializeField]
     private Sprite selectedBackground;
-
-    [SerializedDictionary("Position", "Background")]
+    [Space, SerializedDictionary("Position", "Background")]
     public SerializedDictionary<Position, Image> backgroundImagePositions;
 
+    [Space, Header("Inputs Hint"), SerializedDictionary("Position", "Input Hint")]
+    public SerializedDictionary<Position, Image> inputHintImagePositions;
+    [SerializedDictionary("Position", "Input Hint")]
+    public SerializedDictionary<Position, Sprite[]> inputHintSprites;
 
     [Space, Header("Upgrades"), SerializedDictionary("Position", "Upgrade")]
     public SerializedDictionary<Position, UpgradeObject> upgradePositions;
@@ -100,7 +103,6 @@ public class UpgradeSelector : MonoBehaviour
 
         sizeAudioSource = GetComponent<AudioSource>();
     }
-
     private void Start()
     {
         obtainedUpgrades = new Dictionary<UpgradeObject, bool>();
@@ -131,7 +133,6 @@ public class UpgradeSelector : MonoBehaviour
 
         boostParticles.Stop(true);
     }
-
     private void OnEnable()
     {
         upUpgradeAction.action.started += upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
@@ -146,8 +147,9 @@ public class UpgradeSelector : MonoBehaviour
         leftUpgradeAction.action.started += leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
         leftUpgradeAction.action.canceled += leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
 
-    }
 
+        InputSystem.onDeviceChange += UpdateInputHints;
+    }
     private void OnDisable()
     {
         upUpgradeAction.action.started -= upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
@@ -161,6 +163,9 @@ public class UpgradeSelector : MonoBehaviour
 
         leftUpgradeAction.action.started -= leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
         leftUpgradeAction.action.canceled -= leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
+
+
+        InputSystem.onDeviceChange += UpdateInputHints;
     }
 
     private void Update()
@@ -361,4 +366,11 @@ public class UpgradeSelector : MonoBehaviour
         backgroundImagePositions[_pos].sprite = currentSprite;
     }
 
+    private void UpdateInputHints(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Position, Image> item in inputHintImagePositions)
+        {
+            item.Value.sprite = inputHintSprites[item.Key][(int)InputController.Instance.GetCurrentControllerType()];
+        }
+    }
 }

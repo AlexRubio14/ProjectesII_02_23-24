@@ -5490,6 +5490,34 @@ MonoBehaviour:
       Value: {fileID: 0}
     - Key: 3
       Value: {fileID: 0}
+  inputHintImagePositions:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 0}
+    - Key: 1
+      Value: {fileID: 0}
+    - Key: 2
+      Value: {fileID: 0}
+    - Key: 3
+      Value: {fileID: 0}
+  inputHintSprites:
+    _serializedList:
+    - Key: 0
+      Value:
+      - {fileID: 21300000, guid: 2c09705686aad534fb868d3805c913fc, type: 3}
+      - {fileID: 21300000, guid: d063df0f8c743b84b86a097a06ff6693, type: 3}
+    - Key: 1
+      Value:
+      - {fileID: 21300000, guid: 60b89a9b309344443ad7309666ec76ef, type: 3}
+      - {fileID: 21300000, guid: 101d2664033fafd48800a1d0ddc89af0, type: 3}
+    - Key: 2
+      Value:
+      - {fileID: 21300000, guid: 06ac435e1f00a1f45ac3616408136901, type: 3}
+      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+    - Key: 3
+      Value:
+      - {fileID: 21300000, guid: 41564ffffc548a5448e3da7594f77542, type: 3}
+      - {fileID: 21300000, guid: faeafae63efbf1b40a4e7557e3be877f, type: 3}
   upgradePositions:
     _serializedList:
     - Key: 0

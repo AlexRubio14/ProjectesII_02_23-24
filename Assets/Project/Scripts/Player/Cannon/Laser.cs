@@ -219,7 +219,7 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Map"))
+        if (collision.CompareTag("Map") && collision.gameObject.layer == LayerMask.NameToLayer("Map"))
         {
             InstantiateWallLaserHit();
             AudioManager._instance.Play3dOneShotSound(mapHit, "Laser", 5, collision.transform.position);

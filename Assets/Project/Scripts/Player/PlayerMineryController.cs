@@ -23,11 +23,8 @@ public class PlayerMineryController : MonoBehaviour
         c_miningMinigame.gameObject.SetActive(true);
 
         List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.GO_BACK);
-
-        List<string> nameList = new List<string>();
-        nameList.Add("Hold to Quit");
-        MenuControlsHint.Instance.UpdateHintControls(neededControls, nameList, MenuControlsHint.HintsPos.BOTTOM_LEFT);
+        neededControls.Add(MenuControlsHint.ActionType.EXIT_MINIGAME);
+        MenuControlsHint.Instance.UpdateHintControls(neededControls, null, MenuControlsHint.HintsPos.BOTTOM_LEFT);
     }
 
     public void StartNewMinery(MineralController _mineral)

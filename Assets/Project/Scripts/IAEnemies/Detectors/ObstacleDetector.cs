@@ -17,7 +17,16 @@ public class ObstacleDetector : Detector
 
     public override void Detect(IAData _iaData)
     {
-        colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange, layerToAvoid);
+        Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, detectionRange, layerToAvoid);
+
+        List<Collider2D> collsList = new List<Collider2D>();
+        for (int i = 0; i < colls.Length; i++)
+        {
+            if (!colls[i].isTrigger)
+                collsList.Add(colls[i]);
+        }
+
+        colliders = collsList.ToArray();
         _iaData.m_obstacles = colliders;
     }
 

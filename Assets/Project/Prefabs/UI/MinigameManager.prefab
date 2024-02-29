@@ -1083,7 +1083,7 @@ MonoBehaviour:
   progressBarSlider: {fileID: 6991850848142364571}
   integrity: {fileID: 2034922421588692019}
   progressSpeed: 4
-  breakSpeed: 7
+  breakSpeed: 4.5
   maxIntegrity: 100
   maxMultiplierSpeed: 4
   multiplierUpSpeed: 1.5
