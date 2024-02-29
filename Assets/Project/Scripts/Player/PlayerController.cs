@@ -78,6 +78,10 @@ public class PlayerController : MonoBehaviour
     private Light2D shipLight;
     [SerializeField]
     private ParticleSystem engineParticles;
+    [SerializeField]
+    private AudioClip enginePoweringOff;
+    [SerializeField]
+    private AudioClip deathExplosion;
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip collisionClip;
@@ -285,6 +289,7 @@ public class PlayerController : MonoBehaviour
         shipLight.pointLightOuterRadius /= 4;
 
         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        AudioManager._instance.Play2dOneShotSound(enginePoweringOff, "Death", 1, 1, 1);
     }
     private void ExploteShip()
     {
@@ -294,6 +299,7 @@ public class PlayerController : MonoBehaviour
         InventoryManager.Instance.EndRun(false);
         shipLight.intensity = 0;
         Invoke("ReturnToHub", timeToReturnHub);
+        AudioManager._instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
     }
     private void ReturnToHub()
     {

@@ -40,6 +40,8 @@ public class CheckQuestController : MonoBehaviour
     private UpgradeInstructionController upgradeInstruction;
     [SerializeField]
     private Button upgradeInstructionObtainButton;
+    [SerializeField]
+    private AudioClip missionCompletedClip;
 
     [Space, Header("Inventory"), SerializeField]
     private InventoryMenuController inventoryMenu;
@@ -103,14 +105,11 @@ public class CheckQuestController : MonoBehaviour
         if (currentQuest.newQuest)
             currentQuest.newQuest = false;
 
-
-
         //Settear que los items que necesita la quest hagan el efecto de flotar
         foreach (KeyValuePair<ItemObject, short> item in _quest.neededItems)
         {
             inventoryMenu.SetItemFloaty(item.Key, true);
         }
-
     }
     private void CompleteQuest()
     {
@@ -157,11 +156,11 @@ public class CheckQuestController : MonoBehaviour
             inventoryMenu.UpdateItemAmount(item.Key);
         }
 
-
-
         dialogueController.dialogues = currentQuest.questDialogueEnd;
         dialogueController.gameObject.SetActive(true);
         dialogueController.StartDialogue();
+
+        AudioManager._instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
     }
 
     private void SelectQuest()
