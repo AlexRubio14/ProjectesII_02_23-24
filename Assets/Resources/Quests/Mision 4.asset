@@ -35,6 +35,8 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
       Value: 15
+    - Key: {fileID: 11400000, guid: cd379e840f2a70146bb284b74ce08085, type: 2}
+      Value: 1
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
