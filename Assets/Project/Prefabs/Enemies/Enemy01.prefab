@@ -209,13 +209,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777b6d11e1883224babaac0a17269776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeVision: 12
+  rangeVision: 4.85
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
     m_Bits: 5248
+  spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 0
 --- !u!1 &1302204989104934714
 GameObject:
@@ -591,6 +592,7 @@ MonoBehaviour:
   c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 2
+  deathClip: {fileID: 8300000, guid: f6f5e2b1a48a6cc42a2761062a0f47f5, type: 3}
   showGizmos: 0
   eatingDuration: 1
   eatingForce: 10

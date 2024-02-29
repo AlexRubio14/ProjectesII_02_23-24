@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SizeUpgradeController : MonoBehaviour
 {
@@ -22,6 +23,14 @@ public class SizeUpgradeController : MonoBehaviour
     private float smallCamSize;
     private float normalCamSize;
     private Camera cam;
+
+    [Space, Header("Mixer"), SerializeField]
+    private AudioMixer audioMixer;
+    [SerializeField]
+    private float pitchVolumeBigSize;
+    [SerializeField]
+    private float pitchVolumeSmallSize;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,12 +55,15 @@ public class SizeUpgradeController : MonoBehaviour
         if (growing && transform.localScale.x != normalSize)
         {
             ChangeSize(Time.deltaTime, growthSpeed);
-            if (growProcess == 0)
-                enabled = false;
+
+            audioMixer.SetFloat("SFXPitch", pitchVolumeBigSize);
+
         }
         else if (!growing && transform.localScale.x != smallSize)
         {
             ChangeSize(-Time.deltaTime, shrinkSpeed);
+            audioMixer.SetFloat("SFXPitch", pitchVolumeSmallSize);
+
         }
         else
         {
