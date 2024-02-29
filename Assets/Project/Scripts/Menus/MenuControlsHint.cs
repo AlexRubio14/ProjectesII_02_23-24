@@ -9,7 +9,7 @@ using System.Collections;
 public class MenuControlsHint : MonoBehaviour
 {
     public static MenuControlsHint Instance;
-    public enum ActionType { ACCEPT, GO_BACK, MOVE_MENU, SKIP_DIALOGUE };
+    public enum ActionType { ACCEPT, GO_BACK, MOVE_MENU, SKIP_DIALOGUE, EXIT_MINIGAME };
     public enum HintsPos { TOP_LEFT,  TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
 
     [SerializeField]
@@ -69,17 +69,6 @@ public class MenuControlsHint : MonoBehaviour
         if (Instance == this)
         {
             Instance = null;
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            List<ActionType> _actions = new List<ActionType>();
-            _actions.Add(ActionType.ACCEPT);
-
-            UpdateHintControls(_actions);
         }
     }
 

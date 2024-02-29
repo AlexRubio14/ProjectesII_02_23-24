@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -765,6 +765,10 @@ MonoBehaviour:
       Value:
       - {fileID: 21300000, guid: 4d46b6a2783c1ea43bf03e6574107b5d, type: 3}
       - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+    - Key: 4
+      Value:
+      - {fileID: 21300000, guid: bc9c654b352b1664d99b6d598759a379, type: 3}
+      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
     - Key: 2
       Value:
       - {fileID: 21300000, guid: 2c09705686aad534fb868d3805c913fc, type: 3}
@@ -776,13 +780,15 @@ MonoBehaviour:
   actionsName:
     _serializedList:
     - Key: 0
-      Value: Accept
+      Value: Aceptar
     - Key: 1
-      Value: Back
+      Value: "Atr\xE1s"
     - Key: 2
-      Value: Move
+      Value: Mover
     - Key: 3
-      Value: Continue
+      Value: Continuar
+    - Key: 4
+      Value: Cancelar Mineria
   keysSprite:
   - {fileID: 8001201476904515149}
   - {fileID: 3827360090601358439}

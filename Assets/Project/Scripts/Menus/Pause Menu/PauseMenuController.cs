@@ -240,6 +240,13 @@ public class PauseMenuController : MonoBehaviour
         pauseMenuCanvas.gameObject.SetActive(true);
 
         SelectFirstQuestButon();
+
+        List<MenuControlsHint.ActionType> actions = new List<MenuControlsHint.ActionType>();
+        actions.Add(MenuControlsHint.ActionType.MOVE_MENU);
+        actions.Add(MenuControlsHint.ActionType.ACCEPT);
+        actions.Add(MenuControlsHint.ActionType.GO_BACK);
+        MenuControlsHint.Instance.UpdateHintControls(actions);
+
     }
     public void SelectFirstQuestButon()
     {
@@ -265,6 +272,8 @@ public class PauseMenuController : MonoBehaviour
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
         pauseMenuCanvas.gameObject.SetActive(false);
+
+        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
     public void AbortMission()

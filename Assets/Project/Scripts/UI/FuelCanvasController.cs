@@ -300,5 +300,6 @@ public class FuelCanvasController : MonoBehaviour
         //Reseteamos Flotacion
         sliderFloatEffect.canFloat = false;
         lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, 0);
+        dangerBorderProcess = 0;
     }
 }

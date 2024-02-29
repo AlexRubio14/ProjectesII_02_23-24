@@ -15,21 +15,16 @@ MonoBehaviour:
   <questID>k__BackingField: 8
   <questTitle>k__BackingField: Mision 3
   <questName>k__BackingField: Y se hizo la luz
-  <questDialogue>k__BackingField:
-  - Buen trabajo nyamarada, cuando te vuelvas a tu nave ya tendras esta nueva mejora
-    configurada.
-  - Tu nueva mejora son unos laseres de mineria estos te serviran para romper las
-    paredes agrietadas.
-  - Estas paredes estan rodeados por polvo azul asi que si lo ves no dudes en atravesarlo
-    todo.
-  <questDialogueEnd>k__BackingField: []
+  <questDialogue>k__BackingField: []
+  <questDialogueEnd>k__BackingField:
+  - Inmiaudiato tienes la mejora en tu nave.
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 30
+      Value: 25
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
       Value: 10
-    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
+    - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
       Value: 6
     - Key: {fileID: 11400000, guid: cd379e840f2a70146bb284b74ce08085, type: 2}
       Value: 1
@@ -41,4 +36,4 @@ MonoBehaviour:
       Value: 1
   obtainedQuest: 0
   completedQuest: 0
-  newQuest: 0
+  newQuest: 1

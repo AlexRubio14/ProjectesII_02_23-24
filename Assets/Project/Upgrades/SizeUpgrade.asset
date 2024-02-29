@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SizeUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 3
-  <UpgradeName>k__BackingField: Compactador de Materia
-  <UpgradeDescription>k__BackingField: 
+  <UpgradeName>k__BackingField: Nyampactador
+  <UpgradeDescription>k__BackingField: "Modifica el tama\xF1o de tu nave"
   <UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 4efe8be5bc431ef42975c8ed0b080b90, type: 3}

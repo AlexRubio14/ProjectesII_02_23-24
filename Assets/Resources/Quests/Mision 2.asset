@@ -16,15 +16,21 @@ MonoBehaviour:
   <questTitle>k__BackingField: Mision 2
   <questName>k__BackingField: Explorando
   <questDialogue>k__BackingField: []
-  <questDialogueEnd>k__BackingField: []
+  <questDialogueEnd>k__BackingField:
+  - Buen trabajo nyamarada, cuando te vuelvas a tu nave ya tendras esta nueva mejora
+    configurada.
+  - Tu nueva mejora son unos laseres de mineria estos te serviran para romper las
+    paredes agrietadas.
+  - Estas paredes estan rodeados por polvo azul asi que si lo ves no dudes en atravesarlo
+    todo.
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 15
+      Value: 20
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
       Value: 4
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 10
+      Value: 8
     - Key: {fileID: 11400000, guid: cd379e840f2a70146bb284b74ce08085, type: 2}
       Value: 1
   rewards:
@@ -33,6 +39,6 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
       Value: 1
-  obtainedQuest: 1
+  obtainedQuest: 0
   completedQuest: 0
-  newQuest: 0
+  newQuest: 1
