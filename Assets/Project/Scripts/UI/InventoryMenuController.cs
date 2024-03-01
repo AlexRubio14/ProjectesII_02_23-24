@@ -17,7 +17,7 @@ public class InventoryMenuController : MonoBehaviour
 
     private void SetupItemList()
     {
-        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetAllItems();
+        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetSavetems();
 
         foreach (KeyValuePair<ItemObject, short> item in inventory)
         {

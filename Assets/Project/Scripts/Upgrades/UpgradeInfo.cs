@@ -63,7 +63,7 @@ public class UpgradeInfo : MonoBehaviour
 
     private void UpdatePrizeValues()
     {
-        Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
+        Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetSavetems();
         int index = 0;
 
         //foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
@@ -110,7 +110,7 @@ public class UpgradeInfo : MonoBehaviour
 
     private void SetPrizesRed()
     {
-        Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetAllItems();
+        Dictionary<ItemObject, short> inventoryMap = InventoryManager.Instance.GetSavetems();
 
         //foreach (KeyValuePair<ItemObject, short> item in currentUpgrade.prize)
         //{

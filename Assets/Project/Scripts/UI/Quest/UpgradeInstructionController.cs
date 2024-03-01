@@ -24,6 +24,6 @@ public class UpgradeInstructionController : MonoBehaviour
         questDescriptionText.text = currentUpgrade.UpgradeDescription;
 
         questInstructionImage.sprite = upgradeInstructions[currentUpgrade][0];
-        questInputImage.sprite = upgradeInstructions[currentUpgrade][(int)InputController.Instance.GetCurrentControllerType() + 1];
+        questInputImage.sprite = upgradeInstructions[currentUpgrade][(int)InputController.Instance.GetControllerType() + 1];
     }
 }

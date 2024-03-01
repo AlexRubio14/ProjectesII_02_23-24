@@ -138,16 +138,13 @@ public class UpgradeSelector : MonoBehaviour
     private void OnEnable()
     {
         upUpgradeAction.action.started += upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
-        upUpgradeAction.action.canceled += upUpgradeCanceled => ToggleUpgrade(Position.UP, upUpgradeCanceled);
 
         downUpgradeAction.action.started += downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
         downUpgradeAction.action.canceled += downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
 
         rightUpgradeAction.action.started += rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
-        rightUpgradeAction.action.canceled += rightUpgradeCanceled => ToggleUpgrade(Position.RIGHT, rightUpgradeCanceled);
 
         leftUpgradeAction.action.started += leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
-        leftUpgradeAction.action.canceled += leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
 
 
         InputSystem.onDeviceChange += UpdateInputHints;
@@ -155,16 +152,12 @@ public class UpgradeSelector : MonoBehaviour
     private void OnDisable()
     {
         upUpgradeAction.action.started -= upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
-        upUpgradeAction.action.canceled -= upUpgradeCanceled => ToggleUpgrade(Position.UP, upUpgradeCanceled);
 
         downUpgradeAction.action.started -= downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
-        downUpgradeAction.action.canceled -= downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
 
         rightUpgradeAction.action.started -= rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
-        rightUpgradeAction.action.canceled -= rightUpgradeCanceled => ToggleUpgrade(Position.RIGHT, rightUpgradeCanceled);
 
         leftUpgradeAction.action.started -= leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
-        leftUpgradeAction.action.canceled -= leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
 
 
         InputSystem.onDeviceChange += UpdateInputHints;
@@ -372,7 +365,7 @@ public class UpgradeSelector : MonoBehaviour
     {
         foreach (KeyValuePair<Position, Image> item in inputHintImagePositions)
         {
-            item.Value.sprite = inputHintSprites[item.Key][(int)InputController.Instance.GetCurrentControllerType()];
+            item.Value.sprite = inputHintSprites[item.Key][(int)InputController.Instance.GetControllerType()];
         }
     }
 }

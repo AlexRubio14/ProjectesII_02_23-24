@@ -90,7 +90,7 @@ public class MenuControlsHint : MonoBehaviour
                 break;
 
             keysSprite[i].gameObject.SetActive(true);
-            keysSprite[i].sprite = actionsSprite[_actions[i]][(int)InputController.Instance.GetCurrentControllerType()];
+            keysSprite[i].sprite = actionsSprite[_actions[i]][(int)InputController.Instance.GetControllerType()];
             actionsText[i].gameObject.SetActive(true);
             if (_actionName != null && _actionName[i] != "")
                 actionsText[i].text = _actionName[i];

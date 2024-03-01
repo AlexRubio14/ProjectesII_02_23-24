@@ -50,7 +50,7 @@ public class VirtualMouseUI : MonoBehaviour
     {
         Vector2 cursorPosition = Vector2.zero;
 
-        switch (InputController.Instance.GetCurrentControllerType())
+        switch (InputController.Instance.GetControllerType())
         {
             case InputController.ControllerType.KEYBOARD:
 

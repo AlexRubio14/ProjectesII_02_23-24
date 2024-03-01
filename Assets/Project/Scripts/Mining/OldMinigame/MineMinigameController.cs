@@ -13,6 +13,15 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private InputActionReference cancelMinigameAction;
 
+    [Space, SerializeField]
+    private Image leftInputHint;
+    [SerializeField]
+    private Image rightInputHint;
+    [SerializeField]
+    private Sprite[] leftInputSprites;
+    [SerializeField]
+    private Sprite[] rightInputSprites;
+
     [Space, Header("Lasers"), SerializeField]
     private float laserChargeSpeed;
     [SerializeField]
@@ -141,7 +150,12 @@ public class MineMinigameController : MonoBehaviour
 
         AudioManager._instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
         AudioManager._instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
+
+        InputSystem.onDeviceChange += UpdateInputHints;
+
+        UpdateInputHints(null, InputDeviceChange.Added);
     }
+
     private void OnDisable()
     {
         chargeRightLaserAction.action.started -= ChargeRightLaserAction;
@@ -154,6 +168,7 @@ public class MineMinigameController : MonoBehaviour
 
 
         TimeManager.Instance.ResumeGame();
+        InputSystem.onDeviceChange += UpdateInputHints;
     }
 
     // Update is called once per frame
@@ -435,6 +450,14 @@ public class MineMinigameController : MonoBehaviour
         gameObject.SetActive(false);
         MenuControlsHint.Instance.UpdateHintControls(null);
     }
+
+    private void UpdateInputHints(InputDevice arg1, InputDeviceChange arg2)
+    {
+        rightInputHint.sprite = rightInputSprites[(int)InputController.Instance.GetControllerType()];
+        leftInputHint.sprite = leftInputSprites[(int)InputController.Instance.GetControllerType()];
+    }
+
+
     #endregion
 
 }

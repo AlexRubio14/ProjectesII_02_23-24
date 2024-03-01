@@ -63,7 +63,7 @@ public class QuestInfoMenu : MonoBehaviour
         requirementImages = new List<Image>();
         requirementTexts = new List<TextMeshProUGUI>();
 
-        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetAllItems();
+        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetSavetems();
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {

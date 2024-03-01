@@ -67,13 +67,27 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    public Dictionary<ItemObject, short> GetAllItems()
+    public Dictionary<ItemObject, short> GetSavetems()
     {
         return allItems;
     }
     public Dictionary<ItemObject, short> GetRunItems()
     {
         return runItems;
+    }
+
+    public Dictionary<ItemObject, short> GetAllItems()
+    {
+        Dictionary<ItemObject, short> currentAllItems = new Dictionary<ItemObject, short>();
+
+        foreach (KeyValuePair<ItemObject, short> item in allItems)
+        {
+            short itemsToAdd = runItems.ContainsKey(item.Key)? (short)(item.Value + runItems[item.Key]) : item.Value;
+            currentAllItems.Add(item.Key, itemsToAdd);
+        }
+
+
+        return currentAllItems;
     }
     public short GetTotalItemAmount(ItemObject _item)
     {

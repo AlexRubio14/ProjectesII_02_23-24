@@ -92,13 +92,9 @@ public class FirstMissionTutorial : MonoBehaviour
 
     private void CheckIfEnoughItems()
     {
-        Debug.Log("Entra");
 
         if (tutorialHasShown)
             return;
-
-        Debug.Log("Entra Mas");
-
 
         int acumulator = 0;
 
