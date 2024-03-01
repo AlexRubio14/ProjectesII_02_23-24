@@ -86,18 +86,18 @@ public class CheckQuestController : MonoBehaviour
             if (_quest == QuestManager.Instance.GetSelectedQuest())
             {
                 selectButton.interactable = false;
-                selectText.text = "Seleccionado";
+                selectText.text = "Fijada";
             }
             else
             {
                 selectButton.interactable = true;
-                selectText.text = "Seleccionar";
+                selectText.text = "Fijar";
             }
         }
         else
         {
             completeButton.interactable = false;
-            completeText.text = "Completado";
+            completeText.text = "Completada";
 
             selectButton.gameObject.SetActive(false);
         }
