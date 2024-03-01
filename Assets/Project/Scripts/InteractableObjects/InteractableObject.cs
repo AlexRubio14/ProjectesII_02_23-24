@@ -37,8 +37,10 @@ abstract public class InteractableObject : MonoBehaviour
     private Transform unhidePivot;
 
     [SerializeField]
-    protected Transform[] controlHintPivot; 
+    protected Transform[] controlHintPivot;
 
+    [SerializeField]
+    protected bool placeParticles = true;
     abstract public void Interact();
     virtual public void UnHide()
     {
@@ -52,6 +54,9 @@ abstract public class InteractableObject : MonoBehaviour
         //Cambiar el color de las particulas
         ParticleSystem.MainModule color = interactableParticles.main;
         color.startColor = new Color(_color.r, _color.g, _color.b, 0.1f);
+
+        if (!placeParticles)
+            return;
         ParticleSystem.ShapeModule shape = interactableParticles.shape;
         shape.scale = particlesSize;
         interactableParticles.transform.localPosition = particlesPosition;

@@ -8,7 +8,6 @@ public class BreakableWallController : InteractableObject
     private Grid breakableWallGrid;
     private Tilemap breakableWallTilemap;
 
-
     private void Awake()
     {
         breakableWallGrid = GetComponentInParent<Grid>();
