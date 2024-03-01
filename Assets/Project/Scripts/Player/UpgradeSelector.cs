@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using AYellowpaper.SerializedCollections;
-
+using UnityEngine.Events;
 
 public class UpgradeSelector : MonoBehaviour
 {
@@ -94,6 +94,11 @@ public class UpgradeSelector : MonoBehaviour
     private PlayerController playerController;
     private AutoHelpController autoHelpController;
 
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeUp;
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeDown;
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeRight;
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeLeft;
+
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();  
@@ -135,32 +140,39 @@ public class UpgradeSelector : MonoBehaviour
 
         UpdateInputHints(null, InputDeviceChange.Added);
     }
+
     private void OnEnable()
     {
-        upUpgradeAction.action.started += upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
+        ToggleUpgradeUp = upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
+        ToggleUpgradeDown = downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
+        ToggleUpgradeRight = rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
+        ToggleUpgradeLeft = leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
 
-        downUpgradeAction.action.started += downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
-        downUpgradeAction.action.canceled += downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
+        upUpgradeAction.action.started += ToggleUpgradeUp;
 
-        rightUpgradeAction.action.started += rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
+        downUpgradeAction.action.started += ToggleUpgradeDown;
+        downUpgradeAction.action.canceled += ToggleUpgradeDown;
 
-        leftUpgradeAction.action.started += leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
+        rightUpgradeAction.action.started += ToggleUpgradeRight;
+
+        leftUpgradeAction.action.started += ToggleUpgradeLeft;
 
 
         InputSystem.onDeviceChange += UpdateInputHints;
     }
     private void OnDisable()
     {
-        upUpgradeAction.action.started -= upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
+        upUpgradeAction.action.started -= ToggleUpgradeUp;
 
-        downUpgradeAction.action.started -= downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
+        downUpgradeAction.action.started -= ToggleUpgradeDown;
+        downUpgradeAction.action.canceled -= ToggleUpgradeDown;
 
-        rightUpgradeAction.action.started -= rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
+        rightUpgradeAction.action.started -= ToggleUpgradeRight;
 
-        leftUpgradeAction.action.started -= leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
+        leftUpgradeAction.action.started -= ToggleUpgradeLeft;
 
 
-        InputSystem.onDeviceChange += UpdateInputHints;
+        InputSystem.onDeviceChange -= UpdateInputHints;
     }
 
     private void Update()
