@@ -147,6 +147,7 @@ MonoBehaviour:
   unhidePivot: {fileID: 6431933432271367968}
   controlHintPivot:
   - {fileID: 2284719106127104578}
+  placeParticles: 1
   <c_currentItem>k__BackingField: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
   <MaxItemsToReturn>k__BackingField: 4
   isBeta: 0

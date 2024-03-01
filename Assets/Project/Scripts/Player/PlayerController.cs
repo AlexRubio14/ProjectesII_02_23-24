@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
-        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
+        c_rb.AddForce(direction * knockbackScale * sizeUpgrade.sizeMultiplyer, ForceMode2D.Impulse);
         c_rb.AddTorque(UnityEngine.Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
 
         Invoke("WaitForKnockbackTime", knockbackTime);

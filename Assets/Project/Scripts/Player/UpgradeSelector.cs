@@ -132,6 +132,8 @@ public class UpgradeSelector : MonoBehaviour
         upgradesToggled = new bool[4];
 
         boostParticles.Stop(true);
+
+        UpdateInputHints(null, InputDeviceChange.Added);
     }
     private void OnEnable()
     {
