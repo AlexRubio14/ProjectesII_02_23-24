@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource engineSource;
 
     private SpriteRenderer spriteRenderer;
-    private PlayerMapInteraction c_mapInteraction;
+    private PlayerMapInteraction mapInteraction;
     private AutoHelpController autoHelpController;
     private SizeUpgradeController sizeUpgrade;
 
@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
     {
         c_rb = GetComponent<Rigidbody2D>();
 
-        c_mapInteraction = GetComponent<PlayerMapInteraction>();
+        mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
@@ -278,6 +278,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         ChangeState(State.DEAD);
+        DisableScripts();
         CameraController.Instance.AddHighTrauma();
         Invoke("ExploteShip", timeToExploteShip);
 
@@ -300,6 +301,12 @@ public class PlayerController : MonoBehaviour
         shipLight.intensity = 0;
         Invoke("ReturnToHub", timeToReturnHub);
         AudioManager._instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
+    }
+    private void DisableScripts()
+    {
+        sizeUpgrade.enabled = false;
+        GetComponent<UpgradeSelector>().enabled = false;
+        mapInteraction.enabled = false;
     }
     private void ReturnToHub()
     {
@@ -395,7 +402,7 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
                 InputController.Instance.ChangeActionMap("Player");
-                c_mapInteraction.showCanvas = true;
+                mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
                 break; 
@@ -418,7 +425,7 @@ public class PlayerController : MonoBehaviour
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
                 InputController.Instance.ChangeActionMap("MinigameMinery");
-                c_mapInteraction.showCanvas = false;
+                mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
                 c_rb.velocity = Vector2.zero;
@@ -430,6 +437,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
+                StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
                 break;
             default:
                 break;
@@ -459,7 +467,7 @@ public class PlayerController : MonoBehaviour
     }
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
+        if (obj.started && currentState == State.IDLE)
            engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
 
         if (obj.canceled)
