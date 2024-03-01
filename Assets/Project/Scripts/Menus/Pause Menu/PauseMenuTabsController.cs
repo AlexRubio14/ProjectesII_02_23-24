@@ -56,8 +56,8 @@ public class PauseMenuTabsController : MonoBehaviour
 
     private void UpdateInputHints(InputDevice arg1, InputDeviceChange arg2)
     {
-        inputHint[0].sprite = rightInputHintImage[(int)InputController.Instance.GetCurrentControllerType()];
-        inputHint[1].sprite = leftInputHintImage[(int)InputController.Instance.GetCurrentControllerType()];
+        inputHint[0].sprite = rightInputHintImage[(int)InputController.Instance.GetControllerType()];
+        inputHint[1].sprite = leftInputHintImage[(int)InputController.Instance.GetControllerType()];
     }
 
     private void ChangeTab(InputAction.CallbackContext obj)

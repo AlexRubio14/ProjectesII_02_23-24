@@ -37,6 +37,12 @@ public class PauseMenuController : MonoBehaviour
     private float rewardFontSize;
     [SerializeField]
     private TMP_FontAsset fontAsset;
+    private QuestCanvasController questIngameCanvas;
+
+    private void Awake()
+    {
+        questIngameCanvas = FindObjectOfType<QuestCanvasController>();
+    }
 
     private void Start()
     {
@@ -89,6 +95,9 @@ public class PauseMenuController : MonoBehaviour
     }
     public void SelectQuest(PauseMenuQuestCard _selectedCard)
     {
+        if (_selectedCard.currentQuest.completedQuest)
+            return;
+
         QuestObject lastSelectedQuest = QuestManager.Instance.GetSelectedQuest();
         QuestManager.Instance.SetSelectedQuest(_selectedCard.currentQuest.questID);
         _selectedCard.SetupQuest(_selectedCard.currentQuest);
@@ -102,6 +111,8 @@ public class PauseMenuController : MonoBehaviour
             }
         }
 
+        questIngameCanvas.RemoveCurrentQuest();
+        questIngameCanvas.SetupQuestCanvas(_selectedCard.currentQuest);
     }
 
     #region Quest
@@ -246,24 +257,31 @@ public class PauseMenuController : MonoBehaviour
         actions.Add(MenuControlsHint.ActionType.ACCEPT);
         actions.Add(MenuControlsHint.ActionType.GO_BACK);
         MenuControlsHint.Instance.UpdateHintControls(actions);
-
     }
     public void SelectFirstQuestButon()
     {
         QuestObject selectedQuest = QuestManager.Instance.GetSelectedQuest();
+
+        if (!selectedQuest)
+        {
+            continueButton.Select();
+            return;
+        }
 
         foreach (PauseMenuQuestCard card in cardList)
         {
             card.SetupQuest(card.currentQuest);
 
             if (card.currentQuest == selectedQuest)
+            {
                 card.GetComponent<Button>().Select();
+                DisplayQuest(card.currentQuest);
+            }
 
         }
 
 
-        if (!selectedQuest)
-            continueButton.Select();
+        
     }
 
 

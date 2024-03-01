@@ -32,17 +32,21 @@ public class QuestCanvasController : MonoBehaviour
         prizeImages = new List<Image>();
         prizeTexts = new List<TextMeshProUGUI>();
 
-        SetupQuestCanvas();
+        SetupQuestCanvas(QuestManager.Instance.GetSelectedQuest());
     }
 
-    private void SetupQuestCanvas()
+    public void SetupQuestCanvas(QuestObject _quest)
     {
-        currentQuest = QuestManager.Instance.GetSelectedQuest();
+        currentQuest = _quest;
 
         if (!currentQuest)
         {
             gameObject.SetActive(false);
             return;
+        }
+        else
+        {
+            gameObject.SetActive(true);
         }
         questTitleText.text = currentQuest.questName;
 
@@ -58,7 +62,7 @@ public class QuestCanvasController : MonoBehaviour
         UpdateQuestCanvas();
 
     }
-
+    
     private void UpdateQuestCanvas(ItemObject _itemType = null, short _itemAmount = 0)
     {
         int index = 0;
@@ -92,6 +96,20 @@ public class QuestCanvasController : MonoBehaviour
         yield return new WaitForSeconds(timeToWaitForFloat);
         imageFloatEffect.canFloat = false;
     }
+
+    public void RemoveCurrentQuest()
+    {
+        for (int i = 0; i < prizeImages.Count; i++)
+        {
+            Destroy(prizeImages[i].gameObject);
+            Destroy(prizeTexts[i].gameObject);
+        }
+
+        prizeImages.Clear();
+        prizeTexts.Clear();
+        
+    }
+
     private void OnEnable()
     {
         InventoryManager.Instance.obtainItemAction += UpdateQuestCanvas;   

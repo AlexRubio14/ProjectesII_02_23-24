@@ -5343,7 +5343,9 @@ MonoBehaviour:
   interactHint: {fileID: 0}
   hideUpgradeSprite: {fileID: 21300000, guid: b8a0ad0bee1fd594896ccf61b3669f32, type: 3}
   c_lockedUpgradeImage: {fileID: 0}
-  interactKeySprite: {fileID: 21300000, guid: c01a1548b10ef4c4992c29241cd38f51, type: 3}
+  interactKeySprite:
+  - {fileID: 21300000, guid: 35915400d6ec2ad4db1b29d7c7a0526d, type: 3}
+  - {fileID: 21300000, guid: c01a1548b10ef4c4992c29241cd38f51, type: 3}
   showCanvas: 0
 --- !u!114 &697992122945508969
 MonoBehaviour:

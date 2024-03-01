@@ -27,7 +27,7 @@ public class PlayerMapInteraction : MonoBehaviour
     private GameObject c_lockedUpgradeImage;
 
     [SerializeField]
-    private Sprite interactKeySprite;
+    private Sprite[] interactKeySprite;
 
     public bool showCanvas;
 
@@ -90,7 +90,7 @@ public class PlayerMapInteraction : MonoBehaviour
             )
         {
 
-            interactHint.sprite = interactKeySprite;
+            interactHint.sprite = interactKeySprite[(int)InputController.Instance.GetControllerType()];
         }
         else if(nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
         {

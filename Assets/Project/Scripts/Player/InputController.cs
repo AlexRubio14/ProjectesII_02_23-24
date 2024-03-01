@@ -26,7 +26,7 @@ public class InputController : MonoBehaviour
             inputSystem.SwitchCurrentActionMap(_nextActionMap);
     }
 
-    public ControllerType GetCurrentControllerType()
+    public ControllerType GetControllerType()
     {
         ControllerType currentType;
 
