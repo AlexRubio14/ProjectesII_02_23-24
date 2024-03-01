@@ -131,9 +131,11 @@ public class CheckQuestController : MonoBehaviour
                         upgradeInstruction.gameObject.SetActive(true);
                         upgradeInstruction.SetUpgradeInstructions(currentUpgrade);
 
-                        upgradeInstructionObtainButton.Select(); 
+                        upgradeInstructionObtainButton.Select();
+                        dialogueController.onDialogueEnd -= (() => StartCoroutine(DisplayUpgradeInstructions()));
+
                     }
-                    StartCoroutine(DisplayUpgradeInstructions());
+                    dialogueController.onDialogueEnd += (()=> StartCoroutine(DisplayUpgradeInstructions())) ;
                     break;
                 case QuestObject.RewardType.NEW_QUEST:
                     ((QuestObject)item.Key).obtainedQuest = true;
