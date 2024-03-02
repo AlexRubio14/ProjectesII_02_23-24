@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class HealthTutorial : Tutorial
 {
@@ -10,6 +7,9 @@ public class HealthTutorial : Tutorial
     private GameObject tutorialCanvas;
     [SerializeField]
     private GameObject tpTutorial;
+
+    [SerializeField]
+    private MovementTutorial movementTutorial;
 
     protected override void TutorialMethod()
     {
@@ -46,7 +46,10 @@ public class HealthTutorial : Tutorial
         dialogueController.onDialogueLineStart -= OnDialogueLineStarted;
 
         PlayerPrefs.SetInt(tutorialkey, 1);
-        
+
+        movementTutorial.StartTutorial();
+        movementTutorial.gameObject.SetActive(true);
+
         Destroy(this);
     }
 

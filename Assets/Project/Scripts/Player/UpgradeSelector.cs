@@ -55,12 +55,6 @@ public class UpgradeSelector : MonoBehaviour
 
     [Space, Header("Boost"), SerializeField]
     private float boostMovementSpeed;
-    private float boostStamina = 1;
-    [SerializeField]
-    private float boostStaminaReduction;
-    [SerializeField]
-    private float boostStaminaRecover;
-    private Position boostPos;
     [SerializeField]
     private ParticleSystem boostParticles;
 
@@ -128,9 +122,6 @@ public class UpgradeSelector : MonoBehaviour
             }
 
             upgradeImagePositions[item.Key].sprite = currentSprite;
-
-            if (item.Value.type == UpgradeObject.UpgradeType.BOOST)
-                boostPos = item.Key;
             
         }
 
@@ -186,7 +177,6 @@ public class UpgradeSelector : MonoBehaviour
             }
         }
 
-        CheckBoostStamina();
     }
 
     private void ToggleUpgrade(Position _pos, InputAction.CallbackContext obj)
@@ -243,30 +233,7 @@ public class UpgradeSelector : MonoBehaviour
             AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
         }
     }
-    private void CheckBoostStamina()
-    {
-        if (!obtainedUpgrades[upgradePositions[boostPos]])
-            return;
 
-        //Si la mejora esta activada resta stamina        
-        if (upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
-        {
-            boostStamina -= boostStaminaReduction * Time.deltaTime;
-        }
-        else //Si esta desactivada recupera stamina
-        {
-            boostStamina += boostStaminaRecover * Time.deltaTime;
-        }
-
-        boostStamina = Mathf.Clamp01(boostStamina);
-
-        backgroundImagePositions[boostPos].fillAmount = boostStamina;
-
-        if (boostStamina == 0)
-        {
-            ToggleBoost(boostPos, false);
-        }
-    }
     private void ToggleLight(Position _pos)
     {
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT])
