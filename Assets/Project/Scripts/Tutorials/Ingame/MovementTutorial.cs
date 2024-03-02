@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MovementTutorial : Tutorial
@@ -24,11 +25,26 @@ public class MovementTutorial : Tutorial
         
     }
 
+    private void OnEnable()
+    {
+        InputSystem.onDeviceChange += UpdateInputImages;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onDeviceChange -= UpdateInputImages;
+    }
     public void StartTutorial()
+    {
+        playerStartPos = PlayerManager.Instance.player.transform.position;
+        UpdateInputImages(null, InputDeviceChange.Added);
+
+    }
+
+    public void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {
         rotateImage.sprite = rotateSprites[(int)InputController.Instance.GetControllerType()];
         accelerateImage.sprite = accelerateSprites[(int)InputController.Instance.GetControllerType()];
-        playerStartPos = PlayerManager.Instance.player.transform.position;
     }
 
     private void FixedUpdate()
@@ -42,8 +58,5 @@ public class MovementTutorial : Tutorial
     {
         gameObject.SetActive(false);
     }
-
-
-
 
 }
