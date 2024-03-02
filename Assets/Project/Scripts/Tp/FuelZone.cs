@@ -13,6 +13,7 @@ public class FuelZone : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerManager.Instance.player.fuelConsume += fuelIncrement;
+            PlayerManager.Instance.player.refillFuelParticles.Play();
         }
     }
 
@@ -21,6 +22,7 @@ public class FuelZone : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerManager.Instance.player.fuelConsume -= fuelIncrement;
+            PlayerManager.Instance.player.refillFuelParticles.Stop();
         }
     }
 }

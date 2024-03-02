@@ -129,7 +129,13 @@ public class FuelCanvasController : MonoBehaviour
 
     private void LowFuelFeedback(float _currFuel)
     {
-        if (_currFuel <= fuelPercent && hitShakeProcess < shakeMagnitude)
+        if (playerController.fuelConsume > 0)
+        {
+            RestoreDefaultValues();
+            sliderFloatEffect.canFloat = true;
+            sliderFloatEffect.speed = baseFloatSpeed;
+        }
+        else if (_currFuel <= fuelPercent && hitShakeProcess < shakeMagnitude)
         {
             float maxFuelInfluence = 6;
             float minFuelInfluence = 1.1f;
