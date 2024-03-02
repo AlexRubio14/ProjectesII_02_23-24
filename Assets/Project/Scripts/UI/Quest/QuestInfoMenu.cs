@@ -34,6 +34,8 @@ public class QuestInfoMenu : MonoBehaviour
 
     private DisplayQuestController displayQuestController;
 
+   
+
     private void Awake()
     {
         displayQuestController = GetComponentInParent<DisplayQuestController>();

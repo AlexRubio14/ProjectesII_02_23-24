@@ -509,4 +509,9 @@ public class PlayerController : MonoBehaviour
             GetDamage(enemy.damage, collision.GetContact(0).point);
         }
     }
+
+    public void StopEngineSource()
+    {
+        engineSource.Stop();
+    }
 }

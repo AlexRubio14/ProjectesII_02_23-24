@@ -43,8 +43,12 @@ public class CheckQuestController : MonoBehaviour
     [SerializeField]
     private AudioClip missionCompletedClip;
 
+    [SerializeField]
+    private GameObject selectMissionTutorial;
+
     [Space, Header("Inventory"), SerializeField]
     private InventoryMenuController inventoryMenu;
+
 
     private void Awake()
     {
@@ -57,6 +61,9 @@ public class CheckQuestController : MonoBehaviour
 
         completeButton.onClick.AddListener(() => CompleteQuest());
         selectButton.onClick.AddListener(() => SelectQuest());
+
+        selectMissionTutorial.SetActive(true);
+
     }
 
     public void UpdateQuestValues(QuestObject _quest, bool _selectButton = true)
