@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem hitParticles;
     [HideInInspector]
     public Action OnHit;
+    public ParticleSystem refillFuelParticles;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;

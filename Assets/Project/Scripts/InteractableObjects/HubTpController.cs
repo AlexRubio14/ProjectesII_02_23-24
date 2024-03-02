@@ -48,6 +48,8 @@ public class HubTpController : InteractableObject
         InventoryManager.Instance.EndRun(true);
         c_tpParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         Invoke("GoToHub", timeToGoHub);
+        PlayerManager.Instance.player.refillFuelParticles.Stop();
+
     }
 
 

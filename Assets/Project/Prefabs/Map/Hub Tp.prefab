@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28489ea54bd1dd4c85ab4a7d384faf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelIncrement: 8.6
+  fuelIncrement: 10.1
 --- !u!1 &1296964523778116222
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +516,7 @@ MonoBehaviour:
   unhidePivot: {fileID: 0}
   controlHintPivot:
   - {fileID: 2280407530471977184}
-  placeParticles: 1
+  placeParticles: 0
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
   timeToGoHub: 0.7
   timeToStopParticles: 0.7

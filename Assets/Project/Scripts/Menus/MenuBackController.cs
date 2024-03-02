@@ -36,7 +36,7 @@ public class MenuBackController : MonoBehaviour
 
     private void BackAction(InputAction.CallbackContext obj)
     {
-        if (backButton)
+        if (backButton && backButton.interactable && backButton.gameObject.activeInHierarchy)
         {
             backButton.onClick.Invoke();
             backButton = null;
