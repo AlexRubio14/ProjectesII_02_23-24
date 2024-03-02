@@ -11,7 +11,6 @@ public class ShopMusic : MonoBehaviour
     private void Awake()
     {
         audioSource = AudioManager._instance.Play2dLoop(shopMusic, "Music", 1,1,1);
-
     }
 
     public void StopMusic()
