@@ -381,17 +381,6 @@
                 },
                 {
                     "name": "",
-                    "id": "15c3d515-75b4-4c6c-a01e-ef3b9ff689e8",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fc97b8de-1838-4656-a7be-cdaae82c46e9",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

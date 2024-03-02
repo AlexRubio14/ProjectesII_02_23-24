@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FirstCompletedMission : Tutorial
 {
+    [SerializeField]
+    private SelectMissionTutorial selectMissionTutorial;
 
     private void OnEnable()
     {
@@ -31,5 +35,26 @@ public class FirstCompletedMission : Tutorial
         dialogueController.onDialogueEnd -= EndTutorial;    
 
         PlayerPrefs.SetInt(tutorialkey, 1);
+
+        Button[] mission = FindObjectsOfType<Button>(); 
+        List<Button> btList = new List<Button>();
+        foreach(Button bt in mission)
+        {
+            QuestCard questCard = bt.GetComponent<QuestCard>();
+            
+
+            if(bt.gameObject.activeInHierarchy && !questCard || 
+                questCard && questCard.currentQuest.questID != 4)   
+            {
+                btList.Add(bt);
+                bt.interactable = false;
+            }
+            else if(questCard && questCard.currentQuest.questID == 4)
+            {
+                bt.Select();
+            }
+        }
+
+        selectMissionTutorial.buttons = btList;
     }
 }

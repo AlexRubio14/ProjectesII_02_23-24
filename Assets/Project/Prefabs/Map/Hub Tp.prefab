@@ -363,6 +363,8 @@ MonoBehaviour:
   dialogues:
   - Recuerda que siempre puedes utilizar los teletransportadores para volver a base,
     guardar los objetos y no quedarte sin combustible
+  - Ademas, si pasas por encima de algun teletransportador te recuperaran el combustible
+    asi que no tengas miedo de acercarte a ellos
   dialogueController: {fileID: 0}
 --- !u!1 &7492676948855027737
 GameObject:
@@ -514,6 +516,7 @@ MonoBehaviour:
   unhidePivot: {fileID: 0}
   controlHintPivot:
   - {fileID: 2280407530471977184}
+  placeParticles: 1
   tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
   timeToGoHub: 0.7
   timeToStopParticles: 0.7
