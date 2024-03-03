@@ -7,6 +7,10 @@ public class FuelZone : MonoBehaviour
     [SerializeField]
     private float fuelIncrement;
 
+    [SerializeField]
+    private AudioClip healingClip;
+    private AudioSource healingSource;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,6 +18,7 @@ public class FuelZone : MonoBehaviour
         {
             PlayerManager.Instance.player.fuelConsume += fuelIncrement;
             PlayerManager.Instance.player.refillFuelParticles.Play();
+            healingSource = AudioManager._instance.Play2dLoop(healingClip, "Teleport");
         }
     }
 
@@ -24,6 +29,7 @@ public class FuelZone : MonoBehaviour
             if (PlayerManager.Instance.player.fuel >= PlayerManager.Instance.player.GetMaxFuel())
             {
                 PlayerManager.Instance.player.refillFuelParticles.Stop();
+                AudioManager._instance.StopLoopSound(healingSource);
             }
             else if (PlayerManager.Instance.player.refillFuelParticles.isStopped)
             {
@@ -38,6 +44,7 @@ public class FuelZone : MonoBehaviour
         {
             PlayerManager.Instance.player.fuelConsume -= fuelIncrement;
             PlayerManager.Instance.player.refillFuelParticles.Stop();
+            AudioManager._instance.StopLoopSound(healingSource);
         }
     }
 }
