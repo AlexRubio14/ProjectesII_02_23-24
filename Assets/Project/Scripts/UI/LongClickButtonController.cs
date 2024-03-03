@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class LongClickButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class LongClickButtonController : MonoBehaviour
 {
+    [SerializeField]
+    private InputActionReference pressedAction; 
+
     private bool pointDown;
     private float pointerDownTimer;
 
@@ -16,14 +20,20 @@ public class LongClickButtonController : MonoBehaviour, IPointerDownHandler, IPo
     [SerializeField]
     private Image fillImage;
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void OnEnable()
     {
-        pointDown = true;
+        pressedAction.action.started += ButtonPressed;
+        pressedAction.action.canceled += ButtonPressed;
+    }
+    private void OnDisable()
+    {
+        pressedAction.action.started -= ButtonPressed;
+        pressedAction.action.canceled -= ButtonPressed;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void ButtonPressed(InputAction.CallbackContext obj)
     {
-        pointDown = false;
+        pointDown = obj.started; 
     }
 
     public void Update()

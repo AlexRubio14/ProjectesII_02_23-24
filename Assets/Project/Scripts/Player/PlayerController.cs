@@ -513,6 +513,7 @@ public class PlayerController : MonoBehaviour
 
     public void StopEngineSource()
     {
-        engineSource.Stop();
+        if(engineSource != null)
+            engineSource.Stop();
     }
 }
