@@ -22,8 +22,11 @@ public class ItemObject : ScriptableObject
 
     [field: SerializeField]
     public float BaseMineralHealth {  get; private set; }
+    
     [field: SerializeField]
-    public Vector2 EnergyLevelSize { get; private set; }
+    public Vector2 LeftEnergyLevelSize { get; private set; }
+    [field: SerializeField]
+    public Vector2 RightEnergyLevelSize { get; private set; }
 
     [field: Tooltip("En caso de no tener power up, dejarlo en NONE"), SerializeField]
     public PowerUpManager.PowerUpType PowerUp { get; private set; }
