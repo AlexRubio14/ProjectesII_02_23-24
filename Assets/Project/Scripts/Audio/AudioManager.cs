@@ -152,7 +152,12 @@ public class AudioManager : MonoBehaviour
 
     public IEnumerator FadeOutSFXLoop(AudioSource source, float  fadeSpeed = 0.05f)
     {
-        yield return new WaitUntil(() => (source.volume -= fadeSpeed) <= 0);
-        StopLoopSound(source);
+        if(source != null && source.gameObject)
+        {
+            yield return new WaitUntil(() => (source.volume -= fadeSpeed) <= 0);
+            StopLoopSound(source);
+        }
+        else
+            yield return null;
     }
 }
