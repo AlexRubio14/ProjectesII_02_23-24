@@ -21,7 +21,7 @@ public class CheckQuestController : MonoBehaviour
     public Button questBackButton;
     [SerializeField]
     private GameObject cardPrefab;
-    private List<GameObject> cardList;   
+    private List<QuestCard> cardList;   
 
 
     [Space, Header("Quest"), SerializeField]
@@ -49,7 +49,7 @@ public class CheckQuestController : MonoBehaviour
 
     private void Awake()
     {
-        cardList = new List<GameObject>();
+        cardList = new List<QuestCard>();
 
         displayQuestController = GetComponentInParent<DisplayQuestController>();
         completeText = completeButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -193,15 +193,47 @@ public class CheckQuestController : MonoBehaviour
         foreach (QuestObject item in obtainedQuests)
         {
             GameObject currentObject = Instantiate(cardPrefab, cardLayout);
-            currentObject.GetComponent<QuestCard>().SetTextValues(item);
-            cardList.Add(currentObject);
+            QuestCard currentCard = currentObject.GetComponent<QuestCard>();
+            cardList.Add(currentCard);
+            currentCard.SetTextValues(item);
+        }
+
+        SelectButtonQuestList();
+    }
+
+    private void SelectButtonQuestList()
+    {
+        QuestObject questObject;
+
+        if (currentQuest)
+        {
+            questObject = currentQuest;
+        }
+        else if(QuestManager.Instance.GetSelectedQuest())
+        {
+            questObject = QuestManager.Instance.GetSelectedQuest();
+        }
+        else
+        {
+            questObject = cardList[0].currentQuest;
+        }
+
+        for(int i = 0; i  < cardList.Count; i++) 
+        {
+            if(questObject == cardList[i].currentQuest)
+            {
+                cardList[i].GetComponent<Button>().Select();
+                return;
+            }
         }
     }
     public void RemoveQuestCardList()
     {
-        foreach (GameObject item in cardList)
+        foreach (QuestCard item in cardList)
         {
-            Destroy(item);
+            Destroy(item.gameObject);
         }
+
+        cardList.Clear();   
     }
 }

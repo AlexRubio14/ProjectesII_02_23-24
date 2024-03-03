@@ -66,11 +66,4 @@ public class DisplayQuestController : MonoBehaviour
         if (firstTimeQuest.gameObject.activeInHierarchy)
             StartCoroutine(WaitSelectFirstTimeButton()); 
     }
-
-    public void DisplayQuestList()
-    {
-        checkController.gameObject.SetActive(true);
-        checkController.DisplayQuestCardList();
-        checkListSelectedButton.Select();
-    }
 }
