@@ -12173,6 +12173,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1819140128}
     - target: {fileID: 5487209284526639545, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: obtainClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 20041270510d5c842a9aa9fbf9b526d4, type: 3}
+    - target: {fileID: 5487209284526639545, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: onLongClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 340162845}

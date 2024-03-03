@@ -20,6 +20,9 @@ public class LongClickButtonController : MonoBehaviour
     [SerializeField]
     private Image fillImage;
 
+    [SerializeField]
+    private AudioClip obtainClip;
+
     private void OnEnable()
     {
         pressedAction.action.started += ButtonPressed;
@@ -44,7 +47,10 @@ public class LongClickButtonController : MonoBehaviour
             if (pointerDownTimer > requiredHoldTime)
             {
                 if (onLongClick != null)
+                {
                     onLongClick.Invoke();
+                    AudioManager._instance.Play2dOneShotSound(obtainClip, "MissionCompleted", 1, 1, 1);
+                }
 
                 Reset();
             }
