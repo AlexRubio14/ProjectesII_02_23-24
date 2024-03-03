@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public enum State { IDLE, MOVING, DASHING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
-    private Rigidbody2D c_rb;
+    private Rigidbody2D rb2d;
     [Space, Header("Movement"), SerializeField]
     private float movementSpeed;
     private float accelerationValue;
@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private AudioClip deathExplosion;
 
+    [Space, SerializeField]
+    private GameObject pickableItemPrefab;
+    [SerializeField]
+    private float mineralMaxThrowSpeed;
+
     [Space, Header("Audio"), SerializeField]
     private AudioClip collisionClip;
     [SerializeField]
@@ -97,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        c_rb = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
 
         mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -195,7 +200,7 @@ public class PlayerController : MonoBehaviour
                         Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
                         Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
-        c_rb.AddForce(acceleration * TimeManager.Instance.timeParameter * sizeUpgrade.sizeMultiplyer, ForceMode2D.Force);
+        rb2d.AddForce(acceleration * TimeManager.Instance.timeParameter * sizeUpgrade.sizeMultiplyer, ForceMode2D.Force);
     }
     private void Rotation()
     {
@@ -208,7 +213,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
         Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
         float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
-        c_rb.AddTorque(signedAngle * (rotationSpeed * sizeUpgrade.sizeMultiplyer) * TimeManager.Instance.timeParameter);
+        rb2d.AddTorque(signedAngle * (rotationSpeed * sizeUpgrade.sizeMultiplyer) * TimeManager.Instance.timeParameter);
     }
     private void Dash()
     {
@@ -225,13 +230,13 @@ public class PlayerController : MonoBehaviour
 
         if(currentDashTime >= timeDashing)
         {
-            c_rb.velocity = c_rb.velocity / dashSpeedDrag;
+            rb2d.velocity = rb2d.velocity / dashSpeedDrag;
             currentDashTime = 0;
             currentState = State.IDLE;
         }
         else
         {
-            c_rb.velocity = dashDirection;
+            rb2d.velocity = dashDirection;
         }
     }
 
@@ -283,8 +288,8 @@ public class PlayerController : MonoBehaviour
         CameraController.Instance.AddHighTrauma();
         Invoke("ExploteShip", timeToExploteShip);
 
-        c_rb.drag /= 4;
-        c_rb.angularDrag /= 4;
+        rb2d.drag /= 4;
+        rb2d.angularDrag /= 4;
 
         shipLight.intensity /= 3;
         shipLight.pointLightInnerRadius /= 2;
@@ -295,6 +300,12 @@ public class PlayerController : MonoBehaviour
     }
     private void ExploteShip()
     {
+
+        foreach (KeyValuePair<ItemObject, short> item in InventoryManager.Instance.GetRunItems())
+        {
+            ThrowMinerals(item.Key, (int)item.Value);
+        }
+
         spriteRenderer.enabled = false;
         CameraController.Instance.AddHighTrauma();
         Instantiate(explosionParticles, transform.position, Quaternion.identity);
@@ -302,6 +313,34 @@ public class PlayerController : MonoBehaviour
         shipLight.intensity = 0;
         Invoke("ReturnToHub", timeToReturnHub);
         AudioManager._instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
+
+        
+
+    }
+    private void ThrowMinerals(ItemObject _objectType, int _itemsToReturn)
+    {
+        for (int i = 0; i < _itemsToReturn; i++)
+        {
+            float randomX = UnityEngine.Random.Range(-1, 2);
+            float randomY = UnityEngine.Random.Range(-1, 2);
+            Vector2 randomDir = new Vector2(randomX, randomY);
+            randomDir.Normalize();
+
+            float spawnOffset = 1;
+
+            Vector2 spawnPos = (Vector2)transform.position + randomDir * spawnOffset;
+
+            PickableItemController currItem = Instantiate(pickableItemPrefab, spawnPos, Quaternion.identity).GetComponent<PickableItemController>();
+
+            currItem.c_currentItem = _objectType;
+            currItem.followPlayer = false;
+            
+
+
+            float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);
+            currItem.ImpulseItem(randomDir, throwSpeed);
+            currItem.transform.up = randomDir;
+        }
     }
     private void DisableScripts()
     {
@@ -386,8 +425,8 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
-        c_rb.AddForce(direction * knockbackScale * sizeUpgrade.sizeMultiplyer, ForceMode2D.Impulse);
-        c_rb.AddTorque(UnityEngine.Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+        rb2d.AddForce(direction * knockbackScale * sizeUpgrade.sizeMultiplyer, ForceMode2D.Impulse);
+        rb2d.AddTorque(UnityEngine.Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
 
         Invoke("WaitForKnockbackTime", knockbackTime);
     }
@@ -430,12 +469,12 @@ public class PlayerController : MonoBehaviour
                 mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
-                c_rb.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
 
             case State.FREEZE:
                 engineParticles.gameObject.SetActive(false);
-                c_rb.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
@@ -492,8 +531,8 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerPause()
     {
-        c_rb.velocity = Vector2.zero;
-        c_rb.angularVelocity = 0.0f;
+        rb2d.velocity = Vector2.zero;
+        rb2d.angularVelocity = 0.0f;
     }
 
 

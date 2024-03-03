@@ -10151,6 +10151,8 @@ MonoBehaviour:
   engineParticles: {fileID: 4361300617207404308}
   enginePoweringOff: {fileID: 8300000, guid: 3a56d9eebd572774e8a885abac64bf54, type: 3}
   deathExplosion: {fileID: 8300000, guid: b4c26e704a344db4a80d2915de4f8100, type: 3}
+  pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  mineralMaxThrowSpeed: 4
   collisionClip: {fileID: 8300000, guid: b884c2bebe6af954eaa0b217c2a87247, type: 3}
   engineClip: {fileID: 8300000, guid: c6971e1817e37214aa2dc405b901f5d4, type: 3}
 --- !u!114 &4196185413055272076

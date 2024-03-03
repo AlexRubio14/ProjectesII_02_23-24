@@ -370,7 +370,7 @@ public class MineMinigameController : MonoBehaviour
 
     }
     
-    private void ThrowMinerals(float _itemsToReturn)
+    private void ThrowMinerals(int _itemsToReturn)
     {
         for (int i = 0; i < _itemsToReturn; i++)
         {
