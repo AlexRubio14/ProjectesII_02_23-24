@@ -145,6 +145,9 @@ public class AudioManager : MonoBehaviour
 
     public void StopLoopSound(AudioSource _as) 
     {
+        if (_as == null)
+            return;
+
         _as.loop = false;
         _as.clip = null;
         _as.Stop();

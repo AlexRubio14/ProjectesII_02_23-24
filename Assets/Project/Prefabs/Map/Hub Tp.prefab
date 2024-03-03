@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuelIncrement: 10.1
+  healingClip: {fileID: 8300000, guid: 1c5cfcbe38b9b4e4daeb342494f00b05, type: 3}
 --- !u!1 &1296964523778116222
 GameObject:
   m_ObjectHideFlags: 0
