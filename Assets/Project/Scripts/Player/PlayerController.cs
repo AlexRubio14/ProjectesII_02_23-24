@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.L))
         {
-            fuel += 50;
+            fuelConsume = 100;
         }
 
         CheckIfCanDash();
