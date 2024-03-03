@@ -256,8 +256,8 @@ public class MineMinigameController : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
-        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.EnergyLevelSize.x, miningItem.c_currentItem.EnergyLevelSize.y));
-        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.EnergyLevelSize.x, miningItem.c_currentItem.EnergyLevelSize.y));
+        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.LeftEnergyLevelSize.x, miningItem.c_currentItem.LeftEnergyLevelSize.y));
+        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.RightEnergyLevelSize.x, miningItem.c_currentItem.RightEnergyLevelSize.y));
     }
 
     private void CheckAdvanceProgress()
@@ -369,7 +369,7 @@ public class MineMinigameController : MonoBehaviour
         return itemsToReturn;
 
     }
-
+    
     private void ThrowMinerals(float _itemsToReturn)
     {
         for (int i = 0; i < _itemsToReturn; i++)
