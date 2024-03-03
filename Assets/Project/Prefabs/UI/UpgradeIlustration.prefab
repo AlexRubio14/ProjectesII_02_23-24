@@ -170,7 +170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8180925324940427738
 RectTransform:
   m_ObjectHideFlags: 0
@@ -784,6 +784,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   fillImage: {fileID: 570630140927862190}
+  obtainClip: {fileID: 0}
 --- !u!114 &3718238106471669552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1525,7 +1526,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a31452ea99e028e4b830f8fcba244f92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5e183deafb35bd47a74afe195dae972, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1601,7 +1602,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Mantener
+  m_text: Presiona
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c4e769ebb45c1844fb9e5564f6cb8548, type: 2}
   m_sharedMaterial: {fileID: -8692987287924476269, guid: c4e769ebb45c1844fb9e5564f6cb8548, type: 2}

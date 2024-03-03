@@ -2147,7 +2147,7 @@ MonoBehaviour:
   - "\xA1Bienvenido a mi tienda!"
   - Aqui en el mostrador de la izquierda puedes ver todos los materiales que traigas
     de vuelta a la base despues de una inmersion.
-  - Ves a la ventana de "Quests" y selecciona mi encargo para poder completarlo.
+  - Ves a la mision 1 y completala.
   dialogueController: {fileID: 1688875427}
   shopTutorial: {fileID: 1009540629}
 --- !u!1 &391344610
