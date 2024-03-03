@@ -1452,7 +1452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5433138184344898026
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2883,7 +2883,6 @@ GameObject:
   - component: {fileID: 548320942478738858}
   - component: {fileID: 6945223751760172834}
   - component: {fileID: 6110011136520976249}
-  - component: {fileID: 2187818116609930885}
   - component: {fileID: 4706022648891395132}
   m_Layer: 5
   m_Name: ButtonResume
@@ -2998,7 +2997,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7662815653211644476}
         m_TargetAssemblyTypeName: PauseMenuController, Assembly-CSharp
-        m_MethodName: ResumeGame
+        m_MethodName: ResumeGameButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3065,18 +3064,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &2187818116609930885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5570336976020806008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5988abe75aba3144bb8bc7812880f4a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &4706022648891395132
 Animator:
   serializedVersion: 5
@@ -3303,7 +3290,7 @@ Transform:
   - {fileID: 5433138184344898026}
   - {fileID: 6598878211996832048}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7662815653211644476
 MonoBehaviour:
@@ -3318,6 +3305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseAction: {fileID: 5422022957932358153, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  resumeAction: {fileID: 2631651688888783702, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   pauseMenuCanvas: {fileID: 2742210413428064604}
   continueButton: {fileID: 6945223751760172834}
   cardLayout: {fileID: 4686470196324184340}

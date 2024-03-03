@@ -10,7 +10,9 @@ public class PauseMenuController : MonoBehaviour
 {
     [Header("Inputs"), SerializeField]
     private InputActionReference pauseAction;
-   
+    [SerializeField]
+    private InputActionReference resumeAction;
+
     [Space, Header("Pause Menu"), SerializeField]
     private Canvas pauseMenuCanvas;
     [SerializeField]
@@ -59,10 +61,13 @@ public class PauseMenuController : MonoBehaviour
     private void OnEnable()
     {
         pauseAction.action.started += PauseGame;
+        resumeAction.action.started += ResumeGame;
+
     }
     private void OnDisable()
     {
         pauseAction.action.started -= PauseGame;
+        resumeAction.action.started -= ResumeGame;
     }
 
     private void DisplayQuestsObtainedList()
@@ -284,8 +289,11 @@ public class PauseMenuController : MonoBehaviour
         
     }
 
-
-    public void ResumeGame()
+    public void ResumeGameButton()
+    {
+        ResumeGame(new InputAction.CallbackContext());
+    }
+    private void ResumeGame(InputAction.CallbackContext obj)
     {
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
@@ -298,8 +306,8 @@ public class PauseMenuController : MonoBehaviour
     {
 
         PlayerManager.Instance.player.SubstractFuel(1000);
-        PlayerManager.Instance.player.fuelConsume -= 10;
-        ResumeGame();
+        PlayerManager.Instance.player.fuelConsume = -10;
+        ResumeGame(new InputAction.CallbackContext());
 
     }
 }
