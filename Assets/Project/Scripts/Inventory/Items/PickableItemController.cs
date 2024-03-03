@@ -16,6 +16,9 @@ public class PickableItemController : MonoBehaviour
     [SerializeField]
     private AudioClip collectClip;
 
+    [HideInInspector]
+    public bool followPlayer = true;
+
     private Transform c_playerTransform;
     private Rigidbody2D c_rb2d;
     private void Awake()
@@ -37,7 +40,7 @@ public class PickableItemController : MonoBehaviour
 
     private void FollowPlayer()
     {
-        if (c_playerTransform)
+        if (followPlayer && c_playerTransform)
         {
             Vector2 dir = (c_playerTransform.position - transform.position).normalized;
             c_rb2d.AddForce(dir * moveSpeed, ForceMode2D.Force);
@@ -62,7 +65,7 @@ public class PickableItemController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !playerThrow)
+        if (followPlayer && collision.CompareTag("Player") && !playerThrow)
         {
             c_playerTransform = collision.transform;
         }
