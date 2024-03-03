@@ -78,6 +78,8 @@ public class CheckQuestController : MonoBehaviour
         {
             bool canBuy = InventoryManager.Instance.CanBuy(_quest.neededItems);
             completeButton.interactable = canBuy;
+            if (canBuy)
+                completeButton.Select();
             //completeButtonFloatEffect.canFloat = canBuy;
             completeText.text = "Completar";
 
