@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -16,15 +17,17 @@ public class PlayerMapInteraction : MonoBehaviour
     private float checkRadius;
     [SerializeField]
     private LayerMask interactableLayer;
-    [Space, Header("Interact Canvas"), SerializeField]
-    private GameObject c_itemToShowCanvas;
+
+    [Header("Interact Hint"), SerializeField]
+    private SpriteRenderer interactHint;
     [SerializeField]
-    private Image c_itemToShowImage;
+    private Sprite hideUpgradeSprite;
+
     [SerializeField]
     private GameObject c_lockedUpgradeImage;
 
     [SerializeField]
-    private Sprite interactKeySprite;
+    private Sprite[] interactKeySprite;
 
     public bool showCanvas;
 
@@ -66,27 +69,37 @@ public class PlayerMapInteraction : MonoBehaviour
     private void ShowNeededUpgrade()
     {
 
-        if (!nearestObject || !showCanvas || !nearestObject.isInteractable || nearestObject.isHide)
+        if (!nearestObject || !showCanvas)
         {
-            c_itemToShowCanvas.SetActive(false);
+            interactHint.gameObject.SetActive(false);
             return;
         }
-        else if (nearestObject && !c_itemToShowCanvas.activeInHierarchy)
+        else if (nearestObject)
         {
-            c_itemToShowCanvas.SetActive(true);
+            interactHint.gameObject.SetActive(true);
+            interactHint.transform.position = nearestObject.GetNearestTransform().position;
         }
 
-        if (nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
+
+        if (nearestObject.isHide)
         {
-            c_itemToShowImage.sprite = nearestObject.c_upgradeNeeded.c_UpgradeSprite;
-            c_lockedUpgradeImage.SetActive(true);
-            return;
+            interactHint.sprite = hideUpgradeSprite;
         }
+        else if(nearestObject.isInteractable && nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded) || 
+            nearestObject.isInteractable && !nearestObject.c_upgradeNeeded 
+            )
+        {
 
-        //Mostrar el sprite de pulsar el boton
-        c_itemToShowImage.sprite = interactKeySprite;
-        c_lockedUpgradeImage.SetActive(false);
-
+            interactHint.sprite = interactKeySprite[(int)InputController.Instance.GetControllerType()];
+        }
+        else if(nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
+        {
+            interactHint.sprite = nearestObject.c_upgradeNeeded.UpgradeSprite;
+        }
+        else
+        {
+            interactHint.gameObject.SetActive(false);
+        }
     }
 
     public void InteractNearObject()

@@ -10,6 +10,7 @@ public class Enemy01 : Enemy
     public float eatingForce; 
     [SerializeField]
     public int eatingHeal;
+    
 
     [SerializeField]
     private AudioClip impactPlayerClip;

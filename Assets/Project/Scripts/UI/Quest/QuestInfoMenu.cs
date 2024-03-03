@@ -3,29 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Rendering;
+
 public class QuestInfoMenu : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI titleMissionText;
-    [SerializeField]
-    private TextMeshProUGUI missionResumeText;
 
     [Space, Header("Requirements"), SerializeField]
     private LayoutGroup requirementsLayout;
     private List<Image> requirementImages;
     private List<TextMeshProUGUI> requirementTexts;
+    public bool canItemsFloat;
 
     [Space, Header("Rewards"), SerializeField]
     private LayoutGroup rewardLayout;
     private List<TextMeshProUGUI> rewardList;
+    [SerializeField]
+    private float rewardFontSize;
+    [SerializeField]
+    private bool showCurrentItems;
 
     [Space, SerializeField]
     private DialogueController dialogue;
-    public Button endDialogueButtonSelect;
+    public List<Button> onFirstQuestClosed; //El boton 0 sera en caso de que sea la primera vez que obtenemos una mision, el 1 sera el else
     private QuestObject currentQuest;
 
     [Space, SerializeField]
     private TMP_FontAsset fontAsset;
+
+    private DisplayQuestController displayQuestController;
+
+   
+
+    private void Awake()
+    {
+        displayQuestController = GetComponentInParent<DisplayQuestController>();
+    }
 
     private void OnDisable()
     {
@@ -35,7 +49,6 @@ public class QuestInfoMenu : MonoBehaviour
     {
         currentQuest = _quest;
         titleMissionText.text = currentQuest.questTitle.ToString() + ": " + currentQuest.questName.ToString();
-        missionResumeText.text = currentQuest.questResume;
 
         SetRequirementValues();
         SetRewardValues();
@@ -52,7 +65,7 @@ public class QuestInfoMenu : MonoBehaviour
         requirementImages = new List<Image>();
         requirementTexts = new List<TextMeshProUGUI>();
 
-        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetAllItems();
+        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetSavetems();
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
@@ -60,15 +73,29 @@ public class QuestInfoMenu : MonoBehaviour
 
             Image newImage = newObj.AddComponent<Image>();
             requirementImages.Add(newImage);
-            newImage.sprite = item.Key.c_PickableSprite;
+            newImage.sprite = item.Key.PickableSprite;
+            
 
             newObj.transform.SetParent(requirementsLayout.transform);
+            ImageFloatEffect floatFX = newObj.AddComponent<ImageFloatEffect>();
+            floatFX.canFloat = canItemsFloat;
+            floatFX.speed = 1.4f;
+            floatFX.maxExpand = 1.5f;
+            floatFX.minExpand = 1.1f;
+
 
             newObj = new GameObject("Requirement Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
             newText.font = fontAsset; 
             requirementTexts.Add(newText);
-            newText.text = inventory[item.Key] + " / " + item.Value;
+            if (showCurrentItems)
+            {
+                newText.text = item.Key.ItemName + "   " + inventory[item.Key] + " / " + item.Value;
+            }
+            else
+            {
+                newText.text = item.Key.ItemName + " x " + item.Value;
+            }
             newText.enableAutoSizing = true;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;
             newText.verticalAlignment = VerticalAlignmentOptions.Middle;
@@ -82,19 +109,18 @@ public class QuestInfoMenu : MonoBehaviour
         rewardList = new List<TextMeshProUGUI>();
         foreach (KeyValuePair<ScriptableObject, QuestObject.RewardType> item in currentQuest.rewards)
         {
+            if(item.Value == QuestObject.RewardType.NEW_QUEST) {
+                continue; 
+            }
             GameObject newObj = new GameObject("Reward Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
-            newText.fontSize = 20;
+            newText.fontSize = rewardFontSize;
             newText.font = fontAsset; 
 
             switch (item.Value)
             {
                 case QuestObject.RewardType.UPGRADE:
-                    newText.text = ((UpgradeObject)item.Key).UpgradeName;
-                    break;
-                case QuestObject.RewardType.NEW_QUEST:
-                    QuestObject quest = (QuestObject)item.Key;
-                    newText.text = quest.questTitle + ": " + quest.questName;
+                    newText.text = ((UpgradeObject)item.Key).UpgradeName + ": " + ((UpgradeObject)item.Key).UpgradeDescription;
                     break;
                 case QuestObject.RewardType.POWER_UP:
                     newText.text = ((ItemObject)item.Key).ItemName;
@@ -135,6 +161,11 @@ public class QuestInfoMenu : MonoBehaviour
 
     public void SelectEndFirtstTimeButton()
     {
-        endDialogueButtonSelect.Select();
+        if (currentQuest.questID == 0 )
+        {
+            onFirstQuestClosed[0].Select();
+        }
     }
+
+
 }

@@ -16,18 +16,13 @@ MonoBehaviour:
   <questTitle>k__BackingField: Opt. 1.2
   <questName>k__BackingField: Tomate un respiro
   <questDialogue>k__BackingField: []
-  <questResume>k__BackingField: Recolecta la cantidad necesaria de materiales y desbloquea
-    una mejora que aumentara de forma moderada el combustible de tu nave
+  <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 50
-    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-      Value: 20
-    - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
       Value: 25
-    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 10
+    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
+      Value: 15
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: f2a3a1e76f8f2d64b809d13372fdea8c, type: 2}

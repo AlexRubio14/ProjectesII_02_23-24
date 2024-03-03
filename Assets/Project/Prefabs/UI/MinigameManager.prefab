@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4087865223996663104}
   m_Layer: 5
-  m_Name: CurrentEnergyLeve
+  m_Name: CurrentEnergyLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -484,8 +484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49462a71c1671bf4d864851e3aae4074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  c_currentEnergyLevelPointer: {fileID: 5376053008333232036}
-  c_needEnergyLevelPointer: {fileID: 8227475482437155795}
+  currentEnergyLevelPointer: {fileID: 5376053008333232036}
+  needEnergyLevelPointer: {fileID: 8227475482437155795}
   CorrectEnergy: 0
 --- !u!1 &971296759122435226
 GameObject:
@@ -1051,7 +1051,7 @@ Transform:
   m_Children:
   - {fileID: 5992441030099964028}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5189567363143038640
 MonoBehaviour:
@@ -1067,6 +1067,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargeRightLaserAction: {fileID: 2389276025789361315, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   chargeLeftLaserAction: {fileID: 6815837080457322733, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  cancelMinigameAction: {fileID: -752042838930278205, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
+  leftInputHint: {fileID: 1500339258337816123}
+  rightInputHint: {fileID: 1948757992158589692}
+  leftInputSprites:
+  - {fileID: 21300000, guid: 6f1b2ea0d163e49469ccb1e30493c2f4, type: 3}
+  - {fileID: 21300000, guid: 6853abc99b22934499b6ee06f59578e9, type: 3}
+  rightInputSprites:
+  - {fileID: 21300000, guid: 2ac5cb48f28824f44b8681195e17570c, type: 3}
+  - {fileID: 21300000, guid: 55d0e022ea87b594cbccb57af85a2e45, type: 3}
   laserChargeSpeed: 25
   laserDischargeSpeed: 15
   neededSizes: {x: 30, y: 80}
@@ -1079,10 +1088,10 @@ MonoBehaviour:
   rightLaser: {fileID: 129375026606737271}
   rightLaserSlider: {fileID: 5051201803688919494}
   rightLaserParticles: {fileID: 3779498173179561672}
-  c_progressBarSlider: {fileID: 6991850848142364571}
-  c_integrity: {fileID: 2034922421588692019}
+  progressBarSlider: {fileID: 6991850848142364571}
+  integrity: {fileID: 2034922421588692019}
   progressSpeed: 4
-  breakSpeed: 2
+  breakSpeed: 4.5
   maxIntegrity: 100
   maxMultiplierSpeed: 4
   multiplierUpSpeed: 1.5
@@ -1092,7 +1101,7 @@ MonoBehaviour:
   rightLaserPivot: {fileID: 8906084340829743810}
   leftLaserPivot: {fileID: 4009990243727180844}
   maxAngleRotation: 10
-  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 3.5
   percentText:
   - {fileID: 6824661381988163203}
@@ -2525,7 +2534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8193324810005831337}
   m_Layer: 5
-  m_Name: CurrentEnergyLeve
+  m_Name: CurrentEnergyLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2889,6 +2898,7 @@ GameObject:
   - component: {fileID: 8119412498010242861}
   - component: {fileID: 4865148273741380993}
   - component: {fileID: 1500339258337816123}
+  - component: {fileID: 7693509444730650625}
   m_Layer: 5
   m_Name: LT
   m_TagString: Untagged
@@ -2954,6 +2964,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7693509444730650625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229250311522450947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  maxExpand: 1.1
+  minExpand: 0.9
+  <canFloat>k__BackingField: 1
 --- !u!1 &6309882661843649392
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,8 +3630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49462a71c1671bf4d864851e3aae4074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  c_currentEnergyLevelPointer: {fileID: 2144074295102663339}
-  c_needEnergyLevelPointer: {fileID: 8383994242261416462}
+  currentEnergyLevelPointer: {fileID: 2144074295102663339}
+  needEnergyLevelPointer: {fileID: 8383994242261416462}
   CorrectEnergy: 0
 --- !u!1 &7546343655627401394
 GameObject:
@@ -3770,6 +3796,7 @@ GameObject:
   - component: {fileID: 5023011097213148143}
   - component: {fileID: 9011360895327982833}
   - component: {fileID: 1948757992158589692}
+  - component: {fileID: 6776830053408298269}
   m_Layer: 5
   m_Name: RT
   m_TagString: Untagged
@@ -3835,6 +3862,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6776830053408298269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7595760348549800695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  maxExpand: 1.1
+  minExpand: 0.9
+  <canFloat>k__BackingField: 1
 --- !u!1 &7857604577382097568
 GameObject:
   m_ObjectHideFlags: 0

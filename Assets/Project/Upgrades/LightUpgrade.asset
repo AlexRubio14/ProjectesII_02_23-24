@@ -13,17 +13,6 @@ MonoBehaviour:
   m_Name: LightUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 1
-  <UpgradeName>k__BackingField: Light Upgrade
-  <UpgradeDescription>k__BackingField: Permite encender una luz que permiten ver
-    elementos ocultos en el mapa
-  <c_UpgradeSprite>k__BackingField: {fileID: 21300000, guid: b8a0ad0bee1fd594896ccf61b3669f32, type: 3}
-  prize:
-    _serializedList:
-    - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
-      Value: 50
-    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 35
-    - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
-      Value: 30
-    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 10
+  <UpgradeName>k__BackingField: Luz Ultra-Gato-leta
+  <UpgradeDescription>k__BackingField: Revela objetos ocultos
+  <UpgradeSprite>k__BackingField: {fileID: 21300000, guid: b8a0ad0bee1fd594896ccf61b3669f32, type: 3}

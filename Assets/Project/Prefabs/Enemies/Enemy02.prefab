@@ -89,13 +89,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777b6d11e1883224babaac0a17269776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeVision: 7.5
+  rangeVision: 12
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
     m_Bits: 5248
+  spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 0
 --- !u!1 &1941519944893691061
 GameObject:
@@ -250,7 +251,7 @@ Transform:
   - {fileID: 3874927624965997897}
   - {fileID: 3885256371599684818}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &768391568925790214
 Rigidbody2D:
@@ -349,7 +350,7 @@ MonoBehaviour:
   - {fileID: 1079477967935640561}
   iaData: {fileID: 931764774973105053}
   movementDirectionSolver: {fileID: 6505329190034688335}
-  maxHealth: 100
+  <maxHealth>k__BackingField: 100
   speed: 15
   <damage>k__BackingField: 10
   moveSpots:
@@ -365,10 +366,10 @@ MonoBehaviour:
   c_currentDrop: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 2
+  deathClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
   showGizmos: 0
   timeFollowing: 5
   c_explosionParticles: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}
-  explosionClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
 --- !u!1 &5510550852629598786
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +396,7 @@ Transform:
   m_GameObject: {fileID: 5510550852629598786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5440735559799922451}

@@ -21,7 +21,7 @@ public class NotificationController : MonoBehaviour
 
     private void Update()
     {
-        timeToDesapearWaited += Time.deltaTime;
+        timeToDesapearWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
         if (timeToDesapearWaited >= timeToDisapear)
         {
             Destroy(gameObject);
@@ -33,7 +33,7 @@ public class NotificationController : MonoBehaviour
         notificationType = _item;
         currentAmount = _itemAmount;
 
-        c_itemImage.sprite = notificationType.c_PickableSprite;
+        c_itemImage.sprite = notificationType.PickableSprite;
         string currentItemAmountSign = "+"; 
         if (currentAmount <= 0)
             currentItemAmountSign = "";

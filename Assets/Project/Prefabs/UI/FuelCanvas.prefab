@@ -246,7 +246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 190, y: 190}
+  m_AnchoredPosition: {x: 163.40002, y: 231.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5005169322344386872
@@ -543,8 +543,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00018310547, y: 0}
-  m_SizeDelta: {x: 279.071, y: 75.2029}
+  m_AnchoredPosition: {x: 1.1017, y: 2.1739}
+  m_SizeDelta: {x: 276.8679, y: 71.1156}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8907107792664421827
 CanvasRenderer:
@@ -619,8 +619,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25.309692, y: 0.00012207031}
-  m_SizeDelta: {x: 228.454, y: 80}
+  m_AnchoredPosition: {x: 26.2114, y: 2.174}
+  m_SizeDelta: {x: 226.6505, y: 75.652}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8279021517584357773
 MonoBehaviour:
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -819,6 +819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2016835394324140668}
+  - component: {fileID: 6407949364690171279}
   m_Layer: 5
   m_Name: BackgroundPivot
   m_TagString: Untagged
@@ -845,9 +846,25 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 104, y: 174}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 78, y: 246}
+  m_SizeDelta: {x: 299.8619, y: 85.0678}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6407949364690171279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480866749860695031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  maxExpand: 1.1
+  minExpand: 1.02
+  <canFloat>k__BackingField: 0
 --- !u!1 &5847592470792864266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,8 +1035,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8.099976, y: 16.400002}
-  m_SizeDelta: {x: -161.5415, y: -53.0034}
+  m_AnchoredPosition: {x: -11.435349, y: 16.400002}
+  m_SizeDelta: {x: -154.8707, y: -53.0034}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3513159164570964501
 CanvasRenderer:
@@ -1229,8 +1246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -45.4752}
-  m_SizeDelta: {x: 100, y: 190.9503}
+  m_AnchoredPosition: {x: -7.8264, y: -36.77917}
+  m_SizeDelta: {x: 115.6528, y: 173.5582}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1759804469340244053
 CanvasRenderer:
@@ -1468,7 +1485,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 822479611
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &9203762746689573574
 MonoBehaviour:
@@ -1526,10 +1543,21 @@ MonoBehaviour:
   starterFuel: {fileID: 6336290638864935967}
   totalConsumePerSecond: {fileID: 4335147791500411873}
   fuelSlider: {fileID: 8279021517584357773}
-  dangerFuelPercent: 30
+  dangerFuelPercent: 35
   backgrounds:
   - {fileID: 3172924185371350793}
   - {fileID: 4632951066787994018}
   warningColor: {r: 0.7647059, g: 0.28627452, b: 0.28627452, a: 1}
-  blinkSpeed: 5
-  shakeMagnitude: 4
+  blinkSpeed: 2
+  backgroundFuelInfluence: 4
+  shakeMagnitude: 3
+  maxFloatSpeed: 3
+  baseFloatSpeed: 2
+  dangerBorderAlpha: {x: 0.01, y: 0.2}
+  dangerBorderSpeed: 1
+  borderFuelInfluence: 4.5
+  hitShakeForce: 4
+  hitShakeReduction: 2
+  hitBorderMaxAlpha: 0.5
+  hitBorderEnableSpeed: {x: 6, y: 1}
+  lowFuelBorder: {fileID: 0}

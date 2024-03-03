@@ -20,7 +20,10 @@ public class QuestObject : ScriptableObject
     public string[] questDialogue { private set; get; }
 
     [field: TextArea, SerializeField]
-    public string questResume { private set; get; }
+    public string[] questDialogueEnd { private set; get; }
+
+    //[field: TextArea, SerializeField]
+    //public string questResume { private set; get; }
 
     [SerializedDictionary("Item", "Amount")]
     public SerializedDictionary<ItemObject, short> neededItems;

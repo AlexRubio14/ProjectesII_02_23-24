@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CheckQuestController : MonoBehaviour
 {
@@ -10,14 +11,17 @@ public class CheckQuestController : MonoBehaviour
 
     private DisplayQuestController displayQuestController;
 
+    
     [Header("Card List"), SerializeField]
+    private GameObject questListUi;
+    [SerializeField]
     private Transform cardLayout;
     [SerializeField]
     private Button cardListBackButton;
     public Button questBackButton;
     [SerializeField]
     private GameObject cardPrefab;
-    private List<GameObject> cardList;   
+    private List<QuestCard> cardList;   
 
 
     [Space, Header("Quest"), SerializeField]
@@ -30,14 +34,27 @@ public class CheckQuestController : MonoBehaviour
     [SerializeField]
     private Button backButton;
     private TextMeshProUGUI selectText;
+    [SerializeField]
+    private DialogueController dialogueController;
+    [SerializeField]
+    private UpgradeInstructionController upgradeInstruction;
+    [SerializeField]
+    private Button upgradeInstructionObtainButton;
+    [SerializeField]
+    private AudioClip missionCompletedClip;
+
+    [Space, Header("Inventory"), SerializeField]
+    private InventoryMenuController inventoryMenu;
+
 
     private void Awake()
     {
-        cardList = new List<GameObject>();
+        cardList = new List<QuestCard>();
 
         displayQuestController = GetComponentInParent<DisplayQuestController>();
         completeText = completeButton.GetComponentInChildren<TextMeshProUGUI>();
         selectText = selectButton.GetComponentInChildren<TextMeshProUGUI>();
+
 
         completeButton.onClick.AddListener(() => CompleteQuest());
         selectButton.onClick.AddListener(() => SelectQuest());
@@ -47,11 +64,10 @@ public class CheckQuestController : MonoBehaviour
     {
         if (_selectButton)
         {
-            cardLayout.gameObject.SetActive(false);
-            cardListBackButton.gameObject.SetActive(false);
             backButton.Select();
         }
-        
+
+        questListUi.SetActive(false);
 
         currentQuest = _quest;
         questCanvas.gameObject.SetActive(true);
@@ -60,26 +76,31 @@ public class CheckQuestController : MonoBehaviour
         //Inicializar botones
         if (!currentQuest.completedQuest)
         {
-            completeButton.interactable = InventoryManager.Instance.CanBuy(_quest.neededItems);
+            bool canBuy = InventoryManager.Instance.CanBuy(_quest.neededItems);
+            completeButton.interactable = canBuy;
+            if (canBuy)
+                completeButton.Select();
+            //completeButtonFloatEffect.canFloat = canBuy;
             completeText.text = "Completar";
+
 
             selectButton.gameObject.SetActive(true);
 
             if (_quest == QuestManager.Instance.GetSelectedQuest())
             {
                 selectButton.interactable = false;
-                selectText.text = "Seleccionado";
+                selectText.text = "Fijada";
             }
             else
             {
                 selectButton.interactable = true;
-                selectText.text = "Seleccionar";
+                selectText.text = "Fijar";
             }
         }
         else
         {
             completeButton.interactable = false;
-            completeText.text = "Completado";
+            completeText.text = "Completada";
 
             selectButton.gameObject.SetActive(false);
         }
@@ -87,6 +108,11 @@ public class CheckQuestController : MonoBehaviour
         if (currentQuest.newQuest)
             currentQuest.newQuest = false;
 
+        //Settear que los items que necesita la quest hagan el efecto de flotar
+        foreach (KeyValuePair<ItemObject, short> item in _quest.neededItems)
+        {
+            inventoryMenu.SetItemFloaty(item.Key, true);
+        }
     }
     private void CompleteQuest()
     {
@@ -98,11 +124,22 @@ public class CheckQuestController : MonoBehaviour
             switch (item.Value)
             {
                 case QuestObject.RewardType.UPGRADE:
-                    UpgradeManager.Instance.ObtainUpgrade((UpgradeObject)item.Key);
+                    UpgradeObject currentUpgrade = (UpgradeObject)item.Key; 
+                    UpgradeManager.Instance.ObtainUpgrade(currentUpgrade);
+
+                    IEnumerator DisplayUpgradeInstructions()
+                    {
+                        yield return new WaitForEndOfFrame();
+
+                        upgradeInstruction.gameObject.SetActive(true);
+                        upgradeInstruction.SetUpgradeInstructions(currentUpgrade);
+
+                        upgradeInstructionObtainButton.Select(); 
+                    }
+                    StartCoroutine(DisplayUpgradeInstructions());
                     break;
                 case QuestObject.RewardType.NEW_QUEST:
-                    displayQuestController.checkDisplayNewQuests = true;
-                    displayQuestController.newQuests.Add((QuestObject)item.Key);
+                    ((QuestObject)item.Key).obtainedQuest = true;
                     break;
                 case QuestObject.RewardType.POWER_UP:
                     ItemObject currentItem = (ItemObject)item.Key;
@@ -116,6 +153,17 @@ public class CheckQuestController : MonoBehaviour
         RemoveQuestCardList();
         questCanvas.RemoveQuestInfo();
         UpdateQuestValues(currentQuest, false);
+
+        foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
+        {
+            inventoryMenu.UpdateItemAmount(item.Key);
+        }
+
+        dialogueController.dialogues = currentQuest.questDialogueEnd;
+        dialogueController.gameObject.SetActive(true);
+        dialogueController.StartDialogue();
+
+        AudioManager._instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
     }
 
     private void SelectQuest()
@@ -130,6 +178,16 @@ public class CheckQuestController : MonoBehaviour
         if (!gameObject.activeInHierarchy)
             return;
 
+        questListUi.SetActive(true);
+
+        if (currentQuest)
+        {
+            foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
+            {
+                inventoryMenu.SetItemFloaty(item.Key, false);
+            }
+        }
+        
         List<QuestObject> obtainedQuests = QuestManager.Instance.GetAllObtainedQuests();
 
         //Crear miniaturas de las quests
@@ -137,15 +195,47 @@ public class CheckQuestController : MonoBehaviour
         foreach (QuestObject item in obtainedQuests)
         {
             GameObject currentObject = Instantiate(cardPrefab, cardLayout);
-            currentObject.GetComponent<QuestCard>().SetTextValues(item);
-            cardList.Add(currentObject);
+            QuestCard currentCard = currentObject.GetComponent<QuestCard>();
+            cardList.Add(currentCard);
+            currentCard.SetTextValues(item);
+        }
+
+        SelectButtonQuestList();
+    }
+
+    private void SelectButtonQuestList()
+    {
+        QuestObject questObject;
+
+        if (currentQuest)
+        {
+            questObject = currentQuest;
+        }
+        else if(QuestManager.Instance.GetSelectedQuest())
+        {
+            questObject = QuestManager.Instance.GetSelectedQuest();
+        }
+        else
+        {
+            questObject = cardList[0].currentQuest;
+        }
+
+        for(int i = 0; i  < cardList.Count; i++) 
+        {
+            if(questObject == cardList[i].currentQuest)
+            {
+                cardList[i].GetComponent<Button>().Select();
+                return;
+            }
         }
     }
     public void RemoveQuestCardList()
     {
-        foreach (GameObject item in cardList)
+        foreach (QuestCard item in cardList)
         {
-            Destroy(item);
+            Destroy(item.gameObject);
         }
+
+        cardList.Clear();   
     }
 }

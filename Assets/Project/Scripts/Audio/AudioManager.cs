@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -24,13 +23,12 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null)
+        if (_instance != null && _instance != this)
         {
-            if (_instance != this)
-            {
-                Destroy(_instance);
-            }
+            Destroy(this);
+            return;
         }
+        
 
         _instance = this;
 
@@ -147,14 +145,22 @@ public class AudioManager : MonoBehaviour
 
     public void StopLoopSound(AudioSource _as) 
     {
+        if (_as == null)
+            return;
+
         _as.loop = false;
         _as.clip = null;
         _as.Stop();
     }
 
-    public IEnumerator FadeOutSFXLoop(AudioSource source, float  fadeSpeed = 0.01f)
+    public IEnumerator FadeOutSFXLoop(AudioSource source, float  fadeSpeed = 0.05f)
     {
-        yield return new WaitUntil(() => (source.volume -= fadeSpeed) <= 0);
-        StopLoopSound(source);
+        if(source != null && source.gameObject)
+        {
+            yield return new WaitUntil(() => (source.volume -= fadeSpeed) <= 0);
+            StopLoopSound(source);
+        }
+        else
+            yield return null;
     }
 }

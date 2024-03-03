@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 334274823621980755}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.67, y: 1.67, z: 1.67}
+  m_LocalScale: {x: 1.67, y: 1.6699998, z: 1.67}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6161894378625804264}
@@ -209,13 +209,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777b6d11e1883224babaac0a17269776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeVision: 8
+  rangeVision: 12
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
     m_Bits: 5248
+  spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 0
 --- !u!1 &1302204989104934714
 GameObject:
@@ -476,7 +477,7 @@ Transform:
   - {fileID: 3501139305257391057}
   - {fileID: 8425547812211473044}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4181270967838813588
 Rigidbody2D:
@@ -575,10 +576,11 @@ MonoBehaviour:
   - {fileID: 2450130724856854608}
   iaData: {fileID: 6668970655071454642}
   movementDirectionSolver: {fileID: 8942317131287401040}
-  maxHealth: 100
+  <maxHealth>k__BackingField: 100
   speed: 15
   <damage>k__BackingField: 10
   moveSpots:
+  - {fileID: 6161894378625804264}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -590,6 +592,7 @@ MonoBehaviour:
   c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
   c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 2
+  deathClip: {fileID: 8300000, guid: f6f5e2b1a48a6cc42a2761062a0f47f5, type: 3}
   showGizmos: 0
   eatingDuration: 1
   eatingForce: 10

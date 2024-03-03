@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DisplayQuestController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject shopButtons;
+    private Button firstButtonSelected;
 
     [Space, Header("First Time Quest"), SerializeField]
     private QuestInfoMenu firstTimeQuest;
@@ -18,30 +18,32 @@ public class DisplayQuestController : MonoBehaviour
     [SerializeField]
     private Button checkListSelectedButton;
     [HideInInspector]
-    public List<QuestObject> newQuests;
-    [HideInInspector]
     public bool checkDisplayNewQuests = false;
+    [SerializeField]
+    private Button questBackButton;
 
     [Space, SerializeField]
     private DialogueController dialogue;
 
     private void Start()
     {
-        newQuests = new List<QuestObject>();
 
+        //Esto solo funcionara si acabamos de empezar el juego, nos seleccionara la primera quest de todas y nos saltara el 
         QuestObject selectedQuest = QuestManager.Instance.GetSelectedQuest();
         if (selectedQuest && !selectedQuest.obtainedQuest)
         {
             firstTimeQuest.gameObject.SetActive(true);
             firstTimeQuest.SetValues(selectedQuest);
-            shopButtons.SetActive(false);
-            dialogue.onDialogueEnd += OnDialogueEnd;
+        }
+        else
+        {
+            firstButtonSelected.Select();
         }
     }
 
     private void OnEnable()
     {
-            dialogue.onDialogueEnd += OnDialogueEnd;
+        dialogue.onDialogueEnd += OnDialogueEnd;
     }
 
     private void OnDisable()
@@ -57,48 +59,11 @@ public class DisplayQuestController : MonoBehaviour
         }
 
 
-        if (checkController.isActiveAndEnabled && newQuests.Count <= 1)
-        {
-            firstTimeQuest.endDialogueButtonSelect = checkController.questBackButton;
-        }
+        if (checkController.isActiveAndEnabled)
+            firstTimeQuest.onFirstQuestClosed[1] = checkController.questBackButton;
+        
 
-        StartCoroutine(WaitSelectFirstTimeButton());
-
+        if (firstTimeQuest.gameObject.activeInHierarchy)
+            StartCoroutine(WaitSelectFirstTimeButton()); 
     }
-
-    private void Update()
-    {
-        CheckForNewQuests();
-    }
-    
-    private void CheckForNewQuests()
-    {
-        if (checkDisplayNewQuests && !firstTimeQuest.gameObject.activeInHierarchy)
-        {
-            if (newQuests.Count <= 0)
-            {
-                checkDisplayNewQuests = false;
-                return;
-            }
-            else if (newQuests[0].obtainedQuest)
-            {
-                newQuests.RemoveAt(0);
-                return;
-            }
-
-            firstTimeQuest.gameObject.SetActive(true);
-            firstTimeQuest.SetValues(newQuests[0]);
-            shopButtons.SetActive(false);
-        }
-    }
-
-    public void DisplayQuestList()
-    {
-        checkController.gameObject.SetActive(true);
-        checkController.DisplayQuestCardList();
-        checkListSelectedButton.Select();
-    }
-
-
-
 }

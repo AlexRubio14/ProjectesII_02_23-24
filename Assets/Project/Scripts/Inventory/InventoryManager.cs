@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
+using UnityEngine.UIElements;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -12,19 +13,49 @@ public class InventoryManager : MonoBehaviour
     private SerializedDictionary<ItemObject, short> allItems;
     private Dictionary<ItemObject, short> runItems;
     public Action<ItemObject, short> obtainItemAction;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
             enabled = false;
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
         DontDestroyOnLoad(Instance);
 
+
+        LoadItems();
+
         runItems = new Dictionary<ItemObject, short>();
+    }
+
+    private void LoadItems()
+    {
+        Dictionary<ItemObject, short> storedItems = new Dictionary<ItemObject, short>();
+        foreach (KeyValuePair<ItemObject, short> item in allItems)
+        {
+            if (PlayerPrefs.HasKey(item.Key.ItemName))
+            {
+                storedItems.Add(item.Key, (short)PlayerPrefs.GetInt(item.Key.ItemName));
+            }
+        }
+
+        foreach (KeyValuePair<ItemObject, short> item in storedItems)
+        {
+            allItems[item.Key] = item.Value;
+        }
+    }
+    public void ResetInventory()
+    {
+        Dictionary<ItemObject, short> storedItems = allItems;
+
+        foreach (KeyValuePair<ItemObject, short> item in storedItems)
+        {
+            allItems[item.Key] = 0;
+        }
     }
 
     public void ChangeRunItemAmount(ItemObject _itemType, short _itemsToAdd)
@@ -40,9 +71,9 @@ public class InventoryManager : MonoBehaviour
                 runItems[_itemType] = 0;
         }
 
-        obtainItemAction(_itemType, _itemsToAdd);
+        if(obtainItemAction != null)
+            obtainItemAction(_itemType, _itemsToAdd);
     }
-
 
     public bool CanBuy(Dictionary<ItemObject, short> _upgradePrize)
     {
@@ -66,13 +97,26 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    public Dictionary<ItemObject, short> GetAllItems()
+    public Dictionary<ItemObject, short> GetSavetems()
     {
         return allItems;
     }
     public Dictionary<ItemObject, short> GetRunItems()
     {
         return runItems;
+    }
+    public Dictionary<ItemObject, short> GetAllItems()
+    {
+        Dictionary<ItemObject, short> currentAllItems = new Dictionary<ItemObject, short>();
+
+        foreach (KeyValuePair<ItemObject, short> item in allItems)
+        {
+            short itemsToAdd = runItems.ContainsKey(item.Key)? (short)(item.Value + runItems[item.Key]) : item.Value;
+            currentAllItems.Add(item.Key, itemsToAdd);
+        }
+
+
+        return currentAllItems;
     }
     public short GetTotalItemAmount(ItemObject _item)
     {
@@ -100,9 +144,14 @@ public class InventoryManager : MonoBehaviour
                     PowerUpManager.Instance.PowerUpObtained(item.Key.PowerUp);
                 }
             }
+
+            foreach (KeyValuePair<ItemObject, short> item in allItems)
+            {
+                PlayerPrefs.SetInt(item.Key.ItemName, item.Value);
+            }
+
         }
 
         runItems.Clear();
     }
-   
 }

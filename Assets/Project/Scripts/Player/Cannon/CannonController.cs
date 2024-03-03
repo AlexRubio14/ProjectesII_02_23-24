@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI; 
 
 public class CannonController : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class CannonController : MonoBehaviour
     private float reloadDelay;
     private float currentDelay;
     private bool isShooting;
-    [SerializeField]
-    private float fuelConsume;
     [SerializeField]
     private PlayerController.State[] canShootStates;
     private Rigidbody2D nearestEnemy;
@@ -43,11 +42,14 @@ public class CannonController : MonoBehaviour
 
     private PlayerController playerController;
 
+    Slider sliderHealthBar;
+
 
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
         shootinAnim = GetComponentInChildren<Animator>();
+        sliderHealthBar = aimTarget.GetComponentInChildren<Slider>();
         isShooting = false;
     }
 
@@ -102,6 +104,8 @@ public class CannonController : MonoBehaviour
             }
 
             aimTarget.transform.position = nearestEnemy.transform.position;
+            Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
+            sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
         }
         else if (aimTarget.activeInHierarchy)
             aimTarget.SetActive(false);
@@ -116,7 +120,7 @@ public class CannonController : MonoBehaviour
     }
     public void Shoot()
     {
-        currentDelay += Time.fixedDeltaTime;
+        currentDelay += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
         if (autoShoot)
         {
             isShooting = nearestEnemy;
@@ -129,7 +133,6 @@ public class CannonController : MonoBehaviour
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);
             CameraController.Instance.AddLowTrauma();
-            playerController.SubstractHealth(fuelConsume);
             shootinAnim.SetTrigger("Shoot");
             shootParticles.Play();
         }

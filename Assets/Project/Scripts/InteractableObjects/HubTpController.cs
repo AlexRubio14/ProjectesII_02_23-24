@@ -15,7 +15,6 @@ public class HubTpController : InteractableObject
 
     private PlayerController c_playerController;
     private PlayerMapInteraction c_playerMapInteraction;
-    private SpriteRenderer c_playerSR;
 
     private ParticleSystem c_tpParticles;
 
@@ -26,18 +25,17 @@ public class HubTpController : InteractableObject
     {
         c_playerController = PlayerManager.Instance.player.GetComponent<PlayerController>();
         c_playerMapInteraction = c_playerController.GetComponent<PlayerMapInteraction>();
-        c_playerSR = c_playerController.GetComponentInChildren<SpriteRenderer>();
     }
 
     public override void Interact()
     {
+        PlayerManager.Instance.player.StopEngineSource();
         AudioManager._instance.Play2dOneShotSound(teleportClip, "Teleport");
 
         c_playerController.ChangeState(PlayerController.State.FREEZE);
-        c_playerController.GetComponentInChildren<CannonController>().gameObject.SetActive(false);
-        c_tpParticles = Instantiate(tpParticles, c_playerController.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-        c_playerSR.enabled = false;
         c_playerMapInteraction.showCanvas = false;
+        c_playerController.gameObject.SetActive(false);
+        c_tpParticles = Instantiate(tpParticles, c_playerController.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         Canvas[] activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
         foreach (Canvas item in activeCanvas)
         {
@@ -50,6 +48,8 @@ public class HubTpController : InteractableObject
         InventoryManager.Instance.EndRun(true);
         c_tpParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         Invoke("GoToHub", timeToGoHub);
+        PlayerManager.Instance.player.refillFuelParticles.Stop();
+
     }
 
 

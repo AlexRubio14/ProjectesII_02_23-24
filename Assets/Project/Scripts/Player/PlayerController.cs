@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,26 +14,37 @@ public class PlayerController : MonoBehaviour
     private InputActionReference rotationAction;
     [SerializeField]
     private InputActionReference accelerateAction;
+    [SerializeField]
+    private InputActionReference dashAction;
 
-    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
+    public enum State { IDLE, MOVING, DASHING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
-    private Rigidbody2D c_rb;
+    private Rigidbody2D rb2d;
     [Space, Header("Movement"), SerializeField]
     private float movementSpeed;
     private float accelerationValue;
     private Vector2 movementDirection;
-    private Vector2 lastMovementDirection;
     [HideInInspector]
     public float externalMovementSpeed;
 
-
-
-    public enum RotationType { OLD_ROTATION, NEW_ROTATION };
-    [Space, Header("Rotation"), SerializeField]
-    private RotationType currentRotation;
+    [Space, Header("Dash"), SerializeField]
+    private float dashForce;
+    private bool canDash;
+    private float lastTimeDash;
     [SerializeField]
-    private float[] rotationSpeed;
+    private float timeCanDash;
+    [SerializeField]
+    private float dashFuelConsume;
+    [Space, SerializeField]
+    private float timeDashing;
+    private float currentDashTime;
+    private Vector2 dashDirection;
+    [Space, SerializeField]
+    private float dashSpeedDrag;
+
+    [Space, Header("Rotation"), SerializeField]
+    private float rotationSpeed;
 
     [Space, Header("Knockback"), SerializeField]
     private float knockbackScale;
@@ -52,6 +64,11 @@ public class PlayerController : MonoBehaviour
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
+    [SerializeField]
+    private ParticleSystem hitParticles;
+    [HideInInspector]
+    public Action OnHit;
+    public ParticleSystem refillFuelParticles;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -62,6 +79,15 @@ public class PlayerController : MonoBehaviour
     private Light2D shipLight;
     [SerializeField]
     private ParticleSystem engineParticles;
+    [SerializeField]
+    private AudioClip enginePoweringOff;
+    [SerializeField]
+    private AudioClip deathExplosion;
+
+    [Space, SerializeField]
+    private GameObject pickableItemPrefab;
+    [SerializeField]
+    private float mineralMaxThrowSpeed;
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip collisionClip;
@@ -69,28 +95,33 @@ public class PlayerController : MonoBehaviour
     private AudioClip engineClip;
     private AudioSource engineSource;
 
-    private InputController inputController;
     private SpriteRenderer spriteRenderer;
-    private PlayerMapInteraction c_mapInteraction;
+    private PlayerMapInteraction mapInteraction;
     private AutoHelpController autoHelpController;
+    private SizeUpgradeController sizeUpgrade;
+
     private void Awake()
     {
-        c_rb = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
 
-        inputController = GetComponent<InputController>();
-        c_mapInteraction = GetComponent<PlayerMapInteraction>();
+        mapInteraction = GetComponent<PlayerMapInteraction>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
+        sizeUpgrade = GetComponent<SizeUpgradeController>();    
 
     }
     
     private void Start()
     {
-        fuelConsume = idleFuelConsume;
+        fuelConsume = -idleFuelConsume;
         currentState = State.IDLE;
 
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
+
+        canDash = true;
+
+        currentDashTime = 0;
     }
 
     private void OnEnable()
@@ -103,6 +134,10 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.performed += AccelerateAction;
         accelerateAction.action.canceled += AccelerateAction;
 
+        dashAction.action.performed += DashAction;
+
+        TimeManager.Instance.pauseAction += PlayerPause;
+
     }
 
     private void OnDisable()
@@ -114,6 +149,10 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.started -= AccelerateAction;
         accelerateAction.action.performed -= AccelerateAction;
         accelerateAction.action.canceled -= AccelerateAction;
+
+        dashAction.action.performed -= DashAction;
+
+        TimeManager.Instance.pauseAction -= PlayerPause;
     }
 
     void Update()
@@ -122,8 +161,10 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.L))
         {
-            fuel += 50;
+            fuelConsume = 100;
         }
+
+        CheckIfCanDash();
     }
 
     private void FixedUpdate()
@@ -137,6 +178,9 @@ public class PlayerController : MonoBehaviour
                 CheckIdleOrMovingState();
                 LoseFuel();
                 CheckEnableEngineParticles();
+                break;
+            case State.DASHING:
+                DashingBehaviour();
                 break;
             case State.MINING:
                 break;
@@ -156,46 +200,54 @@ public class PlayerController : MonoBehaviour
                         Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
                         Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
-        c_rb.AddForce(acceleration, ForceMode2D.Force);
+        rb2d.AddForce(acceleration * TimeManager.Instance.timeParameter * sizeUpgrade.sizeMultiplyer, ForceMode2D.Force);
     }
     private void Rotation()
     {
-        if (currentRotation == RotationType.OLD_ROTATION)
-        {
-            Vector2 movementAndAutoHelpDirection;
-
-            Vector2 autoHelp = autoHelpController.autoHelpDirection;
+        Vector2 autoHelp = autoHelpController.autoHelpDirection;
             float autoHelpMutliplier = 3;
             //En caso de que se tenga que aplicar la auto ayuda
             //Y el player no este tocando ningun input
             //Y la ultima direccion no este mirando directo a la pared
             //Se usara la ultima direccion de movimiento
+        Vector2 movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
+        Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+        float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+        rb2d.AddTorque(signedAngle * (rotationSpeed * sizeUpgrade.sizeMultiplyer) * TimeManager.Instance.timeParameter);
+    }
+    private void Dash()
+    {
+        currentState = State.DASHING;
 
-            if (autoHelp != Vector2.zero && movementDirection == Vector2.zero && Vector2.Dot(lastMovementDirection, autoHelp) > -0.6f)
-            {
-                movementAndAutoHelpDirection = lastMovementDirection.normalized * autoHelpMutliplier + autoHelp;
-            }
-            else
-            {
-                movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
-            }
+        dashDirection = movementDirection.normalized * dashForce;
 
-            Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
+        SubstractFuel(dashFuelConsume);
+    }
 
-            float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
+    private void DashingBehaviour()
+    {
+        currentDashTime += Time.fixedDeltaTime;
 
-            c_rb.AddTorque(signedAngle * rotationSpeed[(int)RotationType.OLD_ROTATION]);
-
+        if(currentDashTime >= timeDashing)
+        {
+            rb2d.velocity = rb2d.velocity / dashSpeedDrag;
+            currentDashTime = 0;
+            currentState = State.IDLE;
         }
         else
         {
-            Vector2 movementAndAutoHelpDirection = new Vector2(movementDirection.x, 0).normalized + autoHelpController.autoHelpDirection.normalized;
-
-            float signedAngle = Vector2.SignedAngle(transform.right, movementAndAutoHelpDirection);
-
-            c_rb.AddTorque(-movementDirection.x * rotationSpeed[(int)RotationType.NEW_ROTATION]);
+            rb2d.velocity = dashDirection;
         }
-        
+    }
+
+    private void CheckIfCanDash()
+    {
+        lastTimeDash += Time.deltaTime;
+
+        if (lastTimeDash >= timeCanDash) 
+        {
+            canDash = true;
+        }
     }
 
     private void CheckEnableEngineParticles()
@@ -218,7 +270,7 @@ public class PlayerController : MonoBehaviour
     #region Ship Fuel
     void LoseFuel()
     {
-        fuel = Mathf.Clamp(fuel - fuelConsume * Time.fixedDeltaTime, 0, GetMaxFuel());
+        fuel = Mathf.Clamp(fuel + fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
         CheckIfPlayerDies();
     }
     private void CheckIfPlayerDies()
@@ -232,26 +284,69 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         ChangeState(State.DEAD);
+        DisableScripts();
         CameraController.Instance.AddHighTrauma();
         Invoke("ExploteShip", timeToExploteShip);
 
-        c_rb.drag /= 4;
-        c_rb.angularDrag /= 4;
+        rb2d.drag /= 4;
+        rb2d.angularDrag /= 4;
 
         shipLight.intensity /= 3;
         shipLight.pointLightInnerRadius /= 2;
         shipLight.pointLightOuterRadius /= 4;
 
         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        AudioManager._instance.Play2dOneShotSound(enginePoweringOff, "Death", 1, 1, 1);
     }
     private void ExploteShip()
     {
+
+        foreach (KeyValuePair<ItemObject, short> item in InventoryManager.Instance.GetRunItems())
+        {
+            ThrowMinerals(item.Key, (int)item.Value);
+        }
+
         spriteRenderer.enabled = false;
         CameraController.Instance.AddHighTrauma();
         Instantiate(explosionParticles, transform.position, Quaternion.identity);
         InventoryManager.Instance.EndRun(false);
         shipLight.intensity = 0;
         Invoke("ReturnToHub", timeToReturnHub);
+        AudioManager._instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
+
+        
+
+    }
+    private void ThrowMinerals(ItemObject _objectType, int _itemsToReturn)
+    {
+        for (int i = 0; i < _itemsToReturn; i++)
+        {
+            float randomX = UnityEngine.Random.Range(-1, 2);
+            float randomY = UnityEngine.Random.Range(-1, 2);
+            Vector2 randomDir = new Vector2(randomX, randomY);
+            randomDir.Normalize();
+
+            float spawnOffset = 1;
+
+            Vector2 spawnPos = (Vector2)transform.position + randomDir * spawnOffset;
+
+            PickableItemController currItem = Instantiate(pickableItemPrefab, spawnPos, Quaternion.identity).GetComponent<PickableItemController>();
+
+            currItem.c_currentItem = _objectType;
+            currItem.followPlayer = false;
+            
+
+
+            float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);
+            currItem.ImpulseItem(randomDir, throwSpeed);
+            currItem.transform.up = randomDir;
+        }
+    }
+    private void DisableScripts()
+    {
+        sizeUpgrade.enabled = false;
+        GetComponent<UpgradeSelector>().enabled = false;
+        mapInteraction.enabled = false;
     }
     private void ReturnToHub()
     {
@@ -272,10 +367,24 @@ public class PlayerController : MonoBehaviour
         }
 
         CameraController.Instance.AddHighTrauma();
+        PlayHitParticles(damagePos);
+
         Knockback(damagePos);
+
         fuel -= value / PowerUpManager.Instance.Armor;
+
+
+        if (OnHit != null)
+            OnHit();
     }
-    public void SubstractHealth(float value)
+
+    private void PlayHitParticles(Vector2 damagePos)
+    {
+        hitParticles.transform.forward = ((Vector3)damagePos - transform.position).normalized;
+        hitParticles.Play();
+    }
+
+    public void SubstractFuel(float value)
     {
         fuel -= value;
     }
@@ -287,6 +396,7 @@ public class PlayerController : MonoBehaviour
     {
         return baseFuel + PowerUpManager.Instance.Fuel;
     }
+
     #endregion
 
     #region States
@@ -305,7 +415,8 @@ public class PlayerController : MonoBehaviour
 
     private void WaitForKnockbackTime()
     {
-        ChangeState(State.MOVING);
+        if (currentState == State.KNOCKBACK)
+            ChangeState(State.MOVING);
     }
 
     private void Knockback(Vector2 collisionPoint)
@@ -314,8 +425,8 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
-        c_rb.AddForce(direction * knockbackScale, ForceMode2D.Impulse);
-        c_rb.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+        rb2d.AddForce(direction * knockbackScale * sizeUpgrade.sizeMultiplyer, ForceMode2D.Impulse);
+        rb2d.AddTorque(UnityEngine.Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
 
         Invoke("WaitForKnockbackTime", knockbackTime);
     }
@@ -324,15 +435,15 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case State.IDLE:
-                fuelConsume -= idleFuelConsume;
+                fuelConsume += idleFuelConsume;
                 break;
             case State.MOVING:
-                fuelConsume -= movingFuelConsume;
+                fuelConsume += movingFuelConsume;
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones normal del player
-                inputController.ChangeActionMap("Player");
-                c_mapInteraction.showCanvas = true;
+                InputController.Instance.ChangeActionMap("Player");
+                mapInteraction.showCanvas = true;
                 break;
             case State.KNOCKBACK:
                 break; 
@@ -347,26 +458,27 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.IDLE:
-                fuelConsume += idleFuelConsume;
+                fuelConsume -= idleFuelConsume;
                 break;
             case State.MOVING:
-                fuelConsume += movingFuelConsume;
+                fuelConsume -= movingFuelConsume;
                 break;
             case State.MINING:
                 //Cambiar al mapa de acciones de minar
-                inputController.ChangeActionMap("MinigameMinery");
-                c_mapInteraction.showCanvas = false;
+                InputController.Instance.ChangeActionMap("MinigameMinery");
+                mapInteraction.showCanvas = false;
                 break;
             case State.KNOCKBACK:
-                c_rb.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
 
             case State.FREEZE:
                 engineParticles.gameObject.SetActive(false);
-                c_rb.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
+                StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
                 break;
             default:
                 break;
@@ -387,32 +499,49 @@ public class PlayerController : MonoBehaviour
     #region Input
     private void RotateAction(InputAction.CallbackContext obj)
     {
-        movementDirection = obj.action.ReadValue<Vector2>();
+        Vector2 currDirection = obj.action.ReadValue<Vector2>();
 
-        if (movementDirection != Vector2.zero)
+        if (currDirection != Vector2.zero)
         {
-            lastMovementDirection = movementDirection;
+            movementDirection = currDirection;
         }
     }
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
+        if (obj.started && currentState == State.IDLE)
            engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
 
-        if (obj.canceled)
+        if (obj.canceled && engineSource != null)
             StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
 
         accelerationValue = obj.ReadValue<float>();
     }
 
+    private void DashAction(InputAction.CallbackContext obj)
+    {
+        if(canDash)
+        {
+            canDash = false;
+            lastTimeDash = 0;
+            Dash();
+        }
+    }
+
     #endregion
+
+    private void PlayerPause()
+    {
+        rb2d.velocity = Vector2.zero;
+        rb2d.angularVelocity = 0.0f;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
-            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
             GetDamage(mapDamage, collision.contacts[0].point);
+            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
         }
 
         if(collision.collider.CompareTag("Enemy"))
@@ -420,5 +549,11 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.damage, collision.GetContact(0).point);
         }
+    }
+
+    public void StopEngineSource()
+    {
+        if(engineSource != null)
+            engineSource.Stop();
     }
 }

@@ -6,9 +6,9 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected Rigidbody2D c_rb2d;
 
-    [Space, Header("--- BASE ENEMY"), SerializeField]
-    protected float maxHealth;
-    protected float currentHealth;
+    [field: Space, Header("--- BASE ENEMY"), SerializeField]
+    public float maxHealth { get; protected set; }
+    public float currentHealth { get; protected set; }
     [SerializeField]
     protected float speed;
 
@@ -35,12 +35,15 @@ public abstract class Enemy : EnemyIA, IHealth
     [SerializeField]
     protected float maxThrowSpeed;
 
+    [Header("--- DEATH"), SerializeField]
+    protected AudioClip deathClip;
+    private string enemyAudioSourceName = "Enemy";
+
     //DEBUG
-    [SerializeField]
+    [Space, SerializeField]
     private bool showGizmos = true;
 
     protected SpriteRenderer spriteR;
-
 
     public void InitEnemy()
     {
@@ -50,6 +53,16 @@ public abstract class Enemy : EnemyIA, IHealth
         currentHealth = maxHealth;
     }
 
+    protected void OnEnable()
+    {
+        TimeManager.Instance.pauseAction += EnemyPause;
+    }
+
+    protected void OnDisable()
+    {
+        TimeManager.Instance.pauseAction -= EnemyPause;
+
+    }
 
     #region Behaviours Functions
     protected abstract void Behaviour();
@@ -77,7 +90,7 @@ public abstract class Enemy : EnemyIA, IHealth
     {
         Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
 
-        c_rb2d.AddForce(direction * speed, ForceMode2D.Force);
+        c_rb2d.AddForce(direction * speed * TimeManager.Instance.timeParameter, ForceMode2D.Force);
 
         // ROTATION OF THE ENENMY WHILE FOLLOWING
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -108,7 +121,6 @@ public abstract class Enemy : EnemyIA, IHealth
             spriteR.flipY = true;
         }
     }
-
     #endregion
 
     public abstract void ChangeState(EnemyStates nextState);
@@ -117,7 +129,6 @@ public abstract class Enemy : EnemyIA, IHealth
     public void GetHit(float _damageAmount)
     {
         currentHealth -= _damageAmount;
-
         if (currentHealth <= 0)
             Die();
     }
@@ -125,6 +136,8 @@ public abstract class Enemy : EnemyIA, IHealth
     {
         if (c_currentDrop)
             DropItem();
+
+        AudioManager._instance.Play2dOneShotSound(deathClip, enemyAudioSourceName);
 
         Destroy(gameObject);
     }
@@ -147,6 +160,12 @@ public abstract class Enemy : EnemyIA, IHealth
         currItem.GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = c_currentDrop.EffectsColor;
     }
     #endregion
+
+    private void EnemyPause()
+    {
+        c_rb2d.velocity = Vector2.zero;
+        c_rb2d.angularVelocity = 0.0f;
+    }
 
 
     private void OnDrawGizmosSelected()

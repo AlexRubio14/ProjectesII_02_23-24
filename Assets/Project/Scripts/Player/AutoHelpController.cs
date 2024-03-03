@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AutoHelpController : MonoBehaviour
 {
-    private Rigidbody2D c_rb;
+    private Rigidbody2D rb2d;
 
     [Space, Header("Raycasts"), SerializeField]
     private float distance;
@@ -26,10 +26,12 @@ public class AutoHelpController : MonoBehaviour
     [Space, SerializeField]
     private bool showGizmos = false;
 
+    private SizeUpgradeController sizeUpgrade;
+
     private void Awake()
     {
-        c_rb = GetComponent<Rigidbody2D>();
-
+        rb2d = GetComponent<Rigidbody2D>();
+        sizeUpgrade = GetComponent<SizeUpgradeController>();
         //rayCastDegree = maxDegree / maxDegree;
     }
 
@@ -55,7 +57,7 @@ public class AutoHelpController : MonoBehaviour
         {
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
 
-            rayCastHits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, distance, mapLayer));
+            rayCastHits.Add(Physics2D.Raycast(transform.position, (direction * Vector2.right).normalized, distance * sizeUpgrade.sizeMultiplyer, mapLayer));
         }
         return rayCastHits;
     }
@@ -73,7 +75,7 @@ public class AutoHelpController : MonoBehaviour
                 autoHelpVector += ((Vector2)transform.position - collisionPoint);
         }
 
-        c_rb.AddForce(autoHelpVector * autoHelpMagnitude, ForceMode2D.Impulse);
+        rb2d.AddForce(autoHelpVector * autoHelpMagnitude, ForceMode2D.Impulse);
 
         autoHelpDirection = autoHelpVector.normalized;
     }
@@ -88,7 +90,7 @@ public class AutoHelpController : MonoBehaviour
         for (float i = 0; i < maxDegree; i += maxDegree / totalRays)
         {
             Quaternion direction = transform.rotation * Quaternion.Euler(0, 0, i);
-            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * distance);        
+            Gizmos.DrawLine(transform.position, transform.position + (direction * Vector2.right) * distance * sizeUpgrade.sizeMultiplyer);        
         }
 
     }

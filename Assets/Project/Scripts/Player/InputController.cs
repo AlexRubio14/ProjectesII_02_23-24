@@ -1,26 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static InputController;
+
 
 public class InputController : MonoBehaviour
 {
+    public static InputController Instance;
+
     public enum ControllerType { KEYBOARD, GAMEPAD }
 
-    private PlayerInput c_playerInput;
+    private PlayerInput inputSystem;
 
     private void Awake()
     {
-        c_playerInput = GetComponent<PlayerInput>();
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        inputSystem = FindObjectOfType<PlayerInput>();
     }
 
     public void ChangeActionMap(string _nextActionMap)
     {
-        c_playerInput.SwitchCurrentActionMap(_nextActionMap);
+        if (inputSystem)
+            inputSystem.SwitchCurrentActionMap(_nextActionMap);
     }
 
-    public ControllerType GetCurrentControllerType()
+    public ControllerType GetControllerType()
     {
         ControllerType currentType;
 

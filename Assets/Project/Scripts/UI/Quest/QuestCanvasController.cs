@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class QuestCanvasController : MonoBehaviour
 {
     [SerializeField]
@@ -20,37 +21,40 @@ public class QuestCanvasController : MonoBehaviour
 
     private QuestObject currentQuest;
 
+    [SerializeField]
+    private float timeToWaitForFloat;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         prizeImages = new List<Image>();
         prizeTexts = new List<TextMeshProUGUI>();
 
-        SetupQuestCanvas();
+        SetupQuestCanvas(QuestManager.Instance.GetSelectedQuest());
     }
 
-    private void SetupQuestCanvas()
+    public void SetupQuestCanvas(QuestObject _quest)
     {
-        currentQuest = QuestManager.Instance.GetSelectedQuest();
+        currentQuest = _quest;
 
         if (!currentQuest)
         {
             gameObject.SetActive(false);
             return;
         }
-        questTitleText.text = currentQuest.questName;
-
-        for (int i = 0; i < currentQuest.neededItems.Count; i++)
+        else
         {
-            
-
+            gameObject.SetActive(true);
         }
+        questTitleText.text = currentQuest.questName;
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
             Image newImage = Instantiate(needImagePrefab, layoutQuest.transform).GetComponent<Image>();
             prizeImages.Add(newImage);
-            newImage.sprite = item.Key.c_PickableSprite;
+            newImage.sprite = item.Key.PickableSprite;
             TextMeshProUGUI newText = Instantiate(needTextPrefab, layoutQuest.transform).GetComponent<TextMeshProUGUI>();
             prizeTexts.Add(newText);
         }
@@ -58,19 +62,52 @@ public class QuestCanvasController : MonoBehaviour
         UpdateQuestCanvas();
 
     }
-
+    
     private void UpdateQuestCanvas(ItemObject _itemType = null, short _itemAmount = 0)
     {
         int index = 0;
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
         {
-  
-            prizeTexts[index].text = InventoryManager.Instance.GetTotalItemAmount(item.Key) + " / " + item.Value;
 
+            if(item.Key == _itemType)
+            {
+                for(int i = 0; i < prizeImages.Count; i++)
+                {
+                    if (prizeImages[i].sprite == _itemType.PickableSprite) 
+                    {
+                        StopCoroutine("StopFloating");
+
+                        ImageFloatEffect temp = prizeImages[i].GetComponent<ImageFloatEffect>();
+                        temp.canFloat = true;
+                        StartCoroutine("StopFloating", temp);
+                    }
+                }
+            }
+
+            prizeTexts[index].text = InventoryManager.Instance.GetTotalItemAmount(item.Key) + " / " + item.Value;
+                        
             index++;
         }
+    }
 
+    private IEnumerator StopFloating(ImageFloatEffect imageFloatEffect)
+    {
+        yield return new WaitForSeconds(timeToWaitForFloat);
+        imageFloatEffect.canFloat = false;
+    }
+
+    public void RemoveCurrentQuest()
+    {
+        for (int i = 0; i < prizeImages.Count; i++)
+        {
+            Destroy(prizeImages[i].gameObject);
+            Destroy(prizeTexts[i].gameObject);
+        }
+
+        prizeImages.Clear();
+        prizeTexts.Clear();
+        
     }
 
     private void OnEnable()

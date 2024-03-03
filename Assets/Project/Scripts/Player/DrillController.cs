@@ -75,6 +75,7 @@ public class DrillController : MonoBehaviour
     [Space, SerializeField]
     private AudioClip drillClip;
 
+    private SizeUpgradeController sizeUpgrade;
 
     private void Awake()
     {
@@ -93,6 +94,9 @@ public class DrillController : MonoBehaviour
             currLaser.sortingLayerName = "Player";
             lasers[i] = currLaser;
         }
+
+
+        sizeUpgrade = GetComponent<SizeUpgradeController>();    
     }
 
     private void FixedUpdate()
@@ -116,13 +120,13 @@ public class DrillController : MonoBehaviour
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        float raysOffset = (raysDelimiter * 2) / totalRays;
+        float raysOffset = (raysDelimiter * 2 * sizeUpgrade.sizeMultiplyer) / totalRays;
         Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset * Mathf.Floor(totalRays / 2)));
 
         for (int i = 1; i < totalRays + 1; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.right, raysDistance, breakableWallLayer);
-            if (hit)
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.right, raysDistance * sizeUpgrade.sizeMultiplyer, breakableWallLayer);
+            if (hit && hit.collider.CompareTag("BreakableWall"))
                 hits.Add(hit);
 
             rayPos += (Vector2)(transform.up * raysOffset);
@@ -135,30 +139,28 @@ public class DrillController : MonoBehaviour
         int totalHits = 0;
         foreach (RaycastHit2D hit in _hits)
         {
-            if (hit.collider.CompareTag("BreakableWall"))
+            if (!breakableWallController)
             {
-                if (!breakableWallController)
+                breakableWallController = hit.rigidbody.GetComponent<BreakableWallController>();
+                if (breakableWallController.isHide)
                 {
-                    breakableWallController = hit.rigidbody.GetComponent<BreakableWallController>();
-                    if (breakableWallController.isHide)
-                    {
-                        breakableWallController = null;
-                        return;
-                    }
+                    breakableWallController = null;
+                    return;
                 }
-
-                breakableWallController.ChangeTileContent(hit.centroid, null);
-
-                Vector2 gridOffset = breakableWallController.GetGridOffset();
-                Vector2 tilePos = hit.centroid;
-                UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y));
-                UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y));
-                UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y));
-                UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y));
-
-                totalHits++;
             }
+
+            breakableWallController.ChangeTileContent(hit.centroid, null);
+
+            Vector2 gridOffset = breakableWallController.GetGridOffset();
+            Vector2 tilePos = hit.centroid;
+            UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y));
+            UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y));
+            UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y));
+            UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y));
+
+            totalHits++;
         }
+        
 
         if (totalHits == 0)
         {
@@ -364,8 +366,8 @@ public class DrillController : MonoBehaviour
 
         Gizmos.color = Color.magenta;
         
-        float raysOffset = (raysDelimiter * 2) / totalRays;
-        Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset * Mathf.Floor(totalRays/2)));
+        float raysOffset = (raysDelimiter * 2 * sizeUpgrade.sizeMultiplyer) / totalRays;
+        Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset  * Mathf.Floor(totalRays/2)));
 
         for (int i = 1; i < totalRays + 1; i++)
         {

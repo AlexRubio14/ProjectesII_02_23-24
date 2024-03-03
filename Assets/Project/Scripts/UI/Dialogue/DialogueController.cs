@@ -2,10 +2,13 @@ using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class DialogueController : MonoBehaviour
 {
-
+    [SerializeField]
+    private PlayerInput menuInput;
+    private string lastActionMap;
     [SerializeField]
     private InputActionReference dialogueAction;
 
@@ -24,6 +27,8 @@ public class DialogueController : MonoBehaviour
 
     private bool showingText = false;
     private bool displayingDialogue = false;
+    [SerializeField]
+    private MenuControlsHint.HintsPos hintsPos = MenuControlsHint.HintsPos.BOTTOM_LEFT;
 
     [Space, Header("Animator"), SerializeField]
     private Animator[] catAnimations;
@@ -32,8 +37,13 @@ public class DialogueController : MonoBehaviour
     [SerializeField]
     private AudioClip catDialogueSound;
     private int dialogueSoundIndex;
+    [SerializeField]
+    private bool changeDialoguesHint = true;
+
     [HideInInspector]
     public Action onDialogueEnd;
+    [HideInInspector]
+    public Action<int> onDialogueLineStart;
 
     private void Awake()
     {
@@ -44,12 +54,26 @@ public class DialogueController : MonoBehaviour
     {
         //Activar Input
         dialogueAction.action.started += InputPressed;
+
+        lastActionMap = menuInput.currentActionMap.name;
+        menuInput.SwitchCurrentActionMap("Dialogue");
+
+        List<MenuControlsHint.ActionType> actionList = new List<MenuControlsHint.ActionType>();
+        actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
+
+        if (MenuControlsHint.Instance && changeDialoguesHint)
+            MenuControlsHint.Instance.UpdateHintControls(actionList, null, hintsPos);
+
     }
 
     private void OnDisable()
     {
         //Desactivar Input
         dialogueAction.action.started -= InputPressed;
+        menuInput.SwitchCurrentActionMap(lastActionMap);
+
+        if(MenuControlsHint.Instance && changeDialoguesHint)
+            MenuControlsHint.Instance.UpdateHintControls(MenuControlsHint.Instance.lastActions);
     }
 
     private void InputPressed(InputAction.CallbackContext obj)
@@ -73,7 +97,8 @@ public class DialogueController : MonoBehaviour
         {
             showingText = false;
             displayingDialogue = false;
-            onDialogueEnd();
+            if(onDialogueEnd != null)
+                onDialogueEnd();
             gameObject.SetActive(false);
             return;
         }
@@ -111,6 +136,9 @@ public class DialogueController : MonoBehaviour
             displayingDialogue = true;
             letterIndex = 0;
             c_dialogueText.text = dialogues[currentDialogueIndex];
+            if(onDialogueLineStart != null)
+                onDialogueLineStart(currentDialogueIndex);
+
             c_dialogueText.maxVisibleCharacters = letterIndex;
             Invoke("DisplayLetters", timeBetweenLetters);
             
@@ -121,7 +149,8 @@ public class DialogueController : MonoBehaviour
             //Si no hay mas dialogos
             showingText = false;
             displayingDialogue = false;
-            onDialogueEnd();
+            if(onDialogueEnd != null)
+                onDialogueEnd();
             gameObject.SetActive(false);
         }
 

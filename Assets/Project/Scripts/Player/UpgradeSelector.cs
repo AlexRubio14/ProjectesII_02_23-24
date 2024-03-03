@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using AYellowpaper.SerializedCollections;
-
+using UnityEngine.Events;
 
 public class UpgradeSelector : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class UpgradeSelector : MonoBehaviour
     private AudioClip finishBoost;
     private AudioSource boostSource;
 
-    [Header("Light"), SerializeField]
+    [Header("Audio Light"), SerializeField]
     private AudioClip SwitchLightClip;
     [SerializeField]
     private AudioClip loopLightClip;
@@ -36,10 +36,13 @@ public class UpgradeSelector : MonoBehaviour
     private Sprite unselectedBackground;
     [SerializeField]
     private Sprite selectedBackground;
-
-    [SerializedDictionary("Position", "Background")]
+    [Space, SerializedDictionary("Position", "Background")]
     public SerializedDictionary<Position, Image> backgroundImagePositions;
 
+    [Space, Header("Inputs Hint"), SerializedDictionary("Position", "Input Hint")]
+    public SerializedDictionary<Position, Image> inputHintImagePositions;
+    [SerializedDictionary("Position", "Input Hint")]
+    public SerializedDictionary<Position, Sprite[]> inputHintSprites;
 
     [Space, Header("Upgrades"), SerializedDictionary("Position", "Upgrade")]
     public SerializedDictionary<Position, UpgradeObject> upgradePositions;
@@ -52,12 +55,6 @@ public class UpgradeSelector : MonoBehaviour
 
     [Space, Header("Boost"), SerializeField]
     private float boostMovementSpeed;
-    private float boostStamina = 1;
-    [SerializeField]
-    private float boostStaminaReduction;
-    [SerializeField]
-    private float boostStaminaRecover;
-    private Position boostPos;
     [SerializeField]
     private ParticleSystem boostParticles;
 
@@ -70,26 +67,41 @@ public class UpgradeSelector : MonoBehaviour
     [Space, Header("Light"), SerializeField]
     private GameObject lightUpgrade;
 
+    [Space, Header("Size Changer"), SerializeField]
+    private SizeUpgradeController sizeUpgrade;
+    [SerializeField]
+    private AudioClip shrinkSizeAudioClip;
+    [SerializeField]
+    private AudioClip growUpSizeAudioClip;
+    private AudioSource sizeAudioSource;
+
     [Space, Header("Fuel Consume"), SerializeField]
     private float boostConsume;
     [SerializeField]
     private float drillConsume;
     [SerializeField]
     private float lightConsume;
+    [SerializeField]
+    private float sizeChangerConsume;
 
 
     private PlayerController playerController;
-    private PlayerWebController webController;
     private AutoHelpController autoHelpController;
+
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeUp;
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeDown;
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeRight;
+    private System.Action<InputAction.CallbackContext> ToggleUpgradeLeft;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();  
         drillController = GetComponent<DrillController>();
-        webController = GetComponent<PlayerWebController>();
         autoHelpController = GetComponent<AutoHelpController>();
-    }
+        sizeUpgrade = GetComponent<SizeUpgradeController>();
 
+        sizeAudioSource = GetComponent<AudioSource>();
+    }
     private void Start()
     {
         obtainedUpgrades = new Dictionary<UpgradeObject, bool>();
@@ -100,7 +112,7 @@ public class UpgradeSelector : MonoBehaviour
             Sprite currentSprite;
             if (UpgradeManager.Instance.CheckObtainedUpgrade(item.Value))
             {
-                currentSprite = item.Value.c_UpgradeSprite;
+                currentSprite = item.Value.UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
             }
             else
@@ -110,47 +122,48 @@ public class UpgradeSelector : MonoBehaviour
             }
 
             upgradeImagePositions[item.Key].sprite = currentSprite;
-
-            if (item.Value.type == UpgradeObject.UpgradeType.BOOST)
-            {
-                boostPos = item.Key;
-            }
+            
         }
 
         upgradesToggled = new bool[4];
 
         boostParticles.Stop(true);
+
+        UpdateInputHints(null, InputDeviceChange.Added);
     }
 
     private void OnEnable()
     {
-        upUpgradeAction.action.started += upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
-        upUpgradeAction.action.canceled += upUpgradeCanceled => ToggleUpgrade(Position.UP, upUpgradeCanceled);
+        ToggleUpgradeUp = upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
+        ToggleUpgradeDown = downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
+        ToggleUpgradeRight = rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
+        ToggleUpgradeLeft = leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
 
-        downUpgradeAction.action.started += downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
-        downUpgradeAction.action.canceled += downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
+        upUpgradeAction.action.started += ToggleUpgradeUp;
 
-        rightUpgradeAction.action.started += rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
-        rightUpgradeAction.action.canceled += rightUpgradeCanceled => ToggleUpgrade(Position.RIGHT, rightUpgradeCanceled);
+        downUpgradeAction.action.started += ToggleUpgradeDown;
+        downUpgradeAction.action.canceled += ToggleUpgradeDown;
 
-        leftUpgradeAction.action.started += leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
-        leftUpgradeAction.action.canceled += leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
+        rightUpgradeAction.action.started += ToggleUpgradeRight;
 
+        leftUpgradeAction.action.started += ToggleUpgradeLeft;
+
+
+        InputSystem.onDeviceChange += UpdateInputHints;
     }
-
     private void OnDisable()
     {
-        upUpgradeAction.action.started -= upUpgradeStarted => ToggleUpgrade(Position.UP, upUpgradeStarted);
-        upUpgradeAction.action.canceled -= upUpgradeCanceled => ToggleUpgrade(Position.UP, upUpgradeCanceled);
+        upUpgradeAction.action.started -= ToggleUpgradeUp;
 
-        downUpgradeAction.action.started -= downUpgradeStarted => ToggleUpgrade(Position.DOWN, downUpgradeStarted);
-        downUpgradeAction.action.canceled -= downUpgradeCanceled => ToggleUpgrade(Position.DOWN, downUpgradeCanceled);
+        downUpgradeAction.action.started -= ToggleUpgradeDown;
+        downUpgradeAction.action.canceled -= ToggleUpgradeDown;
 
-        rightUpgradeAction.action.started -= rightUpgradeStarted => ToggleUpgrade(Position.RIGHT, rightUpgradeStarted);
-        rightUpgradeAction.action.canceled -= rightUpgradeCanceled => ToggleUpgrade(Position.RIGHT, rightUpgradeCanceled);
+        rightUpgradeAction.action.started -= ToggleUpgradeRight;
 
-        leftUpgradeAction.action.started -= leftUpgradeStarted => ToggleUpgrade(Position.LEFT, leftUpgradeStarted);
-        leftUpgradeAction.action.canceled -= leftUpgradeCanceled => ToggleUpgrade(Position.LEFT, leftUpgradeCanceled);
+        leftUpgradeAction.action.started -= ToggleUpgradeLeft;
+
+
+        InputSystem.onDeviceChange -= UpdateInputHints;
     }
 
     private void Update()
@@ -159,12 +172,11 @@ public class UpgradeSelector : MonoBehaviour
         {
             foreach (KeyValuePair<Position, UpgradeObject> item in upgradePositions)
             {
-                upgradeImagePositions[item.Key].sprite = item.Value.c_UpgradeSprite;
+                upgradeImagePositions[item.Key].sprite = item.Value.UpgradeSprite;
                 obtainedUpgrades[item.Value] = true;
             }
         }
 
-        CheckBoostStamina();
     }
 
     private void ToggleUpgrade(Position _pos, InputAction.CallbackContext obj)
@@ -184,8 +196,8 @@ public class UpgradeSelector : MonoBehaviour
             case UpgradeObject.UpgradeType.DRILL:
                 ToggleDrill(_pos);
                 break;
-            case UpgradeObject.UpgradeType.CORE_COLLECTOR:
-                ToggleCoreCollector(_pos);
+            case UpgradeObject.UpgradeType.SIZE_CHANGER:
+                ToggleSizeChanger(_pos);
                 break;
             default:
                 break;
@@ -195,17 +207,15 @@ public class UpgradeSelector : MonoBehaviour
     private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
-        
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
             ChangeBackground(_pos, true);
             playerController.externalMovementSpeed += boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = true;
-            //Sumar al consumo de fuel
-            playerController.fuelConsume += boostConsume;
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= boostConsume;
             boostParticles.Play(true);
-            webController.EraseAllWebs();
             AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
             boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
 
@@ -216,35 +226,11 @@ public class UpgradeSelector : MonoBehaviour
             ChangeBackground(_pos, false); 
             playerController.externalMovementSpeed -= boostMovementSpeed;
             upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] = false;
-            //Restar al consumo de fuel
-            playerController.fuelConsume -= boostConsume;
+            //Resetear el consumo de fuel sumando
+            playerController.fuelConsume += boostConsume;
             boostParticles.Stop(true);
             AudioManager._instance.StopLoopSound(boostSource);
             AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
-        }
-    }
-    private void CheckBoostStamina()
-    {
-        if (!obtainedUpgrades[upgradePositions[boostPos]])
-            return;
-
-        //Si la mejora esta activada resta stamina        
-        if (upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
-        {
-            boostStamina -= boostStaminaReduction * Time.deltaTime;
-        }
-        else //Si esta desactivada recupera stamina
-        {
-            boostStamina += boostStaminaRecover * Time.deltaTime;
-        }
-
-        boostStamina = Mathf.Clamp01(boostStamina);
-
-        backgroundImagePositions[boostPos].fillAmount = boostStamina;
-
-        if (boostStamina == 0)
-        {
-            ToggleBoost(boostPos, false);
         }
     }
 
@@ -255,8 +241,9 @@ public class UpgradeSelector : MonoBehaviour
             lightUpgrade.SetActive(true);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = true;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
-            //Sumar al consumo de fuel
-            playerController.fuelConsume += lightConsume;
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= lightConsume;
+
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
             loopLightSource = AudioManager._instance.Play2dLoop(loopLightClip, "Light");
         }
@@ -266,12 +253,13 @@ public class UpgradeSelector : MonoBehaviour
             lightUpgrade.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = false;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
-            //Restar al consumo de fuel
-            playerController.fuelConsume -= lightConsume;
+            //Resetear el consumo de fuel sumando
+
+            playerController.fuelConsume += lightConsume;
+
             AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
-
     private void ToggleDrill(Position _pos)
     {
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL])
@@ -282,8 +270,8 @@ public class UpgradeSelector : MonoBehaviour
             drillSprite.SetActive(true);
             upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL] = true;
             ChangeBackground(_pos, true);
-            //Sumar al consumo de fuel
-            playerController.fuelConsume += drillConsume;
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= drillConsume;
             autoHelpController.enabled = false;
             
         }
@@ -295,16 +283,46 @@ public class UpgradeSelector : MonoBehaviour
             drillSprite.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.DRILL] = false;
             ChangeBackground(_pos, false);
-            //Restar al consumo de fuel
-            playerController.fuelConsume -= drillConsume;
+            //Resetear el consumo de fuel sumando
+            playerController.fuelConsume += drillConsume;
             autoHelpController.enabled = true;
         }
     }
-
-    private void ToggleCoreCollector(Position _pos)
+    private void ToggleSizeChanger(Position _pos)
     {
         //Upgrade 3
-        Debug.LogWarning("Core Collector no implementado");
+        if (!upgradesToggled[(int)UpgradeObject.UpgradeType.SIZE_CHANGER])
+        {
+            //ACTIVAMOS LA MEJORA
+            upgradesToggled[(int)UpgradeObject.UpgradeType.SIZE_CHANGER] = true;
+            sizeUpgrade.enabled = true;
+            sizeUpgrade.SetGrowing(false);
+            ChangeBackground(_pos, true);
+            //Restar el consumo de fuel
+            playerController.fuelConsume -= sizeChangerConsume;
+            autoHelpController.enabled = false;
+
+            sizeAudioSource.Stop();
+            sizeAudioSource.clip = shrinkSizeAudioClip;
+            sizeAudioSource.pitch = Random.Range(0.85f, 1.1f);
+            sizeAudioSource.Play();
+        }
+        else
+        {
+            //DESACTIVAMOS LA MEJORA
+            upgradesToggled[(int)UpgradeObject.UpgradeType.SIZE_CHANGER] = false;
+            sizeUpgrade.SetGrowing(true);
+
+            ChangeBackground(_pos, false);
+            //Resetear el consumo de fuel sumando
+            playerController.fuelConsume += sizeChangerConsume;
+
+            sizeAudioSource.Stop();
+            sizeAudioSource.clip = growUpSizeAudioClip;
+            sizeAudioSource.pitch = Random.Range(0.85f, 1.1f);
+            sizeAudioSource.Play();
+        }
+        
     }
 
     private void ChangeBackground(Position _pos, bool _on)
@@ -322,4 +340,11 @@ public class UpgradeSelector : MonoBehaviour
         backgroundImagePositions[_pos].sprite = currentSprite;
     }
 
+    private void UpdateInputHints(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Position, Image> item in inputHintImagePositions)
+        {
+            item.Value.sprite = inputHintSprites[item.Key][(int)InputController.Instance.GetControllerType()];
+        }
+    }
 }
