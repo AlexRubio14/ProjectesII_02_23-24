@@ -296,6 +296,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void AbortMission()
     {
+
         PlayerManager.Instance.player.SubstractFuel(1000);
         PlayerManager.Instance.player.fuelConsume -= 10;
         ResumeGame();
