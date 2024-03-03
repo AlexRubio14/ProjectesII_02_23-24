@@ -376,7 +376,8 @@ public class PlayerController : MonoBehaviour
 
     private void WaitForKnockbackTime()
     {
-        ChangeState(State.MOVING);
+        if (currentState == State.KNOCKBACK)
+            ChangeState(State.MOVING);
     }
 
     private void Knockback(Vector2 collisionPoint)
