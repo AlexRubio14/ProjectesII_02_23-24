@@ -105,7 +105,8 @@ public class CannonController : MonoBehaviour
 
             aimTarget.transform.position = nearestEnemy.transform.position;
             Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
-            sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
+            if (currentEnemy)
+                sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
         }
         else if (aimTarget.activeInHierarchy)
             aimTarget.SetActive(false);

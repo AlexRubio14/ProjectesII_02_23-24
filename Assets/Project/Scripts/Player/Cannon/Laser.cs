@@ -231,7 +231,7 @@ public class Laser : MonoBehaviour
             AudioManager._instance.Play3dOneShotSound(mapHit, "Laser", 5, collision.transform.position);
             DestroyBullet();
         }
-        else if (collision.CompareTag("Enemy"))
+        else if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
         {
             InstantiateEnemyLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position), collision.transform);
             AudioManager._instance.Play3dOneShotSound(enemyHit, "Laser", 5, collision.transform.position);

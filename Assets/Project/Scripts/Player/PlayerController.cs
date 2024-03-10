@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -542,12 +541,14 @@ public class PlayerController : MonoBehaviour
         {
             GetDamage(mapDamage, collision.contacts[0].point);
             AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
-        }
-
-        if(collision.collider.CompareTag("Enemy"))
+        }else if(collision.collider.CompareTag("Enemy"))
         {
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.damage, collision.GetContact(0).point);
+        }
+        else if (collision.collider.CompareTag("Boss"))
+        {
+            GetDamage(10, collision.GetContact(0).point);
         }
     }
 

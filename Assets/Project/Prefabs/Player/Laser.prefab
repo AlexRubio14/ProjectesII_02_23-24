@@ -35,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 2961559142409145753}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7004272045897514233
 SpriteRenderer:
@@ -111,7 +111,7 @@ MonoBehaviour:
   autoAimRadius: 0.63
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 197120
   enemyHit: {fileID: 8300000, guid: 87faefe2d17713c4e8bd4b668b0e851e, type: 3}
   mapHit: {fileID: 8300000, guid: c4c1e34098028b54f956ab6629be53b4, type: 3}
 --- !u!50 &1869822933708621716

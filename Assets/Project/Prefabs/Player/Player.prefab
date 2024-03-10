@@ -10738,7 +10738,7 @@ MonoBehaviour:
   canShootStates: 000000000100000005000000
   enemiesLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 197120
   mapLayer:
     serializedVersion: 2
     m_Bits: 4096
