@@ -1,8 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +15,8 @@ public abstract class BossController : MonoBehaviour
     public enum Phase { PHASE_1, PHASE_2, DEAD};
     [Space, Header("Phases"), SerializeField]
     protected Phase currentPhase;
-    [SerializeField, Range(0, 100)]
-    protected SerializedDictionary<Phase, float> phaseChangerPercentage;
+    [SerializedDictionary("Phase", "LastPercentage")]
+    public SerializedDictionary<Phase, float> phaseChangerPercentage;
     protected Dictionary<Phase, Action[]> onStartPhaseAttacks;
     protected Dictionary<Phase, Action[]> onUpdatePhaseAttacks;
 
@@ -42,7 +40,6 @@ public abstract class BossController : MonoBehaviour
         onUpdatePhaseAttacks = new Dictionary<Phase, Action[]>();
 
         SetupPhaseAttacks();
-
 
         GenerateRandomAttack();
     }

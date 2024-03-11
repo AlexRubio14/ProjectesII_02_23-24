@@ -53,6 +53,26 @@ public class Boss1Controller : BossController
     private Action spinStart;
     private Action spinUpdate;
 
+    [Space, Header("Suction"), SerializeField]
+    private GameObject windBlow;
+    private ParticleSystem windBlowEmitter;
+    private BoxCollider2D windBlowTrigger;
+    [SerializeField]
+    private float maxSuctionPositionDistance;
+    [SerializeField]
+    private float minSuctionPositionDistance;
+    private Vector2 suctionDirection;
+    [SerializeField]
+    private float suctionMoveSpeed;
+
+    [SerializeField]
+    private float suctionDuration;
+    private float suctionTimeWaited;
+
+    private Action suctionStart;
+    private Action suctionUpdate;
+
+
     private Animator animator;
 
 
@@ -69,6 +89,11 @@ public class Boss1Controller : BossController
 
         for (int i = 1; i < collisions.Length; i++)
             collisions[i] = tail[i - 1].GetComponent<CircleCollider2D>();
+
+        windBlowEmitter = windBlow.GetComponentInChildren<ParticleSystem>();
+        windBlowTrigger = windBlow.GetComponent<BoxCollider2D>();
+
+        SetSuctionWindActive(false);
     }
 
     private void Update()
@@ -92,6 +117,11 @@ public class Boss1Controller : BossController
         startActions.Add(spinStart);
         spinUpdate += UpdateSpin;
         updateActions.Add(spinUpdate);
+
+        suctionStart += StartSuction;
+        startActions.Add(suctionStart);
+        suctionUpdate += UpdateSuction;
+        updateActions.Add(suctionUpdate);
 
         onStartPhaseAttacks.Add(Phase.PHASE_1, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_1, updateActions.ToArray());
@@ -180,9 +210,8 @@ public class Boss1Controller : BossController
         head.transform.position = (Vector2)arenaMiddlePos.position + Vector2.down * spawnOffset;
 
         foreach (Boss1BodyController item in tail)
-        {
             item.ResetTailPos();
-        }
+        
 
         spinTimeWaited = 0;
         spinStunTimeWaited = 0;
@@ -233,7 +262,7 @@ public class Boss1Controller : BossController
                     item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
                 rb2d.angularVelocity = 0;
                 head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime);
-                rb2d.velocity = head.right * spinSpeed;
+                rb2d.velocity = head.right * spinSpeed * 3;
 
                 if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxJumpDistance)
                 {
@@ -275,5 +304,82 @@ public class Boss1Controller : BossController
     }
 
     #endregion
+
+    #region Suction
+    protected void StartSuction()
+    {
+        Debug.Log("Empieza a chuclar");
+        foreach (CircleCollider2D item in collisions)
+            item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
+
+        SetSuctionWindActive(false);
+
+        int randomValue = UnityEngine.Random.Range(-1, 2);
+        int randomPos = UnityEngine.Random.Range(0, 2);
+
+        suctionDirection = new Vector2(randomValue * randomPos, randomValue * (1 - randomPos)).normalized;
+
+        if (suctionDirection == Vector2.zero)
+            suctionDirection = Vector2.left;
+        head.position = (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance;
+
+        foreach (Boss1BodyController item in tail)
+            item.ResetTailPos();
+
+        head.right = -suctionDirection;
+
+        rb2d.velocity = Vector2.zero;
+
+        suctionTimeWaited = 0;
+    }
+
+    protected void UpdateSuction()
+    {
+        Debug.Log("Esta chuclando");
+
+        suctionTimeWaited += Time.deltaTime;
+
+        Vector2 nextPos;
+        if (suctionTimeWaited < suctionDuration)
+        {
+            nextPos = Vector2.Lerp(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance, Time.deltaTime * suctionMoveSpeed);
+            
+            if (!windBlowTrigger.enabled && Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance) <= 3f)
+                SetSuctionWindActive(true);
+        }
+        else
+        {
+            if (windBlowTrigger.enabled)
+                SetSuctionWindActive(false);
+
+            nextPos = Vector2.Lerp(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance, Time.deltaTime * suctionMoveSpeed / 2.5f);
+            if (Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance) <= 3f)
+            {
+                GenerateRandomAttack();
+                return;
+            }
+        }
+
+        head.position = nextPos;
+        head.right = (PlayerManager.Instance.player.transform.position - head.position).normalized;
+
+    }
+    
+    private void SetSuctionWindActive(bool _active)
+    {
+        if (_active)
+        {
+            windBlowEmitter.Play();
+            windBlowTrigger.enabled = true;
+        }
+        else
+        {
+            windBlowEmitter.Stop();
+            windBlowTrigger.enabled = false;
+        }
+    }
+
+    #endregion
+
 
 }
