@@ -46,6 +46,16 @@ public abstract class BossController : MonoBehaviour
 
     protected abstract void SetupPhaseAttacks();
 
+    protected void CheckPhase()
+    {
+        float percentage = maxHealth * (phaseChangerPercentage[currentPhase] / 100);
+
+        if (currentHealth <= percentage && currentPhase != Phase.DEAD)
+        {
+            currentPhase++;
+            ChangePhase(currentPhase);
+        }
+    }
     protected void ChangePhase(Phase _nextPhase)
     {
         currentPhase = _nextPhase;

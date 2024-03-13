@@ -16,6 +16,9 @@ public class Boss1Controller : BossController
 
 
     [Space, Header("Jump Wall To Wall"), SerializeField]
+    private int totalJumpsPerAttack;
+    private int jumpsRemaining;
+    [SerializeField]
     private float spawnOffset;
     [SerializeField]
     private float jumpSpeed;
@@ -98,8 +101,11 @@ public class Boss1Controller : BossController
 
     private void Update()
     {
+            
         if (onUpdatePhaseAttacks[currentPhase][currentAttackID] != null)
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
+
+        CheckPhase();
     }
 
     protected override void SetupPhaseAttacks()
@@ -152,9 +158,16 @@ public class Boss1Controller : BossController
     #region Jump Wall To Wall 
     protected void StartJumpWallToWall()
     {
+        jumpsRemaining = totalJumpsPerAttack;
+
+        ResetJumpValues();
+    }
+
+    protected void ResetJumpValues()
+    {
         foreach (CircleCollider2D item in collisions)
             item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
-        
+
 
         Vector2 spawnDir = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
 
@@ -169,7 +182,7 @@ public class Boss1Controller : BossController
 
         foreach (Boss1BodyController item in tail)
             item.ResetTailPos();
-        
+
 
 
         jumpDirection = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
@@ -191,7 +204,15 @@ public class Boss1Controller : BossController
         if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxJumpDistance)
         {
             rb2d.velocity = Vector2.zero;
-            GenerateRandomAttack();
+            jumpsRemaining--;
+
+            if (jumpsRemaining <= 0)
+                GenerateRandomAttack();
+            else
+                ResetJumpValues();
+            
+
+            
         }
     }
 
@@ -338,6 +359,9 @@ public class Boss1Controller : BossController
         Debug.Log("Esta chuclando");
 
         suctionTimeWaited += Time.deltaTime;
+
+        rb2d.velocity = Vector2.zero;
+
 
         Vector2 nextPos;
         if (suctionTimeWaited < suctionDuration)
