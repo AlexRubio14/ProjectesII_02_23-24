@@ -51,7 +51,6 @@ public class Boss1Controller : BossController
     private float spinStunTimeWaited;
 
     private Vector2 exitDirection;
-    private bool canSpin;
 
     private Action spinStart;
     private Action spinUpdate;
@@ -102,10 +101,10 @@ public class Boss1Controller : BossController
     private void Update()
     {
             
-        if (onUpdatePhaseAttacks[currentPhase][currentAttackID] != null)
+        if (onUpdatePhaseAttacks[currentPhase][currentAttackID] != null && !animator.enabled)
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
 
-        CheckPhase();
+        //CheckPhase();
     }
 
     protected override void SetupPhaseAttacks()
@@ -237,8 +236,6 @@ public class Boss1Controller : BossController
         spinTimeWaited = 0;
         spinStunTimeWaited = 0;
 
-        canSpin = false;
-
         exitDirection.x = UnityEngine.Random.Range(-1f, 1f);
         exitDirection.y = UnityEngine.Random.Range(-1f, 1f);
 
@@ -252,7 +249,6 @@ public class Boss1Controller : BossController
         
 
         spinDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
-        canSpin = true;
         animator.enabled = false;
 
         foreach (Boss1BodyController item in tail)
@@ -262,9 +258,6 @@ public class Boss1Controller : BossController
 
     private void UpdateSpin()
     {
-        if (!canSpin)
-            return;
-
 
         //Comprobar el tiempo que lleva girando
         spinTimeWaited += Time.deltaTime;
@@ -307,11 +300,7 @@ public class Boss1Controller : BossController
     }
 
     public void ChangeSpinDirection(Vector2 _collisionNormal)
-    {
-
-        if (!canSpin)
-            return;
-        
+    {        
         float minimumDot = 0.6f;
 
         Vector2 targetDirection = (spinDirection + _collisionNormal).normalized;

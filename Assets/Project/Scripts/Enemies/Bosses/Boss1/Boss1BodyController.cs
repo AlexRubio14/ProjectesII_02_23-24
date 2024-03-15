@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss1BodyController : MonoBehaviour
 {
     [SerializeField]
+    private Transform head;
+
+    [Space, SerializeField]
     private Transform target;
     [SerializeField] 
     private float offset;
@@ -26,12 +30,14 @@ public class Boss1BodyController : MonoBehaviour
     private Vector2 forceDirection;
 
     private Rigidbody2D rb2d;
+    private SpriteRenderer spriteRenderer;
 
     private Boss1Controller mainBossController;
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         mainBossController = GetComponentInParent<Boss1Controller>();
 
         currentMovementSpeed = baseMovementSpeed;
@@ -41,6 +47,7 @@ public class Boss1BodyController : MonoBehaviour
     void FixedUpdate()
     {
         ChaseTarget();
+        //OrientateSprite();
     }
 
 
@@ -57,7 +64,20 @@ public class Boss1BodyController : MonoBehaviour
 
 
     }
-    
+    private void OrientateSprite()
+    {
+        if (Vector2.Dot(head.right, Vector2.right) > 0)
+        {
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+    }
+
     public void ResetTailPos()
     {
         transform.localPosition = target.localPosition - target.right * offset;
