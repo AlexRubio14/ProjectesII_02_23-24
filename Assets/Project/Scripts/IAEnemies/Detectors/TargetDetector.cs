@@ -62,7 +62,7 @@ public class TargetDetector : Detector
 
                 _iaData.canSeeTarget = true;
                 _iaData.m_currentTarget = playerCollider.transform;
-                AudioManager._instance.Play2dOneShotSound(spottedPlayerClip, "Enemy");
+                AudioManager.instance.Play2dOneShotSound(spottedPlayerClip, "Enemy");
             }
         }
     }

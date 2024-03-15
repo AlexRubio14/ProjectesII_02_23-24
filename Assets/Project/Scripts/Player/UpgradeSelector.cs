@@ -216,8 +216,8 @@ public class UpgradeSelector : MonoBehaviour
             //Restar el consumo de fuel
             playerController.fuelConsume -= boostConsume;
             boostParticles.Play(true);
-            AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
-            boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
+            AudioManager.instance.Play2dOneShotSound(startBoost, "Boost");
+            boostSource = AudioManager.instance.Play2dLoop(boost, "Boost");
 
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
@@ -229,8 +229,8 @@ public class UpgradeSelector : MonoBehaviour
             //Resetear el consumo de fuel sumando
             playerController.fuelConsume += boostConsume;
             boostParticles.Stop(true);
-            AudioManager._instance.StopLoopSound(boostSource);
-            AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
+            AudioManager.instance.StopLoopSound(boostSource);
+            AudioManager.instance.Play2dOneShotSound(finishBoost, "Boost");
         }
     }
 
@@ -244,12 +244,12 @@ public class UpgradeSelector : MonoBehaviour
             //Restar el consumo de fuel
             playerController.fuelConsume -= lightConsume;
 
-            AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
-            loopLightSource = AudioManager._instance.Play2dLoop(loopLightClip, "Light");
+            AudioManager.instance.Play2dOneShotSound(SwitchLightClip, "Light");
+            loopLightSource = AudioManager.instance.Play2dLoop(loopLightClip, "Light");
         }
         else
         {
-            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(loopLightSource));
+            StartCoroutine(AudioManager.instance.FadeOutSFXLoop(loopLightSource));
             lightUpgrade.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = false;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
@@ -257,7 +257,7 @@ public class UpgradeSelector : MonoBehaviour
 
             playerController.fuelConsume += lightConsume;
 
-            AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
+            AudioManager.instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
     private void ToggleDrill(Position _pos)

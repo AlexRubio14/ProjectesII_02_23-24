@@ -49,7 +49,7 @@ public class LongClickButtonController : MonoBehaviour
                 if (onLongClick != null)
                 {
                     onLongClick.Invoke();
-                    AudioManager._instance.Play2dOneShotSound(obtainClip, "MissionCompleted", 1, 1, 1);
+                    AudioManager.instance.Play2dOneShotSound(obtainClip, "MissionCompleted", 1, 1, 1);
                 }
 
                 Reset();

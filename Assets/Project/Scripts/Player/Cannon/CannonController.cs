@@ -128,7 +128,7 @@ public class CannonController : MonoBehaviour
 
         if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
         {
-            AudioManager._instance.Play2dOneShotSound(shootClip, "Laser");
+            AudioManager.instance.Play2dOneShotSound(shootClip, "Laser");
 
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);

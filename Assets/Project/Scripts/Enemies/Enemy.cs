@@ -137,7 +137,7 @@ public abstract class Enemy : EnemyIA, IHealth
         if (c_currentDrop)
             DropItem();
 
-        AudioManager._instance.Play2dOneShotSound(deathClip, enemyAudioSourceName);
+        AudioManager.instance.Play2dOneShotSound(deathClip, enemyAudioSourceName);
 
         Destroy(gameObject);
     }

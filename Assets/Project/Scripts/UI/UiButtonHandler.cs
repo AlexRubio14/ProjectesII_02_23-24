@@ -11,12 +11,12 @@ public class UiButtonHandler : MonoBehaviour
 
     public void PlayOnClickClip()
     {
-        AudioManager._instance.Play2dOneShotSound(clickClip, "Button");
+        AudioManager.instance.Play2dOneShotSound(clickClip, "Button");
     }
 
     public void PlayOnHoverClip()
     {
-        AudioManager._instance.Play2dOneShotSound(hoverClip, "Button");
+        AudioManager.instance.Play2dOneShotSound(hoverClip, "Button");
     }
 
   

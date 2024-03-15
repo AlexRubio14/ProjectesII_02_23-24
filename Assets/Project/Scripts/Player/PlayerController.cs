@@ -296,7 +296,7 @@ public class PlayerController : MonoBehaviour
         shipLight.pointLightOuterRadius /= 4;
 
         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        AudioManager._instance.Play2dOneShotSound(enginePoweringOff, "Death", 1, 1, 1);
+        AudioManager.instance.Play2dOneShotSound(enginePoweringOff, "Death", 1, 1, 1);
     }
     private void ExploteShip()
     {
@@ -312,7 +312,7 @@ public class PlayerController : MonoBehaviour
         InventoryManager.Instance.EndRun(false);
         shipLight.intensity = 0;
         Invoke("ReturnToHub", timeToReturnHub);
-        AudioManager._instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
+        AudioManager.instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
 
         
 
@@ -478,7 +478,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
-                StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
+                StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
                 break;
             default:
                 break;
@@ -509,10 +509,10 @@ public class PlayerController : MonoBehaviour
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
         if (obj.started && currentState == State.IDLE)
-           engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
+           engineSource = AudioManager.instance.Play2dLoop(engineClip, "Engine");
 
         if (obj.canceled && engineSource != null)
-            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
+            StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
 
         accelerationValue = obj.ReadValue<float>();
     }
@@ -541,7 +541,7 @@ public class PlayerController : MonoBehaviour
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
             GetDamage(mapDamage, collision.contacts[0].point);
-            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
+            AudioManager.instance.Play2dOneShotSound(collisionClip, "Player");
         }
 
         if(collision.collider.CompareTag("Enemy"))

@@ -10,11 +10,11 @@ public class ShopMusic : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = AudioManager._instance.Play2dLoop(shopMusic, "Music", 1,1,1);
+        audioSource = AudioManager.instance.Play2dLoop(shopMusic, "Music", 1,1,1);
     }
 
     public void StopMusic()
     {
-        AudioManager._instance.StopLoopSound(audioSource);
+        AudioManager.instance.StopLoopSound(audioSource);
     }
 }

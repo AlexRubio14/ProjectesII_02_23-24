@@ -222,19 +222,19 @@ public class Laser : MonoBehaviour
         if (collision.CompareTag("Map") && collision.gameObject.layer == LayerMask.NameToLayer("Map"))
         {
             InstantiateWallLaserHit();
-            AudioManager._instance.Play3dOneShotSound(mapHit, "Laser", 5, collision.transform.position);
+            AudioManager.instance.Play3dOneShotSound(mapHit, "Laser", 5, collision.transform.position);
             DestroyBullet();
         }
         else if(collision.CompareTag("BreakableWall"))
         {
             InstantiateBreakableWallLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position));
-            AudioManager._instance.Play3dOneShotSound(mapHit, "Laser", 5, collision.transform.position);
+            AudioManager.instance.Play3dOneShotSound(mapHit, "Laser", 5, collision.transform.position);
             DestroyBullet();
         }
         else if (collision.CompareTag("Enemy"))
         {
             InstantiateEnemyLaserHit(collision.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position), collision.transform);
-            AudioManager._instance.Play3dOneShotSound(enemyHit, "Laser", 5, collision.transform.position);
+            AudioManager.instance.Play3dOneShotSound(enemyHit, "Laser", 5, collision.transform.position);
             DestroyBullet();
         }
     }
