@@ -128,7 +128,7 @@ public class Enemy01 : Enemy
     {
         if(collision.collider.CompareTag("Player"))
         {
-            AudioManager._instance.Play2dOneShotSound(impactPlayerClip, "Enemy");
+            AudioManager.instance.Play2dOneShotSound(impactPlayerClip, "Enemy");
             StartEating(collision.contacts[0].point); 
         }
     }

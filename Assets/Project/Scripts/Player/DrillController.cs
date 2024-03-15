@@ -323,7 +323,7 @@ public class DrillController : MonoBehaviour
                     currentParticle.gameObject.transform.position = _hits[i].point;
                     currentParticle.Play(true);
                 }
-                AudioManager._instance.Play2dOneShotSound(drillClip, "Drill");
+                AudioManager.instance.Play2dOneShotSound(drillClip, "Drill");
             }
             else
             {

@@ -163,7 +163,7 @@ public class CheckQuestController : MonoBehaviour
         dialogueController.gameObject.SetActive(true);
         dialogueController.StartDialogue();
 
-        AudioManager._instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
+        AudioManager.instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
     }
 
     private void SelectQuest()

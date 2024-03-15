@@ -174,7 +174,7 @@ public class DialogueController : MonoBehaviour
             letterIndex++;
             Invoke("DisplayLetters", timeBetweenLetters);
             if(dialogueSoundIndex % 4 == 0)
-                AudioManager._instance.Play2dOneShotSound(catDialogueSound, "SFX", 0.35f, 2f, 2.5f);
+                AudioManager.instance.Play2dOneShotSound(catDialogueSound, "SFX", 0.35f, 2f, 2.5f);
 
             dialogueSoundIndex++;
         }

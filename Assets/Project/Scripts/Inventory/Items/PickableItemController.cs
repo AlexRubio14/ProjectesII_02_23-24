@@ -53,7 +53,7 @@ public class PickableItemController : MonoBehaviour
         if (Vector2.Distance(c_playerTransform.position, transform.position) <= minDistanceToGetItem)
         {
             InventoryManager.Instance.ChangeRunItemAmount(c_currentItem, 1);
-            AudioManager._instance.Play2dOneShotSound(collectClip, "Items");
+            AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
             Destroy(gameObject);
         }
     }

@@ -1,50 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectTpsManager : MonoBehaviour
 {
-    public static SelectTpsManager _instance;
+    public static SelectTpsManager instance;
 
-    private Dictionary<int, Transform> discoveredTpsPositions = new Dictionary<int, Transform>();
+    [SerializeField]
+    private List<TpObject> tpList;
 
-    private int totalTpsId = 1;
+    [SerializeField]
+    private int idToTeleport;
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this);
             return;
         }
-        _instance = this;
+
+        instance = this;
 
         DontDestroyOnLoad(gameObject);
     }
 
-    public void AddDiscoveredTp(int key, Transform tpPosition)
+    public void AddDiscoveredTp(int key)
     {
-        discoveredTpsPositions.Add(key, tpPosition);
-    }
-
-    public Transform SearchTp(int tpId)
-    {
-        foreach(int key in discoveredTpsPositions.Keys)
+        for(int i = 0; i < tpList.Count; i++)
         {
-            if(key == tpId)
+            if (tpList[i].id == key)
             {
-                return discoveredTpsPositions[key];
+                tpList[i].discovered = true;
+                return;
             }
         }
-        return null;
     }
 
-    public int GetTotalIds()
+    public int GetIdToTeleport()
     {
-        return totalTpsId;
-    }
-    public void AddTotalIds(int value)
-    {
-        totalTpsId++;
+        return idToTeleport;
     }
 }

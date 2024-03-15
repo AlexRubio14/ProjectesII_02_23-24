@@ -24,7 +24,7 @@ public class LightUpgradeController : MonoBehaviour
             if (interactableObject.isHide)
             {
                 interactableObject.UnHide();
-                AudioManager._instance.Play2dOneShotSound(findObjectClip, "Light");
+                AudioManager.instance.Play2dOneShotSound(findObjectClip, "Light");
             }
 
         }

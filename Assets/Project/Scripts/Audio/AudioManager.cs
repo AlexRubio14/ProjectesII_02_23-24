@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager _instance;
+    public static AudioManager instance;
 
     [SerializeField]
     private AudioMixer mixer;
@@ -23,14 +23,13 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this);
             return;
         }
-        
 
-        _instance = this;
+        instance = this;
 
         actions2dAS = new AudioSource[total2DAS];
         actions3dAS = new AudioSource[total3DAS];
@@ -60,7 +59,6 @@ public class AudioManager : MonoBehaviour
                 return item;
             }
         }
-
         return null;
     }
 
@@ -73,7 +71,6 @@ public class AudioManager : MonoBehaviour
                 return item;
             }
         }
-
         return null;
     }
 
@@ -140,7 +137,6 @@ public class AudioManager : MonoBehaviour
             _as.clip = _clip;
             _as.Play();
         }
-
     }
 
     public void StopLoopSound(AudioSource _as) 

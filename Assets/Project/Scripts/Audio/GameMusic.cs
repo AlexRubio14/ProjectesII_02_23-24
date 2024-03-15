@@ -15,11 +15,11 @@ public class GameMusic : MonoBehaviour
     {
         mixerGroup = "Music";
 
-        _as = AudioManager._instance.Play2dLoop(gameMusic, mixerGroup, 1, 1, 1);
+        _as = AudioManager.instance.Play2dLoop(gameMusic, mixerGroup, 1, 1, 1);
     }
 
     private void OnDisable()
     {
-        AudioManager._instance.StopLoopSound(_as);
+        AudioManager.instance.StopLoopSound(_as);
     }
 }

@@ -148,8 +148,8 @@ public class MineMinigameController : MonoBehaviour
 
         TimeManager.Instance.PauseGame();
 
-        AudioManager._instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
-        AudioManager._instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
 
         InputSystem.onDeviceChange += UpdateInputHints;
 
@@ -320,10 +320,10 @@ public class MineMinigameController : MonoBehaviour
 
     private void EndMining()
     {
-        AudioManager._instance.StopLoopSound(rightLaserSource);
-        AudioManager._instance.StopLoopSound(leftLaserSource);
+        AudioManager.instance.StopLoopSound(rightLaserSource);
+        AudioManager.instance.StopLoopSound(leftLaserSource);
 
-        AudioManager._instance.Play2dOneShotSound(endMiningClip, "Mining", 0.2f);
+        AudioManager.instance.Play2dOneShotSound(endMiningClip, "Mining", 0.2f);
 
         ThrowMinerals(CalculateMinerals(integrityValue));
 
@@ -439,8 +439,8 @@ public class MineMinigameController : MonoBehaviour
 
     private void CancelMinigame(InputAction.CallbackContext obj)
     {
-        AudioManager._instance.StopLoopSound(rightLaserSource);
-        AudioManager._instance.StopLoopSound(leftLaserSource);
+        AudioManager.instance.StopLoopSound(rightLaserSource);
+        AudioManager.instance.StopLoopSound(leftLaserSource);
 
         progressValue = 0;
         integrityValue = 0;
