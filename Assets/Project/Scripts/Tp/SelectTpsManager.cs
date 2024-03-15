@@ -40,4 +40,14 @@ public class SelectTpsManager : MonoBehaviour
     {
         return idToTeleport;
     }
+
+    public void SetIdToTeleport(int value)
+    {
+        idToTeleport = value;
+    }
+
+    public int GetSizeOfTpList()
+    {
+        return tpList.Count;
+    }
 }

@@ -196,15 +196,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd3a842a9300ff4f8e603d2f6a116d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectTpControllers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  tpList:
+  - {fileID: 11400000, guid: f2f639d1c31174048986f9b3c097c122, type: 2}
+  - {fileID: 11400000, guid: 80d4823a3e5549142904431bbed06a5f, type: 2}
+  - {fileID: 11400000, guid: f8f5ef92b86a7d44886cffbbd79b1ca3, type: 2}
+  - {fileID: 11400000, guid: 6fbaa0b198fbfe54fac79afb0c0e3b76, type: 2}
+  - {fileID: 11400000, guid: 2c9937c87861ebb48ad9ab68f0eb37fa, type: 2}
+  - {fileID: 11400000, guid: 3a31ba413f4f7a243a4090e673ed9b84, type: 2}
+  - {fileID: 11400000, guid: fd1b185fa6cb09a41b4b029372ff3865, type: 2}
+  - {fileID: 11400000, guid: 012c5b9c9a9984a438cc7ab1f60801ff, type: 2}
+  idToTeleport: 0
 --- !u!1 &6307647262529591169
 GameObject:
   m_ObjectHideFlags: 0
