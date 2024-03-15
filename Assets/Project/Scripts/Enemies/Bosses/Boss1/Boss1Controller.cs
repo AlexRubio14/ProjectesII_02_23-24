@@ -276,7 +276,7 @@ public class Boss1Controller : BossController
                     item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
                 rb2d.angularVelocity = 0;
                 head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime);
-                rb2d.velocity = head.right * spinSpeed * 3;
+                rb2d.velocity = head.right * spinSpeed;
 
                 if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxJumpDistance)
                 {
@@ -318,7 +318,6 @@ public class Boss1Controller : BossController
     #region Suction
     protected void StartSuction()
     {
-        Debug.Log("Empieza a chuclar");
         foreach (CircleCollider2D item in collisions)
             item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
 
@@ -345,8 +344,6 @@ public class Boss1Controller : BossController
 
     protected void UpdateSuction()
     {
-        Debug.Log("Esta chuclando");
-
         suctionTimeWaited += Time.deltaTime;
 
         rb2d.velocity = Vector2.zero;
@@ -365,7 +362,12 @@ public class Boss1Controller : BossController
             if (windBlowTrigger.enabled)
                 SetSuctionWindActive(false);
 
-            nextPos = Vector2.Lerp(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance, Time.deltaTime * suctionMoveSpeed / 2.5f);
+            nextPos = Vector2.Lerp(
+                head.position,
+                (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance,
+                Time.deltaTime * suctionMoveSpeed / 1.5f
+                );
+            
             if (Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance) <= 3f)
             {
                 GenerateRandomAttack();

@@ -8,6 +8,7 @@ public class Boss1BodyController : MonoBehaviour
 {
     [SerializeField]
     private Transform head;
+    private Rigidbody2D headRb;
 
     [Space, SerializeField]
     private Transform target;
@@ -37,6 +38,7 @@ public class Boss1BodyController : MonoBehaviour
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        headRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         mainBossController = GetComponentInParent<Boss1Controller>();
 
@@ -47,7 +49,7 @@ public class Boss1BodyController : MonoBehaviour
     void FixedUpdate()
     {
         ChaseTarget();
-        //OrientateSprite();
+        OrientateSprite();
     }
 
 
@@ -66,15 +68,13 @@ public class Boss1BodyController : MonoBehaviour
     }
     private void OrientateSprite()
     {
-        if (Vector2.Dot(head.right, Vector2.right) > 0)
+        if (Vector2.Dot(headRb.velocity, Vector2.right) > 0)
         {
-            spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
         }
         else
         {
-            spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
+            spriteRenderer.flipY = true;
         }
     }
 
