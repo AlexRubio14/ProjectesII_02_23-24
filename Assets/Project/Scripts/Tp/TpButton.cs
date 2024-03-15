@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TpButton : MonoBehaviour
 {
-    private int id;
+    public TpObject tpObject;
 
-    public void SetId(int value)
+    TextMeshProUGUI textMeshProUGUI;
+
+    [SerializeField]
+    public MenuNavegation menuNavegation;
+
+    public void Initialize()
     {
-        id = value;
+        textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
+        textMeshProUGUI.text = tpObject.id.ToString();
+
+        Button bt = GetComponent<Button>();
+        bt.onClick.AddListener(() => SetTp());
     }
 
-    public int GetId()
+    public void SetTp()
     {
-        return id;
+        SelectTpsManager.instance.SetIdToTeleport(tpObject.id);
+        menuNavegation.GoToGame();
     }
 }

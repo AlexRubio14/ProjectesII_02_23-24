@@ -5,11 +5,13 @@ public class SelectTpsManager : MonoBehaviour
 {
     public static SelectTpsManager instance;
 
-    [SerializeField]
-    private List<TpObject> tpList;
+    [field: SerializeField]
+    public List<TpObject> tpList { get; private set; }
 
     [SerializeField]
     private int idToTeleport;
+
+   
 
     private void Awake()
     {
@@ -40,14 +42,8 @@ public class SelectTpsManager : MonoBehaviour
     {
         return idToTeleport;
     }
-
     public void SetIdToTeleport(int value)
     {
         idToTeleport = value;
-    }
-
-    public int GetSizeOfTpList()
-    {
-        return tpList.Count;
     }
 }

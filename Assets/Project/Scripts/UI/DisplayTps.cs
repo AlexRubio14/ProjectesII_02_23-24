@@ -6,38 +6,48 @@ using UnityEngine.UI;
 
 public class DisplayTps : MonoBehaviour
 {
-    private int numOfTps;
-
     [SerializeField]
-    private GridLayoutGroup buttonsLayout;
+    private Transform buttonsLayout;
+
+    private List<TpButton> discoveredTpButtonList;
 
     [SerializeField]
     private GameObject bt;
-    
+
+    [SerializeField]
+    private MenuNavegation menuNavegation;
 
     private void Awake()
     {
-        numOfTps = SelectTpsManager.instance.GetSizeOfTpList();
-        CreateButtonsAndAddToList();
+        discoveredTpButtonList = new List<TpButton>();
     }
 
-    public void CreateButtonsAndAddToList()
+    private void Start()
     {
-        for (int i = 1; i < numOfTps; i++)
+        CreateDiscoveredTpList();
+    }
+
+    private void CreateDiscoveredTpList()
+    {
+        foreach (TpObject tp in SelectTpsManager.instance.tpList)
         {
-            GameObject newButton = Instantiate(bt);
-            newButton.transform.parent = buttonsLayout.transform;
-            
-            GetComponent<TpButton>().SetId(i);
+            bt = Instantiate(bt, buttonsLayout);
+            TpButton tpButton = bt.GetComponent<TpButton>();
+            discoveredTpButtonList.Add(tpButton);
+            tpButton.tpObject = tp;
+            tpButton.transform.SetParent(buttonsLayout);
+            tpButton.Initialize();
 
-            TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = i.ToString();
+            Button button = bt.GetComponent<Button>();
+            if (!tp.discovered) 
+            {
+                button.interactable = false;
+            }
+
+            if (tp.id == 1)
+                button.Select();
+
+            tpButton.menuNavegation = menuNavegation;
         }
-    }
-    
-    public void SetTpToTeleport()
-    {
-        int id = GetComponent<TpButton>().GetId();
-        SelectTpsManager.instance.SetIdToTeleport(id);
     }
 }
