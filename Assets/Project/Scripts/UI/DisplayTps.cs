@@ -17,6 +17,9 @@ public class DisplayTps : MonoBehaviour
     [SerializeField]
     private MenuNavegation menuNavegation;
 
+    [SerializeField]
+    private GameObject tpMenu;
+
     private void Awake()
     {
         discoveredTpButtonList = new List<TpButton>();
@@ -29,25 +32,35 @@ public class DisplayTps : MonoBehaviour
 
     private void CreateDiscoveredTpList()
     {
-        foreach (TpObject tp in SelectTpsManager.instance.tpList)
+        if (!SelectTpsManager.instance.tpList[0].discovered)
         {
-            bt = Instantiate(bt, buttonsLayout);
-            TpButton tpButton = bt.GetComponent<TpButton>();
-            discoveredTpButtonList.Add(tpButton);
-            tpButton.tpObject = tp;
-            tpButton.transform.SetParent(buttonsLayout);
-            tpButton.Initialize();
+            SelectTpsManager.instance.SetIdToTeleport(1);
+            menuNavegation.GoToGame();
+        }
+        else
+        {
+            tpMenu.gameObject.SetActive(true);
 
-            Button button = bt.GetComponent<Button>();
-            if (!tp.discovered) 
+            foreach (TpObject tp in SelectTpsManager.instance.tpList)
             {
-                button.interactable = false;
+                bt = Instantiate(bt, buttonsLayout);
+                TpButton tpButton = bt.GetComponent<TpButton>();
+                discoveredTpButtonList.Add(tpButton);
+                tpButton.tpObject = tp;
+                tpButton.transform.SetParent(buttonsLayout);
+                tpButton.Initialize();
+
+                Button button = bt.GetComponent<Button>();
+                if (!tp.discovered)
+                {
+                    button.interactable = false;
+                }
+
+                if (tp.id == 1)
+                    button.Select();
+
+                tpButton.menuNavegation = menuNavegation;
             }
-
-            if (tp.id == 1)
-                button.Select();
-
-            tpButton.menuNavegation = menuNavegation;
         }
     }
 }

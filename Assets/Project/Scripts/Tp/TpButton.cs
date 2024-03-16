@@ -14,7 +14,7 @@ public class TpButton : MonoBehaviour
     public void Initialize()
     {
         textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
-        textMeshProUGUI.text = tpObject.id.ToString();
+        textMeshProUGUI.text = tpObject.zoneName;
 
         Button bt = GetComponent<Button>();
         bt.onClick.AddListener(() => SetTp());
