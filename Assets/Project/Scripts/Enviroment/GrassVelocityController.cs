@@ -14,6 +14,9 @@ public class GrassVelocityController : MonoBehaviour
 
     public void InfluenceGrass(Material mat, float xVelocity)
     {
+    //    if (xVelocity > 0) 
+    //        xVelocity += 1;
+
         mat.SetFloat(externalInfluence, xVelocity);
     }
 }

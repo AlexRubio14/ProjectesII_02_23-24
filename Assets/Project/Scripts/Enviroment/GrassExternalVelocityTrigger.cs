@@ -53,15 +53,15 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
     {
         if (collision.gameObject == player)
         {
-            if (Mathf.Abs(velocityLastFrame) < MathF.Abs(grassVelocityController.VelocityThreshold) && 
-                MathF.Abs(playerRb2D.velocity.x) > Mathf.Abs(grassVelocityController.VelocityThreshold))
+            if (Mathf.Abs(velocityLastFrame) > MathF.Abs(grassVelocityController.VelocityThreshold) &&
+                MathF.Abs(playerRb2D.velocity.x) < Mathf.Abs(grassVelocityController.VelocityThreshold))
             {
-                StartCoroutine(EaseOut()); 
+                StartCoroutine(EaseOut());
             }
-            else if (Mathf.Abs(velocityLastFrame) > Mathf.Abs(grassVelocityController.VelocityThreshold) && 
-                Mathf.Abs(playerRb2D.velocity.x) < Mathf.Abs(grassVelocityController.VelocityThreshold))
+            else if (Mathf.Abs(velocityLastFrame) < Mathf.Abs(grassVelocityController.VelocityThreshold) &&
+                Mathf.Abs(playerRb2D.velocity.x) > Mathf.Abs(grassVelocityController.VelocityThreshold))
             {
-                StartCoroutine(EaseIn(playerRb2D.velocity.x * grassVelocityController.ExternalInfluenceStrength)); 
+                StartCoroutine(EaseIn(playerRb2D.velocity.x * grassVelocityController.ExternalInfluenceStrength));
             }
             else if (!easeInCoroutineRunning && !easeOutCoroutineRunning &&
                 MathF.Abs(playerRb2D.velocity.x) > Mathf.Abs(grassVelocityController.VelocityThreshold))
@@ -76,13 +76,16 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
     private IEnumerator EaseIn(float XVelocity)
     {
         easeInCoroutineRunning = true;
-
         float elapsedTime = 0f;
-        while(elapsedTime < grassVelocityController.EaseInTime)
+
+        if (XVelocity > 0)
+            XVelocity += 2;
+
+        while (elapsedTime < grassVelocityController.EaseInTime)
         {
             elapsedTime += Time.deltaTime;
 
-            float lerpedAmount = Mathf.Lerp(startingXVelocity, XVelocity, (elapsedTime / grassVelocityController.EaseInTime)); 
+            float lerpedAmount = Mathf.Lerp(startingXVelocity, XVelocity, (elapsedTime / grassVelocityController.EaseInTime));
             grassVelocityController.InfluenceGrass(material, lerpedAmount);
 
             yield return null;
@@ -90,6 +93,7 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
 
         easeInCoroutineRunning = false;
     }
+
     private IEnumerator EaseOut()
     {
         easeOutCoroutineRunning = true;

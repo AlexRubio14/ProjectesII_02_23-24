@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _ExternalInfluence: 1
     - _WindIntensity: 1
-    - _WindScale: 0.2
+    - _WindScale: 0.3
     - _WindSpeed: 3
     - _YMaskInfluence: 1
     m_Colors: []
