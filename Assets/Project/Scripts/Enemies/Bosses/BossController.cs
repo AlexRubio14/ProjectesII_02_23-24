@@ -79,6 +79,9 @@ public abstract class BossController : MonoBehaviour
     {
         currentAttackID = _attackID;
 
+        Debug.Log(currentAttackID);
+        //Debug.Break();
+
         if(onStartPhaseAttacks[currentPhase][currentAttackID] != null)
             onStartPhaseAttacks[currentPhase][currentAttackID]();
     }

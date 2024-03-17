@@ -21,10 +21,9 @@ public class PlayerMapInteraction : MonoBehaviour
     [Header("Interact Hint"), SerializeField]
     private SpriteRenderer interactHint;
     [SerializeField]
-    private Sprite hideUpgradeSprite;
-
+    private UpgradeObject lightUpgradeObject;
     [SerializeField]
-    private GameObject c_lockedUpgradeImage;
+    private Sprite missingUpgradeSprite;
 
     [SerializeField]
     private Sprite[] interactKeySprite;
@@ -81,18 +80,26 @@ public class PlayerMapInteraction : MonoBehaviour
         }
 
 
-        if (nearestObject.isHide)
+        if (nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded) ||
+            nearestObject.isHide && !UpgradeManager.Instance.CheckObtainedUpgrade(lightUpgradeObject))
         {
-            interactHint.sprite = hideUpgradeSprite;
+            interactHint.sprite = missingUpgradeSprite;
         }
-        else if(nearestObject.isInteractable && nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded) || 
-            nearestObject.isInteractable && !nearestObject.c_upgradeNeeded 
-            )
+        else if (nearestObject.isHide)
+        {
+            interactHint.sprite = lightUpgradeObject.UpgradeSprite;
+        }
+        else if (nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded) && !nearestObject.isInteractable)
+        {
+            interactHint.sprite = nearestObject.c_upgradeNeeded.UpgradeSprite;
+        }
+        else if(nearestObject.isInteractable && 
+            (nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded) && nearestObject.isInteractable || !nearestObject.c_upgradeNeeded))
         {
 
             interactHint.sprite = interactKeySprite[(int)InputController.Instance.GetControllerType()];
         }
-        else if(nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
+        else if(nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
         {
             interactHint.sprite = nearestObject.c_upgradeNeeded.UpgradeSprite;
         }

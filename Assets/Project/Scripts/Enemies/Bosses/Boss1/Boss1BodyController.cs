@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Boss1BodyController : MonoBehaviour
 {
+
+    [SerializeField]
+    private bool isHead;
     [SerializeField]
     private Transform head;
     private Rigidbody2D headRb;
@@ -68,14 +71,12 @@ public class Boss1BodyController : MonoBehaviour
     }
     private void OrientateSprite()
     {
-        if (Vector2.Dot(headRb.velocity, Vector2.right) > 0)
-        {
+        float dot = Vector2.Dot(headRb.velocity, Vector2.right);
+        if (dot > 0)
             spriteRenderer.flipY = false;
-        }
-        else
-        {
+        else if ( dot < 0)
             spriteRenderer.flipY = true;
-        }
+        
     }
 
     public void ResetTailPos()
@@ -94,9 +95,7 @@ public class Boss1BodyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Map"))
-        {
-            mainBossController.ChangeSpinDirection(collision.contacts[0].normal);
-        }
+            mainBossController.CollisionWithMap(collision);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

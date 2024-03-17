@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -12,27 +13,42 @@ public class Boss1Controller : BossController
     [SerializeField]
     private Transform arenaMiddlePos;
     private CircleCollider2D[] collisions;
+    [SerializeField]
+    private Sprite normalHeadSprite;
+    [SerializeField]
+    private Sprite stunnedHeadSprite;
+    private SpriteRenderer headSR;
+    
 
 
-
-    [Space, Header("Jump Wall To Wall"), SerializeField]
-    private int totalJumpsPerAttack;
-    private int jumpsRemaining;
+    [Space, Header("Dash Wall To Wall"), SerializeField]
+    private int totalDashesPerAttack;
+    private int dashesRemaining;
     [SerializeField]
     private float spawnOffset;
     [SerializeField]
-    private float jumpSpeed;
-    private Vector2 jumpDirection;
+    private float dashSpeed;
+    private Vector2 dashDirection;
     [SerializeField]
-    private float jumpRotationSpeed;
+    private float dashRotationSpeed;
     [SerializeField]
     private float minSpawnDot;
     [SerializeField]
-    private float maxJumpDistance;
-    private Vector2 lastJumpDir = Vector2.up;
+    private float maxDashDistance;
+    private Vector2 lastDashDir = Vector2.up;
+    [SerializeField]
+    private float dashStunDuration;
+    private float dashStunTimeWaited;
+    private bool stunnedOnDash = false;
+    private Vector2 lastDirDashStunned;
+    private Vector2 stunedHeadDirection;
+    [SerializeField]
+    private float dashHitDamage;
+    
 
-    private Action jumpWallToWallStart;
-    private Action jumpWallToWallUpdate;
+
+    private Action dashStart;
+    private Action dashUpdate;
 
     [Space, Header("Spin"), SerializeField]
     private float spinSpeed;
@@ -95,6 +111,8 @@ public class Boss1Controller : BossController
         windBlowEmitter = windBlow.GetComponentInChildren<ParticleSystem>();
         windBlowTrigger = windBlow.GetComponent<BoxCollider2D>();
 
+        headSR = head.GetComponent<SpriteRenderer>();
+
         SetSuctionWindActive(false);
     }
 
@@ -113,10 +131,10 @@ public class Boss1Controller : BossController
         List<Action> startActions = new List<Action>();
         List<Action> updateActions = new List<Action>();
 
-        jumpWallToWallStart += StartJumpWallToWall;
-        startActions.Add(jumpWallToWallStart);
-        jumpWallToWallUpdate += UpdateJumpWallToWall;
-        updateActions.Add(jumpWallToWallUpdate);
+        dashStart += StartJumpWallToWall;
+        startActions.Add(dashStart);
+        dashUpdate += UpdateJumpWallToWall;
+        updateActions.Add(dashUpdate);
 
         spinStart += StartSpin;
         startActions.Add(spinStart);
@@ -157,7 +175,7 @@ public class Boss1Controller : BossController
     #region Jump Wall To Wall 
     protected void StartJumpWallToWall()
     {
-        jumpsRemaining = totalJumpsPerAttack;
+        dashesRemaining = totalDashesPerAttack;
 
         ResetJumpValues();
     }
@@ -170,13 +188,13 @@ public class Boss1Controller : BossController
 
         Vector2 spawnDir = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
 
-        if (Vector2.Dot(spawnDir, lastJumpDir) > minSpawnDot)
+        if (Vector2.Dot(spawnDir, lastDashDir) > minSpawnDot)
         {
             StartJumpWallToWall();
             return;
         }
 
-        lastJumpDir = spawnDir;
+        lastDashDir = spawnDir;
         head.transform.position = (Vector2)arenaMiddlePos.position + spawnDir * spawnOffset;
 
         foreach (Boss1BodyController item in tail)
@@ -184,34 +202,74 @@ public class Boss1Controller : BossController
 
 
 
-        jumpDirection = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
-        rb2d.velocity = jumpDirection * jumpSpeed;
-        head.right = jumpDirection;
+        dashDirection = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
+        rb2d.velocity = dashDirection * dashSpeed;
+        head.right = dashDirection;
+
+        stunnedOnDash = false;
+        dashStunTimeWaited = 0;
+
     }
 
     protected void UpdateJumpWallToWall()
     {
+        if (stunnedOnDash)
+        {
+            StunnedOnDashBehaviour();
+            return;
+        }
+
         //Calcular un poco de rotacion para que se acerque muy poco a poco al player
         Vector2 playerDir = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
-        jumpDirection = Vector2.Lerp(jumpDirection, playerDir, Time.deltaTime * jumpRotationSpeed).normalized;
+        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime * dashRotationSpeed).normalized;
 
         //mover al bicho y rotarlo hacia la direccion
-        rb2d.velocity = jumpDirection * jumpSpeed;
-        head.right = jumpDirection;
+        rb2d.velocity = dashDirection * dashSpeed;
+        head.right = dashDirection;
+
 
         //Comprobar si esta suficientemente lejos del area para hacer otro ataque
-        if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxJumpDistance)
+        if (Vector2.Distance(head.position, arenaMiddlePos.position) <= maxDashDistance)
+            return;
+
+        rb2d.velocity = Vector2.zero;
+        dashesRemaining--;
+
+        if (dashesRemaining <= 0)
+            GenerateRandomAttack();
+        else
+            ResetJumpValues();
+
+    }
+
+    private void StunnedOnDashBehaviour()
+    {
+        dashStunTimeWaited += Time.deltaTime;
+        headSR.sprite = stunnedHeadSprite;
+
+        foreach (CircleCollider2D item in collisions)
+            item.gameObject.layer = LayerMask.NameToLayer("Boss");
+
+        if (dashStunTimeWaited >= dashStunDuration)
         {
+            foreach (CircleCollider2D item in collisions)
+                item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
+
+            headSR.sprite = normalHeadSprite;
+
+            dashDirection = Vector2.Lerp(dashDirection, lastDirDashStunned, Time.deltaTime * dashRotationSpeed).normalized;
+
+            //mover al bicho y rotarlo hacia la direccion
+            rb2d.velocity = dashDirection * dashSpeed * 0.5f;
+            head.right = dashDirection;
+
+            if (Vector2.Distance(head.position, arenaMiddlePos.position) <= maxDashDistance)
+                return;
+
             rb2d.velocity = Vector2.zero;
-            jumpsRemaining--;
-
-            if (jumpsRemaining <= 0)
-                GenerateRandomAttack();
-            else
-                ResetJumpValues();
-            
-
-            
+            stunnedOnDash = false;
+            dashStunTimeWaited = 0;
+            GenerateRandomAttack();
         }
     }
 
@@ -220,6 +278,13 @@ public class Boss1Controller : BossController
     #region Spin
     private void StartSpin()
     {
+        head.position = arenaMiddlePos.position + Vector3.down * 30;
+        foreach (Boss1BodyController item in tail)
+            item.ResetTailPos();
+
+        rb2d.velocity = Vector2.zero;
+
+
         animator.enabled = true;
         animator.SetTrigger("SpinSpawnAnim");
 
@@ -227,10 +292,7 @@ public class Boss1Controller : BossController
             item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
         
 
-        head.transform.position = (Vector2)arenaMiddlePos.position + Vector2.down * spawnOffset;
-
-        foreach (Boss1BodyController item in tail)
-            item.ResetTailPos();
+        
         
 
         spinTimeWaited = 0;
@@ -242,6 +304,11 @@ public class Boss1Controller : BossController
 
     }
 
+    public void SetTailLowFollowSpeed()
+    {
+        foreach (Boss1BodyController item in tail)
+            item.SetLowFollowSpeed();
+    }
     public void OnSpinSpawnAnimationEnd()
     {
         foreach (CircleCollider2D item in collisions)
@@ -249,11 +316,7 @@ public class Boss1Controller : BossController
         
 
         spinDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
-        animator.enabled = false;
-
-        foreach (Boss1BodyController item in tail)
-            item.SetLowFollowSpeed();
-        
+        animator.enabled = false;        
     }
 
     private void UpdateSpin()
@@ -267,18 +330,20 @@ public class Boss1Controller : BossController
 
             //Espera stuneado
             spinStunTimeWaited += Time.deltaTime;
+            headSR.sprite = stunnedHeadSprite;
+
             if (spinStunTimeWaited >= spinStunDuration)
             {
+                headSR.sprite = normalHeadSprite;
+
                 //Volver a la posicion de inicio 
-
-
                 foreach (CircleCollider2D item in collisions)
                     item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
                 rb2d.angularVelocity = 0;
                 head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime);
-                rb2d.velocity = head.right * spinSpeed;
+                rb2d.velocity = head.right * spinSpeed * 0.75f;
 
-                if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxJumpDistance)
+                if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxDashDistance)
                 {
                     GenerateRandomAttack();
                     foreach (Boss1BodyController item in tail)
@@ -299,7 +364,7 @@ public class Boss1Controller : BossController
 
     }
 
-    public void ChangeSpinDirection(Vector2 _collisionNormal)
+    private void ChangeSpinDirection(Vector2 _collisionNormal)
     {        
         float minimumDot = 0.6f;
 
@@ -396,5 +461,36 @@ public class Boss1Controller : BossController
 
     #endregion
 
+
+    public void CollisionWithMap(Collision2D collision)
+    {
+        switch (currentPhase)
+        {
+            case Phase.PHASE_1:
+                switch (currentAttackID)
+                {
+                    case 0:
+                        if (stunnedOnDash)
+                            break;
+
+                        stunnedOnDash = true;
+                        lastDirDashStunned = -dashDirection;
+                        currentHealth -= dashHitDamage;
+                        break;
+                    case 1:
+                        ChangeSpinDirection(collision.contacts[0].normal);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case Phase.PHASE_2:
+                break;
+            case Phase.DEAD:
+                break;
+            default:
+                break;
+        }
+    }
 
 }
