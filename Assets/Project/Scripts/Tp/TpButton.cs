@@ -4,12 +4,16 @@ using UnityEngine.UI;
 
 public class TpButton : MonoBehaviour
 {
+    [HideInInspector]
     public TpObject tpObject;
 
     TextMeshProUGUI textMeshProUGUI;
 
-    [SerializeField]
+    [HideInInspector]
     public MenuNavegation menuNavegation;
+
+    [HideInInspector]
+    public GameObject zoneImage;
 
     public void Initialize()
     {
@@ -18,6 +22,29 @@ public class TpButton : MonoBehaviour
 
         Button bt = GetComponent<Button>();
         bt.onClick.AddListener(() => SetTp());
+    }
+
+    public void OnPointerEnter()
+    {
+        zoneImage.SetActive(true);
+        Image image = zoneImage.GetComponentInChildren<Image>();
+        image.sprite = tpObject.zoneImage;
+    }
+
+    public void OnPointerExit()
+    {
+        Image image = GetComponentInChildren<Image>();
+        image.sprite = null;
+        zoneImage.SetActive(false);
+    }
+
+    public void SelectButton()
+    {
+        Button bt = GetComponent<Button>();
+        bt.Select();
+        zoneImage.SetActive(true);
+        Image image = zoneImage.GetComponentInChildren<Image>();
+        image.sprite = tpObject.zoneImage;
     }
 
     public void SetTp()

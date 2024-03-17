@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: 8
   <zoneName>k__BackingField: Boss 3
-  <zoneImage>k__BackingField: {fileID: 0}
-  discovered: 0
+  <zoneImage>k__BackingField: {fileID: 21300000, guid: e2d46b647c6ba5e498a6a0eed0de6734, type: 3}
+  discovered: 1

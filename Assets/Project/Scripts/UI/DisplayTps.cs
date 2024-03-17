@@ -20,6 +20,12 @@ public class DisplayTps : MonoBehaviour
     [SerializeField]
     private GameObject tpMenu;
 
+    [SerializeField]
+    private GameObject zoneImage;
+
+    [SerializeField]
+    private Button spaceShipButton;
+
     private void Awake()
     {
         discoveredTpButtonList = new List<TpButton>();
@@ -48,6 +54,7 @@ public class DisplayTps : MonoBehaviour
                 discoveredTpButtonList.Add(tpButton);
                 tpButton.tpObject = tp;
                 tpButton.transform.SetParent(buttonsLayout);
+                tpButton.zoneImage = zoneImage;
                 tpButton.Initialize();
 
                 Button button = bt.GetComponent<Button>();
@@ -62,5 +69,16 @@ public class DisplayTps : MonoBehaviour
                 tpButton.menuNavegation = menuNavegation;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        if (discoveredTpButtonList != null)
+            discoveredTpButtonList[0].SelectButton();
+    }     
+
+    private void OnDisable()
+    {
+        spaceShipButton.Select();
     }
 }
