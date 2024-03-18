@@ -30,7 +30,7 @@ public class HubTpController : InteractableObject
     public override void Interact()
     {
         PlayerManager.Instance.player.StopEngineSource();
-        AudioManager.instance.Play2dOneShotSound(teleportClip, "Teleport");
+        AudioManager.instance.Play2dOneShotSound(teleportClip, "TpInteraction");
 
         c_playerController.ChangeState(PlayerController.State.FREEZE);
         c_playerMapInteraction.showCanvas = false;
