@@ -10207,7 +10207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserDrill: {fileID: 702809251199840510}
   raysDelimiter: 0.97
-  raysDistance: 1.3
+  raysDistance: 2.5
   totalRays: 17
   breakableWallLayer:
     serializedVersion: 2

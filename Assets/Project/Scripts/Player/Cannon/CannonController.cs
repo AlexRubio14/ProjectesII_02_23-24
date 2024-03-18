@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI; 
@@ -120,6 +121,9 @@ public class CannonController : MonoBehaviour
     }
     public void Shoot()
     {
+        if (playerController.GetState() == PlayerController.State.MINING)
+            return;
+
         currentDelay += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
         if (autoShoot)
         {

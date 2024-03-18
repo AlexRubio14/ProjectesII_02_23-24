@@ -21,7 +21,7 @@ public class FuelZone : MonoBehaviour
             if (PlayerManager.Instance.player.GetFuel() < PlayerManager.Instance.player.GetMaxFuel() - 3f)
             {
                 PlayerManager.Instance.player.refillFuelParticles.Play();
-                healingSource = AudioManager.instance.Play2dLoop(healingClip, "Teleport");
+                healingSource = AudioManager.instance.Play2dLoop(healingClip, "HealingSFX");
             }
         }
     }
