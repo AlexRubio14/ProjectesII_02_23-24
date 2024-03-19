@@ -78,10 +78,11 @@ public class CannonController : MonoBehaviour
 
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
-        int index = 0;
         foreach (RaycastHit2D hit in hits)
         {
-            index++;
+            if (!hit.rigidbody)
+                continue;
+
             float distance = Vector2.Distance(transform.position, hit.point);
             float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
             Vector3 dir = (hit.rigidbody.transform.position - transform.position);

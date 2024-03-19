@@ -18,7 +18,8 @@ public class Boss1Controller : BossController
     [SerializeField]
     private Sprite stunnedHeadSprite;
     private SpriteRenderer headSR;
-    
+    [SerializeField]
+    private GameObject laserPrefab;
 
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
@@ -41,7 +42,6 @@ public class Boss1Controller : BossController
     private float dashStunTimeWaited;
     private bool stunnedOnDash = false;
     private Vector2 lastDirDashStunned;
-    private Vector2 stunedHeadDirection;
     [SerializeField]
     private float dashHitDamage;
     
@@ -131,9 +131,9 @@ public class Boss1Controller : BossController
         List<Action> startActions = new List<Action>();
         List<Action> updateActions = new List<Action>();
 
-        dashStart += StartJumpWallToWall;
+        dashStart += StartDashWallToWall;
         startActions.Add(dashStart);
-        dashUpdate += UpdateJumpWallToWall;
+        dashUpdate += UpdateDashWallToWall;
         updateActions.Add(dashUpdate);
 
         spinStart += StartSpin;
@@ -152,6 +152,11 @@ public class Boss1Controller : BossController
         //Fase 2
         startActions = new List<Action>();
         updateActions = new List<Action>();
+
+        startActions.Add(dashStart);
+        updateActions.Add(dashUpdate);
+
+
 
         onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_2, updateActions.ToArray());
@@ -172,15 +177,15 @@ public class Boss1Controller : BossController
         UpdateHealthBar();
     }
 
-    #region Jump Wall To Wall 
-    protected void StartJumpWallToWall()
+    #region Dash Wall To Wall 
+    protected void StartDashWallToWall()
     {
         dashesRemaining = totalDashesPerAttack;
 
-        ResetJumpValues();
+        ResetDashValues();
     }
 
-    protected void ResetJumpValues()
+    protected void ResetDashValues()
     {
         foreach (CircleCollider2D item in collisions)
             item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
@@ -190,7 +195,7 @@ public class Boss1Controller : BossController
 
         if (Vector2.Dot(spawnDir, lastDashDir) > minSpawnDot)
         {
-            StartJumpWallToWall();
+            StartDashWallToWall();
             return;
         }
 
@@ -211,7 +216,7 @@ public class Boss1Controller : BossController
 
     }
 
-    protected void UpdateJumpWallToWall()
+    protected void UpdateDashWallToWall()
     {
         if (stunnedOnDash)
         {
@@ -221,7 +226,7 @@ public class Boss1Controller : BossController
 
         //Calcular un poco de rotacion para que se acerque muy poco a poco al player
         Vector2 playerDir = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
-        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime * dashRotationSpeed).normalized;
+        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime).normalized;
 
         //mover al bicho y rotarlo hacia la direccion
         rb2d.velocity = dashDirection * dashSpeed;
@@ -235,10 +240,10 @@ public class Boss1Controller : BossController
         rb2d.velocity = Vector2.zero;
         dashesRemaining--;
 
-        if (dashesRemaining <= 0)
+        if (dashesRemaining < 0)
             GenerateRandomAttack();
         else
-            ResetJumpValues();
+            ResetDashValues();
 
     }
 
@@ -261,7 +266,9 @@ public class Boss1Controller : BossController
 
             //mover al bicho y rotarlo hacia la direccion
             rb2d.velocity = dashDirection * dashSpeed * 0.5f;
-            head.right = dashDirection;
+            
+            Quaternion targetRotation = Quaternion.FromToRotation(head.right, dashDirection);
+            head.rotation = Quaternion.Lerp(head.rotation, targetRotation, Time.deltaTime);
 
             if (Vector2.Distance(head.position, arenaMiddlePos.position) <= maxDashDistance)
                 return;
@@ -340,7 +347,7 @@ public class Boss1Controller : BossController
                 foreach (CircleCollider2D item in collisions)
                     item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
                 rb2d.angularVelocity = 0;
-                head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime);
+                head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime * 3f).normalized;
                 rb2d.velocity = head.right * spinSpeed * 0.75f;
 
                 if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxDashDistance)
@@ -404,6 +411,8 @@ public class Boss1Controller : BossController
 
         rb2d.velocity = Vector2.zero;
 
+        rb2d.isKinematic = true;
+
         suctionTimeWaited = 0;
     }
 
@@ -435,6 +444,7 @@ public class Boss1Controller : BossController
             
             if (Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance) <= 3f)
             {
+                rb2d.isKinematic = false;
                 GenerateRandomAttack();
                 return;
             }
@@ -476,6 +486,7 @@ public class Boss1Controller : BossController
                         stunnedOnDash = true;
                         lastDirDashStunned = -dashDirection;
                         currentHealth -= dashHitDamage;
+                        UpdateHealthBar();
                         break;
                     case 1:
                         ChangeSpinDirection(collision.contacts[0].normal);
@@ -485,6 +496,35 @@ public class Boss1Controller : BossController
                 }
                 break;
             case Phase.PHASE_2:
+                switch (currentAttackID)
+                {
+                    case 0:
+                        if (stunnedOnDash)
+                            break;
+
+                        stunnedOnDash = true;
+                        lastDirDashStunned = -dashDirection;
+                        currentHealth -= dashHitDamage;
+                        UpdateHealthBar();
+
+                        //Tirar rayo laser
+                        int tailId = 1;
+                        float laserOffset = 1f;
+
+                        Vector2 spawnPos = tail[tailId].transform.position + tail[tailId].transform.up * laserOffset;
+                        Vector2 direction = tail[tailId].transform.up;
+                        CastLaser(spawnPos, direction, true, tailId);
+
+                        spawnPos = tail[tailId].transform.position - tail[tailId].transform.up * laserOffset;
+                        direction = -tail[tailId].transform.up;
+                        CastLaser(spawnPos, direction, true, tailId);
+                        break;
+                    case 1:
+
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case Phase.DEAD:
                 break;
@@ -492,5 +532,16 @@ public class Boss1Controller : BossController
                 break;
         }
     }
+
+    public void CastLaser(Vector2 _spawnPosition, Vector2 _dir, bool _parent = false, int _tailID = -1)
+    {
+        GameObject laser = Instantiate(laserPrefab, _spawnPosition, Quaternion.identity);
+        laser.transform.up = _dir;
+
+
+        if (_parent)
+            laser.transform.SetParent(tail[_tailID].transform);
+    }
+
 
 }

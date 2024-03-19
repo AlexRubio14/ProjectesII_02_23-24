@@ -11,6 +11,7 @@ TagManager:
   - BreakableWall
   - Web
   - Boss
+  - BossLaser
   layers:
   - Default
   - TransparentFX

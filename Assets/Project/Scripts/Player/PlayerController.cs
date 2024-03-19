@@ -546,7 +546,7 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.damage, collision.GetContact(0).point);
         }
-        else if (collision.collider.CompareTag("Boss"))
+        else if (collision.collider.CompareTag("Boss") || collision.collider.CompareTag("BossLaser"))
         {
             GetDamage(10, collision.GetContact(0).point);
         }

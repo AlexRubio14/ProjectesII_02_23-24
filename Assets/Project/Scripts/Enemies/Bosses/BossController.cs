@@ -34,7 +34,7 @@ public abstract class BossController : MonoBehaviour
         healthBar.maxValue = maxHealth;
         UpdateHealthBar();
 
-        currentPhase = Phase.PHASE_1;
+        //currentPhase = Phase.PHASE_1;
 
         onStartPhaseAttacks = new Dictionary<Phase, Action[]>();
         onUpdatePhaseAttacks = new Dictionary<Phase, Action[]>();
