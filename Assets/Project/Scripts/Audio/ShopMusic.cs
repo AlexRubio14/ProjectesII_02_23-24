@@ -8,9 +8,24 @@ public class ShopMusic : MonoBehaviour
     [SerializeField]
     private AudioClip shopMusic;
 
+    public static ShopMusic instance;
+
     private void Awake()
     {
-        audioSource = AudioManager.instance.Play2dLoop(shopMusic, "Music", 1,1,1);
+        if(instance != null && instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad(instance);
+    }
+
+    public void PlayMusic()
+    {
+        audioSource = AudioManager.instance.Play2dLoop(shopMusic, "Music", 1, 1, 1);
     }
 
     public void StopMusic()

@@ -50,6 +50,7 @@ public class TpButton : MonoBehaviour
     public void SetTp()
     {
         SelectTpsManager.instance.SetIdToTeleport(tpObject.id);
+        ShopMusic.instance.StopMusic();
         menuNavegation.GoToGame();
     }
 }
