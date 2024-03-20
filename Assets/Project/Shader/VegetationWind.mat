@@ -42,9 +42,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _ExternalInfluence: 1
-    - _WindIntensity: 1
+    - _WindIntensity: 0.5
     - _WindScale: 0.3
-    - _WindSpeed: 3
+    - _WindSpeed: 2
     - _YMaskInfluence: 1
     m_Colors: []
   m_BuildTextureStacks: []
