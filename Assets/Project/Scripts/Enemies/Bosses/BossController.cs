@@ -21,7 +21,7 @@ public abstract class BossController : MonoBehaviour
     protected Dictionary<Phase, Action[]> onUpdatePhaseAttacks;
 
     protected int currentAttackID;
-
+    protected int lastAttack;
     protected Action onDieStart;
     protected Action onDieUpdate;
 
@@ -35,7 +35,8 @@ public abstract class BossController : MonoBehaviour
         UpdateHealthBar();
 
         //currentPhase = Phase.PHASE_1;
-
+        currentAttackID = -1;
+        lastAttack = -1;
         onStartPhaseAttacks = new Dictionary<Phase, Action[]>();
         onUpdatePhaseAttacks = new Dictionary<Phase, Action[]>();
 
@@ -60,14 +61,17 @@ public abstract class BossController : MonoBehaviour
     {
         currentPhase = _nextPhase;
 
-        GenerateRandomAttack();
+        currentAttackID = -1;
+        lastAttack = -1;
     }
 
     protected void GenerateRandomAttack()
     {
+        CheckPhase();
+
         int nextAttackId = UnityEngine.Random.Range(0, onStartPhaseAttacks[currentPhase].Length);
 
-        if (nextAttackId == currentAttackID)
+        if (nextAttackId == currentAttackID || nextAttackId == lastAttack)
         {
             GenerateRandomAttack();
             return;
@@ -77,10 +81,10 @@ public abstract class BossController : MonoBehaviour
     }
     protected void ChangeAttack(int _attackID)
     {
+        lastAttack = currentAttackID;
         currentAttackID = _attackID;
 
         Debug.Log(currentAttackID);
-        //Debug.Break();
 
         if(onStartPhaseAttacks[currentPhase][currentAttackID] != null)
             onStartPhaseAttacks[currentPhase][currentAttackID]();

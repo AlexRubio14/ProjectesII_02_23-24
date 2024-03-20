@@ -874,7 +874,7 @@ MonoBehaviour:
   totalDashesPerAttack: 2
   spawnOffset: 30
   dashSpeed: 17
-  dashRotationSpeed: 0.5
+  dashRotationSpeed: 0.3
   minSpawnDot: 0.6
   maxDashDistance: 45
   dashStunDuration: 4
@@ -884,6 +884,8 @@ MonoBehaviour:
   spinHeadRotationSpeed: 800
   spinDuration: 7.5
   spinStunDuration: 3.5
+  laserStateStartMove: 0
+  laserSpinDuration: 0
   windBlow: {fileID: 5513138748001548416}
   maxSuctionPositionDistance: 12
   minSuctionPositionDistance: 25

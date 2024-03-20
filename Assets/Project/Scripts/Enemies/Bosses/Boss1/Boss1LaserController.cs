@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Boss1LaserController : MonoBehaviour
 {
-    private enum LaserState { CASTING, FADE_IN, LASERING, FADE_OUT };
+    public enum LaserState { CASTING, FADE_IN, LASERING, FADE_OUT };
 
-    private LaserState currentLaserState;
+    public LaserState currentLaserState;
 
     [SerializeField]
     private SpriteRenderer laser;
@@ -19,7 +19,7 @@ public class Boss1LaserController : MonoBehaviour
     private float maxLaserTrailWidth;
 
     [Space, Header("Cast Laser"), SerializeField]
-    private float castLaserDuration;
+    public float castLaserDuration;
     private float castLaserTimeWaited;
     [SerializeField]
     private SpriteRenderer trackerSR;
@@ -27,13 +27,13 @@ public class Boss1LaserController : MonoBehaviour
     private float trackerMaxAlpha;
 
     [Space, Header("Fading In"), SerializeField]
-    private float fadeInDuration;
+    public float fadeInDuration;
     private float fadeInTimeWaited;
     [Space, Header("Laser"), SerializeField]
-    private float laserDuration;
+    public float laserDuration;
     private float laserTimeWaited;
     [Space, Header("Fading Out"), SerializeField]
-    private float fadeOutDuration;
+    public float fadeOutDuration;
     private float fadeOutTimeWaited;
 
     private void Start()
@@ -129,6 +129,23 @@ public class Boss1LaserController : MonoBehaviour
             //Acabar aqui (destroy)
             Destroy(gameObject);
         }
+    }
+
+
+    public void SetCast(float _castLaser)
+    {
+        castLaserDuration = _castLaser;
+    }public void SetFadeIn(float _fadeIn)
+    {
+        fadeInDuration = _fadeIn;
+    }
+    public void SetLaser(float _laser)
+    {
+        laserDuration = _laser;
+    }
+    public void SetFadeOut(float _fadeOut)
+    {
+        fadeOutDuration = _fadeOut;
     }
 
 }

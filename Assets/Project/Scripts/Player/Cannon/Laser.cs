@@ -66,7 +66,7 @@ public class Laser : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.CircleCast(transform.position, autoAimRadius, Vector2.zero, 0, enemyLayer);
 
-            if (hit)
+            if (hit && hit.rigidbody)
             {
                 autoAimTarget = hit.rigidbody.gameObject;
             }

@@ -71,6 +71,16 @@ public class Boss1Controller : BossController
     private Action spinStart;
     private Action spinUpdate;
 
+    [Header("Spin Phase 2"), SerializeField]
+    private Boss1LaserController.LaserState laserStateStartMove;
+    private bool canSpin;
+    private Boss1LaserController currentLaser;
+    [SerializeField]
+    private float laserSpinDuration;
+    private float laserSpinTimeWaited;
+    private Action spinPhase2Start;
+    private Action spinPhase2Update;
+
     [Space, Header("Suction"), SerializeField]
     private GameObject windBlow;
     private ParticleSystem windBlowEmitter;
@@ -112,6 +122,8 @@ public class Boss1Controller : BossController
         windBlowTrigger = windBlow.GetComponent<BoxCollider2D>();
 
         headSR = head.GetComponent<SpriteRenderer>();
+        
+        canSpin = true;
 
         SetSuctionWindActive(false);
     }
@@ -119,10 +131,9 @@ public class Boss1Controller : BossController
     private void Update()
     {
             
-        if (onUpdatePhaseAttacks[currentPhase][currentAttackID] != null && !animator.enabled)
+        if (currentPhase != Phase.DEAD && onUpdatePhaseAttacks[currentPhase][currentAttackID] != null && !animator.enabled)
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
 
-        //CheckPhase();
     }
 
     protected override void SetupPhaseAttacks()
@@ -156,6 +167,10 @@ public class Boss1Controller : BossController
         startActions.Add(dashStart);
         updateActions.Add(dashUpdate);
 
+        spinPhase2Start += StartSpinPhase2;
+        startActions.Add(spinPhase2Start);
+        spinPhase2Update += UpdateSpinPhase2;
+        updateActions.Add(spinPhase2Update);
 
 
         onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
@@ -226,7 +241,7 @@ public class Boss1Controller : BossController
 
         //Calcular un poco de rotacion para que se acerque muy poco a poco al player
         Vector2 playerDir = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
-        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime).normalized;
+        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime * dashRotationSpeed).normalized;
 
         //mover al bicho y rotarlo hacia la direccion
         rb2d.velocity = dashDirection * dashSpeed;
@@ -262,7 +277,7 @@ public class Boss1Controller : BossController
 
             headSR.sprite = normalHeadSprite;
 
-            dashDirection = Vector2.Lerp(dashDirection, lastDirDashStunned, Time.deltaTime * dashRotationSpeed).normalized;
+            dashDirection = Vector2.Lerp(dashDirection, lastDirDashStunned, Time.deltaTime).normalized;
 
             //mover al bicho y rotarlo hacia la direccion
             rb2d.velocity = dashDirection * dashSpeed * 0.5f;
@@ -328,7 +343,6 @@ public class Boss1Controller : BossController
 
     private void UpdateSpin()
     {
-
         //Comprobar el tiempo que lleva girando
         spinTimeWaited += Time.deltaTime;
 
@@ -361,7 +375,7 @@ public class Boss1Controller : BossController
             return;
         }
 
-
+        Debug.Log("Gira Gira");
         //Girar la cabeza
         head.rotation *= Quaternion.Euler(0,0, spinHeadRotationSpeed * Time.deltaTime);
 
@@ -370,7 +384,6 @@ public class Boss1Controller : BossController
         
 
     }
-
     private void ChangeSpinDirection(Vector2 _collisionNormal)
     {        
         float minimumDot = 0.6f;
@@ -471,7 +484,39 @@ public class Boss1Controller : BossController
 
     #endregion
 
+    #region Spin Phase 2
 
+    private void StartSpinPhase2()
+    {
+        canSpin = true;
+        laserSpinTimeWaited = laserSpinDuration;
+        StartSpin();
+    }
+
+    private void UpdateSpinPhase2()
+    {
+
+        if (!canSpin)
+        {
+            if (currentLaser.currentLaserState == laserStateStartMove)
+            {
+                Debug.Log("SEXO");
+                canSpin = true;
+
+                rb2d.constraints = RigidbodyConstraints2D.None;
+                foreach (Boss1BodyController item in tail)
+                    item.SetFreeze(RigidbodyConstraints2D.None);
+            }
+
+        }
+        else
+        {
+            laserSpinTimeWaited += Time.deltaTime;
+            UpdateSpin();
+        }
+    }
+
+    #endregion
     public void CollisionWithMap(Collision2D collision)
     {
         switch (currentPhase)
@@ -499,6 +544,8 @@ public class Boss1Controller : BossController
                 switch (currentAttackID)
                 {
                     case 0:
+                        //DashAttack
+
                         if (stunnedOnDash)
                             break;
 
@@ -512,14 +559,56 @@ public class Boss1Controller : BossController
                         float laserOffset = 1f;
 
                         Vector2 spawnPos = tail[tailId].transform.position + tail[tailId].transform.up * laserOffset;
-                        Vector2 direction = tail[tailId].transform.up;
-                        CastLaser(spawnPos, direction, true, tailId);
+                        Vector2 laserDir = tail[tailId].transform.up;
+                        CastLaser(spawnPos, laserDir, true, tailId);
 
                         spawnPos = tail[tailId].transform.position - tail[tailId].transform.up * laserOffset;
-                        direction = -tail[tailId].transform.up;
-                        CastLaser(spawnPos, direction, true, tailId);
+                        laserDir = -tail[tailId].transform.up;
+                        CastLaser(spawnPos, laserDir, true, tailId);
                         break;
                     case 1:
+                        //Spin attack
+
+                        ChangeSpinDirection(collision.contacts[0].normal);
+
+                        if (!canSpin || laserSpinDuration > laserSpinTimeWaited || spinTimeWaited >= spinDuration)
+                            return;
+
+
+                        canSpin = false;
+                        laserSpinTimeWaited = 0;
+
+                        rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+                        foreach (Boss1BodyController item in tail)
+                            item.SetFreeze(RigidbodyConstraints2D.FreezeAll);
+
+                        //Intance 4 lasers
+                        //LASER 1
+                        laserOffset = 2.5f;
+                        laserDir = (Vector2.up + Vector2.right).normalized;
+                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
+
+                        //Aqui nos guardamos el primer laser para comprobar cuando nos podemos volver a mover
+                        currentLaser = CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>();
+                        float fadeOutTime = currentLaser.fadeOutDuration / 4;
+                        currentLaser.SetFadeOut(fadeOutTime);
+                        //LASER 2
+                        laserDir = (Vector2.up + Vector2.left).normalized;
+                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
+
+                        CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>().SetFadeOut(fadeOutTime);
+                        
+                        //LASER 3
+                        laserDir = (Vector2.down + Vector2.left).normalized;
+                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
+
+                        CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>().SetFadeOut(fadeOutTime); ;
+
+                        //LASER 4
+                        laserDir = (Vector2.down + Vector2.right).normalized;
+                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
+
+                        CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>().SetFadeOut(fadeOutTime); ;
 
                         break;
                     default:
@@ -533,7 +622,7 @@ public class Boss1Controller : BossController
         }
     }
 
-    public void CastLaser(Vector2 _spawnPosition, Vector2 _dir, bool _parent = false, int _tailID = -1)
+    public GameObject CastLaser(Vector2 _spawnPosition, Vector2 _dir, bool _parent = false, int _tailID = -1)
     {
         GameObject laser = Instantiate(laserPrefab, _spawnPosition, Quaternion.identity);
         laser.transform.up = _dir;
@@ -541,6 +630,8 @@ public class Boss1Controller : BossController
 
         if (_parent)
             laser.transform.SetParent(tail[_tailID].transform);
+
+        return laser;
     }
 
 

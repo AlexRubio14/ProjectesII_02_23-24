@@ -71,6 +71,9 @@ public class Boss1BodyController : MonoBehaviour
     }
     private void OrientateSprite()
     {
+        if (rb2d.constraints == RigidbodyConstraints2D.FreezeAll)
+            return;
+
         float dot = Vector2.Dot(headRb.velocity, Vector2.right);
         if (dot > 0)
             spriteRenderer.flipY = false;
@@ -92,6 +95,12 @@ public class Boss1BodyController : MonoBehaviour
     {
         currentMovementSpeed = baseMovementSpeed;
     }
+
+    public void SetFreeze(RigidbodyConstraints2D _freeze)
+    {
+        rb2d.constraints = _freeze;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Map"))
