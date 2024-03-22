@@ -486,7 +486,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 4.9333334
+  - time: 5
     functionName: OnSpinSpawnAnimationEnd
     data: 
     objectReferenceParameter: {fileID: 0}

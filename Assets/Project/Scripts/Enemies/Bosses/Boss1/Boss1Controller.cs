@@ -208,9 +208,14 @@ public class Boss1Controller : BossController
         rb2d.velocity = dashDirection * dashSpeed;
         head.right = dashDirection;
 
+        float distanceFromMiddlePos = Vector2.Distance(head.position, arenaMiddlePos.position);
+
+        if (distanceFromMiddlePos <= spawnOffset / 1.5f)
+            CameraController.Instance.AddLowTrauma();
+
 
         //Comprobar si esta suficientemente lejos del area para hacer otro ataque
-        if (Vector2.Distance(head.position, arenaMiddlePos.position) <= maxDashDistance)
+        if (distanceFromMiddlePos <= maxDashDistance)
             return;
 
         rb2d.velocity = Vector2.zero;
@@ -324,6 +329,8 @@ public class Boss1Controller : BossController
             targetDirection = (targetDirection + playerDirection).normalized;
 
         spinDirection = targetDirection;
+
+        CameraController.Instance.AddMediumTrauma();
     }
 
     #endregion
@@ -369,7 +376,7 @@ public class Boss1Controller : BossController
         {
             Vector2 targetPosition = (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance;
             MoveHeadSuction(targetPosition, suctionMoveSpeed);
-            CameraController.Instance.AddMediumTrauma();
+            CameraController.Instance.AddLowTrauma();
         }
         else
         {

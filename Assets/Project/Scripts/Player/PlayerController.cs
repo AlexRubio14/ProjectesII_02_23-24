@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Action OnHit;
     public ParticleSystem refillFuelParticles;
+    public ParticleSystem bubbleFuelParticles;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -322,8 +323,7 @@ public class PlayerController : MonoBehaviour
         {
             float randomX = UnityEngine.Random.Range(-1, 2);
             float randomY = UnityEngine.Random.Range(-1, 2);
-            Vector2 randomDir = new Vector2(randomX, randomY);
-            randomDir.Normalize();
+            Vector2 randomDir = new Vector2(randomX, randomY).normalized;
 
             float spawnOffset = 1;
 
@@ -333,8 +333,6 @@ public class PlayerController : MonoBehaviour
 
             currItem.c_currentItem = _objectType;
             currItem.followPlayer = false;
-            
-
 
             float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);
             currItem.ImpulseItem(randomDir, throwSpeed);
