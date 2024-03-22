@@ -76,7 +76,7 @@ public class Boss1Controller : BossController
     private bool canSpin;
     private Boss1LaserController currentLaser;
     [SerializeField]
-    private float laserSpinDuration;
+    private float spinMinTimeToLaser;
     private float laserSpinTimeWaited;
     private Action spinPhase2Start;
     private Action spinPhase2Update;
@@ -99,6 +99,9 @@ public class Boss1Controller : BossController
 
     private Action suctionStart;
     private Action suctionUpdate;
+    
+    private Action suctionPhase2Start;
+    private Action suctionPhase2Update;
 
 
     private Animator animator;
@@ -171,6 +174,8 @@ public class Boss1Controller : BossController
         startActions.Add(spinPhase2Start);
         spinPhase2Update += UpdateSpinPhase2;
         updateActions.Add(spinPhase2Update);
+
+
 
 
         onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
@@ -400,6 +405,50 @@ public class Boss1Controller : BossController
 
     #endregion
 
+    #region Spin Phase 2
+
+    private void StartSpinPhase2()
+    {
+        canSpin = true;
+        laserSpinTimeWaited = spinMinTimeToLaser;
+        StartSpin();
+    }
+
+    private void UpdateSpinPhase2()
+    {
+
+        if (!canSpin)
+        {
+            if (currentLaser.currentLaserState == laserStateStartMove)
+            {
+                Debug.Log("SEXO");
+                canSpin = true;
+
+                rb2d.constraints = RigidbodyConstraints2D.None;
+                foreach (Boss1BodyController item in tail)
+                    item.SetFreeze(RigidbodyConstraints2D.None);
+            }
+
+        }
+        else
+        {
+            laserSpinTimeWaited += Time.deltaTime;
+            UpdateSpin();
+        }
+    }
+
+    private Boss1LaserController CreateSpinLaser(Vector2 _spawnPos, Vector2 _laserDir, float _offset)
+    {
+        Boss1LaserController laserBoss = CastLaser(_spawnPos, _laserDir).GetComponent<Boss1LaserController>();
+        float fadeOutTime = laserBoss.fadeOutDuration / 4;
+        laserBoss.SetFadeOut(fadeOutTime);
+
+        return laserBoss;
+    }
+
+
+    #endregion
+
     #region Suction
     protected void StartSuction()
     {
@@ -435,26 +484,25 @@ public class Boss1Controller : BossController
 
         rb2d.velocity = Vector2.zero;
 
-
+        MoveHeadSuction();
+        CheckIfActivateWindBlow();
+    }
+    
+    private void MoveHeadSuction()
+    {
         Vector2 nextPos;
         if (suctionTimeWaited < suctionDuration)
         {
             nextPos = Vector2.Lerp(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance, Time.deltaTime * suctionMoveSpeed);
-            
-            if (!windBlowTrigger.enabled && Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance) <= 3f)
-                SetSuctionWindActive(true);
         }
         else
         {
-            if (windBlowTrigger.enabled)
-                SetSuctionWindActive(false);
-
             nextPos = Vector2.Lerp(
                 head.position,
                 (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance,
                 Time.deltaTime * suctionMoveSpeed / 1.5f
                 );
-            
+
             if (Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance) <= 3f)
             {
                 rb2d.isKinematic = false;
@@ -465,9 +513,18 @@ public class Boss1Controller : BossController
 
         head.position = nextPos;
         head.right = (PlayerManager.Instance.player.transform.position - head.position).normalized;
-
     }
-    
+
+    private void CheckIfActivateWindBlow()
+    {
+        if (!windBlowTrigger.enabled && suctionTimeWaited < suctionDuration && !windBlowTrigger.enabled && Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance) <= 3f)
+            SetSuctionWindActive(true);
+        else if (windBlowTrigger.enabled && suctionTimeWaited >= suctionDuration)
+            SetSuctionWindActive(false);
+    }
+
+
+
     private void SetSuctionWindActive(bool _active)
     {
         if (_active)
@@ -484,39 +541,20 @@ public class Boss1Controller : BossController
 
     #endregion
 
-    #region Spin Phase 2
-
-    private void StartSpinPhase2()
+#region Suction Phase 2
+    protected void StartSuctionPhase2()
     {
-        canSpin = true;
-        laserSpinTimeWaited = laserSpinDuration;
-        StartSpin();
+        StartSuction();
+    }
+    
+    protected void UpdateSuctionPhase2()
+    {
+        MoveHeadSuction();
+
     }
 
-    private void UpdateSpinPhase2()
-    {
+#endregion
 
-        if (!canSpin)
-        {
-            if (currentLaser.currentLaserState == laserStateStartMove)
-            {
-                Debug.Log("SEXO");
-                canSpin = true;
-
-                rb2d.constraints = RigidbodyConstraints2D.None;
-                foreach (Boss1BodyController item in tail)
-                    item.SetFreeze(RigidbodyConstraints2D.None);
-            }
-
-        }
-        else
-        {
-            laserSpinTimeWaited += Time.deltaTime;
-            UpdateSpin();
-        }
-    }
-
-    #endregion
     public void CollisionWithMap(Collision2D collision)
     {
         switch (currentPhase)
@@ -571,7 +609,7 @@ public class Boss1Controller : BossController
 
                         ChangeSpinDirection(collision.contacts[0].normal);
 
-                        if (!canSpin || laserSpinDuration > laserSpinTimeWaited || spinTimeWaited >= spinDuration)
+                        if (!canSpin || spinMinTimeToLaser > laserSpinTimeWaited || spinTimeWaited >= spinDuration)
                             return;
 
 
@@ -587,28 +625,23 @@ public class Boss1Controller : BossController
                         laserOffset = 2.5f;
                         laserDir = (Vector2.up + Vector2.right).normalized;
                         spawnPos = (Vector2)head.position + laserDir * laserOffset;
-
                         //Aqui nos guardamos el primer laser para comprobar cuando nos podemos volver a mover
-                        currentLaser = CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>();
-                        float fadeOutTime = currentLaser.fadeOutDuration / 4;
-                        currentLaser.SetFadeOut(fadeOutTime);
+                        currentLaser = CreateSpinLaser(spawnPos, laserDir, laserOffset);
+
                         //LASER 2
                         laserDir = (Vector2.up + Vector2.left).normalized;
                         spawnPos = (Vector2)head.position + laserDir * laserOffset;
+                        CreateSpinLaser(spawnPos, laserDir, laserOffset);
 
-                        CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>().SetFadeOut(fadeOutTime);
-                        
                         //LASER 3
                         laserDir = (Vector2.down + Vector2.left).normalized;
                         spawnPos = (Vector2)head.position + laserDir * laserOffset;
-
-                        CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>().SetFadeOut(fadeOutTime); ;
+                        CreateSpinLaser(spawnPos, laserDir, laserOffset);
 
                         //LASER 4
                         laserDir = (Vector2.down + Vector2.right).normalized;
                         spawnPos = (Vector2)head.position + laserDir * laserOffset;
-
-                        CastLaser(spawnPos, laserDir).GetComponent<Boss1LaserController>().SetFadeOut(fadeOutTime); ;
+                        CreateSpinLaser(spawnPos, laserDir, laserOffset);
 
                         break;
                     default:

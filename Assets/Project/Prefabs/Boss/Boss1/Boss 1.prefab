@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2b879d5a6d2d1478bfad974bb4840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1500
+  maxHealth: 3000
   healthBar: {fileID: 0}
   currentPhase: 0
   phaseChangerPercentage:
@@ -884,8 +884,8 @@ MonoBehaviour:
   spinHeadRotationSpeed: 800
   spinDuration: 7.5
   spinStunDuration: 3.5
-  laserStateStartMove: 0
-  laserSpinDuration: 0
+  laserStateStartMove: 3
+  spinMinTimeToLaser: 1.5
   windBlow: {fileID: 5513138748001548416}
   maxSuctionPositionDistance: 12
   minSuctionPositionDistance: 25
