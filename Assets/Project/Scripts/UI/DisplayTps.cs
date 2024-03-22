@@ -73,7 +73,7 @@ public class DisplayTps : MonoBehaviour
 
     private void OnEnable()
     {
-        if (discoveredTpButtonList != null)
+        if (discoveredTpButtonList[0] != null)
             discoveredTpButtonList[0].SelectButton();
     }     
 

@@ -24,27 +24,10 @@ public class TpButton : MonoBehaviour
         bt.onClick.AddListener(() => SetTp());
     }
 
-    public void OnPointerEnter()
-    {
-        zoneImage.SetActive(true);
-        Image image = zoneImage.GetComponentInChildren<Image>();
-        image.sprite = tpObject.zoneImage;
-    }
-
-    public void OnPointerExit()
-    {
-        Image image = GetComponentInChildren<Image>();
-        image.sprite = null;
-        zoneImage.SetActive(false);
-    }
-
     public void SelectButton()
     {
         Button bt = GetComponent<Button>();
         bt.Select();
-        zoneImage.SetActive(true);
-        Image image = zoneImage.GetComponentInChildren<Image>();
-        image.sprite = tpObject.zoneImage;
     }
 
     public void SetTp()

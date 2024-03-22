@@ -10,8 +10,5 @@ public class TpObject : ScriptableObject
     public string zoneName { get; private set; }
 
     [field: SerializeField]
-    public Sprite zoneImage { get; private set; }
-
-    [field: SerializeField]
     public bool discovered;
 }
