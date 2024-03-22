@@ -104,7 +104,7 @@ public class Boss1BodyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Map"))
-            mainBossController.CollisionWithMap(collision);
+            mainBossController.ChangeSpinDirection(collision.contacts[0].normal);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

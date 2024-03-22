@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 
 public class Boss1Controller : BossController
@@ -18,8 +19,6 @@ public class Boss1Controller : BossController
     [SerializeField]
     private Sprite stunnedHeadSprite;
     private SpriteRenderer headSR;
-    [SerializeField]
-    private GameObject laserPrefab;
 
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
@@ -37,13 +36,6 @@ public class Boss1Controller : BossController
     [SerializeField]
     private float maxDashDistance;
     private Vector2 lastDashDir = Vector2.up;
-    [SerializeField]
-    private float dashStunDuration;
-    private float dashStunTimeWaited;
-    private bool stunnedOnDash = false;
-    private Vector2 lastDirDashStunned;
-    [SerializeField]
-    private float dashHitDamage;
     
 
 
@@ -71,16 +63,6 @@ public class Boss1Controller : BossController
     private Action spinStart;
     private Action spinUpdate;
 
-    [Header("Spin Phase 2"), SerializeField]
-    private Boss1LaserController.LaserState laserStateStartMove;
-    private bool canSpin;
-    private Boss1LaserController currentLaser;
-    [SerializeField]
-    private float spinMinTimeToLaser;
-    private float laserSpinTimeWaited;
-    private Action spinPhase2Start;
-    private Action spinPhase2Update;
-
     [Space, Header("Suction"), SerializeField]
     private GameObject windBlow;
     private ParticleSystem windBlowEmitter;
@@ -99,9 +81,6 @@ public class Boss1Controller : BossController
 
     private Action suctionStart;
     private Action suctionUpdate;
-    
-    private Action suctionPhase2Start;
-    private Action suctionPhase2Update;
 
 
     private Animator animator;
@@ -126,8 +105,6 @@ public class Boss1Controller : BossController
 
         headSR = head.GetComponent<SpriteRenderer>();
         
-        canSpin = true;
-
         SetSuctionWindActive(false);
     }
 
@@ -166,17 +143,6 @@ public class Boss1Controller : BossController
         //Fase 2
         startActions = new List<Action>();
         updateActions = new List<Action>();
-
-        startActions.Add(dashStart);
-        updateActions.Add(dashUpdate);
-
-        spinPhase2Start += StartSpinPhase2;
-        startActions.Add(spinPhase2Start);
-        spinPhase2Update += UpdateSpinPhase2;
-        updateActions.Add(spinPhase2Update);
-
-
-
 
         onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_2, updateActions.ToArray());
@@ -230,20 +196,10 @@ public class Boss1Controller : BossController
         dashDirection = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
         rb2d.velocity = dashDirection * dashSpeed;
         head.right = dashDirection;
-
-        stunnedOnDash = false;
-        dashStunTimeWaited = 0;
-
     }
 
     protected void UpdateDashWallToWall()
     {
-        if (stunnedOnDash)
-        {
-            StunnedOnDashBehaviour();
-            return;
-        }
-
         //Calcular un poco de rotacion para que se acerque muy poco a poco al player
         Vector2 playerDir = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
         dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime * dashRotationSpeed).normalized;
@@ -265,39 +221,6 @@ public class Boss1Controller : BossController
         else
             ResetDashValues();
 
-    }
-
-    private void StunnedOnDashBehaviour()
-    {
-        dashStunTimeWaited += Time.deltaTime;
-        headSR.sprite = stunnedHeadSprite;
-
-        foreach (CircleCollider2D item in collisions)
-            item.gameObject.layer = LayerMask.NameToLayer("Boss");
-
-        if (dashStunTimeWaited >= dashStunDuration)
-        {
-            foreach (CircleCollider2D item in collisions)
-                item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
-
-            headSR.sprite = normalHeadSprite;
-
-            dashDirection = Vector2.Lerp(dashDirection, lastDirDashStunned, Time.deltaTime).normalized;
-
-            //mover al bicho y rotarlo hacia la direccion
-            rb2d.velocity = dashDirection * dashSpeed * 0.5f;
-            
-            Quaternion targetRotation = Quaternion.FromToRotation(head.right, dashDirection);
-            head.rotation = Quaternion.Lerp(head.rotation, targetRotation, Time.deltaTime);
-
-            if (Vector2.Distance(head.position, arenaMiddlePos.position) <= maxDashDistance)
-                return;
-
-            rb2d.velocity = Vector2.zero;
-            stunnedOnDash = false;
-            dashStunTimeWaited = 0;
-            GenerateRandomAttack();
-        }
     }
 
     #endregion
@@ -389,7 +312,7 @@ public class Boss1Controller : BossController
         
 
     }
-    private void ChangeSpinDirection(Vector2 _collisionNormal)
+    public void ChangeSpinDirection(Vector2 _collisionNormal)
     {        
         float minimumDot = 0.6f;
 
@@ -402,50 +325,6 @@ public class Boss1Controller : BossController
 
         spinDirection = targetDirection;
     }
-
-    #endregion
-
-    #region Spin Phase 2
-
-    private void StartSpinPhase2()
-    {
-        canSpin = true;
-        laserSpinTimeWaited = spinMinTimeToLaser;
-        StartSpin();
-    }
-
-    private void UpdateSpinPhase2()
-    {
-
-        if (!canSpin)
-        {
-            if (currentLaser.currentLaserState == laserStateStartMove)
-            {
-                Debug.Log("SEXO");
-                canSpin = true;
-
-                rb2d.constraints = RigidbodyConstraints2D.None;
-                foreach (Boss1BodyController item in tail)
-                    item.SetFreeze(RigidbodyConstraints2D.None);
-            }
-
-        }
-        else
-        {
-            laserSpinTimeWaited += Time.deltaTime;
-            UpdateSpin();
-        }
-    }
-
-    private Boss1LaserController CreateSpinLaser(Vector2 _spawnPos, Vector2 _laserDir, float _offset)
-    {
-        Boss1LaserController laserBoss = CastLaser(_spawnPos, _laserDir).GetComponent<Boss1LaserController>();
-        float fadeOutTime = laserBoss.fadeOutDuration / 4;
-        laserBoss.SetFadeOut(fadeOutTime);
-
-        return laserBoss;
-    }
-
 
     #endregion
 
@@ -484,33 +363,26 @@ public class Boss1Controller : BossController
 
         rb2d.velocity = Vector2.zero;
 
-        MoveHeadSuction();
         CheckIfActivateWindBlow();
-    }
-    
-    private void MoveHeadSuction()
-    {
-        Vector2 nextPos;
+        
         if (suctionTimeWaited < suctionDuration)
         {
-            nextPos = Vector2.Lerp(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance, Time.deltaTime * suctionMoveSpeed);
+            Vector2 targetPosition = (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance;
+            MoveHeadSuction(targetPosition, suctionMoveSpeed);
+            CameraController.Instance.AddMediumTrauma();
         }
         else
         {
-            nextPos = Vector2.Lerp(
-                head.position,
-                (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance,
-                Time.deltaTime * suctionMoveSpeed / 1.5f
-                );
-
-            if (Vector2.Distance(head.position, (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance) <= 3f)
-            {
-                rb2d.isKinematic = false;
-                GenerateRandomAttack();
-                return;
-            }
+            Vector2 exitPosition = (Vector2)arenaMiddlePos.position + suctionDirection * minSuctionPositionDistance;
+            MoveHeadSuction(exitPosition, suctionMoveSpeed / 1.5f);
+            CheckIfStopSuction(exitPosition);
         }
 
+    }
+    
+    private void MoveHeadSuction(Vector2 _targetPos, float _suctionSpeed)
+    {
+        Vector2 nextPos = Vector2.Lerp(head.position, _targetPos, Time.deltaTime * _suctionSpeed);
         head.position = nextPos;
         head.right = (PlayerManager.Instance.player.transform.position - head.position).normalized;
     }
@@ -523,7 +395,14 @@ public class Boss1Controller : BossController
             SetSuctionWindActive(false);
     }
 
-
+    private void CheckIfStopSuction(Vector2 _exitPos)
+    {
+        if (suctionTimeWaited >= suctionDuration && Vector2.Distance(head.position, _exitPos) <= 3f)
+        {
+            rb2d.isKinematic = false;
+            GenerateRandomAttack();
+        }
+    }
 
     private void SetSuctionWindActive(bool _active)
     {
@@ -540,132 +419,5 @@ public class Boss1Controller : BossController
     }
 
     #endregion
-
-#region Suction Phase 2
-    protected void StartSuctionPhase2()
-    {
-        StartSuction();
-    }
-    
-    protected void UpdateSuctionPhase2()
-    {
-        MoveHeadSuction();
-
-    }
-
-#endregion
-
-    public void CollisionWithMap(Collision2D collision)
-    {
-        switch (currentPhase)
-        {
-            case Phase.PHASE_1:
-                switch (currentAttackID)
-                {
-                    case 0:
-                        if (stunnedOnDash)
-                            break;
-
-                        stunnedOnDash = true;
-                        lastDirDashStunned = -dashDirection;
-                        currentHealth -= dashHitDamage;
-                        UpdateHealthBar();
-                        break;
-                    case 1:
-                        ChangeSpinDirection(collision.contacts[0].normal);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case Phase.PHASE_2:
-                switch (currentAttackID)
-                {
-                    case 0:
-                        //DashAttack
-
-                        if (stunnedOnDash)
-                            break;
-
-                        stunnedOnDash = true;
-                        lastDirDashStunned = -dashDirection;
-                        currentHealth -= dashHitDamage;
-                        UpdateHealthBar();
-
-                        //Tirar rayo laser
-                        int tailId = 1;
-                        float laserOffset = 1f;
-
-                        Vector2 spawnPos = tail[tailId].transform.position + tail[tailId].transform.up * laserOffset;
-                        Vector2 laserDir = tail[tailId].transform.up;
-                        CastLaser(spawnPos, laserDir, true, tailId);
-
-                        spawnPos = tail[tailId].transform.position - tail[tailId].transform.up * laserOffset;
-                        laserDir = -tail[tailId].transform.up;
-                        CastLaser(spawnPos, laserDir, true, tailId);
-                        break;
-                    case 1:
-                        //Spin attack
-
-                        ChangeSpinDirection(collision.contacts[0].normal);
-
-                        if (!canSpin || spinMinTimeToLaser > laserSpinTimeWaited || spinTimeWaited >= spinDuration)
-                            return;
-
-
-                        canSpin = false;
-                        laserSpinTimeWaited = 0;
-
-                        rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
-                        foreach (Boss1BodyController item in tail)
-                            item.SetFreeze(RigidbodyConstraints2D.FreezeAll);
-
-                        //Intance 4 lasers
-                        //LASER 1
-                        laserOffset = 2.5f;
-                        laserDir = (Vector2.up + Vector2.right).normalized;
-                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
-                        //Aqui nos guardamos el primer laser para comprobar cuando nos podemos volver a mover
-                        currentLaser = CreateSpinLaser(spawnPos, laserDir, laserOffset);
-
-                        //LASER 2
-                        laserDir = (Vector2.up + Vector2.left).normalized;
-                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
-                        CreateSpinLaser(spawnPos, laserDir, laserOffset);
-
-                        //LASER 3
-                        laserDir = (Vector2.down + Vector2.left).normalized;
-                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
-                        CreateSpinLaser(spawnPos, laserDir, laserOffset);
-
-                        //LASER 4
-                        laserDir = (Vector2.down + Vector2.right).normalized;
-                        spawnPos = (Vector2)head.position + laserDir * laserOffset;
-                        CreateSpinLaser(spawnPos, laserDir, laserOffset);
-
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case Phase.DEAD:
-                break;
-            default:
-                break;
-        }
-    }
-
-    public GameObject CastLaser(Vector2 _spawnPosition, Vector2 _dir, bool _parent = false, int _tailID = -1)
-    {
-        GameObject laser = Instantiate(laserPrefab, _spawnPosition, Quaternion.identity);
-        laser.transform.up = _dir;
-
-
-        if (_parent)
-            laser.transform.SetParent(tail[_tailID].transform);
-
-        return laser;
-    }
-
 
 }
