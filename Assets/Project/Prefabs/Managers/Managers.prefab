@@ -70,7 +70,7 @@ Transform:
   - {fileID: 8803247340621399050}
   - {fileID: 3627089616994944222}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8992415094662957168
 MonoBehaviour:
@@ -196,15 +196,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd3a842a9300ff4f8e603d2f6a116d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectTpControllers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  <tpList>k__BackingField:
+  - {fileID: 11400000, guid: f8ce0b815b497aa4a875e3ccbbcd9338, type: 2}
+  - {fileID: 11400000, guid: 5527e4004370a9643b8737ca909e1d0c, type: 2}
+  - {fileID: 11400000, guid: 9ae7bc7c35114e84293e04e219d4f69f, type: 2}
+  - {fileID: 11400000, guid: c363ff8056791f845a1bebf8f987c25a, type: 2}
+  - {fileID: 11400000, guid: 6dcd3a73104c77f43b0b110a5c6fc6ed, type: 2}
+  - {fileID: 11400000, guid: 4e27807177af77643a5b50c2e14effee, type: 2}
+  - {fileID: 11400000, guid: b8a39089742c56b4587ee1f75edddbc8, type: 2}
+  - {fileID: 11400000, guid: 4c4bc7e53e7659f4c9367dae6984baa3, type: 2}
+  idToTeleport: 2
 --- !u!1 &6307647262529591169
 GameObject:
   m_ObjectHideFlags: 0
