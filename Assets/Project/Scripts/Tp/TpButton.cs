@@ -12,13 +12,14 @@ public class TpButton : MonoBehaviour
     [HideInInspector]
     public MenuNavegation menuNavegation;
 
-    [HideInInspector]
-    public GameObject zoneImage;
+    private MenuMapController menuMapController;
 
-    public void Initialize()
+    public void Initialize(MenuMapController currentMap)
     {
         textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
         textMeshProUGUI.text = tpObject.zoneName;
+
+        menuMapController = currentMap;
 
         Button bt = GetComponent<Button>();
         bt.onClick.AddListener(() => SetTp());
@@ -35,5 +36,10 @@ public class TpButton : MonoBehaviour
         SelectTpsManager.instance.SetIdToTeleport(tpObject.id);
         ShopMusic.instance.StopMusic();
         menuNavegation.GoToGame();
+    }
+
+    public void OnSelectButton()
+    {
+        menuMapController.SetSelectedTeleport(tpObject.id - 1);
     }
 }

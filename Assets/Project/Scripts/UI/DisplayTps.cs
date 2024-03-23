@@ -21,10 +21,10 @@ public class DisplayTps : MonoBehaviour
     private GameObject tpMenu;
 
     [SerializeField]
-    private GameObject zoneImage;
+    private Button spaceShipButton;
 
     [SerializeField]
-    private Button spaceShipButton;
+    private MenuMapController menuMapController;
 
     private void Awake()
     {
@@ -54,8 +54,7 @@ public class DisplayTps : MonoBehaviour
                 discoveredTpButtonList.Add(tpButton);
                 tpButton.tpObject = tp;
                 tpButton.transform.SetParent(buttonsLayout);
-                tpButton.zoneImage = zoneImage;
-                tpButton.Initialize();
+                tpButton.Initialize(menuMapController);
 
                 Button button = bt.GetComponent<Button>();
                 if (!tp.discovered)
@@ -73,7 +72,7 @@ public class DisplayTps : MonoBehaviour
 
     private void OnEnable()
     {
-        if (discoveredTpButtonList[0] != null)
+        if (discoveredTpButtonList.Count > 0)
             discoveredTpButtonList[0].SelectButton();
     }     
 

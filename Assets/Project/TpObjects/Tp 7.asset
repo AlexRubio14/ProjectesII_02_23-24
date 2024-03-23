@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: 7
   <zoneName>k__BackingField: Pre Boss 3
-  <zoneImage>k__BackingField: {fileID: 21300000, guid: 071f51818216ece4bacd7130ea3f081a, type: 3}
-  discovered: 1
+  discovered: 0
