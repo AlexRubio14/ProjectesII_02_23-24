@@ -33,6 +33,9 @@ public class Boss1BodyController : MonoBehaviour
     private float forceApplyed;
     private Vector2 forceDirection;
 
+    [SerializeField]
+    private ParticleSystem explosionParticle;
+
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
 
@@ -62,8 +65,9 @@ public class Boss1BodyController : MonoBehaviour
             return;
 
         Vector3 targetPos = target.localPosition - target.right * offset;
-        rb2d.velocity = (Vector2)(targetPos - transform.localPosition) * currentMovementSpeed + forceDirection * (Mathf.Cos(Time.time * shakeSpeed) * forceApplyed);
-        forceApplyed = Mathf.Clamp(forceApplyed - Time.deltaTime * shakeReduction, 0, Mathf.Infinity)  ;
+        float externalForce = Mathf.Cos((Time.time % 360) * shakeSpeed) * forceApplyed;
+        rb2d.velocity = (Vector2)(targetPos - transform.localPosition) * currentMovementSpeed + forceDirection * externalForce;
+        forceApplyed = Mathf.Clamp(forceApplyed - Time.fixedDeltaTime * shakeReduction, 0, Mathf.Infinity);
         rb2d.angularVelocity = Quaternion.Angle(transform.rotation, target.rotation) * rotationSpeed;
         transform.rotation = target.rotation;
 
@@ -100,6 +104,14 @@ public class Boss1BodyController : MonoBehaviour
     {
         rb2d.constraints = _freeze;
     }
+
+
+    public void ExplodeBodyPart()
+    {
+        explosionParticle.Play();
+        spriteRenderer.enabled = false;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

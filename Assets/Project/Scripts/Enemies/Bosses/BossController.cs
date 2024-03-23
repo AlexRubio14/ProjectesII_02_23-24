@@ -55,6 +55,7 @@ public abstract class BossController : MonoBehaviour
         {
             currentPhase++;
             ChangePhase(currentPhase);
+            CheckPhase();
         }
     }
     protected void ChangePhase(Phase _nextPhase)
@@ -64,7 +65,6 @@ public abstract class BossController : MonoBehaviour
         currentAttackID = -1;
         lastAttack = -1;
     }
-
     protected void GenerateRandomAttack()
     {
         CheckPhase();
@@ -79,6 +79,7 @@ public abstract class BossController : MonoBehaviour
 
         ChangeAttack(nextAttackId);
     }
+
     protected void ChangeAttack(int _attackID)
     {
         lastAttack = currentAttackID;
@@ -93,4 +94,6 @@ public abstract class BossController : MonoBehaviour
         healthBar.value = currentHealth;
     }
 
+    protected abstract void StartDie();
+    protected abstract void UpdateDie();
 }

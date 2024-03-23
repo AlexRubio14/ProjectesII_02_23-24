@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEngine.GraphicsBuffer;
+using static UnityEditor.Progress;
 
 public class Boss1Controller : BossController
 {
@@ -18,8 +16,11 @@ public class Boss1Controller : BossController
     private Sprite normalHeadSprite;
     [SerializeField]
     private Sprite stunnedHeadSprite;
+    [SerializeField]
+    private Sprite deadHeadSprite;
     private SpriteRenderer headSR;
-
+    [SerializeField]
+    private float outOfZoneDistance;
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
     private int totalDashesPerAttack;
@@ -33,8 +34,6 @@ public class Boss1Controller : BossController
     private float dashRotationSpeed;
     [SerializeField]
     private float minSpawnDot;
-    [SerializeField]
-    private float maxDashDistance;
     private Vector2 lastDashDir = Vector2.up;
     
 
@@ -82,6 +81,9 @@ public class Boss1Controller : BossController
     private Action suctionStart;
     private Action suctionUpdate;
 
+    
+    private Vector2 dieExitDirection;
+
 
     private Animator animator;
 
@@ -111,9 +113,10 @@ public class Boss1Controller : BossController
     private void Update()
     {
             
-        if (currentPhase != Phase.DEAD && onUpdatePhaseAttacks[currentPhase][currentAttackID] != null && !animator.enabled)
+        if (onUpdatePhaseAttacks[currentPhase][currentAttackID] != null && !animator.enabled)
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
 
+        CheckIfDead();
     }
 
     protected override void SetupPhaseAttacks()
@@ -150,6 +153,12 @@ public class Boss1Controller : BossController
         //Cuando este muerto
         startActions = new List<Action>();
         updateActions = new List<Action>();
+
+
+        onDieStart += StartDie;
+        startActions.Add(onDieStart); 
+        onDieUpdate += UpdateDie;
+        updateActions.Add(onDieUpdate);
 
         onStartPhaseAttacks.Add(Phase.DEAD, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.DEAD, updateActions.ToArray());
@@ -215,7 +224,7 @@ public class Boss1Controller : BossController
 
 
         //Comprobar si esta suficientemente lejos del area para hacer otro ataque
-        if (distanceFromMiddlePos <= maxDashDistance)
+        if (distanceFromMiddlePos <= outOfZoneDistance)
             return;
 
         rb2d.velocity = Vector2.zero;
@@ -266,12 +275,14 @@ public class Boss1Controller : BossController
     }
     public void OnSpinSpawnAnimationEnd()
     {
+        spinDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
+        animator.enabled = false;
+
+        if (currentPhase == Phase.DEAD)
+            return;
+
         foreach (CircleCollider2D item in collisions)
             item.gameObject.layer = LayerMask.NameToLayer("Boss");
-        
-
-        spinDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
-        animator.enabled = false;        
     }
 
     private void UpdateSpin()
@@ -297,7 +308,7 @@ public class Boss1Controller : BossController
                 head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime * 3f).normalized;
                 rb2d.velocity = head.right * spinSpeed * 0.75f;
 
-                if (Vector2.Distance(head.position, arenaMiddlePos.position) > maxDashDistance)
+                if (Vector2.Distance(head.position, arenaMiddlePos.position) > outOfZoneDistance)
                 {
                     GenerateRandomAttack();
                     foreach (Boss1BodyController item in tail)
@@ -308,7 +319,6 @@ public class Boss1Controller : BossController
             return;
         }
 
-        Debug.Log("Gira Gira");
         //Girar la cabeza
         head.rotation *= Quaternion.Euler(0,0, spinHeadRotationSpeed * Time.deltaTime);
 
@@ -427,4 +437,65 @@ public class Boss1Controller : BossController
 
     #endregion
 
+    private void CheckIfDead()
+    {
+        if (currentPhase != Phase.DEAD && currentHealth <= 0)
+        {
+            //Muere
+            ChangePhase(Phase.DEAD);
+            GenerateRandomAttack();
+        }
+    }
+    protected override void StartDie()
+    {
+        headSR.sprite = deadHeadSprite;
+
+        head.GetComponent<CircleCollider2D>().enabled = false;
+        foreach (CircleCollider2D item in collisions)
+            item.enabled = false;
+        
+
+
+
+        rb2d.isKinematic = false;
+
+        SetSuctionWindActive(false);
+
+        foreach (Boss1BodyController item in tail)
+            item.SetNormalFollowSpeed();
+
+        if (rb2d.velocity == Vector2.zero)
+            dieExitDirection = head.right;
+        else
+            dieExitDirection = rb2d.velocity.normalized;
+
+
+    }
+    protected override void UpdateDie()
+    {
+        head.right = Vector2.Lerp(head.right, dieExitDirection, Time.deltaTime * 3f).normalized;
+        rb2d.velocity = head.right * spinSpeed * 0.75f;
+
+        if (Vector2.Distance(head.position, arenaMiddlePos.position) > outOfZoneDistance)
+        {
+            rb2d.velocity = Vector2.zero;
+            animator.enabled = true;
+            animator.SetTrigger("Dead");
+            foreach (Boss1BodyController item in tail)
+                item.ResetTailPos();
+            
+        }
+    }
+
+
+    public void ExplodeBodyPart(int _tailID)
+    {
+        int currentID = _tailID - 1;
+
+        if (currentID == -1) //Es la cabeza
+            head.GetComponent<Boss1BodyController>().ExplodeBodyPart();
+        else //Es el cuerpo
+            tail[currentID].ExplodeBodyPart();
+
+    }
 }
