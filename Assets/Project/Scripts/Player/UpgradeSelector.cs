@@ -68,12 +68,11 @@ public class UpgradeSelector : MonoBehaviour
     private GameObject lightUpgrade;
 
     [Space, Header("Size Changer"), SerializeField]
-    private SizeUpgradeController sizeUpgrade;
-    [SerializeField]
     private AudioClip shrinkSizeAudioClip;
     [SerializeField]
     private AudioClip growUpSizeAudioClip;
     private AudioSource sizeAudioSource;
+    private SizeUpgradeController sizeUpgrade;
 
     [Space, Header("Fuel Consume"), SerializeField]
     private float boostConsume;

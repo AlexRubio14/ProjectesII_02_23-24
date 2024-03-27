@@ -142,6 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7351355c992c94f966f336f009f132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageKey: DamageAddition
+  damageAddition: 0.7
+  fuelKey: FuelAddition
+  fuelAddition: 100
 --- !u!114 &99130520360442118
 MonoBehaviour:
   m_ObjectHideFlags: 0

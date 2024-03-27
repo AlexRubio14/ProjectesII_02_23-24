@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Accelerate",
+                    "type": "Value",
+                    "id": "ab08045c-31ed-4e2a-9632-6314b22f666b",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "AimTurret",
                     "type": "Value",
                     "id": "03ceb02f-3700-4ebf-b30a-93ceea76b0b9",
@@ -49,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Accelerate",
-                    "type": "Value",
-                    "id": "ab08045c-31ed-4e2a-9632-6314b22f666b",
-                    "expectedControlType": "Analog",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 },
                 {
                     "name": "UpUpgradeSelected",
@@ -271,30 +271,8 @@
                 },
                 {
                     "name": "",
-                    "id": "b1c66b1a-7050-42f0-9afc-81b9238b9b47",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "AxisDeadzone(min=1.401298E-45,max=0.6)",
-                    "groups": "",
-                    "action": "Accelerate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d3b8d130-fb9c-4225-9233-c5fd0d3031d3",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Accelerate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4c212f5b-45c3-437d-ac02-50607b0d64f9",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -316,7 +294,7 @@
                 {
                     "name": "",
                     "id": "5eafcc8a-84a4-4b8d-b4d2-45866ab4a94e",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -338,7 +316,7 @@
                 {
                     "name": "",
                     "id": "10746cc8-2b8e-45a0-9558-115a871f715d",
-                    "path": "<Keyboard>/rightArrow",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -360,7 +338,7 @@
                 {
                     "name": "",
                     "id": "b022ac4e-c67e-406b-b418-e0909e549b23",
-                    "path": "<Keyboard>/leftArrow",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -398,6 +376,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1c66b1a-7050-42f0-9afc-81b9238b9b47",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "AxisDeadzone(min=1.401298E-45,max=0.6)",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3b8d130-fb9c-4225-9233-c5fd0d3031d3",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

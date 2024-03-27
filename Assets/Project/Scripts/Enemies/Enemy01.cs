@@ -131,16 +131,12 @@ public class Enemy01 : Enemy
             AudioManager.instance.Play2dOneShotSound(impactPlayerClip, "Enemy");
             StartEating(collision.contacts[0].point); 
         }
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
+        if (collision.collider.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
         {
-            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
+            float bulletDamage = collision.collider.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);
             ChangeState(EnemyStates.KNOCKBACK);
-            StartKnockback(collision.transform.position, knockbackForce); 
+            StartKnockback(collision.transform.position, knockbackForce);
         }
     }
 }

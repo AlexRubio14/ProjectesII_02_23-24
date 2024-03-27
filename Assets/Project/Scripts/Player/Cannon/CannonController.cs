@@ -79,10 +79,11 @@ public class CannonController : MonoBehaviour
 
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
-        int index = 0;
         foreach (RaycastHit2D hit in hits)
         {
-            index++;
+            if (!hit.rigidbody)
+                continue;
+
             float distance = Vector2.Distance(transform.position, hit.point);
             float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
             Vector3 dir = (hit.rigidbody.transform.position - transform.position);
@@ -106,7 +107,8 @@ public class CannonController : MonoBehaviour
 
             aimTarget.transform.position = nearestEnemy.transform.position;
             Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
-            sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
+            if (currentEnemy)
+                sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
         }
         else if (aimTarget.activeInHierarchy)
             aimTarget.SetActive(false);

@@ -477,7 +477,7 @@ Transform:
   - {fileID: 3501139305257391057}
   - {fileID: 8425547812211473044}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4181270967838813588
 Rigidbody2D:
@@ -578,7 +578,7 @@ MonoBehaviour:
   movementDirectionSolver: {fileID: 8942317131287401040}
   <maxHealth>k__BackingField: 100
   speed: 15
-  <damage>k__BackingField: 10
+  <damage>k__BackingField: 20
   moveSpots:
   - {fileID: 6161894378625804264}
   - {fileID: 0}

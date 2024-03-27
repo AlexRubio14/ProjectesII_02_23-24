@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -61,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float mapDamage;
     [SerializeField]
+    private float invulnerabilityDuration;
+    private float invulnerabilityTimeWaited;
+    [SerializeField]
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
@@ -69,6 +71,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Action OnHit;
     public ParticleSystem refillFuelParticles;
+    public ParticleSystem bubbleFuelParticles;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -122,6 +125,7 @@ public class PlayerController : MonoBehaviour
         canDash = true;
 
         currentDashTime = 0;
+        invulnerabilityTimeWaited = invulnerabilityDuration;
     }
 
     private void OnEnable()
@@ -156,15 +160,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {        
-        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+    {
+        ConsumeFuel();
 
-        if(Input.GetKey(KeyCode.L))
-        {
-            fuelConsume = 100;
-        }
-
-        CheckIfCanDash();
+        //CheckIfCanDash();
     }
 
     private void FixedUpdate()
@@ -190,6 +189,9 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
+        invulnerabilityTimeWaited += Time.fixedDeltaTime;
+
     }
 
     #region Movement
@@ -268,6 +270,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Ship Fuel
+    private void ConsumeFuel()
+    {
+        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+
+        if (Input.GetKey(KeyCode.L))
+        {
+            fuelConsume = 100;
+        }
+    }
     void LoseFuel()
     {
         fuel = Mathf.Clamp(fuel + fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
@@ -323,8 +334,7 @@ public class PlayerController : MonoBehaviour
         {
             float randomX = UnityEngine.Random.Range(-1, 2);
             float randomY = UnityEngine.Random.Range(-1, 2);
-            Vector2 randomDir = new Vector2(randomX, randomY);
-            randomDir.Normalize();
+            Vector2 randomDir = new Vector2(randomX, randomY).normalized;
 
             float spawnOffset = 1;
 
@@ -334,8 +344,6 @@ public class PlayerController : MonoBehaviour
 
             currItem.c_currentItem = _objectType;
             currItem.followPlayer = false;
-            
-
 
             float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);
             currItem.ImpulseItem(randomDir, throwSpeed);
@@ -353,8 +361,11 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("HubScene");
     }
 
-    public void GetDamage(float value, Vector2 damagePos)
+    public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {
+        if (invulnerabilityDuration > invulnerabilityTimeWaited)
+            return;
+
         switch (currentState)
         {
             case State.MINING:
@@ -371,8 +382,9 @@ public class PlayerController : MonoBehaviour
 
         Knockback(damagePos);
 
-        fuel -= value / PowerUpManager.Instance.Armor;
+        fuel -=  GetMaxFuel() * _damagePercentage / 100;
 
+        invulnerabilityTimeWaited = 0;
 
         if (OnHit != null)
             OnHit();
@@ -542,12 +554,14 @@ public class PlayerController : MonoBehaviour
         {
             GetDamage(mapDamage, collision.contacts[0].point);
             AudioManager.instance.Play2dOneShotSound(collisionClip, "Player");
-        }
-
-        if(collision.collider.CompareTag("Enemy"))
+        }else if(collision.collider.CompareTag("Enemy"))
         {
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.damage, collision.GetContact(0).point);
+        }
+        else if (collision.collider.CompareTag("Boss") || collision.collider.CompareTag("BossLaser"))
+        {
+            GetDamage(collision.gameObject.GetComponentInParent<BossController>().contactDamage, collision.GetContact(0).point);
         }
     }
 
