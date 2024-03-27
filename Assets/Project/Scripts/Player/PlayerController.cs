@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float mapDamage;
     [SerializeField]
+    private float invulnerabilityDuration;
+    private float invulnerabilityTimeWaited;
+    [SerializeField]
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
@@ -122,6 +125,7 @@ public class PlayerController : MonoBehaviour
         canDash = true;
 
         currentDashTime = 0;
+        invulnerabilityTimeWaited = invulnerabilityDuration;
     }
 
     private void OnEnable()
@@ -156,15 +160,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {        
-        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+    {
+        ConsumeFuel();
 
-        if(Input.GetKey(KeyCode.L))
-        {
-            fuelConsume = 100;
-        }
-
-        CheckIfCanDash();
+        //CheckIfCanDash();
     }
 
     private void FixedUpdate()
@@ -190,6 +189,9 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
+        invulnerabilityTimeWaited += Time.fixedDeltaTime;
+
     }
 
     #region Movement
@@ -268,6 +270,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Ship Fuel
+    private void ConsumeFuel()
+    {
+        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+
+        if (Input.GetKey(KeyCode.L))
+        {
+            fuelConsume = 100;
+        }
+    }
     void LoseFuel()
     {
         fuel = Mathf.Clamp(fuel + fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
@@ -350,8 +361,11 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("HubScene");
     }
 
-    public void GetDamage(float value, Vector2 damagePos)
+    public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {
+        if (invulnerabilityDuration > invulnerabilityTimeWaited)
+            return;
+
         switch (currentState)
         {
             case State.MINING:
@@ -368,8 +382,9 @@ public class PlayerController : MonoBehaviour
 
         Knockback(damagePos);
 
-        fuel -= value / PowerUpManager.Instance.Armor;
+        fuel -=  GetMaxFuel() * _damagePercentage / 100;
 
+        invulnerabilityTimeWaited = 0;
 
         if (OnHit != null)
             OnHit();
@@ -546,7 +561,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.collider.CompareTag("Boss") || collision.collider.CompareTag("BossLaser"))
         {
-            GetDamage(10, collision.GetContact(0).point);
+            GetDamage(collision.gameObject.GetComponentInParent<BossController>().contactDamage, collision.GetContact(0).point);
         }
     }
 

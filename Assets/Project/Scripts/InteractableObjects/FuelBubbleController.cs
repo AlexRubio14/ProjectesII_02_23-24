@@ -7,6 +7,13 @@ public class FuelBubbleController : FloatingItem
     [Space, Header("Bubble"), SerializeField]
     private float fuelRecover;
 
+    private Animator animator;
+
+    private void Awake()
+    {
+        base.Awake();
+        animator = GetComponent<Animator>();
+    }
 
     protected override void ChaseAction()
     {
@@ -34,4 +41,9 @@ public class FuelBubbleController : FloatingItem
             canChase = true;
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        animator.SetTrigger("Collision");
+    }
 }

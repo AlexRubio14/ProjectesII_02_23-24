@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss1BodyController : MonoBehaviour
@@ -116,14 +113,14 @@ public class Boss1BodyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Map"))
-            mainBossController.ChangeSpinDirection(collision.contacts[0].normal);
-    }
+            mainBossController.ChangeSpinDirection(collision, transform.position);
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Bullet"))
+        if (collision.collider.CompareTag("Player"))
+            mainBossController.CollisionWithPlayer();
+
+        if (collision.collider.CompareTag("Bullet"))
         {
-            mainBossController.GetDamage(collision.GetComponent<Laser>().GetBulletDamage());
+            mainBossController.GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
             forceDirection = (transform.position - collision.transform.position).normalized;
             forceApplyed = shakeForce;
         }

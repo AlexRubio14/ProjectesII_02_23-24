@@ -11,6 +11,8 @@ public abstract class BossController : MonoBehaviour
     protected float currentHealth;
     [Space, SerializeField]
     protected Slider healthBar;
+    [field: SerializeField]
+    public float contactDamage {  get; private set; }
 
     public enum Phase { PHASE_1, PHASE_2, DEAD};
     [Space, Header("Phases"), SerializeField]
@@ -19,6 +21,8 @@ public abstract class BossController : MonoBehaviour
     public SerializedDictionary<Phase, float> phaseChangerPercentage;
     protected Dictionary<Phase, Action[]> onStartPhaseAttacks;
     protected Dictionary<Phase, Action[]> onUpdatePhaseAttacks;
+
+
 
     protected int currentAttackID;
     protected int lastAttack;
@@ -78,6 +82,7 @@ public abstract class BossController : MonoBehaviour
         }
 
         ChangeAttack(nextAttackId);
+        Debug.Log(nextAttackId);
     }
 
     protected void ChangeAttack(int _attackID)

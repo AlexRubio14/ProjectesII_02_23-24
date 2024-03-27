@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Boss1Controller : BossController
 {
@@ -21,6 +20,13 @@ public class Boss1Controller : BossController
     private SpriteRenderer headSR;
     [SerializeField]
     private float outOfZoneDistance;
+    [SerializeField]
+    private ParticleSystem spawnTrackerParticles;
+    [SerializeField]
+    private LayerMask trackerParticlesLayer;
+    [SerializeField]
+    private GameObject bubblePrefab;
+
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
     private int totalDashesPerAttack;
@@ -35,8 +41,8 @@ public class Boss1Controller : BossController
     [SerializeField]
     private float minSpawnDot;
     private Vector2 lastDashDir = Vector2.up;
-    
-
+    [SerializeField]
+    private float maxDistanceParticleTracker;
 
     private Action dashStart;
     private Action dashUpdate;
@@ -59,6 +65,10 @@ public class Boss1Controller : BossController
 
     private Vector2 exitDirection;
 
+    [SerializeField]
+    private float bubbleSpinCD;
+    private float bubbleSpinTimeWaited;
+
     private Action spinStart;
     private Action spinUpdate;
 
@@ -77,6 +87,10 @@ public class Boss1Controller : BossController
     [SerializeField]
     private float suctionDuration;
     private float suctionTimeWaited;
+    [SerializeField]
+    private float suctionBubbleSpawnTime;
+    private float suctionBubbleTimeWatied;
+
 
     private Action suctionStart;
     private Action suctionUpdate;
@@ -175,9 +189,11 @@ public class Boss1Controller : BossController
     #region Dash Wall To Wall 
     protected void StartDashWallToWall()
     {
+        Debug.Log("START");
         dashesRemaining = totalDashesPerAttack;
 
         ResetDashValues();
+
     }
 
     protected void ResetDashValues()
@@ -190,7 +206,7 @@ public class Boss1Controller : BossController
 
         if (Vector2.Dot(spawnDir, lastDashDir) > minSpawnDot)
         {
-            StartDashWallToWall();
+            ResetDashValues();
             return;
         }
 
@@ -205,6 +221,8 @@ public class Boss1Controller : BossController
         dashDirection = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
         rb2d.velocity = dashDirection * dashSpeed;
         head.right = dashDirection;
+
+        CalculateRayTrackerParticles();
     }
 
     protected void UpdateDashWallToWall()
@@ -223,6 +241,11 @@ public class Boss1Controller : BossController
             CameraController.Instance.AddLowTrauma();
 
 
+        //Comprobar si esta dentro del circulo
+        if (distanceFromMiddlePos <= maxDistanceParticleTracker)
+            ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
+
+
         //Comprobar si esta suficientemente lejos del area para hacer otro ataque
         if (distanceFromMiddlePos <= outOfZoneDistance)
             return;
@@ -230,7 +253,7 @@ public class Boss1Controller : BossController
         rb2d.velocity = Vector2.zero;
         dashesRemaining--;
 
-        if (dashesRemaining < 0)
+        if (dashesRemaining <= 0)
             GenerateRandomAttack();
         else
             ResetDashValues();
@@ -254,10 +277,10 @@ public class Boss1Controller : BossController
 
         foreach (CircleCollider2D item in collisions)
             item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
-        
 
-        
-        
+
+
+        bubbleSpinTimeWaited = bubbleSpinCD;
 
         spinTimeWaited = 0;
         spinStunTimeWaited = 0;
@@ -265,7 +288,7 @@ public class Boss1Controller : BossController
         exitDirection.x = UnityEngine.Random.Range(-1f, 1f);
         exitDirection.y = UnityEngine.Random.Range(-1f, 1f);
 
-
+        CalculateRayTrackerParticles();
     }
 
     public void SetTailLowFollowSpeed()
@@ -283,10 +306,17 @@ public class Boss1Controller : BossController
 
         foreach (CircleCollider2D item in collisions)
             item.gameObject.layer = LayerMask.NameToLayer("Boss");
+
+        ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
+
+        spinTimeWaited = 0;
+        spinStunTimeWaited = 0;
     }
 
     private void UpdateSpin()
     {
+        bubbleSpinTimeWaited += Time.deltaTime;
+
         //Comprobar el tiempo que lleva girando
         spinTimeWaited += Time.deltaTime;
 
@@ -327,11 +357,11 @@ public class Boss1Controller : BossController
         
 
     }
-    public void ChangeSpinDirection(Vector2 _collisionNormal)
+    public void ChangeSpinDirection(Collision2D _collision, Vector2 _currentPos)
     {        
         float minimumDot = 0.6f;
 
-        Vector2 targetDirection = (spinDirection + _collisionNormal).normalized;
+        Vector2 targetDirection = (spinDirection + _collision.contacts[0].normal).normalized;
 
         Vector2 playerDirection = (PlayerManager.Instance.player.transform.position - head.position).normalized;
         //Si el player no esta en otra direccion y esta suficientemente lejos de la pared
@@ -341,6 +371,23 @@ public class Boss1Controller : BossController
         spinDirection = targetDirection;
 
         CameraController.Instance.AddMediumTrauma();
+
+        if (bubbleSpinCD > bubbleSpinTimeWaited || spinTimeWaited >= spinDuration)
+            return;
+        bubbleSpinTimeWaited = 0;
+        //Instanciar una burbuja
+        float spawnBubbleOffset = 1.3f;
+        Vector2 pointToCollisionObject = (_currentPos - _collision.contacts[0].point).normalized;
+
+        Vector2 spawnPoint = _collision.contacts[0].point + pointToCollisionObject * spawnBubbleOffset;
+        Rigidbody2D bubbleRb2d = Instantiate(bubblePrefab, spawnPoint, Quaternion.identity).GetComponent<Rigidbody2D>();
+        Vector2 randomDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
+        float bubbleSpawnForce = 150f;
+
+        bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
+        //Debug.DrawLine(_collision.contacts[0].point, _collision.contacts[0].point + pointToCollisionObject * spawnBubbleOffset);
+        //Debug.Break();
+
     }
 
     #endregion
@@ -372,6 +419,10 @@ public class Boss1Controller : BossController
         rb2d.isKinematic = true;
 
         suctionTimeWaited = 0;
+
+        suctionBubbleTimeWatied = 0;
+
+        CalculateRayTrackerParticles();
     }
 
     protected void UpdateSuction()
@@ -381,7 +432,8 @@ public class Boss1Controller : BossController
         rb2d.velocity = Vector2.zero;
 
         CheckIfActivateWindBlow();
-        
+        InstantiateBubblesDuringSuction();
+
         if (suctionTimeWaited < suctionDuration)
         {
             Vector2 targetPosition = (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance;
@@ -402,6 +454,23 @@ public class Boss1Controller : BossController
         Vector2 nextPos = Vector2.Lerp(head.position, _targetPos, Time.deltaTime * _suctionSpeed);
         head.position = nextPos;
         head.right = (PlayerManager.Instance.player.transform.position - head.position).normalized;
+    }
+    private void InstantiateBubblesDuringSuction()
+    {
+        suctionBubbleTimeWatied += Time.deltaTime;
+
+        if (suctionBubbleTimeWatied <= suctionBubbleSpawnTime)
+            return;
+
+        suctionBubbleTimeWatied = 0;
+        Vector2 rayDirection = (PlayerManager.Instance.player.transform.position - head.position).normalized;
+
+        RaycastHit2D hit = Physics2D.Raycast(head.position, rayDirection, 100, trackerParticlesLayer);
+
+        float offset = 1.5f;
+        Vector2 spawnPos = hit.point - rayDirection * offset; 
+
+        Instantiate(bubblePrefab, spawnPos, Quaternion.identity);
     }
 
     private void CheckIfActivateWindBlow()
@@ -469,7 +538,7 @@ public class Boss1Controller : BossController
         else
             dieExitDirection = rb2d.velocity.normalized;
 
-
+        ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
     }
     protected override void UpdateDie()
     {
@@ -487,7 +556,6 @@ public class Boss1Controller : BossController
         }
     }
 
-
     public void ExplodeBodyPart(int _tailID)
     {
         int currentID = _tailID - 1;
@@ -498,4 +566,37 @@ public class Boss1Controller : BossController
             tail[currentID].ExplodeBodyPart();
 
     }
+
+
+    private void CalculateRayTrackerParticles()
+    {
+        Vector2 rayDirection = (head.position - arenaMiddlePos.position).normalized;
+
+        RaycastHit2D hit = Physics2D.Raycast(arenaMiddlePos.position, rayDirection, 100, trackerParticlesLayer);
+
+        ShowTrackerPositionParticles(true, hit.point, hit.normal);
+    }
+
+    private void ShowTrackerPositionParticles(bool _show, Vector2 _particlePos , Vector2 _particlesRotation)
+    {
+        if (_show)
+        {
+            spawnTrackerParticles.transform.position = _particlePos;
+            spawnTrackerParticles.transform.up = _particlesRotation;
+            spawnTrackerParticles.Play();
+        }
+        else
+            spawnTrackerParticles.Stop();
+    }
+
+    public void CollisionWithPlayer()
+    {
+        if (currentAttackID != 1)
+            return;
+        ////Bajar la duracion de este giro
+        //spinTimeWaited += spinDuration / 6;
+        //spinStunTimeWaited = 100;
+
+    }
+
 }

@@ -7,19 +7,18 @@ public class NewGameController : MonoBehaviour
 {
     [SerializeField]
     private QuestObject firstQuest;
-
+    [SerializeField]
+    protected string firstTutorialkey;
 
     private void Start()
     {
         Button continueButton = GetComponent<Button>();
-        if (!firstQuest.obtainedQuest)
-        {
-            continueButton.interactable = false;
-        }
-        else
-        {
+
+        if (PlayerPrefs.HasKey(firstTutorialkey) && PlayerPrefs.GetInt(firstTutorialkey) == 1)
             continueButton.Select();
-        }
+        else
+            continueButton.interactable = false;
+
     }
 
     public void ResetGame()

@@ -110,19 +110,18 @@ public class Enemy02 : Enemy
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))
-        {
             Die();
+        if (collision.collider.CompareTag(BULLET_TAG))
+        {
+            float bulletDamage = collision.collider.GetComponent<Laser>().GetBulletDamage();
+            GetHit(bulletDamage);
+            ChangeState(EnemyStates.KNOCKBACK);
+            StartKnockback(collision.transform.position, knockbackForce);
         }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(BULLET_TAG))
-        {
-            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
-            GetHit(bulletDamage);
-            ChangeState(EnemyStates.KNOCKBACK);
-            StartKnockback(collision.transform.position, knockbackForce);
-        }
+        
     }
 }

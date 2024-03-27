@@ -15042,9 +15042,10 @@ MonoBehaviour:
   knockbackScale: 10
   knockbackRotation: 1
   knockbackTime: 0.3
-  baseFuel: 100
+  baseFuel: 200
   fuelConsume: 0
-  mapDamage: 10
+  mapDamage: 25
+  invulnerabilityDuration: 1.5
   idleFuelConsume: 0.1
   movingFuelConsume: 0.6
   hitParticles: {fileID: 6872335442167715334}
