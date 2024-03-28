@@ -46,4 +46,12 @@ public class SelectTpsManager : MonoBehaviour
     {
         idToTeleport = value;
     }
+
+    public void ResetTpObjects()
+    {
+        for (int i = 0; i < tpList.Count; i++)
+        {
+            tpList[i].discovered = false;
+        }
+    }
 }

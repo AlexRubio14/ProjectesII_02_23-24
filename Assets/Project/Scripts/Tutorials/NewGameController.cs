@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +21,8 @@ public class NewGameController : MonoBehaviour
 
     public void ResetGame()
     {
+        SelectTpsManager.instance.ResetTpObjects();
+
         PlayerPrefs.DeleteAll();
         QuestObject[] quests = Resources.LoadAll<QuestObject>("Quests");
         foreach (QuestObject item in quests)
@@ -33,6 +33,7 @@ public class NewGameController : MonoBehaviour
         }
 
         InventoryManager.Instance.ResetInventory();
+
 
     }
 
