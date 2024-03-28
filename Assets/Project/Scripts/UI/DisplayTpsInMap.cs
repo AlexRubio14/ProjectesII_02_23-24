@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayTps : MonoBehaviour
+public class DisplayTpsInMap : MonoBehaviour
 {
     [SerializeField]
     private Transform buttonsLayout;
@@ -19,9 +17,6 @@ public class DisplayTps : MonoBehaviour
 
     [SerializeField]
     private GameObject tpMenu;
-
-    [SerializeField]
-    private Button spaceShipButton;
 
     [SerializeField]
     private MenuMapController menuMapController;
@@ -41,7 +36,6 @@ public class DisplayTps : MonoBehaviour
         if (!SelectTpsManager.instance.tpList[0].discovered)
         {
             SelectTpsManager.instance.SetIdToTeleport(1);
-            ShopMusic.instance.StopMusic();
             menuNavegation.GoToGame();
         }
         else
@@ -56,7 +50,7 @@ public class DisplayTps : MonoBehaviour
                 tpButton.tpObject = tp;
                 tpButton.transform.SetParent(buttonsLayout);
                 tpButton.Initialize(menuMapController);
-
+                
                 Button button = bt.GetComponent<Button>();
                 if (!tp.discovered)
                 {
@@ -75,10 +69,5 @@ public class DisplayTps : MonoBehaviour
     {
         if (discoveredTpButtonList.Count > 0)
             discoveredTpButtonList[0].SelectButton();
-    }     
-
-    private void OnDisable()
-    {
-        spaceShipButton.Select();
     }
 }
