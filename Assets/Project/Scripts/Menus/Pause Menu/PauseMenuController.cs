@@ -293,6 +293,7 @@ public class PauseMenuController : MonoBehaviour
     {
         ResumeGame(new InputAction.CallbackContext());
     }
+
     private void ResumeGame(InputAction.CallbackContext obj)
     {
         InputController.Instance.ChangeActionMap("Player");
@@ -304,11 +305,9 @@ public class PauseMenuController : MonoBehaviour
 
     public void AbortMission()
     {
-
         PlayerManager.Instance.player.SubstractFuel(1000);
         PlayerManager.Instance.player.fuelConsume = -10;
         ResumeGame(new InputAction.CallbackContext());
-
     }
 }
 

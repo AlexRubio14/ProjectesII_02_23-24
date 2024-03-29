@@ -14771,6 +14771,7 @@ GameObject:
   - component: {fileID: 670545847217739927}
   - component: {fileID: 5663581563948604064}
   - component: {fileID: 2710599507721073680}
+  - component: {fileID: 1306045602590068316}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -15426,6 +15427,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1306045602590068316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ab688792e64804e8f2d757ab6df533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScripts: []
+  playerSprite: {fileID: 0}
+  tpParticlesPrefab: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
+  timeToEndTp: 1.5
+  timeToStopParticles: 1.5
+  teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
 --- !u!1 &4329926445472445026
 GameObject:
   m_ObjectHideFlags: 0

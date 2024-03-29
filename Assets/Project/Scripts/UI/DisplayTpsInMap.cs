@@ -1,73 +1,88 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-public class DisplayTpsInMap : MonoBehaviour
+public class DisplayTpsInMap : DisplayTps
 {
-    [SerializeField]
-    private Transform buttonsLayout;
+    private PlayerTpController playerTpController;
 
-    private List<TpButton> discoveredTpButtonList;
+    [Header("Inputs"), SerializeField]
+    private InputActionReference resumeAction;
 
-    [SerializeField]
-    private GameObject bt;
+    private Vector2 positionToTravel;
 
-    [SerializeField]
-    private MenuNavegation menuNavegation;
+    SelectTpController[] selectTpControllers;
 
-    [SerializeField]
-    private GameObject tpMenu;
 
-    [SerializeField]
-    private MenuMapController menuMapController;
-
-    private void Awake()
+    protected void OnEnable()
     {
-        discoveredTpButtonList = new List<TpButton>();
+        resumeAction.action.started += ResumeGame;
+    }
+    private void OnDisable()
+    {
+        resumeAction.action.started -= ResumeGame;
     }
 
     private void Start()
     {
         CreateDiscoveredTpList();
+        playerTpController = PlayerManager.Instance.player.GetComponent<PlayerTpController>();
+        selectTpControllers = FindObjectsOfType<SelectTpController>();
     }
 
-    private void CreateDiscoveredTpList()
+    public override void OnButtonClick(int id)
     {
-        if (!SelectTpsManager.instance.tpList[0].discovered)
-        {
-            SelectTpsManager.instance.SetIdToTeleport(1);
-            menuNavegation.GoToGame();
-        }
-        else
-        {
-            tpMenu.gameObject.SetActive(true);
+        tpMenu.SetActive(false);
 
-            foreach (TpObject tp in SelectTpsManager.instance.tpList)
+
+        foreach (SelectTpController item in selectTpControllers)
+        {
+            if(item.id == id)
             {
-                bt = Instantiate(bt, buttonsLayout);
-                TpButton tpButton = bt.GetComponent<TpButton>();
-                discoveredTpButtonList.Add(tpButton);
-                tpButton.tpObject = tp;
-                tpButton.transform.SetParent(buttonsLayout);
-                tpButton.Initialize(menuMapController);
-                
-                Button button = bt.GetComponent<Button>();
-                if (!tp.discovered)
-                {
-                    button.interactable = false;
-                }
-
-                if (tp.id == 1)
-                    button.Select();
-
-                tpButton.menuNavegation = menuNavegation;
+                positionToTravel = item.tpPosition.position;
+                break;
             }
         }
+
+        playerTpController.onTpStop += TravelToTp;
+        playerTpController.StartTravel();
+
     }
 
-    private void OnEnable()
+    private void TravelToTp()
     {
-        if (discoveredTpButtonList.Count > 0)
-            discoveredTpButtonList[0].SelectButton();
+        playerTpController.transform.position = positionToTravel;
+        playerTpController.EnablePlayer(true);
+        playerTpController.DisplayCanvas(true);
+
+        PlayerManager.Instance.player.ChangeState(PlayerController.State.IDLE);
+        ResumeGameButton();
+
+        playerTpController.onTpStop -= TravelToTp;
+    }
+
+    public void OpenMenu()
+    {
+        InputController.Instance.ChangeActionMap("Menu");
+        TimeManager.Instance.PauseGame();
+
+        List<MenuControlsHint.ActionType> actions = new List<MenuControlsHint.ActionType>();
+        actions.Add(MenuControlsHint.ActionType.MOVE_MENU);
+        actions.Add(MenuControlsHint.ActionType.ACCEPT);
+        actions.Add(MenuControlsHint.ActionType.GO_BACK);
+        MenuControlsHint.Instance.UpdateHintControls(actions);
+    }
+    public void ResumeGameButton()
+    {
+        ResumeGame(new InputAction.CallbackContext());
+    }
+
+    public void ResumeGame(InputAction.CallbackContext obj)
+    {
+        InputController.Instance.ChangeActionMap("Player");
+        TimeManager.Instance.ResumeGame();
+        tpMenu.gameObject.SetActive(false);
+
+        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 }
