@@ -1,84 +1,59 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayTps : MonoBehaviour
+public abstract class DisplayTps : MonoBehaviour
 {
     [SerializeField]
-    private Transform buttonsLayout;
+    protected Transform buttonsLayout;
 
-    private List<TpButton> discoveredTpButtonList;
-
-    [SerializeField]
-    private GameObject bt;
+    protected List<TpButton> discoveredTpButtonList;
 
     [SerializeField]
-    private MenuNavegation menuNavegation;
+    protected GameObject bt;
 
     [SerializeField]
-    private GameObject tpMenu;
+    protected MenuNavegation menuNavegation;
 
     [SerializeField]
-    private Button spaceShipButton;
+    protected GameObject tpMenu;
 
     [SerializeField]
-    private MenuMapController menuMapController;
+    protected MenuMapController menuMapController;
 
-    private void Awake()
+    protected void Awake()
     {
         discoveredTpButtonList = new List<TpButton>();
     }
 
-    private void Start()
+    protected void CreateDiscoveredTpList()
     {
-        CreateDiscoveredTpList();
-    }
+        tpMenu.gameObject.SetActive(true);
 
-    private void CreateDiscoveredTpList()
-    {
-        if (!SelectTpsManager.instance.tpList[0].discovered)
+        foreach (TpObject tp in SelectTpsManager.instance.tpList)
         {
-            SelectTpsManager.instance.SetIdToTeleport(1);
-            ShopMusic.instance.StopMusic();
-            menuNavegation.GoToGame();
-        }
-        else
-        {
-            tpMenu.gameObject.SetActive(true);
+            GameObject bt = Instantiate(this.bt, buttonsLayout);
+            TpButton tpButton = bt.GetComponent<TpButton>();
+            discoveredTpButtonList.Add(tpButton);
+            tpButton.transform.SetParent(buttonsLayout);
+            tpButton.Initialize(menuMapController, this, menuNavegation, tp);
 
-            foreach (TpObject tp in SelectTpsManager.instance.tpList)
+            Button button = bt.GetComponent<Button>();
+            if (!tp.discovered)
             {
-                bt = Instantiate(bt, buttonsLayout);
-                TpButton tpButton = bt.GetComponent<TpButton>();
-                discoveredTpButtonList.Add(tpButton);
-                tpButton.tpObject = tp;
-                tpButton.transform.SetParent(buttonsLayout);
-                tpButton.Initialize(menuMapController);
-
-                Button button = bt.GetComponent<Button>();
-                if (!tp.discovered)
-                {
-                    button.interactable = false;
-                }
-
-                if (tp.id == 1)
-                    button.Select();
-
-                tpButton.menuNavegation = menuNavegation;
+                button.interactable = false;
             }
+
+            if (tp.id == 1)
+                button.Select();
         }
     }
 
-    private void OnEnable()
+    public abstract void OnButtonClick(int id);
+
+    protected void OnEnable()
     {
         if (discoveredTpButtonList.Count > 0)
             discoveredTpButtonList[0].SelectButton();
     }     
-
-    private void OnDisable()
-    {
-        spaceShipButton.Select();
-    }
 }

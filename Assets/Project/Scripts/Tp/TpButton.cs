@@ -4,22 +4,26 @@ using UnityEngine.UI;
 
 public class TpButton : MonoBehaviour
 {
-    [HideInInspector]
-    public TpObject tpObject;
+    private TpObject tpObject;
 
     TextMeshProUGUI textMeshProUGUI;
 
-    [HideInInspector]
-    public MenuNavegation menuNavegation;
+    private MenuNavegation menuNavegation;
 
     private MenuMapController menuMapController;
 
-    public void Initialize(MenuMapController currentMap)
+    private DisplayTps displayTps;
+
+
+    public void Initialize(MenuMapController currentMap, DisplayTps displayTps, MenuNavegation menuNavegation, TpObject tpObject)
     {
+        menuMapController = currentMap;
+        this.displayTps = displayTps;
+        this.menuNavegation = menuNavegation;
+        this.tpObject = tpObject;
+
         textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
         textMeshProUGUI.text = tpObject.zoneName;
-
-        menuMapController = currentMap;
 
         Button bt = GetComponent<Button>();
         bt.onClick.AddListener(() => SetTp());
@@ -33,9 +37,12 @@ public class TpButton : MonoBehaviour
 
     public void SetTp()
     {
-        SelectTpsManager.instance.SetIdToTeleport(tpObject.id);
-        ShopMusic.instance.StopMusic();
-        menuNavegation.GoToGame();
+        displayTps.OnButtonClick(tpObject.id);
+    }
+
+    public void BackToHub()
+    {
+        menuNavegation.GoToHub();
     }
 
     public void OnSelectButton()

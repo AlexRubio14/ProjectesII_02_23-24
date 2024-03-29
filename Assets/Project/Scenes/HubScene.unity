@@ -7782,6 +7782,11 @@ RectTransform:
   m_AnchoredPosition: {x: 337.9997, y: 274.177}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1420299266 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
+  m_PrefabInstance: {fileID: 6518614503519985275}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1420469535
 GameObject:
   m_ObjectHideFlags: 0
@@ -10532,11 +10537,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912434065}
   m_CullTransparentMesh: 1
---- !u!1 &1924308488 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5435870144824452751, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-  m_PrefabInstance: {fileID: 6518614503519985275}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1928734248
 GameObject:
   m_ObjectHideFlags: 0
@@ -10659,13 +10659,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1924308488}
+      - m_Target: {fileID: 1420299266}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12510,8 +12522,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2415865649733766274, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
+      propertyPath: menuNavegation
+      value: 
+      objectReference: {fileID: 226249119}
+    - target: {fileID: 2415865649733766274, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
+      propertyPath: spaceShipButton
+      value: 
+      objectReference: {fileID: 1928734250}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -12598,7 +12618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5435870144824452751, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7782336059955711328, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
