@@ -34,7 +34,6 @@ public class DisplayTpsInMap : DisplayTps
     {
         tpMenu.SetActive(false);
 
-
         foreach (SelectTpController item in selectTpControllers)
         {
             if(item.id == id)
@@ -72,6 +71,22 @@ public class DisplayTpsInMap : DisplayTps
         actions.Add(MenuControlsHint.ActionType.GO_BACK);
         MenuControlsHint.Instance.UpdateHintControls(actions);
     }
+
+    public void ReturnToHub()
+    {
+        ResumeGameButton();
+        playerTpController.onTpStop += EndTpReturnHub;
+        playerTpController.StartTravel();
+    }
+
+    private void EndTpReturnHub()
+    {
+        InventoryManager.Instance.EndRun(true);
+        ResumeGameButton();
+        menuNavegation.GoToHub();
+        playerTpController.onTpStop -= EndTpReturnHub;
+    }
+
     public void ResumeGameButton()
     {
         ResumeGame(new InputAction.CallbackContext());

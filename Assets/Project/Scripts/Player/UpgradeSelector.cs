@@ -182,11 +182,11 @@ public class UpgradeSelector : MonoBehaviour
     {
         if (!obtainedUpgrades[upgradePositions[_pos]])
             return;
-        
+
         switch (upgradePositions[_pos].type)
         {
             case UpgradeObject.UpgradeType.BOOST:
-                bool isPressed = obj.action.IsPressed();
+                bool isPressed = obj.action != null ? obj.action.IsPressed() : false;
                 ToggleBoost(_pos, isPressed);
                 break;
             case UpgradeObject.UpgradeType.LIGHT:
@@ -203,9 +203,11 @@ public class UpgradeSelector : MonoBehaviour
         }
 
     }
+
     private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
+
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
@@ -344,6 +346,17 @@ public class UpgradeSelector : MonoBehaviour
         foreach (KeyValuePair<Position, Image> item in inputHintImagePositions)
         {
             item.Value.sprite = inputHintSprites[item.Key][(int)InputController.Instance.GetControllerType()];
+        }
+    }
+
+    public void StopAllUpgrades()
+    {
+        foreach (KeyValuePair<Position, UpgradeObject> item in upgradePositions)
+        {
+            if (upgradesToggled[(int)item.Value.type])
+            {
+                ToggleUpgrade(item.Key, new InputAction.CallbackContext());
+            }
         }
     }
 }

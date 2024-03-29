@@ -26,6 +26,8 @@ public class PlayerTpController : MonoBehaviour
 
     private ParticleSystem tpParticles;
 
+    private Canvas[] activeCanvas;
+
     [SerializeField]
     private AudioClip teleportClip;
 
@@ -35,9 +37,13 @@ public class PlayerTpController : MonoBehaviour
         playerMapInteraction = GetComponent<PlayerMapInteraction>();
     }
 
+    private void Start()
+    {
+        activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+    }
+
     public void StartTravel()
     {
-        playerController.StopEngineSource();
         AudioManager.instance.Play2dOneShotSound(teleportClip, "TpInteraction");
 
         playerController.ChangeState(PlayerController.State.FREEZE);
@@ -68,7 +74,6 @@ public class PlayerTpController : MonoBehaviour
     {
         playerMapInteraction.showCanvas = IsEnabled;
 
-        Canvas[] activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
         foreach (Canvas item in activeCanvas)
         {
             if(item.gameObject != transform.parent.gameObject)
@@ -78,7 +83,6 @@ public class PlayerTpController : MonoBehaviour
 
     private void StopParticles()
     {
-        //InventoryManager.Instance.EndRun(true);
         tpParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         Invoke("TpEnd", timeToEndTp);
         playerController.refillFuelParticles.Stop();

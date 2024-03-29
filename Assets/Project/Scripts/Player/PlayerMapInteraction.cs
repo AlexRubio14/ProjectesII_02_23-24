@@ -113,7 +113,8 @@ public class PlayerMapInteraction : MonoBehaviour
     {
         if (nearestObject && //Si existe un objeto cercano
             nearestObject.isInteractable && //Si se puede interactuar con el
-            !nearestObject.isHide //Si no esta oculto
+            !nearestObject.isHide && //Si no esta oculto
+            showCanvas
             )
         {
             //Si no necesita mejora o necesita una mejora y la tiene
