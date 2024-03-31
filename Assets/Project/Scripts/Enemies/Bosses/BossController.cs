@@ -99,6 +99,16 @@ public abstract class BossController : MonoBehaviour
         healthBar.value = currentHealth;
     }
 
+    protected void CheckIfDead()
+    {
+        if (currentPhase != Phase.DEAD && currentHealth <= 0)
+        {
+            //Muere
+            ChangePhase(Phase.DEAD);
+            GenerateRandomAttack();
+        }
+    }
+
     protected abstract void StartDie();
     protected abstract void UpdateDie();
 }

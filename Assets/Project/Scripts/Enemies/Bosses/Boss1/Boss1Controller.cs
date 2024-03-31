@@ -506,15 +506,6 @@ public class Boss1Controller : BossController
 
     #endregion
 
-    private void CheckIfDead()
-    {
-        if (currentPhase != Phase.DEAD && currentHealth <= 0)
-        {
-            //Muere
-            ChangePhase(Phase.DEAD);
-            GenerateRandomAttack();
-        }
-    }
     protected override void StartDie()
     {
         headSR.sprite = deadHeadSprite;
