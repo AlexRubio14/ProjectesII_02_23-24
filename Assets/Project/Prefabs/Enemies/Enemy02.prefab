@@ -251,7 +251,7 @@ Transform:
   - {fileID: 3874927624965997897}
   - {fileID: 3885256371599684818}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &768391568925790214
 Rigidbody2D:
@@ -370,6 +370,7 @@ MonoBehaviour:
   showGizmos: 0
   timeFollowing: 5
   c_explosionParticles: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}
+  timeToExplode: 5
 --- !u!1 &5510550852629598786
 GameObject:
   m_ObjectHideFlags: 0

@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMapInteraction mapInteraction;
     private AutoHelpController autoHelpController;
     private SizeUpgradeController sizeUpgrade;
+    private UpgradeSelector upgradeSelector;
 
     private void Awake()
     {
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
         sizeUpgrade = GetComponent<SizeUpgradeController>();    
-
+        upgradeSelector = GetComponent<UpgradeSelector>();
     }
     
     private void Start()
@@ -363,8 +364,6 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {
-        if (invulnerabilityDuration > invulnerabilityTimeWaited)
-            return;
 
         switch (currentState)
         {
@@ -382,9 +381,11 @@ public class PlayerController : MonoBehaviour
 
         Knockback(damagePos);
 
-        fuel -=  GetMaxFuel() * _damagePercentage / 100;
-
-        invulnerabilityTimeWaited = 0;
+        if (invulnerabilityDuration <= invulnerabilityTimeWaited)
+        {
+            fuel -=  GetMaxFuel() * _damagePercentage / 100;
+            invulnerabilityTimeWaited = 0;
+        }
 
         if (OnHit != null)
             OnHit();
@@ -485,12 +486,14 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case State.FREEZE:
-                engineParticles.gameObject.SetActive(false);
+                engineParticles.Stop();
                 rb2d.velocity = Vector2.zero;
+                upgradeSelector.StopAllUpgrades();
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
                 StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
+                upgradeSelector.StopAllUpgrades();
                 break;
             default:
                 break;
@@ -563,11 +566,5 @@ public class PlayerController : MonoBehaviour
         {
             GetDamage(collision.gameObject.GetComponentInParent<BossController>().contactDamage, collision.GetContact(0).point);
         }
-    }
-
-    public void StopEngineSource()
-    {
-        if(engineSource != null)
-            engineSource.Stop();
     }
 }

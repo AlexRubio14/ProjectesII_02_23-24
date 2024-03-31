@@ -5,9 +5,16 @@ using UnityEngine;
 public class Enemy02 : Enemy
 {
     [Space, Header("--- ENEMY 02"), SerializeField]
-    private float timeFollowing = 5.0f;
+    private float timeToExplode;
+
+    private float currentTime = 0.0f;
+
     [SerializeField]
     private GameObject c_explosionParticles;
+
+    
+
+
 
     void Awake()
     {
@@ -29,6 +36,7 @@ public class Enemy02 : Enemy
             case EnemyStates.CHASING:
                 PerformDetection();
                 ChaseBehaviour();
+                WaitForExplode();
                 break;
             case EnemyStates.KNOCKBACK:
                 KnockbackBehaviour();
@@ -91,7 +99,6 @@ public class Enemy02 : Enemy
             case EnemyStates.PATROLLING:
                 break;
             case EnemyStates.CHASING:
-                Invoke("Die", timeFollowing);
                 break;
             case EnemyStates.KNOCKBACK:
                 break;
@@ -100,6 +107,15 @@ public class Enemy02 : Enemy
         }
     }
 
+    private void WaitForExplode()
+    {
+        currentTime += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
+
+        if(currentTime >= timeToExplode)
+        {
+            Die();
+        }
+    }
     override public void Die()
     {
         AudioManager.instance.Play2dOneShotSound(deathClip, "Enemy", 1, 0.9f, 1.1f);

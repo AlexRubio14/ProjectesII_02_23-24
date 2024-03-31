@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class SelectTpController : MonoBehaviour
 {
-    [SerializeField]
-    private int id;
+    public int id;
 
-    [SerializeField]
-    private Transform tpPosition;
+    public Transform tpPosition;
 
     private void Awake()
     {
