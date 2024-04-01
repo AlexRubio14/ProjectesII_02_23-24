@@ -58,6 +58,9 @@ TagManager:
   - name: Details1
     uniqueID: 2496116073
     locked: 0
+  - name: Enviroment Decoration Back
+    uniqueID: 2679624179
+    locked: 0
   - name: Items
     uniqueID: 1742496995
     locked: 0
@@ -81,6 +84,9 @@ TagManager:
     locked: 0
   - name: Front Particles
     uniqueID: 1249371403
+    locked: 0
+  - name: Enviroment Decoration Front
+    uniqueID: 874612649
     locked: 0
   - name: Canvas
     uniqueID: 822479611
