@@ -99,7 +99,7 @@ public class DrillController : MonoBehaviour
         sizeUpgrade = GetComponent<SizeUpgradeController>();    
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Drill();        
     }
@@ -365,8 +365,8 @@ public class DrillController : MonoBehaviour
             return;
 
         Gizmos.color = Color.magenta;
-        
-        float raysOffset = (raysDelimiter * 2 * sizeUpgrade.sizeMultiplyer) / totalRays;
+        float sizeMultiplier = sizeUpgrade ? sizeUpgrade.sizeMultiplyer : 1f;
+        float raysOffset = (raysDelimiter * 2 * sizeMultiplier) / totalRays;
         Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset  * Mathf.Floor(totalRays/2)));
 
         for (int i = 1; i < totalRays + 1; i++)

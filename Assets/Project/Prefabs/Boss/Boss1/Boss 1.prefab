@@ -210,6 +210,7 @@ MonoBehaviour:
   shakeSpeed: 20
   shakeReduction: 15
   explosionParticle: {fileID: 8232107294463834048}
+  hitColor: {r: 1, g: 0.29803923, b: 0.29803923, a: 1}
 --- !u!1 &2818570625895483025
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +384,7 @@ MonoBehaviour:
   shakeSpeed: 20
   shakeReduction: 15
   explosionParticle: {fileID: 2333038239818398694}
+  hitColor: {r: 1, g: 0.29803923, b: 0.29803923, a: 1}
 --- !u!1 &4733193432343214337
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +640,7 @@ MonoBehaviour:
   shakeSpeed: 20
   shakeReduction: 15
   explosionParticle: {fileID: 6651737840562709509}
+  hitColor: {r: 1, g: 0.29803923, b: 0.29803923, a: 1}
 --- !u!1 &5415825615066353432
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +814,7 @@ MonoBehaviour:
   shakeSpeed: 20
   shakeReduction: 15
   explosionParticle: {fileID: 2816601086535224010}
+  hitColor: {r: 1, g: 0.29803923, b: 0.29803923, a: 1}
 --- !u!1 &5831948351815915904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1105,7 @@ MonoBehaviour:
   shakeSpeed: 0
   shakeReduction: 0
   explosionParticle: {fileID: 342041976610166584}
+  hitColor: {r: 1, g: 0.29803923, b: 0.29803923, a: 1}
 --- !u!1 &8991274839623967458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,6 +1279,7 @@ MonoBehaviour:
   shakeSpeed: 20
   shakeReduction: 15
   explosionParticle: {fileID: 6920745806260230116}
+  hitColor: {r: 1, g: 0.29803923, b: 0.29803923, a: 1}
 --- !u!1001 &106269534246558510
 PrefabInstance:
   m_ObjectHideFlags: 0

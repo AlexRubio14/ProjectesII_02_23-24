@@ -506,6 +506,7 @@ public class Boss1Controller : BossController
 
     #endregion
 
+    #region Die
     protected override void StartDie()
     {
         headSR.sprite = deadHeadSprite;
@@ -557,7 +558,7 @@ public class Boss1Controller : BossController
             tail[currentID].ExplodeBodyPart();
 
     }
-
+    #endregion
 
     private void CalculateRayTrackerParticles()
     {
@@ -578,16 +579,6 @@ public class Boss1Controller : BossController
         }
         else
             spawnTrackerParticles.Stop();
-    }
-
-    public void CollisionWithPlayer()
-    {
-        if (currentAttackID != 1)
-            return;
-        ////Bajar la duracion de este giro
-        //spinTimeWaited += spinDuration / 6;
-        //spinStunTimeWaited = 100;
-
     }
 
 }
