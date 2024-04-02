@@ -859,7 +859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hubScene: HubScene
   titleScene: TitleScreen
-  gameScene: NewMap
+  gameScene: Map
 --- !u!114 &226249120
 MonoBehaviour:
   m_ObjectHideFlags: 0
