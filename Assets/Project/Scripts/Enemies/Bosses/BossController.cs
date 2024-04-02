@@ -82,7 +82,6 @@ public abstract class BossController : MonoBehaviour
         }
 
         ChangeAttack(nextAttackId);
-        Debug.Log(nextAttackId);
     }
 
     protected void ChangeAttack(int _attackID)

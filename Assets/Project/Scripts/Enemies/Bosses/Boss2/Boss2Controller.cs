@@ -1,51 +1,80 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 public class Boss2Controller : BossController
 {
     [Space, Header("Boss 2"), SerializeField]
     private Transform arenaMiddlePos;
-    [SerializeField]
-    protected float rotationSpeed;
+    
     [SerializeField]
     protected SpriteRenderer bossMainSR;
     [SerializeField]
     private Transform[] mapBottomCorners;
+    [SerializeField]
+    private Tile defaultTile;
     private Animator animator;
 
 
     [Space, Header("Rock Drop"), SerializeField]
-    protected Transform rockStarterPos;
+    private Transform rockStarterPos;
     [SerializeField]
-    protected float rockStarterPosXOffset;
+    private float rockStarterPosXOffset;
     [SerializeField]
-    protected int rockSize;
+    private int rockSize;
     [SerializeField]
-    protected int rockBorderValue;
+    private int rockBorderValue;
     [SerializeField]
-    protected Tile defaultTile;
+    private Boss2BreakableRockController[] breakableRocks;
     [SerializeField]
-    protected Boss2BreakableRockController[] breakableRocks;
+    private float rockDropDuration;
+    private float rockDropTimeWaited;
     [SerializeField]
-    protected float rockDropDuration;
-    protected float rockDropTimeWaited;
-    [SerializeField]
-    protected float rockCD;
-    protected float rockCDTimeWaited;
+    private float rockCD;
+    private float rockCDTimeWaited;
     [SerializeField]
     private ParticleSystem rockSpawnParticles;
     private Vector2 rockMovementPosition;
     [SerializeField]
-    protected float rockMovementSpeed;
-
+    private float rockMovementSpeed;
+    [SerializeField]
+    protected float rockRotationSpeed;
     private Action startRockDropAction;
     private Action updateRockDropAction;
 
 
+    [Space, Header("Dashes"), SerializeField]
+    private int totalDashesAmount;
+    private int dashesDone;
+    [SerializeField]
+    private float castDuration;
+    [SerializeField]
+    private float castTrackDuration;
+    private float castTimeWaited;
+    [SerializeField]
+    private float dashForce;
 
+    private Action startDashesAction;
+    private Action updateDashesAction;
+
+
+    [Space, Header("Create Breakeable Wall"), SerializeField]
+    private BreakableWallController breakableWallCreate;
+    [SerializeField]
+    private float createBreakableWallDuration;
+    private float createBreakableWallTimeWaited;
+    [SerializeField]
+    private float offsetBetweenCreateBW;
+    [SerializeField]
+    private int breakableWallWidth;
+    private Vector2 createBreakableWallDir;
+    [SerializeField]
+    private float createBreakableWallSpeed;
+    [SerializeField]
+    private float createBreakableWallRotationSpeed;
+    private Action startCreateBreakableWallAction;
+    private Action updateCreateBreakableWallAction;
 
     private void Awake()
     {
@@ -53,7 +82,7 @@ public class Boss2Controller : BossController
         rb2d = GetComponent<Rigidbody2D>();
         rockSpawnParticles.Stop();
     }
-    
+
     void Update()
     {
 
@@ -73,7 +102,16 @@ public class Boss2Controller : BossController
         startActions.Add(startRockDropAction);
         updateRockDropAction += UpdateRockDrop;
         updateActions.Add(updateRockDropAction);
-        
+
+        startDashesAction += StartDashes;
+        startActions.Add(startDashesAction);
+        updateDashesAction += UpdateDashes;
+        updateActions.Add(updateDashesAction);
+
+        startCreateBreakableWallAction += StartCreateBreakableWall;
+        startActions.Add(startCreateBreakableWallAction);
+        updateCreateBreakableWallAction += UpdateCreateBreakableWall;
+        updateActions.Add(updateCreateBreakableWallAction);
 
         onStartPhaseAttacks.Add(Phase.PHASE_1, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_1, updateActions.ToArray());
@@ -101,7 +139,7 @@ public class Boss2Controller : BossController
 
     #region Rock Drop
 
-    protected void StartRockDrop()
+    private void StartRockDrop()
     {
         for (int i = 0; i < breakableRocks.Length; i++)
             breakableRocks[i].gameObject.SetActive(false);
@@ -114,9 +152,11 @@ public class Boss2Controller : BossController
         rockCDTimeWaited = 0;
 
         rockMovementPosition = mapBottomCorners[UnityEngine.Random.Range(0, mapBottomCorners.Length)].position;
+        gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
+
     }
 
-    protected void UpdateRockDrop()
+    private void UpdateRockDrop()
     {
         CameraController.Instance.AddHighTrauma();
         RockMovementBehaviour();
@@ -125,36 +165,41 @@ public class Boss2Controller : BossController
     }
 
     //Movement Behaviour
-    protected void RockMovementBehaviour()
+    private void RockMovementBehaviour()
     {
+        //Comprobar cuanto tiempo ha havido segun la caida de rocas
+        if (rockDropTimeWaited >= rockDropDuration - rockDropDuration / 6) //Si es mayor a una  sexta parte del tiempo total
+        {
+            //Moverse hacia dentro de la zona
+            MoveTo(arenaMiddlePos.position);
+            return;
+        }
+        
+        
         float distanceBetweenCorner = Vector2.Distance(transform.position, rockMovementPosition);
-
         if (distanceBetweenCorner < 1)
-        {
             LookMiddlePos();
-        }
         else
-        {
-            MoveToCorner();
-        }
+            MoveTo(rockMovementPosition);        
+
     }
-    protected void MoveToCorner()
+    private void MoveTo(Vector2 _moveToPos)
     {
         //Mover a la esquina
-        Vector2 dirToLook = (rockMovementPosition - (Vector2)transform.position).normalized;
-        LookForwardDirection(dirToLook);
+        Vector2 dirToLook = (_moveToPos - (Vector2)transform.position).normalized;
+        LookForwardDirection(dirToLook, rockRotationSpeed);
         rb2d.velocity = transform.right * rockMovementSpeed;
     }
-    protected void LookMiddlePos()
+    private void LookMiddlePos()
     {
         rb2d.velocity = Vector2.zero;
 
         Vector2 dirToLook = (arenaMiddlePos.position - transform.position).normalized;
-        LookForwardDirection(dirToLook);
+        LookForwardDirection(dirToLook, rockRotationSpeed);
     }
 
 
-    protected void RockCD()
+    private void RockCD()
     {
         rockCDTimeWaited += Time.deltaTime;
 
@@ -164,7 +209,7 @@ public class Boss2Controller : BossController
             DropRock(GetUnusedRock());
         }
     }
-    protected int GetUnusedRock()
+    private int GetUnusedRock()
     {
         for (int i = 0; i < breakableRocks.Length; i++)
         {
@@ -173,7 +218,7 @@ public class Boss2Controller : BossController
         }
         return 0;
     }
-    protected void DropRock(int _rockId)
+    private void DropRock(int _rockId)
     {
         //Cambiarle la posicion
         Vector2 randomPos = rockStarterPos.position + new Vector3(UnityEngine.Random.Range(-rockStarterPosXOffset, rockStarterPosXOffset), 0);
@@ -192,7 +237,7 @@ public class Boss2Controller : BossController
         breakableRocks[_rockId].rb2d.angularVelocity = randomRotationForce;
 
     }
-    protected void ResetRockTiles(Tilemap _tilemap)
+    private void ResetRockTiles(Tilemap _tilemap)
     {
         for (int i = -rockSize; i < rockSize + 1; i++)
         {
@@ -208,30 +253,127 @@ public class Boss2Controller : BossController
         }
     }
 
-    protected void CheckIfEndRockDrop()
+    private void CheckIfEndRockDrop()
     {
         rockDropTimeWaited += Time.deltaTime;
         
         if (rockDropTimeWaited >= rockDropDuration)
         {
             //Acabar de tirar rocas
-            //GenerateRandomAttack();
+            rockSpawnParticles.Stop();
+            GenerateRandomAttack();
         }
     }
     #endregion
 
     #region Dashes
-
-    #endregion
-
-    #region 
-
-    #endregion
-
-
-    protected void LookForwardDirection(Vector2 _posToLook)
+    private void StartDashes()
     {
-        transform.right = Vector2.Lerp(transform.right, _posToLook.normalized, Time.deltaTime * rotationSpeed);
+        dashesDone = 0;
+        castTimeWaited = 0;
+        rb2d.velocity = Vector2.zero;
+        gameObject.layer = LayerMask.NameToLayer("Boss");
+
+    }
+    private void UpdateDashes()
+    {
+        if (rb2d.velocity.magnitude < 3f)
+        {
+            if (dashesDone >= totalDashesAmount)
+            {
+                GenerateRandomAttack();
+                return;
+            }
+            //Volver a hacer un dash
+            CastDash();
+        }
+    }
+    private void CastDash()
+    {
+        castTimeWaited += Time.deltaTime;
+
+        if (castTimeWaited < castTrackDuration)
+        {
+            //Mirar hacia el player
+            Vector2 targetDir = (PlayerManager.Instance.player.transform.position - transform.position).normalized;
+            LookForwardDirection(targetDir, rockRotationSpeed);
+            return;
+        }
+
+        if (castTimeWaited < castDuration)
+            return;
+
+        //EmpezarDash
+        DoDash();
+    }
+    private void DoDash()
+    {
+        rb2d.AddForce(transform.right * dashForce, ForceMode2D.Impulse);
+        dashesDone++;
+        castTimeWaited = 0;
+    }
+
+    #endregion
+
+    #region CreateBreakableWall
+    private void StartCreateBreakableWall()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Boss");
+
+        createBreakableWallTimeWaited = 0;
+        createBreakableWallDir = transform.right;
+    }
+    private void UpdateCreateBreakableWall()
+    {
+        //Mover
+        LookForwardDirection(createBreakableWallDir, createBreakableWallRotationSpeed);
+        rb2d.velocity = createBreakableWallDir * createBreakableWallSpeed;
+        //Crear el muro detras suyo
+        CreateBreakableWall();
+        //Comprobar si acaba el ataque
+        CheckIfStopCreatingBreakableWalls();
+    }
+
+    private void CreateBreakableWall()
+    {
+        breakableWallCreate.ChangeTileContent(transform.position, defaultTile);
+
+        for (int i = 1; i < breakableWallWidth; i++)
+        {
+            int multiplier = (int)Mathf.Ceil(i / 2);
+            int sign = i % 2 == 0 ? 1 : -1;
+            breakableWallCreate.ChangeTileContent(
+                transform.position + transform.up * offsetBetweenCreateBW * sign * multiplier,
+                defaultTile
+                );
+        }
+    }
+
+    private void CheckIfStopCreatingBreakableWalls()
+    {
+        createBreakableWallTimeWaited += Time.deltaTime;
+
+        if (createBreakableWallTimeWaited >= createBreakableWallDuration)
+        {
+            //GenerateRandomAttack();
+        }
+    }
+
+
+    private void CollisionWithWall(Collision2D _collision)
+    {
+        if (currentAttackID != 2)
+            return;
+
+        createBreakableWallDir = (createBreakableWallDir + _collision.contacts[0].normal * 3).normalized;
+    }
+
+    #endregion
+
+
+    private void LookForwardDirection(Vector2 _posToLook, float _rotationSpeed)
+    {
+        transform.right = Vector2.Lerp(transform.right, _posToLook.normalized, Time.deltaTime * _rotationSpeed);
 
         bossMainSR.flipY = Vector2.Dot(transform.right, Vector2.right) < 0;
     }
@@ -261,6 +403,12 @@ public class Boss2Controller : BossController
         {
             GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
         }
+
+        if (collision.collider.CompareTag("Map"))
+        {
+            CollisionWithWall(collision);
+        }
+
     }
 
 
