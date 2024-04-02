@@ -31,7 +31,7 @@ public abstract class FloatingItem : MonoBehaviour
     }
     protected void CheckGetDistance(Transform _target)
     {
-        if (Vector2.Distance(PlayerManager.Instance.player.transform.position, transform.position) <= minDistanceToGetItem)
+        if (Vector2.Distance(_target.position, transform.position) <= minDistanceToGetItem)
         {
             ObtainAction();
         }

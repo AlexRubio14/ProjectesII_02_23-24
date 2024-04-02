@@ -79,5 +79,4 @@ public class BreakableWallController : InteractableObject
         Vector2 gridOffset = new Vector2(breakableWallGrid.cellSize.x, breakableWallGrid.cellSize.y);
         return gridOffset;
     }
-
 }

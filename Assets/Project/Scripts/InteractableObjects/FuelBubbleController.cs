@@ -9,8 +9,9 @@ public class FuelBubbleController : FloatingItem
 
     private Animator animator;
 
-    private void Start()
+    protected void Awake()
     {
+        base.Awake();
         animator = GetComponent<Animator>();
     }
 

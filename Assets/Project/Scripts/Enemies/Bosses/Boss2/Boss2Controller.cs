@@ -1,10 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 public class Boss2Controller : BossController
 {
+    [Space, Header("Boss 2"), SerializeField]
+    private Transform arenaMiddlePos;
+    [SerializeField]
+    protected float rotationSpeed;
+    [SerializeField]
+    protected SpriteRenderer bossMainSR;
+    [SerializeField]
+    private Transform[] mapBottomCorners;
+    private Animator animator;
 
 
     [Space, Header("Rock Drop"), SerializeField]
@@ -27,18 +37,20 @@ public class Boss2Controller : BossController
     protected float rockCDTimeWaited;
     [SerializeField]
     private ParticleSystem rockSpawnParticles;
+    private Vector2 rockMovementPosition;
+    [SerializeField]
+    protected float rockMovementSpeed;
 
     private Action startRockDropAction;
     private Action updateRockDropAction;
 
 
-    private Animator animator;
 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
+        rb2d = GetComponent<Rigidbody2D>();
         rockSpawnParticles.Stop();
     }
     
@@ -100,14 +112,48 @@ public class Boss2Controller : BossController
 
         rockDropTimeWaited = 0;
         rockCDTimeWaited = 0;
+
+        rockMovementPosition = mapBottomCorners[UnityEngine.Random.Range(0, mapBottomCorners.Length)].position;
     }
 
     protected void UpdateRockDrop()
     {
         CameraController.Instance.AddHighTrauma();
+        RockMovementBehaviour();
         RockCD();
         CheckIfEndRockDrop();
     }
+
+    //Movement Behaviour
+    protected void RockMovementBehaviour()
+    {
+        float distanceBetweenCorner = Vector2.Distance(transform.position, rockMovementPosition);
+
+        if (distanceBetweenCorner < 1)
+        {
+            LookMiddlePos();
+        }
+        else
+        {
+            MoveToCorner();
+        }
+    }
+    protected void MoveToCorner()
+    {
+        //Mover a la esquina
+        Vector2 dirToLook = (rockMovementPosition - (Vector2)transform.position).normalized;
+        LookForwardDirection(dirToLook);
+        rb2d.velocity = transform.right * rockMovementSpeed;
+    }
+    protected void LookMiddlePos()
+    {
+        rb2d.velocity = Vector2.zero;
+
+        Vector2 dirToLook = (arenaMiddlePos.position - transform.position).normalized;
+        LookForwardDirection(dirToLook);
+    }
+
+
     protected void RockCD()
     {
         rockCDTimeWaited += Time.deltaTime;
@@ -116,17 +162,6 @@ public class Boss2Controller : BossController
         {
             rockCDTimeWaited = 0;
             DropRock(GetUnusedRock());
-        }
-    }
-
-    protected void CheckIfEndRockDrop()
-    {
-        rockDropTimeWaited += Time.deltaTime;
-        
-        if (rockDropTimeWaited >= rockDropDuration)
-        {
-            //Acabar de tirar rocas
-            //GenerateRandomAttack();
         }
     }
     protected int GetUnusedRock()
@@ -173,7 +208,16 @@ public class Boss2Controller : BossController
         }
     }
 
-
+    protected void CheckIfEndRockDrop()
+    {
+        rockDropTimeWaited += Time.deltaTime;
+        
+        if (rockDropTimeWaited >= rockDropDuration)
+        {
+            //Acabar de tirar rocas
+            //GenerateRandomAttack();
+        }
+    }
     #endregion
 
     #region Dashes
@@ -185,6 +229,12 @@ public class Boss2Controller : BossController
     #endregion
 
 
+    protected void LookForwardDirection(Vector2 _posToLook)
+    {
+        transform.right = Vector2.Lerp(transform.right, _posToLook.normalized, Time.deltaTime * rotationSpeed);
+
+        bossMainSR.flipY = Vector2.Dot(transform.right, Vector2.right) < 0;
+    }
 
     public override void GetDamage(float _damage)
     {
@@ -192,14 +242,7 @@ public class Boss2Controller : BossController
 
         UpdateHealthBar();
     }
-    protected void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Bullet"))
-        {
-            GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
-        }
-    }
-
+    
     #region Die
     protected override void StartDie()
     {
@@ -211,6 +254,14 @@ public class Boss2Controller : BossController
         
     }
     #endregion
+
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Bullet"))
+        {
+            GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
+        }
+    }
 
 
     private void OnDrawGizmosSelected()
