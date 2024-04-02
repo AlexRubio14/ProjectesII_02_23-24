@@ -62,6 +62,8 @@ public class Boss2Controller : BossController
     [Space, Header("Create Breakeable Wall"), SerializeField]
     private BreakableWallController breakableWallCreate;
     [SerializeField]
+    private Transform posToSpawnBreakeableWall;
+    [SerializeField]
     private float createBreakableWallDuration;
     private float createBreakableWallTimeWaited;
     [SerializeField]
@@ -336,14 +338,14 @@ public class Boss2Controller : BossController
 
     private void CreateBreakableWall()
     {
-        breakableWallCreate.ChangeTileContent(transform.position, defaultTile);
+        breakableWallCreate.ChangeTileContent(posToSpawnBreakeableWall.position, defaultTile);
 
         for (int i = 1; i < breakableWallWidth; i++)
         {
             int multiplier = (int)Mathf.Ceil(i / 2);
             int sign = i % 2 == 0 ? 1 : -1;
             breakableWallCreate.ChangeTileContent(
-                transform.position + transform.up * offsetBetweenCreateBW * sign * multiplier,
+                (Vector2)posToSpawnBreakeableWall.position + createBreakableWallDir * offsetBetweenCreateBW * sign * multiplier,
                 defaultTile
                 );
         }
@@ -355,7 +357,7 @@ public class Boss2Controller : BossController
 
         if (createBreakableWallTimeWaited >= createBreakableWallDuration)
         {
-            //GenerateRandomAttack();
+            GenerateRandomAttack();
         }
     }
 
@@ -375,7 +377,10 @@ public class Boss2Controller : BossController
     {
         transform.right = Vector2.Lerp(transform.right, _posToLook.normalized, Time.deltaTime * _rotationSpeed);
 
-        bossMainSR.flipY = Vector2.Dot(transform.right, Vector2.right) < 0;
+
+        Quaternion newRotation = new Quaternion();
+        newRotation.x = Vector2.Dot(transform.right, Vector2.right) < 0 ? 180 : 0;
+        bossMainSR.transform.localRotation = newRotation;
     }
 
     public override void GetDamage(float _damage)
