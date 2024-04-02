@@ -8,7 +8,6 @@ public class SelectTpsManager : MonoBehaviour
     [field: SerializeField]
     public List<TpObject> tpList { get; private set; }
 
-    [SerializeField]
     private int idToTeleport;
 
    
