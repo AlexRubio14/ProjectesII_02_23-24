@@ -385,8 +385,6 @@ public class Boss1Controller : BossController
         float bubbleSpawnForce = 150f;
 
         bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
-        //Debug.DrawLine(_collision.contacts[0].point, _collision.contacts[0].point + pointToCollisionObject * spawnBubbleOffset);
-        //Debug.Break();
 
     }
 

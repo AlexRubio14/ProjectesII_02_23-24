@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -11,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        //Si no existe el player que se borre
         if (player == null)
         {
             enabled = false;
@@ -18,7 +17,7 @@ public class PlayerManager : MonoBehaviour
             return;
 
             
-        }else if (Instance != null && Instance != this)
+        }else if (Instance != null && Instance != this) //Si existe comprobar que no haya una instancia del singletone
         {
             Instance.enabled = false;
             Destroy(Instance);

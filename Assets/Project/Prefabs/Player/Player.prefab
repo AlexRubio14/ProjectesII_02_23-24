@@ -15282,7 +15282,7 @@ MonoBehaviour:
   locketUpgradeSprite: {fileID: 21300000, guid: ad3edb4bfe23c734da74e1a4f9c8decb, type: 3}
   boostMovementSpeed: 55
   boostParticles: {fileID: 9202339918048795296}
-  drillMovementSlow: 20
+  drillMovementSlow: 0
   drillSprite: {fileID: 702809251199840510}
   lightUpgrade: {fileID: 9096134186405275553}
   shrinkSizeAudioClip: {fileID: 8300000, guid: 2eea572990c3d5648bfb7a331354acd6, type: 3}

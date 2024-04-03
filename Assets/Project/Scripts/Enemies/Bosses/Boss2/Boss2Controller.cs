@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,7 +16,8 @@ public class Boss2Controller : BossController
     [SerializeField]
     private Tile defaultTile;
     private Animator animator;
-
+    [SerializeField]
+    private GameObject bubblePrefab;
 
     [Space, Header("Rock Drop"), SerializeField]
     private Transform rockStarterPos;
@@ -54,6 +56,12 @@ public class Boss2Controller : BossController
     private float castTimeWaited;
     [SerializeField]
     private float dashForce;
+    [SerializeField]
+    private int bubblesPerDash;
+    [SerializeField]
+    private float minBubblesDashDot;
+    [SerializeField]
+    private float dashCollisionRotationAngle;
 
     private Action startDashesAction;
     private Action updateDashesAction;
@@ -286,6 +294,8 @@ public class Boss2Controller : BossController
                 GenerateRandomAttack();
                 return;
             }
+
+            rb2d.angularVelocity = 0;
             //Volver a hacer un dash
             CastDash();
         }
@@ -313,6 +323,31 @@ public class Boss2Controller : BossController
         rb2d.AddForce(transform.right * dashForce, ForceMode2D.Impulse);
         dashesDone++;
         castTimeWaited = 0;
+
+        for (int i = 0; i < bubblesPerDash; i++)
+        {
+            Rigidbody2D bubbleRb2d = Instantiate(bubblePrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+            Vector2 randomDirection = -transform.right;
+
+            for (int j = 0; j < 10; j++)
+            {
+                float x = UnityEngine.Random.Range(-1f, 1f);
+                float y = UnityEngine.Random.Range(-1f, 1f);
+                Vector2 randomDirTemp = new Vector2(x, y).normalized;
+
+                if (Vector2.Dot(randomDirTemp, -transform.right) > minBubblesDashDot)
+                {
+                    randomDirection = randomDirTemp;
+                    break;
+                }
+            }
+
+
+            float bubbleSpawnForce = 150f;
+
+            bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
+        }
+        
     }
 
     #endregion
@@ -340,12 +375,19 @@ public class Boss2Controller : BossController
     {
         breakableWallCreate.ChangeTileContent(posToSpawnBreakeableWall.position, defaultTile);
 
+        Vector2 direction = transform.up;
         for (int i = 1; i < breakableWallWidth; i++)
         {
             int multiplier = (int)Mathf.Ceil(i / 2);
             int sign = i % 2 == 0 ? 1 : -1;
+
             breakableWallCreate.ChangeTileContent(
-                (Vector2)posToSpawnBreakeableWall.position + createBreakableWallDir * offsetBetweenCreateBW * sign * multiplier,
+                (Vector2)transform.position + direction * offsetBetweenCreateBW * sign * multiplier,
+                defaultTile
+                );
+
+            breakableWallCreate.ChangeTileContent(
+                (Vector2)posToSpawnBreakeableWall.position + direction * offsetBetweenCreateBW * sign * multiplier,
                 defaultTile
                 );
         }
@@ -364,10 +406,21 @@ public class Boss2Controller : BossController
 
     private void CollisionWithWall(Collision2D _collision)
     {
-        if (currentAttackID != 2)
-            return;
+        switch (currentAttackID)
+        {
+            case 1:
+                float randomAgle = UnityEngine.Random.Range(-dashCollisionRotationAngle, dashCollisionRotationAngle);
+                rb2d.angularVelocity = randomAgle;
+                break;
+            case 2:
+                createBreakableWallDir = (createBreakableWallDir + _collision.contacts[0].normal * 3).normalized;
+                transform.right = createBreakableWallDir;
+                break;
+            default:
+                break;
+        }
 
-        createBreakableWallDir = (createBreakableWallDir + _collision.contacts[0].normal * 3).normalized;
+        
     }
 
     #endregion
