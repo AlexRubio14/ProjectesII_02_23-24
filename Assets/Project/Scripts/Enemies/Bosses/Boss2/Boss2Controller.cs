@@ -105,14 +105,11 @@ public class Boss2Controller : BossController
     private float timeToEnrockLayeringWaited;
 
     [SerializeField]
-    private GameObject pickeableItemPrefab;
-    [SerializeField]
-    private ItemObject rewardObject;
+    private GameObject rewardObject;
 
     [SerializeField]
     private Tilemap deadEnrockTilemap;
     private CircleCollider2D circleCollider;
-
 
 
 
@@ -515,7 +512,9 @@ public class Boss2Controller : BossController
     {
         timeToEnrockWaited += Time.deltaTime;
 
-        Debug.Log("Enrocking");
+        Vector2 dirToMiddlePos = arenaMiddlePos.position - transform.position;
+        rb2d.velocity = dirToMiddlePos;
+        LookForwardDirection(dirToMiddlePos.normalized, rockRotationSpeed);
 
         if (timeToEnrock <= timeToEnrockWaited)
         {
@@ -524,8 +523,6 @@ public class Boss2Controller : BossController
             rb2d.velocity = Vector2.zero;
             rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
 
-            //Mirar Recto
-            LookForwardDirection(Vector2.right, 1000000);
 
             //Limpiar las rocas a su alrededor del createBreakableWall
             Tilemap breakableWallCreateTilemap = breakableWallCreate.GetComponent<Tilemap>();
@@ -541,10 +538,6 @@ public class Boss2Controller : BossController
                     }
                 }
             }
-            //Cambiar el sorting layer de todo
-            bossMainSR.sortingLayerName = "Map";
-            finRenderer.sortingLayerName = "Map";
-            tailRenderer.sortingLayerName = "Map";
         }
     }
 
@@ -554,9 +547,6 @@ public class Boss2Controller : BossController
 
         timeToEnrockLayeringWaited = Mathf.Clamp(timeToEnrockLayeringWaited, 0, enrockSize);
         int loopsToDraw = (int)(timeToEnrockLayeringWaited / timeToEnrockLayering);
-
-
-        deadEnrockTilemap.SetTile(new Vector3Int(0, 0, 0), defaultTile);
 
         for (int i = -loopsToDraw; i < loopsToDraw; i++)
         {
@@ -574,11 +564,16 @@ public class Boss2Controller : BossController
         }
 
 
-        if (loopsToDraw == enrockSize)
+        if (loopsToDraw >= enrockSize)
         {
             //Acaba la muerte
-            Debug.Log("100% morido");
-            enabled = false;   
+            bossMainSR.enabled = false;
+            finRenderer.enabled = false;
+            tailRenderer.enabled = false;
+            enabled = false;
+
+            //Activar item reward
+            rewardObject.SetActive(true);
         }
 
     }

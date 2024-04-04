@@ -138,7 +138,7 @@ public class DrillController : MonoBehaviour
         int totalHits = 0;
         foreach (RaycastHit2D hit in _hits)
         {
-            BreakableWallController breakableWall = hit.rigidbody.GetComponent<BreakableWallController>();
+            BreakableWallController breakableWall = hit.collider.GetComponent<BreakableWallController>();
             if (breakableWall.isHide)
             {
                 breakableWall = null;

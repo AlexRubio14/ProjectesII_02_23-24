@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -15,7 +13,7 @@ public class PickableItemController : FloatingItem
 
     private void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = c_currentItem.PickableSprite;
+        GetComponentInChildren<SpriteRenderer>().sprite = c_currentItem.PickableSprite;
         GetComponentInChildren<Light2D>().color = c_currentItem.EffectsColor;
     }  
 
@@ -35,8 +33,13 @@ public class PickableItemController : FloatingItem
         Destroy(gameObject);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        animator.SetTrigger("Collision");
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.CompareTag("Player"))
             canChase = true;
     }

@@ -15,9 +15,12 @@ public abstract class FloatingItem : MonoBehaviour
     protected AudioClip collectClip;
 
     protected Rigidbody2D rb2d;
+    protected Animator animator;
+
     protected void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
     protected void FixedUpdate()
     {

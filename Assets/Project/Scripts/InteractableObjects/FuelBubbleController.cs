@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FuelBubbleController : FloatingItem
@@ -7,12 +5,9 @@ public class FuelBubbleController : FloatingItem
     [Space, Header("Bubble"), SerializeField]
     private float fuelRecover;
 
-    private Animator animator;
-
-    protected void Awake()
+    private void Start()
     {
-        base.Awake();
-        animator = GetComponent<Animator>();
+        animator.SetBool("IsAnimated", true);
     }
 
     protected override void ChaseAction()
