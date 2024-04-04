@@ -26,7 +26,8 @@ public class Boss1Controller : BossController
     private LayerMask trackerParticlesLayer;
     [SerializeField]
     private GameObject bubblePrefab;
-
+    [SerializeField]
+    private GameObject crystralDrop;
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
     private int totalDashesPerAttack;
@@ -555,6 +556,30 @@ public class Boss1Controller : BossController
         else //Es el cuerpo
             tail[currentID].ExplodeBodyPart();
 
+    }
+
+    public void CreateCrystalDrop()
+    {
+
+        crystralDrop.GetComponent<CircleCollider2D>().enabled = true;
+        crystralDrop.GetComponentInChildren<CircleCollider2D>().enabled = true;
+
+        Rigidbody2D crystalRb2d =  crystralDrop.GetComponent<Rigidbody2D>();
+
+        crystalRb2d.bodyType = RigidbodyType2D.Dynamic;
+        float impulseForce = 10;
+        crystalRb2d.AddForce(transform.up * impulseForce, ForceMode2D.Impulse);
+
+        CameraController.Instance.AddHighTrauma();
+    }
+
+    public void PlayParticles()
+    {
+        spawnTrackerParticles.Play();
+    }
+    public void StopParticles()
+    {
+        spawnTrackerParticles.Stop();
     }
     #endregion
 

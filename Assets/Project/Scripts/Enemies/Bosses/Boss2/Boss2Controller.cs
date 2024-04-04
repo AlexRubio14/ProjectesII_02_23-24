@@ -555,7 +555,6 @@ public class Boss2Controller : BossController
                 if (Mathf.Abs(i) + Mathf.Abs(j) < enrockValue)
                 {
                     Vector3Int tilePos = new Vector3Int(i, j, 0);
-                    Debug.Log(tilePos);
                     deadEnrockTilemap.SetTile(tilePos, defaultTile);
                 }
 
@@ -577,9 +576,6 @@ public class Boss2Controller : BossController
         }
 
     }
-
-
-
     #endregion
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -595,7 +591,6 @@ public class Boss2Controller : BossController
         }
 
     }
-
 
     private void OnDrawGizmosSelected()
     {
