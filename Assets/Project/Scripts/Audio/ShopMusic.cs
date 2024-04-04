@@ -19,8 +19,6 @@ public class ShopMusic : MonoBehaviour
         }
 
         instance = this;
-
-        DontDestroyOnLoad(instance);
     }
 
     public void PlayMusic()
