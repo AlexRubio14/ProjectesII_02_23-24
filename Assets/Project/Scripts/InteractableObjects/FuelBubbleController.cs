@@ -44,6 +44,11 @@ public class FuelBubbleController : FloatingItem
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("BreakableWall"))
+        {
+            Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+            return;
+        }
         animator.SetTrigger("Collision");
     }
 }

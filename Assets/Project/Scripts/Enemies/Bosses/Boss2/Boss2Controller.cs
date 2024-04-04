@@ -67,10 +67,10 @@ public class Boss2Controller : BossController
     private Action updateDashesAction;
 
 
-    [Space, Header("Create Breakeable Wall"), SerializeField]
+    [Space, Header("Create Breakable Wall"), SerializeField]
     private BreakableWallController breakableWallCreate;
     [SerializeField]
-    private Transform posToSpawnBreakeableWall;
+    private Transform posToSpawnBreakableWall;
     [SerializeField]
     private float createBreakableWallDuration;
     private float createBreakableWallTimeWaited;
@@ -86,11 +86,43 @@ public class Boss2Controller : BossController
     private Action startCreateBreakableWallAction;
     private Action updateCreateBreakableWallAction;
 
+    [Space, Header("Die"), SerializeField]
+    private SpriteRenderer finRenderer;
+    [SerializeField]
+    private SpriteRenderer tailRenderer;
+
+    [SerializeField]
+    private float timeToEnrock;
+    private float timeToEnrockWaited;
+
+    [SerializeField]
+    private int enrockSize;
+    [SerializeField]
+    private int enrockValue;
+
+    [SerializeField]
+    private float timeToEnrockLayering;
+    private float timeToEnrockLayeringWaited;
+
+    [SerializeField]
+    private GameObject pickeableItemPrefab;
+    [SerializeField]
+    private ItemObject rewardObject;
+
+    [SerializeField]
+    private Tilemap deadEnrockTilemap;
+    private CircleCollider2D circleCollider;
+
+
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
         rockSpawnParticles.Stop();
+
     }
 
     void Update()
@@ -373,7 +405,7 @@ public class Boss2Controller : BossController
 
     private void CreateBreakableWall()
     {
-        breakableWallCreate.ChangeTileContent(posToSpawnBreakeableWall.position, defaultTile);
+        breakableWallCreate.ChangeTileContent(posToSpawnBreakableWall.position, defaultTile);
 
         Vector2 direction = transform.up;
         for (int i = 1; i < breakableWallWidth; i++)
@@ -387,7 +419,7 @@ public class Boss2Controller : BossController
                 );
 
             breakableWallCreate.ChangeTileContent(
-                (Vector2)posToSpawnBreakeableWall.position + direction * offsetBetweenCreateBW * sign * multiplier,
+                (Vector2)posToSpawnBreakableWall.position + direction * offsetBetweenCreateBW * sign * multiplier,
                 defaultTile
                 );
         }
@@ -446,13 +478,113 @@ public class Boss2Controller : BossController
     #region Die
     protected override void StartDie()
     {
-        
+        timeToEnrockWaited = 0;
+        timeToEnrockLayeringWaited = 0;
+
+
+        //Parar las particulas del spawn
+        rockSpawnParticles.Stop();
+
+
+        rockDropTimeWaited = 0;
+        rockCDTimeWaited = 0;
+        gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
+
+        circleCollider.enabled = false;
+
     }
 
     protected override void UpdateDie()
     {
-        
+        DieBehaviour();
     }
+
+    private void DieBehaviour()
+    {
+        if (timeToEnrock > timeToEnrockWaited)
+        {
+            Enrock();
+        }
+        else
+        {
+            EnrockLayering();
+        }
+    }
+
+    private void Enrock() 
+    {
+        timeToEnrockWaited += Time.deltaTime;
+
+        Debug.Log("Enrocking");
+
+        if (timeToEnrock <= timeToEnrockWaited)
+        {
+            //Ultimo frame moviendose
+
+            rb2d.velocity = Vector2.zero;
+            rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+
+            //Mirar Recto
+            LookForwardDirection(Vector2.right, 1000000);
+
+            //Limpiar las rocas a su alrededor del createBreakableWall
+            Tilemap breakableWallCreateTilemap = breakableWallCreate.GetComponent<Tilemap>();
+            for (int i = -enrockSize; i < enrockSize + 1; i++)
+            {
+                for (int j = -enrockSize; j < enrockSize + 1; j++)
+                {
+                    if (Mathf.Abs(i) + Mathf.Abs(j) < enrockValue)
+                    {
+                        //Puedo poner trozo de piedra
+                        Vector3Int tilePos = new Vector3Int(i, j, 0);
+                        breakableWallCreateTilemap.SetTile(tilePos, null);
+                    }
+                }
+            }
+            //Cambiar el sorting layer de todo
+            bossMainSR.sortingLayerName = "Map";
+            finRenderer.sortingLayerName = "Map";
+            tailRenderer.sortingLayerName = "Map";
+        }
+    }
+
+    private void EnrockLayering()
+    {
+        timeToEnrockLayeringWaited += Time.deltaTime;
+
+        timeToEnrockLayeringWaited = Mathf.Clamp(timeToEnrockLayeringWaited, 0, enrockSize);
+        int loopsToDraw = (int)(timeToEnrockLayeringWaited / timeToEnrockLayering);
+
+
+        deadEnrockTilemap.SetTile(new Vector3Int(0, 0, 0), defaultTile);
+
+        for (int i = -loopsToDraw; i < loopsToDraw; i++)
+        {
+            for (int j = -loopsToDraw; j < loopsToDraw; j++)
+            {
+                if (Mathf.Abs(i) + Mathf.Abs(j) < enrockValue)
+                {
+                    Vector3Int tilePos = new Vector3Int(i, j, 0);
+                    Debug.Log(tilePos);
+                    deadEnrockTilemap.SetTile(tilePos, defaultTile);
+                }
+
+            }
+            
+        }
+
+
+        if (loopsToDraw == enrockSize)
+        {
+            //Acaba la muerte
+            Debug.Log("100% morido");
+            enabled = false;   
+        }
+
+    }
+
+
+
     #endregion
 
     protected void OnCollisionEnter2D(Collision2D collision)

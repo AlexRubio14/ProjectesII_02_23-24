@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28489ea54bd1dd4c85ab4a7d384faf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelIncrement: 10.1
+  fuelIncrement: 100.1
   healingClip: {fileID: 8300000, guid: 1c5cfcbe38b9b4e4daeb342494f00b05, type: 3}
 --- !u!114 &8356643065634414369
 MonoBehaviour:
@@ -437,10 +437,7 @@ MonoBehaviour:
   controlHintPivot:
   - {fileID: 2280407530471977184}
   placeParticles: 0
-  tpParticles: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
-  timeToGoHub: 0.7
-  timeToStopParticles: 0.7
-  teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
+  fastTravelCanvas: {fileID: 0}
 --- !u!61 &6824204765675086956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -727,6 +724,7 @@ MonoBehaviour:
   menuNavegation: {fileID: 0}
   tpMenu: {fileID: 1141515428714949223}
   menuMapController: {fileID: 2529741271683249716}
+  resumeAction: {fileID: 0}
 --- !u!1 &1141515428714949223 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 762157163521775155, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
