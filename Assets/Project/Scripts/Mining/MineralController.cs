@@ -47,7 +47,7 @@ public class MineralController : InteractableObject
             boxCollider.size = Vector2.one * 0.1f;
             boxCollider.offset = originalBoxOffset;
         }
-        else
+        else if(spriteRenderer)
         {
             if (isBeta)
                 spriteRenderer.sprite = currentItem.BetaSprite;
