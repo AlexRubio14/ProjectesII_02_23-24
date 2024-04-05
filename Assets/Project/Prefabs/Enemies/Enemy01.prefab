@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1407661151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 41484e76c00e21448b0c8850faea597b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -590,7 +590,7 @@ MonoBehaviour:
   knockbackRotation: 1
   knockbackDuration: 0.05
   c_currentDrop: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-  c_pickableItemPrefab: {fileID: 5688611432231651215, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  c_pickableItemPrefab: {fileID: 6678534543415543241, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: f6f5e2b1a48a6cc42a2761062a0f47f5, type: 3}
   showGizmos: 0

@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
     private SizeUpgradeController sizeUpgrade;
     private UpgradeSelector upgradeSelector;
 
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -343,7 +344,7 @@ public class PlayerController : MonoBehaviour
 
             PickableItemController currItem = Instantiate(pickableItemPrefab, spawnPos, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.c_currentItem = _objectType;
+            currItem.currentItem = _objectType;
             currItem.followPlayer = false;
 
             float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);
@@ -550,7 +551,9 @@ public class PlayerController : MonoBehaviour
         rb2d.angularVelocity = 0.0f;
     }
 
-
+    
+    
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))

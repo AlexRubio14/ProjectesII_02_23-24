@@ -145,7 +145,7 @@ public abstract class Enemy : EnemyIA, IHealth
     {
         PickableItemController currItem = Instantiate(c_pickableItemPrefab, transform.position, Quaternion.identity).GetComponent<PickableItemController>();
 
-        currItem.c_currentItem = c_currentDrop;
+        currItem.currentItem = c_currentDrop;
 
         float randomX = Random.Range(-1, 2);
         float randomY = Random.Range(-1, 2);

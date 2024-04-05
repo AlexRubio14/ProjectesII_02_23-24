@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 public class PickableItemController : FloatingItem
 {
     [Space, Header("PickableItem"), SerializeField]
-    public ItemObject c_currentItem;
+    public ItemObject currentItem;
 
     [HideInInspector]
     public bool followPlayer = true;
@@ -13,8 +13,8 @@ public class PickableItemController : FloatingItem
 
     private void Start()
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = c_currentItem.PickableSprite;
-        GetComponentInChildren<Light2D>().color = c_currentItem.EffectsColor;
+        GetComponentInChildren<SpriteRenderer>().sprite = currentItem.PickableSprite;
+        GetComponentInChildren<Light2D>().color = currentItem.EffectsColor;
     }  
 
     protected override void ChaseAction()
@@ -28,7 +28,7 @@ public class PickableItemController : FloatingItem
     }
     protected override void ObtainAction()
     {
-        InventoryManager.Instance.ChangeRunItemAmount(c_currentItem, 1);
+        InventoryManager.Instance.ChangeRunItemAmount(currentItem, 1);
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
         Destroy(gameObject);
     }

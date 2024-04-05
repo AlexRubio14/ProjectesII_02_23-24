@@ -183,7 +183,7 @@ public class MineryMinigameController : MonoBehaviour
             if (i < currentMineral.MaxItemsToReturn)
             {
                 itemImage.enabled = true;
-                itemImage.sprite = currentMineral.c_currentItem.PickableSprite;
+                itemImage.sprite = currentMineral.currentItem.PickableSprite;
                 itemImage.color = Color.white;
                 mineralsHealth.Add(selectedMineralControler.minerals[i], currentMineral.mineralsHealth[i]);
                 selectedMineralControler.activeMinerals[selectedMineralControler.minerals[i]] = true;
@@ -255,7 +255,7 @@ public class MineryMinigameController : MonoBehaviour
             return;    
         
 
-        InventoryManager.Instance.ChangeRunItemAmount(currentMineral.c_currentItem, 1);
+        InventoryManager.Instance.ChangeRunItemAmount(currentMineral.currentItem, 1);
         selectedMineralControler.selectedMineral.GetComponent<Image>().color = new Color(1,1,1, 0.2f);
         selectedMineralControler.activeMinerals[selectedMineralControler.selectedMineral] = false;
         if (selectedMineralControler.activeMinerals.ContainsValue(true))
@@ -322,7 +322,7 @@ public class MineryMinigameController : MonoBehaviour
     {
         rockBreakBar.value = currentMineral.currentRockHealth;
         if (mineralsHealth.ContainsKey(selectedMineralControler.selectedMineral))
-            selectedMineralControler.selectionIcon.fillAmount = mineralsHealth[selectedMineralControler.selectedMineral] / currentMineral.c_currentItem.BaseMineralHealth;        
+            selectedMineralControler.selectionIcon.fillAmount = mineralsHealth[selectedMineralControler.selectedMineral] / currentMineral.currentItem.BaseMineralHealth;        
     }
     #endregion
 

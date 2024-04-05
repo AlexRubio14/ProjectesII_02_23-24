@@ -256,8 +256,8 @@ public class MineMinigameController : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
-        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.LeftEnergyLevelSize.x, miningItem.c_currentItem.LeftEnergyLevelSize.y));
-        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.RightEnergyLevelSize.x, miningItem.c_currentItem.RightEnergyLevelSize.y));
+        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.currentItem.LeftEnergyLevelSize.x, miningItem.currentItem.LeftEnergyLevelSize.y));
+        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.currentItem.RightEnergyLevelSize.x, miningItem.currentItem.RightEnergyLevelSize.y));
     }
 
     private void CheckAdvanceProgress()
@@ -376,7 +376,7 @@ public class MineMinigameController : MonoBehaviour
         {
             PickableItemController currItem = Instantiate(pickableItemPrefab, miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.c_currentItem = miningItem.c_currentItem;
+            currItem.currentItem = miningItem.currentItem;
 
             float randomX = Random.Range(-1, 2);
             float randomY = Random.Range(-1, 2);
@@ -405,7 +405,7 @@ public class MineMinigameController : MonoBehaviour
     {
         for (int i = 0; i < mineralTypeImages.Length; i++)
         {
-            mineralTypeImages[i].sprite = miningItem.c_currentItem.PickableSprite;
+            mineralTypeImages[i].sprite = miningItem.currentItem.PickableSprite;
         }
     }
 
