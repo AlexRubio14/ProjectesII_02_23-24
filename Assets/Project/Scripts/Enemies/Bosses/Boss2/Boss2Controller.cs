@@ -118,6 +118,8 @@ public class Boss2Controller : BossController
     private float hitColorLerpSpeed;
     private float hitColorLerpProcess;
 
+    private Vector2 pauseSpeed;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -125,6 +127,19 @@ public class Boss2Controller : BossController
         circleCollider = GetComponent<CircleCollider2D>();
         rockSpawnParticles.Stop();
 
+        hitColorLerpProcess = 1;
+    }
+
+    private void OnEnable()
+    {
+        TimeManager.Instance.pauseAction += OnPauseAction;
+        TimeManager.Instance.resumeAction += OnResumeAction;
+    }
+
+    private void OnDisable()
+    {
+        TimeManager.Instance.pauseAction -= OnPauseAction;
+        TimeManager.Instance.resumeAction -= OnResumeAction;
     }
 
     void Update()
@@ -249,7 +264,7 @@ public class Boss2Controller : BossController
 
     private void RockCD()
     {
-        rockCDTimeWaited += Time.deltaTime;
+        rockCDTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         if (rockCDTimeWaited >= rockCD)
         {
@@ -303,7 +318,7 @@ public class Boss2Controller : BossController
 
     private void CheckIfEndRockDrop()
     {
-        rockDropTimeWaited += Time.deltaTime;
+        rockDropTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
         
         if (rockDropTimeWaited >= rockDropDuration)
         {
@@ -346,7 +361,7 @@ public class Boss2Controller : BossController
     }
     private void CastDash()
     {
-        castTimeWaited += Time.deltaTime;
+        castTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         if (castTimeWaited < castTrackDuration)
         {
@@ -443,7 +458,7 @@ public class Boss2Controller : BossController
 
     private void CheckIfStopCreatingBreakableWalls()
     {
-        createBreakableWallTimeWaited += Time.deltaTime;
+        createBreakableWallTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         if (createBreakableWallTimeWaited >= createBreakableWallDuration)
         {
@@ -473,37 +488,6 @@ public class Boss2Controller : BossController
 
     #endregion
 
-
-    private void LookForwardDirection(Vector2 _posToLook, float _rotationSpeed)
-    {
-        transform.right = Vector2.Lerp(transform.right, _posToLook.normalized, Time.deltaTime * _rotationSpeed);
-
-
-        Quaternion newRotation = new Quaternion();
-        newRotation.x = Vector2.Dot(transform.right, Vector2.right) < 0 ? 180 : 0;
-        bossMainSR.transform.localRotation = newRotation;
-    }
-
-    public override void GetDamage(float _damage)
-    {
-        currentHealth -= _damage;
-
-        UpdateHealthBar();
-    }
-    private void CheckHitColor()
-    {
-        if (hitColorLerpProcess >= 1)
-            return;
-
-        hitColorLerpProcess += Time.deltaTime * hitColorLerpSpeed;
-
-        Color lerpColor = Color.Lerp(hitColor, Color.white, hitColorLerpProcess);
-        bossMainSR.color = lerpColor;
-        tailRenderer.color = lerpColor;
-        finRenderer.color = lerpColor;
-        hitColorLerpProcess = Mathf.Clamp01(hitColorLerpProcess);
-
-    }
     #region Die
     protected override void StartDie()
     {
@@ -540,9 +524,9 @@ public class Boss2Controller : BossController
         }
     }
 
-    private void Enrock() 
+    private void Enrock()
     {
-        timeToEnrockWaited += Time.deltaTime;
+        timeToEnrockWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         Vector2 dirToMiddlePos = arenaMiddlePos.position - transform.position;
         rb2d.velocity = dirToMiddlePos;
@@ -575,7 +559,7 @@ public class Boss2Controller : BossController
 
     private void EnrockLayering()
     {
-        timeToEnrockLayeringWaited += Time.deltaTime;
+        timeToEnrockLayeringWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         timeToEnrockLayeringWaited = Mathf.Clamp(timeToEnrockLayeringWaited, 0, enrockSize);
         int loopsToDraw = (int)(timeToEnrockLayeringWaited / timeToEnrockLayering);
@@ -591,7 +575,7 @@ public class Boss2Controller : BossController
                 }
 
             }
-            
+
         }
 
 
@@ -601,14 +585,59 @@ public class Boss2Controller : BossController
             bossMainSR.enabled = false;
             finRenderer.enabled = false;
             tailRenderer.enabled = false;
-            enabled = false;
+            animator.enabled = false;
 
             //Activar item reward
             rewardObject.SetActive(true);
+
+            enabled = false;
         }
 
     }
     #endregion
+
+    private void LookForwardDirection(Vector2 _posToLook, float _rotationSpeed)
+    {
+        transform.right = Vector2.Lerp(transform.right, _posToLook.normalized, Time.deltaTime * _rotationSpeed * TimeManager.Instance.timeParameter);
+
+
+        Quaternion newRotation = new Quaternion();
+        newRotation.x = Vector2.Dot(transform.right, Vector2.right) < 0 ? 180 : 0;
+        bossMainSR.transform.localRotation = newRotation;
+    }
+
+    public override void GetDamage(float _damage)
+    {
+        currentHealth -= _damage;
+
+        UpdateHealthBar();
+    }
+    private void CheckHitColor()
+    {
+        if (hitColorLerpProcess >= 1)
+            return;
+
+        hitColorLerpProcess += Time.deltaTime * hitColorLerpSpeed * TimeManager.Instance.timeParameter;
+
+        Color lerpColor = Color.Lerp(hitColor, Color.white, hitColorLerpProcess);
+        bossMainSR.color = lerpColor;
+        tailRenderer.color = lerpColor;
+        finRenderer.color = lerpColor;
+        hitColorLerpProcess = Mathf.Clamp01(hitColorLerpProcess);
+
+    }
+    
+    private void OnPauseAction()
+    {
+        pauseSpeed = rb2d.velocity;
+        rb2d.velocity = Vector2.zero;
+    }
+
+    private void OnResumeAction()
+    {
+        rb2d.velocity = pauseSpeed;
+    }
+
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {

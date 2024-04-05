@@ -19,7 +19,7 @@ public class BreakableWallController : InteractableObject
         }
         else
         {
-            SetupParticles(vfxUnhideColor);
+            interactableParticles.Stop();
         }
     }
 
@@ -32,7 +32,7 @@ public class BreakableWallController : InteractableObject
     {
         base.UnHide();
 
-        SetupParticles(vfxUnhideColor);
+        interactableParticles.Stop();
 
         breakableWallTilemap.CompressBounds();
 

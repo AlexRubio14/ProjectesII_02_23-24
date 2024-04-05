@@ -118,10 +118,11 @@ MonoBehaviour:
   controlHintPivot:
   - {fileID: 8220210334823721990}
   placeParticles: 1
-  <c_currentItem>k__BackingField: {fileID: 0}
+  <currentItem>k__BackingField: {fileID: 0}
   <MaxItemsToReturn>k__BackingField: 0
   isBeta: 1
   hideSprite: {fileID: 0}
+  fog: {fileID: 4340667900545708042}
   <mineralRockBaseHealth>k__BackingField: 0
 --- !u!61 &7220782329502496194
 BoxCollider2D:
@@ -205,7 +206,7 @@ MonoBehaviour:
   - {x: 0.45841205, y: -0.2284627, z: 0}
   m_ShapePathHash: -1095257861
   m_Mesh: {fileID: 0}
-  m_InstanceId: 218144
+  m_InstanceId: 101562
   m_LocalBounds:
     m_Center: {x: -0.0021694899, y: -0.011515856, z: 0}
     m_Extent: {x: 0.46058154, y: 0.21694684, z: 0}

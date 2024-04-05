@@ -9857,12 +9857,12 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.45
+  m_FalloffIntensity: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.6
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc67b10a2c3b5f34e7530be5774afb96de8369b5c794
+  m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc67b10a2c3b5f34e7530be5774afb96de8369b5c794f3d1b79fa9872134
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -14995,23 +14995,15 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: f37d89aa-045e-4e51-ba33-895c7d5c40ab
-    m_ActionName: NewMineryMinigame/AimLaser
+    m_ActionName: NewMineryMinigame/AimLaser[/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 76b421ef-64e3-41b1-a436-a1b09aaa8438
-    m_ActionName: NewMineryMinigame/ShootRightLaser
+    m_ActionName: NewMineryMinigame/ShootRightLaser[/Mouse/rightButton,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 934eab80-288b-48ae-b6e8-4b9df7b23b2e
-    m_ActionName: NewMineryMinigame/ShootLeftLaser
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 98c5f147-341c-4219-ba24-69b7fbdc4e52
-    m_ActionName: Player/PauseGame[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cc739acf-9549-488b-b91c-61b7b1aaa79b
-    m_ActionName: Menu/ResumeGame[/Keyboard/escape]
+    m_ActionName: NewMineryMinigame/ShootLeftLaser[/Mouse/leftButton,/XInputControllerWindows/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -15113,7 +15105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserDrill: {fileID: 702809251199840510}
-  raysDelimiter: 0.97
+  raysDelimiter: 1.5
   raysDistance: 2.5
   totalRays: 27
   breakableWallLayer:
@@ -15196,7 +15188,7 @@ MonoBehaviour:
   threeSideTileDown: {fileID: 11400000, guid: 192c96603cf271b4e89c661abda11ff2, type: 2}
   threeSideTileRight: {fileID: 11400000, guid: 66affec7bfe66eb45a271571265cc987, type: 2}
   threeSideTileLeft: {fileID: 11400000, guid: 7653edc87985f0c4099c51aeb34c500b, type: 2}
-  showGizmos: 0
+  showGizmos: 1
   drillClip: {fileID: 8300000, guid: 0f0ed528ac6e1454a8f29fc0fa15ba4b, type: 3}
 --- !u!114 &6238323751129512243
 MonoBehaviour:
@@ -16034,13 +16026,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_LightType: 3
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.014
+  m_BlendStyleIndex: 1
+  m_FalloffIntensity: 0.109
   m_Color: {r: 1, g: 0, b: 1, a: 1}
-  m_Intensity: 4
+  m_Intensity: 0.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc67fb0a06315f34e753b10a2c3b61b9d2a4fb96de8369b5c794
+  m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc675f34e753b10a2c3b61b9d2a4fb96de8369b5c794f3d1b79f1fe198f6
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -16056,7 +16048,7 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 41.242718
+  m_PointLightInnerAngle: 30
   m_PointLightOuterAngle: 66.40777
   m_PointLightInnerRadius: 5.3262844
   m_PointLightOuterRadius: 8.04
