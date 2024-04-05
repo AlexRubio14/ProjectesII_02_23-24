@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Boss1BodyController : MonoBehaviour
@@ -38,6 +39,12 @@ public class Boss1BodyController : MonoBehaviour
 
     private Boss1Controller mainBossController;
 
+    [Space, SerializeField]
+    private Color hitColor;
+    [SerializeField]
+    private float hitColorLerpSpeed;
+    private float hitColorLerpProcess;
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -46,6 +53,7 @@ public class Boss1BodyController : MonoBehaviour
         mainBossController = GetComponentInParent<Boss1Controller>();
 
         currentMovementSpeed = baseMovementSpeed;
+        hitColorLerpProcess = 1;
     }
 
     // Update is called once per frame
@@ -53,6 +61,7 @@ public class Boss1BodyController : MonoBehaviour
     {
         ChaseTarget();
         OrientateSprite();
+        CheckHitColor();
     }
 
 
@@ -82,6 +91,19 @@ public class Boss1BodyController : MonoBehaviour
             spriteRenderer.flipY = true;
         
     }
+    private void CheckHitColor()
+    {
+        if (hitColorLerpProcess >= 1)
+            return;
+
+        hitColorLerpProcess += Time.fixedDeltaTime * hitColorLerpSpeed;
+
+        spriteRenderer.color = Color.Lerp(hitColor, Color.white, hitColorLerpProcess);
+
+        hitColorLerpProcess = Mathf.Clamp01(hitColorLerpProcess);
+        
+    }
+
 
     public void ResetTailPos()
     {
@@ -115,14 +137,12 @@ public class Boss1BodyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Map"))
             mainBossController.ChangeSpinDirection(collision, transform.position);
 
-        if (collision.collider.CompareTag("Player"))
-            mainBossController.CollisionWithPlayer();
-
         if (collision.collider.CompareTag("Bullet"))
         {
             mainBossController.GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
             forceDirection = (transform.position - collision.transform.position).normalized;
             forceApplyed = shakeForce;
+            hitColorLerpProcess = 0;
         }
     }
 

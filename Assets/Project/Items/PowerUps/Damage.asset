@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Damage
   m_EditorClassIdentifier: 
-  <itemName>k__BackingField: Damage Upgrade
-  <weight>k__BackingField: 15
-  <c_MapSprite>k__BackingField: {fileID: 0}
-  <c_PickableSprite>k__BackingField: {fileID: 21300000, guid: 867af31712d028f47ad32d504cef7deb, type: 3}
-  <LightColor>k__BackingField: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
-  <PowerUp>k__BackingField: 3
+  <ItemName>k__BackingField: "Da\xF1o extra"
+  <BetaSprite>k__BackingField: {fileID: 0}
+  <MapSprite>k__BackingField: {fileID: 0}
+  <PickableSprite>k__BackingField: {fileID: 0}
+  <EffectsColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <BaseMineralHealth>k__BackingField: 0
+  <LeftEnergyLevelSize>k__BackingField: {x: 0, y: 0}
+  <RightEnergyLevelSize>k__BackingField: {x: 0, y: 0}
+  <PowerUp>k__BackingField: 2

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -65,7 +63,7 @@ public class BreakableWallController : InteractableObject
 
     public void ChangeTileContent(Vector2 _worldPos, TileBase _tile)
     {
-        Vector3Int cellPos = breakableWallGrid.LocalToCell(_worldPos);
+        Vector3Int cellPos = breakableWallGrid.WorldToCell(_worldPos);
         breakableWallTilemap.SetTile(cellPos, _tile);
     }
 

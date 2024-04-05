@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28489ea54bd1dd4c85ab4a7d384faf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelIncrement: 10.1
+  fuelIncrement: 100.1
   healingClip: {fileID: 8300000, guid: 1c5cfcbe38b9b4e4daeb342494f00b05, type: 3}
 --- !u!114 &8356643065634414369
 MonoBehaviour:

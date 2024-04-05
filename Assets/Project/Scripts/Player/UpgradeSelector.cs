@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using AYellowpaper.SerializedCollections;
-using UnityEngine.Events;
 
 public class UpgradeSelector : MonoBehaviour
 {

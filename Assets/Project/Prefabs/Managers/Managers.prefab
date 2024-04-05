@@ -100,6 +100,8 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: cd379e840f2a70146bb284b74ce08085, type: 2}
       Value: 0
+    - Key: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}
+      Value: 0
 --- !u!114 &2712434369159525489
 MonoBehaviour:
   m_ObjectHideFlags: 0

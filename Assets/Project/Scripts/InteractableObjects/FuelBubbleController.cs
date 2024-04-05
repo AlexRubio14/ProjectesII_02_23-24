@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FuelBubbleController : FloatingItem
@@ -7,11 +5,9 @@ public class FuelBubbleController : FloatingItem
     [Space, Header("Bubble"), SerializeField]
     private float fuelRecover;
 
-    private Animator animator;
-
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        animator.SetBool("IsAnimated", true);
     }
 
     protected override void ChaseAction()
@@ -43,6 +39,11 @@ public class FuelBubbleController : FloatingItem
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("BreakableWall"))
+        {
+            Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+            return;
+        }
         animator.SetTrigger("Collision");
     }
 }

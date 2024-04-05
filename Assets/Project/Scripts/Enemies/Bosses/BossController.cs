@@ -82,7 +82,6 @@ public abstract class BossController : MonoBehaviour
         }
 
         ChangeAttack(nextAttackId);
-        Debug.Log(nextAttackId);
     }
 
     protected void ChangeAttack(int _attackID)
@@ -97,6 +96,16 @@ public abstract class BossController : MonoBehaviour
     protected void UpdateHealthBar()
     {
         healthBar.value = currentHealth;
+    }
+
+    protected void CheckIfDead()
+    {
+        if (currentPhase != Phase.DEAD && currentHealth <= 0)
+        {
+            //Muere
+            ChangePhase(Phase.DEAD);
+            GenerateRandomAttack();
+        }
     }
 
     protected abstract void StartDie();

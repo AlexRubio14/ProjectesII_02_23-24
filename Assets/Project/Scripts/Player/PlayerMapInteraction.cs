@@ -73,7 +73,7 @@ public class PlayerMapInteraction : MonoBehaviour
             interactHint.gameObject.SetActive(false);
             return;
         }
-        else if (nearestObject)
+        else if (nearestObject && nearestObject.GetNearestTransform())
         {
             interactHint.gameObject.SetActive(true);
             interactHint.transform.position = nearestObject.GetNearestTransform().position;

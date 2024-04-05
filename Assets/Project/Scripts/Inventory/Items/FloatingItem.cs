@@ -15,9 +15,12 @@ public abstract class FloatingItem : MonoBehaviour
     protected AudioClip collectClip;
 
     protected Rigidbody2D rb2d;
+    protected Animator animator;
+
     protected void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
     protected void FixedUpdate()
     {
@@ -31,7 +34,7 @@ public abstract class FloatingItem : MonoBehaviour
     }
     protected void CheckGetDistance(Transform _target)
     {
-        if (Vector2.Distance(PlayerManager.Instance.player.transform.position, transform.position) <= minDistanceToGetItem)
+        if (Vector2.Distance(_target.position, transform.position) <= minDistanceToGetItem)
         {
             ObtainAction();
         }

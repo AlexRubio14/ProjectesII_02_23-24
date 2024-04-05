@@ -26,7 +26,8 @@ public class Boss1Controller : BossController
     private LayerMask trackerParticlesLayer;
     [SerializeField]
     private GameObject bubblePrefab;
-
+    [SerializeField]
+    private GameObject crystralDrop;
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
     private int totalDashesPerAttack;
@@ -385,8 +386,6 @@ public class Boss1Controller : BossController
         float bubbleSpawnForce = 150f;
 
         bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
-        //Debug.DrawLine(_collision.contacts[0].point, _collision.contacts[0].point + pointToCollisionObject * spawnBubbleOffset);
-        //Debug.Break();
 
     }
 
@@ -506,15 +505,7 @@ public class Boss1Controller : BossController
 
     #endregion
 
-    private void CheckIfDead()
-    {
-        if (currentPhase != Phase.DEAD && currentHealth <= 0)
-        {
-            //Muere
-            ChangePhase(Phase.DEAD);
-            GenerateRandomAttack();
-        }
-    }
+    #region Die
     protected override void StartDie()
     {
         headSR.sprite = deadHeadSprite;
@@ -567,6 +558,30 @@ public class Boss1Controller : BossController
 
     }
 
+    public void CreateCrystalDrop()
+    {
+
+        crystralDrop.GetComponent<CircleCollider2D>().enabled = true;
+        crystralDrop.GetComponentInChildren<CircleCollider2D>().enabled = true;
+
+        Rigidbody2D crystalRb2d =  crystralDrop.GetComponent<Rigidbody2D>();
+
+        crystalRb2d.bodyType = RigidbodyType2D.Dynamic;
+        float impulseForce = 10;
+        crystalRb2d.AddForce(transform.up * impulseForce, ForceMode2D.Impulse);
+
+        CameraController.Instance.AddHighTrauma();
+    }
+
+    public void PlayParticles()
+    {
+        spawnTrackerParticles.Play();
+    }
+    public void StopParticles()
+    {
+        spawnTrackerParticles.Stop();
+    }
+    #endregion
 
     private void CalculateRayTrackerParticles()
     {
@@ -587,16 +602,6 @@ public class Boss1Controller : BossController
         }
         else
             spawnTrackerParticles.Stop();
-    }
-
-    public void CollisionWithPlayer()
-    {
-        if (currentAttackID != 1)
-            return;
-        ////Bajar la duracion de este giro
-        //spinTimeWaited += spinDuration / 6;
-        //spinStunTimeWaited = 100;
-
     }
 
 }
