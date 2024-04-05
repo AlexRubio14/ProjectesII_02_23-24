@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -111,7 +112,11 @@ public class Boss2Controller : BossController
     private Tilemap deadEnrockTilemap;
     private CircleCollider2D circleCollider;
 
-
+    [Space, SerializeField]
+    private Color hitColor;
+    [SerializeField]
+    private float hitColorLerpSpeed;
+    private float hitColorLerpProcess;
 
     private void Awake()
     {
@@ -128,6 +133,7 @@ public class Boss2Controller : BossController
         if (onUpdatePhaseAttacks[currentPhase][currentAttackID] != null)
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
 
+        CheckHitColor();
         CheckIfDead();
     }
 
@@ -228,6 +234,8 @@ public class Boss2Controller : BossController
         Vector2 dirToLook = (_moveToPos - (Vector2)transform.position).normalized;
         LookForwardDirection(dirToLook, rockRotationSpeed);
         rb2d.velocity = transform.right * rockMovementSpeed;
+        animator.SetBool("Moving", true);
+
     }
     private void LookMiddlePos()
     {
@@ -235,6 +243,7 @@ public class Boss2Controller : BossController
 
         Vector2 dirToLook = (arenaMiddlePos.position - transform.position).normalized;
         LookForwardDirection(dirToLook, rockRotationSpeed);
+        animator.SetBool("Moving", false);
     }
 
 
@@ -312,18 +321,24 @@ public class Boss2Controller : BossController
         castTimeWaited = 0;
         rb2d.velocity = Vector2.zero;
         gameObject.layer = LayerMask.NameToLayer("Boss");
-
+        animator.ResetTrigger("HoldToDash");
+        animator.ResetTrigger("Dash");
+        animator.ResetTrigger("Collision");
+        animator.ResetTrigger("ChargeDash");
+        
     }
     private void UpdateDashes()
     {
         if (rb2d.velocity.magnitude < 3f)
         {
+
             if (dashesDone >= totalDashesAmount)
             {
                 GenerateRandomAttack();
                 return;
             }
 
+            animator.SetTrigger("ChargeDash");
             rb2d.angularVelocity = 0;
             //Volver a hacer un dash
             CastDash();
@@ -340,6 +355,7 @@ public class Boss2Controller : BossController
             LookForwardDirection(targetDir, rockRotationSpeed);
             return;
         }
+        animator.SetTrigger("HoldToDash");
 
         if (castTimeWaited < castDuration)
             return;
@@ -376,6 +392,9 @@ public class Boss2Controller : BossController
 
             bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
         }
+
+
+        animator.SetTrigger("Dash");
         
     }
 
@@ -440,10 +459,10 @@ public class Boss2Controller : BossController
             case 1:
                 float randomAgle = UnityEngine.Random.Range(-dashCollisionRotationAngle, dashCollisionRotationAngle);
                 rb2d.angularVelocity = randomAgle;
+                animator.SetTrigger("Collision");
                 break;
             case 2:
                 createBreakableWallDir = (createBreakableWallDir + _collision.contacts[0].normal * 3).normalized;
-                transform.right = createBreakableWallDir;
                 break;
             default:
                 break;
@@ -471,7 +490,20 @@ public class Boss2Controller : BossController
 
         UpdateHealthBar();
     }
-    
+    private void CheckHitColor()
+    {
+        if (hitColorLerpProcess >= 1)
+            return;
+
+        hitColorLerpProcess += Time.deltaTime * hitColorLerpSpeed;
+
+        Color lerpColor = Color.Lerp(hitColor, Color.white, hitColorLerpProcess);
+        bossMainSR.color = lerpColor;
+        tailRenderer.color = lerpColor;
+        finRenderer.color = lerpColor;
+        hitColorLerpProcess = Mathf.Clamp01(hitColorLerpProcess);
+
+    }
     #region Die
     protected override void StartDie()
     {
@@ -583,6 +615,7 @@ public class Boss2Controller : BossController
         if (collision.collider.CompareTag("Bullet"))
         {
             GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
+            hitColorLerpProcess = 0;
         }
 
         if (collision.collider.CompareTag("Map"))
