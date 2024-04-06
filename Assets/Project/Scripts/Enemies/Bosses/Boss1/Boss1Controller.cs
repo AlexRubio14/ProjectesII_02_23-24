@@ -140,20 +140,20 @@ public class Boss1Controller : BossController
         List<Action> startActions = new List<Action>();
         List<Action> updateActions = new List<Action>();
 
-        //dashStart += StartDashWallToWall;
-        //startActions.Add(dashStart);
-        //dashUpdate += UpdateDashWallToWall;
-        //updateActions.Add(dashUpdate);
+        dashStart += StartDashWallToWall;
+        startActions.Add(dashStart);
+        dashUpdate += UpdateDashWallToWall;
+        updateActions.Add(dashUpdate);
 
         spinStart += StartSpin;
         startActions.Add(spinStart);
         spinUpdate += UpdateSpin;
         updateActions.Add(spinUpdate);
 
-        //suctionStart += StartSuction;
-        //startActions.Add(suctionStart);
-        //suctionUpdate += UpdateSuction;
-        //updateActions.Add(suctionUpdate);
+        suctionStart += StartSuction;
+        startActions.Add(suctionStart);
+        suctionUpdate += UpdateSuction;
+        updateActions.Add(suctionUpdate);
 
         onStartPhaseAttacks.Add(Phase.PHASE_1, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_1, updateActions.ToArray());
