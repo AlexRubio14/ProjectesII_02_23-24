@@ -5,18 +5,19 @@ public class Enemy02 : Enemy
     [Space, Header("--- ENEMY 02"), SerializeField]
     private float timeToExplode;
 
-    private float currentTime = 0.0f;
+    private float timeToExplodeWaited = 0.0f;
 
     [SerializeField]
-    private GameObject c_explosionParticles;
+    private GameObject explosion;
 
-    
+    private Animator animator;
 
 
 
     void Awake()
     {
         InitEnemy();
+        animator = GetComponent<Animator>();    
     }
     private void FixedUpdate()
     {
@@ -82,6 +83,7 @@ public class Enemy02 : Enemy
             case EnemyStates.PATROLLING:
                 break;
             case EnemyStates.CHASING:
+                animator.SetBool("Exploding", false);
                 break;
             case EnemyStates.KNOCKBACK:
                 rb2d.velocity = Vector2.zero;
@@ -97,6 +99,8 @@ public class Enemy02 : Enemy
             case EnemyStates.PATROLLING:
                 break;
             case EnemyStates.CHASING:
+                animator.SetBool("Exploding", true);
+                timeToExplodeWaited = 0;
                 break;
             case EnemyStates.KNOCKBACK:
                 break;
@@ -107,9 +111,9 @@ public class Enemy02 : Enemy
 
     private void WaitForExplode()
     {
-        currentTime += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
+        timeToExplodeWaited += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
 
-        if(currentTime >= timeToExplode)
+        if(timeToExplodeWaited >= timeToExplode)
         {
             Die();
         }
@@ -117,7 +121,7 @@ public class Enemy02 : Enemy
     override public void Die()
     {
         AudioManager.instance.Play2dOneShotSound(deathClip, "Enemy", 1, 0.9f, 1.1f);
-        Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
+        Instantiate(explosion, transform.position, Quaternion.identity);
         base.Die();
     }
 
@@ -132,10 +136,5 @@ public class Enemy02 : Enemy
             ChangeState(EnemyStates.KNOCKBACK);
             StartKnockback(collision.transform.position, knockbackForce);
         }
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        
     }
 }

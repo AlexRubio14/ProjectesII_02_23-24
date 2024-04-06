@@ -173,10 +173,6 @@ public abstract class Enemy : EnemyIA, IHealth
     }
     protected void DropBubble()
     {
-        //50% de posibilidades que los enemigos dropeen burbujas de fuel al morir
-        if (Random.Range(0, 2) == 0)
-            return;
-
         FuelBubbleController bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity).GetComponent<FuelBubbleController>();
 
         float randomX = Random.Range(-1, 2);

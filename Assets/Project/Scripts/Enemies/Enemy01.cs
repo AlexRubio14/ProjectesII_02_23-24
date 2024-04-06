@@ -8,6 +8,8 @@ public class Enemy01 : Enemy
     public float eatingForce; 
     [SerializeField]
     public int eatingHeal;
+    [SerializeField]
+    private ParticleSystem eatingParticles;
 
     [SerializeField]
     private AudioClip impactPlayerClip;
@@ -75,12 +77,13 @@ public class Enemy01 : Enemy
 
     protected void StopEating()
     {
-        currentHealth += eatingHeal;
         ChangeState(EnemyStates.CHASING);
-        
     }
     private void StartEating(Vector2 collisionPoint)
     {
+        currentHealth = Mathf.Clamp(currentHealth + eatingHeal, 0, maxHealth); 
+        
+        eatingParticles.Play();
         StartKnockback(collisionPoint, eatingForce);
         ChangeState(EnemyStates.EXTRA);
         Invoke("StopEating", eatingDuration); 
@@ -128,7 +131,7 @@ public class Enemy01 : Enemy
             AudioManager.instance.Play2dOneShotSound(impactPlayerClip, "Enemy");
             StartEating(collision.contacts[0].point); 
         }
-        if (collision.collider.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
+        else if (collision.collider.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
         {
             float bulletDamage = collision.collider.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);

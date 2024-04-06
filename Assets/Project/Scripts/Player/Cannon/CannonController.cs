@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI; 
@@ -43,7 +42,7 @@ public class CannonController : MonoBehaviour
 
     private PlayerController playerController;
 
-    Slider sliderHealthBar;
+    private Slider sliderHealthBar;
 
 
     private void Awake()
@@ -87,6 +86,7 @@ public class CannonController : MonoBehaviour
             float distance = Vector2.Distance(transform.position, hit.point);
             float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
             Vector3 dir = (hit.rigidbody.transform.position - transform.position);
+
             if (minDisntance > distance && 
                 !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
             {
@@ -109,6 +109,7 @@ public class CannonController : MonoBehaviour
             Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
             if (currentEnemy)
                 sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
+            
         }
         else if (aimTarget.activeInHierarchy)
             aimTarget.SetActive(false);
