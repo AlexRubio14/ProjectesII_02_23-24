@@ -13779,25 +13779,9 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 226249114}
-    - target: {fileID: 762157163521775155, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812907726598333989, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: menuNavegation
-      value: 
-      objectReference: {fileID: 226249119}
-    - target: {fileID: 812907726598333989, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: spaceShipButton
-      value: 
-      objectReference: {fileID: 1928734250}
     - target: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_Name
       value: SelectTpCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2415865649733766274, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: menuNavegation
@@ -13891,22 +13875,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5435870144824452751, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7782336059955711328, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1819140128}
-    - target: {fileID: 8877648798371369024, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: menuNavegation
-      value: 
-      objectReference: {fileID: 226249119}
-    - target: {fileID: 8877648798371369024, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: spaceShipButton
-      value: 
-      objectReference: {fileID: 1928734250}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
