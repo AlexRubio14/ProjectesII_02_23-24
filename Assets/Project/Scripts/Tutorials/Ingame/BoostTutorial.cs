@@ -36,18 +36,12 @@ public class BoostTutorial : Tutorial
         dialogueController.gameObject.SetActive(true);
 
         dialogueController.StartDialogue();
-
-        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls, null, MenuControlsHint.HintsPos.BOTTOM_LEFT);
         TimeManager.Instance.PauseGame();
     }
 
     protected override void EndTutorial()
     {
         boostCanvasTutorial.enabled = false;
-        MenuControlsHint.Instance.UpdateHintControls(null);
         TimeManager.Instance.ResumeGame();
 
         dialogueController.onDialogueEnd -= EndTutorial;

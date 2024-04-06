@@ -1,7 +1,6 @@
-using System.Collections;
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,6 +11,8 @@ public class PauseMenuController : MonoBehaviour
     private InputActionReference pauseAction;
     [SerializeField]
     private InputActionReference resumeAction;
+    [SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
     [Space, Header("Pause Menu"), SerializeField]
     private Canvas pauseMenuCanvas;
@@ -62,12 +63,15 @@ public class PauseMenuController : MonoBehaviour
     {
         pauseAction.action.started += PauseGame;
         resumeAction.action.started += ResumeGame;
+        InputSystem.onDeviceChange += UpdateInputImages;
 
     }
     private void OnDisable()
     {
         pauseAction.action.started -= PauseGame;
         resumeAction.action.started -= ResumeGame;
+        InputSystem.onDeviceChange -= UpdateInputImages;
+
     }
 
     private void DisplayQuestsObtainedList()
@@ -256,12 +260,6 @@ public class PauseMenuController : MonoBehaviour
         pauseMenuCanvas.gameObject.SetActive(true);
 
         SelectFirstQuestButon();
-
-        List<MenuControlsHint.ActionType> actions = new List<MenuControlsHint.ActionType>();
-        actions.Add(MenuControlsHint.ActionType.MOVE_MENU);
-        actions.Add(MenuControlsHint.ActionType.ACCEPT);
-        actions.Add(MenuControlsHint.ActionType.GO_BACK);
-        MenuControlsHint.Instance.UpdateHintControls(actions);
     }
     public void SelectFirstQuestButon()
     {
@@ -299,8 +297,6 @@ public class PauseMenuController : MonoBehaviour
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
         pauseMenuCanvas.gameObject.SetActive(false);
-
-        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
     public void AbortMission()
@@ -308,6 +304,14 @@ public class PauseMenuController : MonoBehaviour
         PlayerManager.Instance.player.SubstractFuel(1000);
         PlayerManager.Instance.player.fuelConsume = -10;
         ResumeGame(new InputAction.CallbackContext());
+    }
+
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
 }
 

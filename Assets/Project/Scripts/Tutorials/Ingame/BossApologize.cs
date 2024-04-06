@@ -20,17 +20,11 @@ public class BossApologize : Tutorial
 
 
         catMonster.SetActive(true);
-
-        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls, null, MenuControlsHint.HintsPos.BOTTOM_RIGHT);
         TimeManager.Instance.PauseGame();
     }
 
     protected override void EndTutorial()
     {
-        MenuControlsHint.Instance.UpdateHintControls(null);
         TimeManager.Instance.ResumeGame();
 
         dialogueController.onDialogueEnd -= EndTutorial;

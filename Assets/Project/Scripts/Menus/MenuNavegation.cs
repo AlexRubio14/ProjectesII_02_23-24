@@ -15,13 +15,6 @@ public class MenuNavegation : MonoBehaviour
 
     private void Start()
     {
-        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
-        neededControls.Add(MenuControlsHint.ActionType.GO_BACK);
-        neededControls.Add(MenuControlsHint.ActionType.MOVE_MENU);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls);
-
         PlayerPrefs.Save();
     }
 
