@@ -15,19 +15,24 @@ public class DisplayTpsInMap : DisplayTps
 
     private Vector2 positionToTravel;
 
-    SelectTpController[] selectTpControllers;
+    private SelectTpController[] selectTpControllers;
 
+    [SerializeField]
+    private GameObject inputsObject;
 
     protected void OnEnable()
     {
         resumeAction.action.started += ResumeGame;
         InputSystem.onDeviceChange += UpdateInputImages;
         UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
+
+        inputsObject.SetActive(true);
     }
     private void OnDisable()
     {
         resumeAction.action.started -= ResumeGame;
         InputSystem.onDeviceChange -= UpdateInputImages;
+        inputsObject.SetActive(false);
     }
 
     private void Start()
