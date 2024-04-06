@@ -90,7 +90,7 @@ public class TargetDetector : Detector
     }
 
     //DEBUG
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (showGizmos == false)
             return; 

@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 7027293667625730114}
   - component: {fileID: 931764774973105053}
   - component: {fileID: 4303963849420674202}
+  - component: {fileID: 8588124914710935735}
   m_Layer: 9
   m_Name: Enemy02
   m_TagString: Enemy
@@ -350,9 +351,9 @@ MonoBehaviour:
   - {fileID: 1079477967935640561}
   iaData: {fileID: 931764774973105053}
   movementDirectionSolver: {fileID: 6505329190034688335}
-  <maxHealth>k__BackingField: 100
-  speed: 15
-  <damage>k__BackingField: 25
+  <maxHealth>k__BackingField: 300
+  speed: 35
+  <damage>k__BackingField: 40
   moveSpots:
   - {fileID: 0}
   - {fileID: 0}
@@ -360,18 +361,39 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  knockbackForce: 3
+  knockbackForce: 4
   knockbackRotation: 1
-  knockbackDuration: 0.05
+  knockbackDuration: 0.2
   currentDrop: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
   minMaxItemDrop: {x: 1, y: 2}
   pickableItemPrefab: {fileID: 6678534543415543241, guid: db3a317e0d29aa9418d420731477906b, type: 3}
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
-  showGizmos: 0
-  timeToExplode: 5
-  c_explosionParticles: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}
+  showGizmos: 1
+  timeToExplode: 6
+  explosion: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}
+--- !u!95 &8588124914710935735
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411913824642017210}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: da86929363d917545afa77a02a3ccd57, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5510550852629598786
 GameObject:
   m_ObjectHideFlags: 0
