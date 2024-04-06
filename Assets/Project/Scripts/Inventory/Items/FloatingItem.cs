@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public abstract class FloatingItem : MonoBehaviour
 {
@@ -16,11 +17,15 @@ public abstract class FloatingItem : MonoBehaviour
 
     protected Rigidbody2D rb2d;
     protected Animator animator;
+    protected SpriteRenderer spriteRenderer;
+    protected Light2D light2D;
 
     protected void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        light2D = GetComponentInChildren<Light2D>();
     }
     protected void FixedUpdate()
     {

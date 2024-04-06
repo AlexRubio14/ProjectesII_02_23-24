@@ -4,7 +4,7 @@ public abstract class Enemy : EnemyIA, IHealth
     public enum EnemyStates { PATROLLING, CHASING, KNOCKBACK, EXTRA }
     public EnemyStates currentState { get; protected set; }
 
-    protected Rigidbody2D c_rb2d;
+    protected Rigidbody2D rb2d;
 
     [field: Space, Header("--- BASE ENEMY"), SerializeField]
     public float maxHealth { get; protected set; }
@@ -29,9 +29,13 @@ public abstract class Enemy : EnemyIA, IHealth
     private float knockbackWaited;
 
     [Header("--- DROP"), SerializeField]
-    protected ItemObject c_currentDrop;
+    protected ItemObject currentDrop;
     [SerializeField]
-    protected GameObject c_pickableItemPrefab;
+    protected Vector2 minMaxItemDrop; 
+    [SerializeField]
+    protected GameObject pickableItemPrefab;
+    [SerializeField]
+    private GameObject bubblePrefab;
     [SerializeField]
     protected float maxThrowSpeed;
 
@@ -47,7 +51,7 @@ public abstract class Enemy : EnemyIA, IHealth
 
     public void InitEnemy()
     {
-        c_rb2d = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
         spriteR = GetComponentInChildren<SpriteRenderer>();
         ChangeState(EnemyStates.PATROLLING);
         currentHealth = maxHealth;
@@ -82,15 +86,15 @@ public abstract class Enemy : EnemyIA, IHealth
         Vector2 direction = (Vector2)transform.position - collisionPoint;
         direction.Normalize();
 
-        c_rb2d.AddForce(direction * force, ForceMode2D.Impulse);
-        c_rb2d.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
+        rb2d.AddForce(direction * force, ForceMode2D.Impulse);
+        rb2d.AddTorque(Random.Range(-knockbackRotation, knockbackRotation), ForceMode2D.Impulse);
     }
 
     protected void MoveToTarget()
     {
         Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
 
-        c_rb2d.AddForce(direction * speed * TimeManager.Instance.timeParameter, ForceMode2D.Force);
+        rb2d.AddForce(direction * speed * TimeManager.Instance.timeParameter, ForceMode2D.Force);
 
         // ROTATION OF THE ENENMY WHILE FOLLOWING
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -134,18 +138,46 @@ public abstract class Enemy : EnemyIA, IHealth
     }
     virtual public void Die()
     {
-        if (c_currentDrop)
-            DropItem();
+        if (currentDrop)
+        {
+            DropItems();
+            DropBubble();
+        }
 
         AudioManager.instance.Play2dOneShotSound(deathClip, enemyAudioSourceName);
 
         Destroy(gameObject);
     }
-    protected void DropItem()
+    protected void DropItems()
     {
-        PickableItemController currItem = Instantiate(c_pickableItemPrefab, transform.position, Quaternion.identity).GetComponent<PickableItemController>();
+        int randomItems = Random.Range((int)minMaxItemDrop.x, (int)minMaxItemDrop.y + 1);
 
-        currItem.currentItem = c_currentDrop;
+        for (int i = 0; i < randomItems; i++)
+        {
+            PickableItemController currItem = Instantiate(pickableItemPrefab, transform.position, Quaternion.identity).GetComponent<PickableItemController>();
+
+            currItem.InitializeItem(currentDrop);
+
+            float randomX = Random.Range(-1, 2);
+            float randomY = Random.Range(-1, 2);
+            Vector2 randomDir = new Vector2(randomX, randomY);
+
+            randomDir.Normalize();
+
+            float throwSpeed = Random.Range(0, maxThrowSpeed);
+            currItem.ImpulseItem(randomDir, throwSpeed);
+            currItem.transform.up = randomDir;
+
+            currItem.GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = currentDrop.EffectsColor;
+        }  
+    }
+    protected void DropBubble()
+    {
+        //50% de posibilidades que los enemigos dropeen burbujas de fuel al morir
+        if (Random.Range(0, 2) == 0)
+            return;
+
+        FuelBubbleController bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity).GetComponent<FuelBubbleController>();
 
         float randomX = Random.Range(-1, 2);
         float randomY = Random.Range(-1, 2);
@@ -154,17 +186,18 @@ public abstract class Enemy : EnemyIA, IHealth
         randomDir.Normalize();
 
         float throwSpeed = Random.Range(0, maxThrowSpeed);
-        currItem.ImpulseItem(randomDir, throwSpeed);
-        currItem.transform.up = randomDir;
+        bubble.ImpulseItem(randomDir, throwSpeed);
+        bubble.transform.up = randomDir;
 
-        currItem.GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = c_currentDrop.EffectsColor;
+        bubble.GetComponentInChildren<UnityEngine.Rendering.Universal.Light2D>().color = currentDrop.EffectsColor;
     }
+
     #endregion
 
     private void EnemyPause()
     {
-        c_rb2d.velocity = Vector2.zero;
-        c_rb2d.angularVelocity = 0.0f;
+        rb2d.velocity = Vector2.zero;
+        rb2d.angularVelocity = 0.0f;
     }
 
 

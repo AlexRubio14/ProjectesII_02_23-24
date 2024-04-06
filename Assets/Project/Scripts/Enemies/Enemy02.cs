@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy02 : Enemy
@@ -86,7 +84,7 @@ public class Enemy02 : Enemy
             case EnemyStates.CHASING:
                 break;
             case EnemyStates.KNOCKBACK:
-                c_rb2d.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
             default:
                 break;

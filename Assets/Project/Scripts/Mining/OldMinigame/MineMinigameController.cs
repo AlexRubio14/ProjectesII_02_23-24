@@ -376,7 +376,7 @@ public class MineMinigameController : MonoBehaviour
         {
             PickableItemController currItem = Instantiate(pickableItemPrefab, miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.currentItem = miningItem.currentItem;
+            currItem.InitializeItem(miningItem.currentItem);
 
             float randomX = Random.Range(-1, 2);
             float randomY = Random.Range(-1, 2);
