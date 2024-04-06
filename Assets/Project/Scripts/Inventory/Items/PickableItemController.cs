@@ -9,13 +9,12 @@ public class PickableItemController : FloatingItem
     [HideInInspector]
     public bool followPlayer = true;
 
-    
-
-    private void Start()
+    public void InitializeItem(ItemObject _currentItem)
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = currentItem.PickableSprite;
-        GetComponentInChildren<Light2D>().color = currentItem.EffectsColor;
-    }  
+        currentItem = _currentItem;
+        spriteRenderer.sprite = currentItem.PickableSprite;
+        light2D.color = currentItem.EffectsColor;
+    }
 
     protected override void ChaseAction()
     {

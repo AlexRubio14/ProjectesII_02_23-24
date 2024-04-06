@@ -344,7 +344,8 @@ public class PlayerController : MonoBehaviour
 
             PickableItemController currItem = Instantiate(pickableItemPrefab, spawnPos, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.currentItem = _objectType;
+            currItem.InitializeItem(_objectType);
+
             currItem.followPlayer = false;
 
             float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);

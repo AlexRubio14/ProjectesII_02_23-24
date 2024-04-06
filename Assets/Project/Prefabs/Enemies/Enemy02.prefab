@@ -95,7 +95,7 @@ MonoBehaviour:
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
-    m_Bits: 5248
+    m_Bits: 4224
   spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 0
 --- !u!1 &1941519944893691061
@@ -363,8 +363,10 @@ MonoBehaviour:
   knockbackForce: 3
   knockbackRotation: 1
   knockbackDuration: 0.05
-  c_currentDrop: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-  c_pickableItemPrefab: {fileID: 6678534543415543241, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  currentDrop: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
+  minMaxItemDrop: {x: 1, y: 2}
+  pickableItemPrefab: {fileID: 6678534543415543241, guid: db3a317e0d29aa9418d420731477906b, type: 3}
+  bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
   showGizmos: 0

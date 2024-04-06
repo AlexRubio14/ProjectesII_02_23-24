@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
@@ -13,19 +11,24 @@ public class CoreController : InteractableObject
     private float timeToChangeScene;
 
     private bool glowUp = false;
-
+    private ImageFloatEffect floatEffect;
     private Light2D coreLight;
+
+    private Camera cam;
 
     private void Awake()
     {
         coreLight = GetComponentInChildren<Light2D>();
+        floatEffect = GetComponent<ImageFloatEffect>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (glowUp)
         {
-            coreLight.pointLightInnerRadius += Time.deltaTime * glowUpSpeed;
+            float glowUpIncrement = Time.deltaTime * glowUpSpeed;
+            coreLight.intensity += glowUpIncrement;
+            cam.orthographicSize += glowUpIncrement / 8;
         }
     }
     public override void Interact()
@@ -35,7 +38,10 @@ public class CoreController : InteractableObject
         PlayerManager.Instance.player.GetComponent<PlayerController>().ChangeState(PlayerController.State.FREEZE);
         PlayerManager.Instance.player.GetComponent<PlayerMapInteraction>().showCanvas = false;
         glowUp = true;
+        floatEffect.enabled = false;
         Invoke("EndGame", timeToChangeScene);
+
+        cam = CameraController.Instance.GetComponent<Camera>();
     }
 
     private void EndGame()
