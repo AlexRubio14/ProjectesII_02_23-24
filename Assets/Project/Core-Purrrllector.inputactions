@@ -484,7 +484,7 @@
                     "name": "",
                     "id": "c3ae5640-7a65-410f-a0dd-80f57f918199",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "Hold(duration=0.5)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Cancel",
@@ -494,7 +494,7 @@
                 {
                     "name": "",
                     "id": "972d7852-0625-4bf1-9b1a-4a445b75d3b7",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

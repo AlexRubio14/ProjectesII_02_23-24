@@ -1,6 +1,8 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DisplayTpsInMap : DisplayTps
 {
@@ -8,6 +10,8 @@ public class DisplayTpsInMap : DisplayTps
 
     [Header("Inputs"), SerializeField]
     private InputActionReference resumeAction;
+    [SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
     private Vector2 positionToTravel;
 
@@ -17,10 +21,13 @@ public class DisplayTpsInMap : DisplayTps
     protected void OnEnable()
     {
         resumeAction.action.started += ResumeGame;
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
     }
     private void OnDisable()
     {
         resumeAction.action.started -= ResumeGame;
+        InputSystem.onDeviceChange -= UpdateInputImages;
     }
 
     private void Start()
@@ -65,11 +72,6 @@ public class DisplayTpsInMap : DisplayTps
         InputController.Instance.ChangeActionMap("Menu");
         TimeManager.Instance.PauseGame();
 
-        List<MenuControlsHint.ActionType> actions = new List<MenuControlsHint.ActionType>();
-        actions.Add(MenuControlsHint.ActionType.MOVE_MENU);
-        actions.Add(MenuControlsHint.ActionType.ACCEPT);
-        actions.Add(MenuControlsHint.ActionType.GO_BACK);
-        MenuControlsHint.Instance.UpdateHintControls(actions);
     }
 
     public void ReturnToHub()
@@ -97,7 +99,13 @@ public class DisplayTpsInMap : DisplayTps
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
         tpMenu.gameObject.SetActive(false);
+    }
 
-        MenuControlsHint.Instance.UpdateHintControls(null);
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
 }

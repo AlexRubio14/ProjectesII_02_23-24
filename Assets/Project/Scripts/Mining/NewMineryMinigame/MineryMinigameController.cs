@@ -1,7 +1,5 @@
-using System.Collections;
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -19,6 +17,8 @@ public class MineryMinigameController : MonoBehaviour
     private InputActionReference rightLaserTrigger;
     [Space, SerializeField]
     private Transform pointer;
+    [SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
     [Space, Header("Lasers"), SerializeField]
     private float laserRayGrowSpeed;
@@ -60,7 +60,6 @@ public class MineryMinigameController : MonoBehaviour
 
     private void OnEnable()
     {
-
         //Inputs
         leftLaserTrigger.action.started += LeftLaserAction;
         leftLaserTrigger.action.canceled += LeftLaserAction; 
@@ -68,14 +67,15 @@ public class MineryMinigameController : MonoBehaviour
         rightLaserTrigger.action.canceled += RightLaserAction;        
 
         foreach (Canvas item in otherCanvas)
-        {
             item.gameObject.SetActive(false);
-        }
 
         rightLaserOn = false;
         rightLaserRayProgress = 0;
         leftLaserOn = false;
         leftLaserRayProgress = 0;
+
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
 
     }
     private void OnDisable()
@@ -89,10 +89,9 @@ public class MineryMinigameController : MonoBehaviour
         //Prepararlo todo para la proxima vez y reactivar lo necesario para el gameplay
         mineralsHealth.Clear();
         foreach (Canvas item in otherCanvas)
-        {
             item.gameObject.SetActive(true);
-        }
 
+        InputSystem.onDeviceChange -= UpdateInputImages;
     }
 
     // Update is called once per frame
@@ -294,8 +293,6 @@ public class MineryMinigameController : MonoBehaviour
             currentMineral.gameObject.SetActive(false);
             CameraController.Instance.AddMediumTrauma();
             PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
-
-            MenuControlsHint.Instance.UpdateHintControls(null);
         }
         virtualMoseObj.SetActive(false);
         gameObject.SetActive(false);
@@ -335,6 +332,14 @@ public class MineryMinigameController : MonoBehaviour
     private void RightLaserAction(InputAction.CallbackContext obj)
     {
         rightLaserOn = obj.action.IsInProgress();
+    }
+
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
     #endregion
 }

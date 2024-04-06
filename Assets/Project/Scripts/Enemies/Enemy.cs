@@ -173,7 +173,7 @@ public abstract class Enemy : EnemyIA, IHealth
     }
     protected void DropBubble()
     {
-        FuelBubbleController bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity).GetComponent<FuelBubbleController>();
+        FuelBubbleController bubble = Instantiate(bubblePrefab, transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<FuelBubbleController>();
 
         float randomX = Random.Range(-1, 2);
         float randomY = Random.Range(-1, 2);
@@ -181,7 +181,9 @@ public abstract class Enemy : EnemyIA, IHealth
 
         randomDir.Normalize();
 
-        float throwSpeed = Random.Range(0, maxThrowSpeed);
+        float randNum = Random.Range(0, maxThrowSpeed);
+        float throwSpeed = randNum * 50;
+        Debug.Log(randNum);
         bubble.ImpulseItem(randomDir, throwSpeed);
         bubble.transform.up = randomDir;
 

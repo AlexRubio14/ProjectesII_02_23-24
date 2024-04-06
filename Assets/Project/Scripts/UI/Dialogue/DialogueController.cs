@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
+using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class DialogueController : MonoBehaviour
 
     [Space, SerializeField]
     private GameObject dialogueObject;
-    private TextMeshProUGUI c_dialogueText;
+    private TextMeshProUGUI dialogueText;
 
     [TextArea, SerializeField]
     public string[] dialogues;
@@ -27,8 +29,8 @@ public class DialogueController : MonoBehaviour
 
     private bool showingText = false;
     private bool displayingDialogue = false;
-    [SerializeField]
-    private MenuControlsHint.HintsPos hintsPos = MenuControlsHint.HintsPos.BOTTOM_LEFT;
+    [SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
     [Space, Header("Animator"), SerializeField]
     private Animator[] catAnimations;
@@ -37,8 +39,6 @@ public class DialogueController : MonoBehaviour
     [SerializeField]
     private AudioClip catDialogueSound;
     private int dialogueSoundIndex;
-    [SerializeField]
-    private bool changeDialoguesHint = true;
 
     [HideInInspector]
     public Action onDialogueEnd;
@@ -47,7 +47,7 @@ public class DialogueController : MonoBehaviour
 
     private void Awake()
     {
-        c_dialogueText = dialogueObject.GetComponentInChildren<TextMeshProUGUI>();
+        dialogueText = dialogueObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -58,11 +58,12 @@ public class DialogueController : MonoBehaviour
         lastActionMap = menuInput.currentActionMap.name;
         menuInput.SwitchCurrentActionMap("Dialogue");
 
-        List<MenuControlsHint.ActionType> actionList = new List<MenuControlsHint.ActionType>();
-        actionList.Add(MenuControlsHint.ActionType.SKIP_DIALOGUE);
+        InputSystem.onDeviceChange += UpdateInputImages;
 
-        if (MenuControlsHint.Instance && changeDialoguesHint)
-            MenuControlsHint.Instance.UpdateHintControls(actionList, null, hintsPos);
+        if(MenuUIHintController.instance)
+            MenuUIHintController.instance.HideInputs();
+
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
 
     }
 
@@ -72,8 +73,10 @@ public class DialogueController : MonoBehaviour
         dialogueAction.action.started -= InputPressed;
         menuInput.SwitchCurrentActionMap(lastActionMap);
 
-        if(MenuControlsHint.Instance && changeDialoguesHint)
-            MenuControlsHint.Instance.UpdateHintControls(MenuControlsHint.Instance.lastActions);
+        InputSystem.onDeviceChange -= UpdateInputImages;
+
+        if (MenuUIHintController.instance)
+            MenuUIHintController.instance.ShowInputs();
     }
 
     private void InputPressed(InputAction.CallbackContext obj)
@@ -108,8 +111,8 @@ public class DialogueController : MonoBehaviour
         dialogueObject.SetActive(true);
         currentDialogueIndex = 0;
         letterIndex = 0;
-        c_dialogueText.text = dialogues[currentDialogueIndex];
-        c_dialogueText.maxVisibleCharacters = letterIndex;
+        dialogueText.text = dialogues[currentDialogueIndex];
+        dialogueText.maxVisibleCharacters = letterIndex;
         showingText = true;
         displayingDialogue = true;
         Invoke("DisplayLetters", timeBetweenLetters);
@@ -135,11 +138,11 @@ public class DialogueController : MonoBehaviour
             //Si aun no se ha acabado el dialogo
             displayingDialogue = true;
             letterIndex = 0;
-            c_dialogueText.text = dialogues[currentDialogueIndex];
+            dialogueText.text = dialogues[currentDialogueIndex];
             if(onDialogueLineStart != null)
                 onDialogueLineStart(currentDialogueIndex);
 
-            c_dialogueText.maxVisibleCharacters = letterIndex;
+            dialogueText.maxVisibleCharacters = letterIndex;
             Invoke("DisplayLetters", timeBetweenLetters);
             
 
@@ -170,7 +173,7 @@ public class DialogueController : MonoBehaviour
                     animator.SetBool("talking", false);
                 }
             }
-            c_dialogueText.maxVisibleCharacters = letterIndex;
+            dialogueText.maxVisibleCharacters = letterIndex;
             letterIndex++;
             Invoke("DisplayLetters", timeBetweenLetters);
             if(dialogueSoundIndex % 4 == 0)
@@ -183,7 +186,7 @@ public class DialogueController : MonoBehaviour
     private void DisplayAllLetters()
     {
         displayingDialogue = false;
-        c_dialogueText.maxVisibleCharacters = dialogues[currentDialogueIndex].Length;
+        dialogueText.maxVisibleCharacters = dialogues[currentDialogueIndex].Length;
         currentDialogueIndex++;
         foreach (Animator animator in catAnimations)
         {
@@ -191,4 +194,11 @@ public class DialogueController : MonoBehaviour
         }
     }
 
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
+    }
 }

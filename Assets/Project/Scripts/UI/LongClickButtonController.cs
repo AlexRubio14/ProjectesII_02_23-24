@@ -36,7 +36,8 @@ public class LongClickButtonController : MonoBehaviour
 
     private void ButtonPressed(InputAction.CallbackContext obj)
     {
-        pointDown = obj.started; 
+        pointDown = obj.started;
+        MenuUIHintController.instance.ShowInputs();
     }
 
     public void Update()

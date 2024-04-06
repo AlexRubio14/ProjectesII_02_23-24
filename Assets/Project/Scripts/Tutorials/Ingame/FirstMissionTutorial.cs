@@ -61,17 +61,11 @@ public class FirstMissionTutorial : MonoBehaviour
 
         dialogueController.StartDialogue();
 
-        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls, null, MenuControlsHint.HintsPos.BOTTOM_RIGHT);
         TimeManager.Instance.PauseGame();
     }
 
     private void EndTutorial()
     {
-        MenuControlsHint.Instance.UpdateHintControls(null);
-
         TimeManager.Instance.ResumeGame();
 
         dialogueController.onDialogueEnd -= EndTutorial;

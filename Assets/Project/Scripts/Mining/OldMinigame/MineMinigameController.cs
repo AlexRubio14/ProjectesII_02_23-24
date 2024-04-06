@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 
 public class MineMinigameController : MonoBehaviour
 {
@@ -13,14 +15,9 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private InputActionReference cancelMinigameAction;
 
-    [Space, SerializeField]
-    private Image leftInputHint;
-    [SerializeField]
-    private Image rightInputHint;
-    [SerializeField]
-    private Sprite[] leftInputSprites;
-    [SerializeField]
-    private Sprite[] rightInputSprites;
+    [Space, SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
+    private Canvas[] activeCanvas;
 
     [Space, Header("Lasers"), SerializeField]
     private float laserChargeSpeed;
@@ -110,6 +107,11 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private AudioSource rightLaserSource;
 
+    private void Awake()
+    {
+        activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+    }
+
     private void Start()
     {
         startPos = oreBox.transform.localPosition;
@@ -151,9 +153,11 @@ public class MineMinigameController : MonoBehaviour
         AudioManager.instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
         AudioManager.instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
 
-        InputSystem.onDeviceChange += UpdateInputHints;
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
 
-        UpdateInputHints(null, InputDeviceChange.Added);
+        DisplayCanvas(false);
+
     }
 
     private void OnDisable()
@@ -168,7 +172,9 @@ public class MineMinigameController : MonoBehaviour
 
 
         TimeManager.Instance.ResumeGame();
-        InputSystem.onDeviceChange += UpdateInputHints;
+        InputSystem.onDeviceChange -= UpdateInputImages;
+
+        DisplayCanvas(true);
     }
 
     // Update is called once per frame
@@ -336,7 +342,6 @@ public class MineMinigameController : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
     private short CalculateMinerals(float _currentIntegrity)
@@ -448,15 +453,23 @@ public class MineMinigameController : MonoBehaviour
         PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
 
         gameObject.SetActive(false);
-        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
-    private void UpdateInputHints(InputDevice arg1, InputDeviceChange arg2)
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {
-        rightInputHint.sprite = rightInputSprites[(int)InputController.Instance.GetControllerType()];
-        leftInputHint.sprite = leftInputSprites[(int)InputController.Instance.GetControllerType()];
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
-
+    public void DisplayCanvas(bool IsEnabled)
+    {
+        foreach (Canvas item in activeCanvas)
+        {
+            if (item.transform.parent.gameObject != gameObject)
+                item.gameObject.SetActive(IsEnabled);
+        }
+    }
 
     #endregion
 
