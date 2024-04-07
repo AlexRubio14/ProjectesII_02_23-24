@@ -9,7 +9,6 @@ public class CheckQuestController : MonoBehaviour
 {
     private QuestObject currentQuest;
 
-    private DisplayQuestController displayQuestController;
 
     
     [Header("Card List"), SerializeField]
@@ -51,7 +50,6 @@ public class CheckQuestController : MonoBehaviour
     {
         cardList = new List<QuestCard>();
 
-        displayQuestController = GetComponentInParent<DisplayQuestController>();
         completeText = completeButton.GetComponentInChildren<TextMeshProUGUI>();
         selectText = selectButton.GetComponentInChildren<TextMeshProUGUI>();
 
