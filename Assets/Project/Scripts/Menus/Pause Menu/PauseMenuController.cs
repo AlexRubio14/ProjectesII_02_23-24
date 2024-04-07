@@ -71,7 +71,6 @@ public class PauseMenuController : MonoBehaviour
         pauseAction.action.started -= PauseGame;
         resumeAction.action.started -= ResumeGame;
         InputSystem.onDeviceChange -= UpdateInputImages;
-
     }
 
     private void DisplayQuestsObtainedList()
@@ -259,6 +258,9 @@ public class PauseMenuController : MonoBehaviour
         TimeManager.Instance.PauseGame();
         pauseMenuCanvas.gameObject.SetActive(true);
 
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
         SelectFirstQuestButon();
     }
     public void SelectFirstQuestButon()
@@ -297,6 +299,8 @@ public class PauseMenuController : MonoBehaviour
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
         pauseMenuCanvas.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void AbortMission()
