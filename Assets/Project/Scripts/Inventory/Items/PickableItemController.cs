@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class PickableItemController : FloatingItem
 {
@@ -8,6 +8,9 @@ public class PickableItemController : FloatingItem
 
     [HideInInspector]
     public bool followPlayer = true;
+
+    public Action onItemPicked;
+
 
     public void InitializeItem(ItemObject _currentItem)
     {
@@ -27,6 +30,8 @@ public class PickableItemController : FloatingItem
     }
     protected override void ObtainAction()
     {
+        if (onItemPicked != null)
+            onItemPicked();
         InventoryManager.Instance.ChangeRunItemAmount(currentItem, 1);
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
         Destroy(gameObject);

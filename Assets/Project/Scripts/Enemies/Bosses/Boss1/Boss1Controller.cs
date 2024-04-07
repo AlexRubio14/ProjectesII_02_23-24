@@ -27,7 +27,7 @@ public class Boss1Controller : BossController
     [SerializeField]
     private GameObject bubblePrefab;
     [SerializeField]
-    private GameObject crystralDrop;
+    private GameObject crystalDrop;
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
     private int totalDashesPerAttack;
@@ -75,7 +75,7 @@ public class Boss1Controller : BossController
 
     [Space, Header("Suction"), SerializeField]
     private GameObject windBlow;
-    private ParticleSystem windBlowEmitter;
+    private ParticleSystem[] windBlowEmitter;
     private BoxCollider2D windBlowTrigger;
     [SerializeField]
     private float maxSuctionPositionDistance;
@@ -117,11 +117,14 @@ public class Boss1Controller : BossController
         for (int i = 1; i < collisions.Length; i++)
             collisions[i] = tail[i - 1].GetComponent<CircleCollider2D>();
 
-        windBlowEmitter = windBlow.GetComponentInChildren<ParticleSystem>();
+        windBlowEmitter = windBlow.GetComponentsInChildren<ParticleSystem>();
         windBlowTrigger = windBlow.GetComponent<BoxCollider2D>();
 
         headSR = head.GetComponent<SpriteRenderer>();
-        
+
+        PickableItemController currentItem = crystalDrop.GetComponent<PickableItemController>();
+        currentItem.InitializeItem(currentItem.currentItem);
+
         SetSuctionWindActive(false);
     }
 
@@ -489,16 +492,18 @@ public class Boss1Controller : BossController
         }
     }
 
-    private void SetSuctionWindActive(bool _active)
+    public void SetSuctionWindActive(bool _active)
     {
         if (_active)
         {
-            windBlowEmitter.Play();
+            foreach (ParticleSystem item in windBlowEmitter)
+                item.Play();
             windBlowTrigger.enabled = true;
         }
         else
         {
-            windBlowEmitter.Stop();
+            foreach (ParticleSystem item in windBlowEmitter)
+                item.Stop();
             windBlowTrigger.enabled = false;
         }
     }
@@ -561,10 +566,11 @@ public class Boss1Controller : BossController
     public void CreateCrystalDrop()
     {
 
-        crystralDrop.GetComponent<CircleCollider2D>().enabled = true;
-        crystralDrop.GetComponentInChildren<CircleCollider2D>().enabled = true;
+        crystalDrop.GetComponent<CircleCollider2D>().enabled = true;
+        crystalDrop.GetComponent<PickableItemController>().enabled = true;
+        crystalDrop.GetComponentInChildren<CircleCollider2D>().enabled = true;
 
-        Rigidbody2D crystalRb2d =  crystralDrop.GetComponent<Rigidbody2D>();
+        Rigidbody2D crystalRb2d =  crystalDrop.GetComponent<Rigidbody2D>();
 
         crystalRb2d.bodyType = RigidbodyType2D.Dynamic;
         float impulseForce = 10;
