@@ -25,8 +25,16 @@ public class BossDoors : InteractableObject
 
     public override void Interact()
     {
-        PlayerManager.Instance.player.transform.position = posToSpawnPlayer.position;
+        TransitionCanvasManager.instance.FadeIn();
+        SubscribeToFadeIn();
         currentDialogue.door = this;
+
+    }
+
+    public void SubscribeToFadeIn()
+    {
+        TransitionCanvasManager.instance.onFadeIn += () => PlayerManager.Instance.player.transform.position = posToSpawnPlayer.position;
+        TransitionCanvasManager.instance.onFadeIn += TransitionCanvasManager.instance.FadeOut;
     }
 
     public void DestroyDoor()
