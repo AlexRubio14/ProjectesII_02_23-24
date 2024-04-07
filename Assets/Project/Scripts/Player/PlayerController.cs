@@ -324,12 +324,21 @@ public class PlayerController : MonoBehaviour
         Instantiate(explosionParticles, transform.position, Quaternion.identity);
         InventoryManager.Instance.EndRun(false);
         shipLight.intensity = 0;
-        Invoke("ReturnToHub", timeToReturnHub);
-        AudioManager.instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
 
+        TransitionCanvasManager.instance.FadeIn();
+
+        TransitionCanvasManager.instance.onFadeIn += ReturnToHub;
         
-
+        AudioManager.instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
     }
+
+    private void ReturnToHub()
+    {
+        TransitionCanvasManager.instance.onFadeIn -= ReturnToHub;
+        FindObjectOfType<MenuNavegation>().GoToHub();
+    }
+
+
     private void ThrowMinerals(ItemObject _objectType, int _itemsToReturn)
     {
         for (int i = 0; i < _itemsToReturn; i++)
