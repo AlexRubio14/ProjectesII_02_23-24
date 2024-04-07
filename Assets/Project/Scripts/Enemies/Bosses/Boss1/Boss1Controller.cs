@@ -28,6 +28,9 @@ public class Boss1Controller : BossController
     private GameObject bubblePrefab;
     [SerializeField]
     private GameObject crystalDrop;
+    [SerializeField]
+    private AudioClip explisionClip;
+
 
     [Space, Header("Dash Wall To Wall"), SerializeField]
     private int totalDashesPerAttack;
@@ -47,6 +50,9 @@ public class Boss1Controller : BossController
 
     private Action dashStart;
     private Action dashUpdate;
+
+    [SerializeField]
+    private AudioClip dashAudioClip;
 
     [Space, Header("Spin"), SerializeField]
     private float spinSpeed;
@@ -73,6 +79,14 @@ public class Boss1Controller : BossController
     private Action spinStart;
     private Action spinUpdate;
 
+    [SerializeField]
+    private AudioClip spinLoopAudioClip;
+    private AudioSource spinAudioSource;
+    [SerializeField]
+    private AudioClip hitWallsAudioClip;
+
+
+
     [Space, Header("Suction"), SerializeField]
     private GameObject windBlow;
     private ParticleSystem[] windBlowEmitter;
@@ -96,7 +110,10 @@ public class Boss1Controller : BossController
     private Action suctionStart;
     private Action suctionUpdate;
 
-    
+    [SerializeField]
+    private AudioClip suctionLoopAudioClip;
+    private AudioSource suctionAudioSource;
+
     private Vector2 dieExitDirection;
 
 
@@ -223,6 +240,9 @@ public class Boss1Controller : BossController
         head.right = dashDirection;
 
         CalculateRayTrackerParticles();
+
+        AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss1", 0.4f, 0.7f, 1.3f);
+
     }
 
     protected void UpdateDashWallToWall()
@@ -289,6 +309,7 @@ public class Boss1Controller : BossController
         exitDirection.y = UnityEngine.Random.Range(-1f, 1f);
 
         CalculateRayTrackerParticles();
+
     }
 
     public void SetTailLowFollowSpeed()
@@ -311,6 +332,7 @@ public class Boss1Controller : BossController
 
         spinTimeWaited = 0;
         spinStunTimeWaited = 0;
+        spinAudioSource = AudioManager.instance.Play2dLoop(spinLoopAudioClip, "Boss1");
     }
 
     private void UpdateSpin()
@@ -326,6 +348,11 @@ public class Boss1Controller : BossController
             //Espera stuneado
             spinStunTimeWaited += Time.deltaTime;
             headSR.sprite = stunnedHeadSprite;
+            if (spinAudioSource)
+            {
+                AudioManager.instance.StopLoopSound(spinAudioSource);
+                spinAudioSource = null;
+            }
 
             if (spinStunTimeWaited >= spinStunDuration)
             {
@@ -372,6 +399,8 @@ public class Boss1Controller : BossController
 
         CameraController.Instance.AddMediumTrauma();
 
+        AudioManager.instance.Play2dOneShotSound(hitWallsAudioClip, "Boss1");
+
         if (bubbleSpinCD > bubbleSpinTimeWaited || spinTimeWaited >= spinDuration)
             return;
         bubbleSpinTimeWaited = 0;
@@ -385,6 +414,7 @@ public class Boss1Controller : BossController
         float bubbleSpawnForce = 150f;
 
         bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
+
 
     }
 
@@ -421,6 +451,9 @@ public class Boss1Controller : BossController
         suctionBubbleTimeWatied = 0;
 
         CalculateRayTrackerParticles();
+
+        suctionAudioSource = AudioManager.instance.Play2dLoop(suctionLoopAudioClip, "Boss1", 1, 1, 0.2f);
+
     }
 
     protected void UpdateSuction()
@@ -484,6 +517,7 @@ public class Boss1Controller : BossController
         if (suctionTimeWaited >= suctionDuration && Vector2.Distance(head.position, _exitPos) <= 3f)
         {
             rb2d.isKinematic = false;
+            AudioManager.instance.StopLoopSound(suctionAudioSource);
             GenerateRandomAttack();
         }
     }
@@ -556,6 +590,8 @@ public class Boss1Controller : BossController
             head.GetComponent<Boss1BodyController>().ExplodeBodyPart();
         else //Es el cuerpo
             tail[currentID].ExplodeBodyPart();
+
+        AudioManager.instance.Play2dOneShotSound(explisionClip, "Boss1");
 
     }
 
