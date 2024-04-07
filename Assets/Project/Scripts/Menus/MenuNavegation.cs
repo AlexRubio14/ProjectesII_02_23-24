@@ -22,17 +22,23 @@ public class MenuNavegation : MonoBehaviour
     public void GoToHub()
     {
         SceneManager.LoadScene(hubScene);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void GoToTitleScreen()
     {
         SceneManager.LoadScene(titleScene);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void GoToGame()
     {
         SceneManager.LoadScene(gameScene);
         TransitionCanvasManager.instance.onFadeIn -= GoToGame;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
     }
 

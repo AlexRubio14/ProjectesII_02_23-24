@@ -27,12 +27,17 @@ public class DisplayTpsInMap : DisplayTps
         UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
 
         inputsObject.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
     private void OnDisable()
     {
         resumeAction.action.started -= ResumeGame;
         InputSystem.onDeviceChange -= UpdateInputImages;
         inputsObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Start()

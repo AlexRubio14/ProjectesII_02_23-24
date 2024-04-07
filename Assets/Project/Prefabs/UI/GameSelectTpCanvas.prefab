@@ -669,7 +669,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xBFEst\xC1S seguro que quieres abortar la mision?"
+  m_text: "\xBFEst\xC1S seguro que quieres vovler a la base?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d95754a2973eb7343ba13e2b6e453be3, type: 2}
   m_sharedMaterial: {fileID: -2080066064294990652, guid: d95754a2973eb7343ba13e2b6e453be3, type: 2}
