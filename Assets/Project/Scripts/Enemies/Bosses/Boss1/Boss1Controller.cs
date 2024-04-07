@@ -565,6 +565,14 @@ public class Boss1Controller : BossController
             dieExitDirection = rb2d.velocity.normalized;
 
         ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
+        if (suctionAudioSource)
+            AudioManager.instance.StopLoopSound(suctionAudioSource);
+        if (spinAudioSource)
+            AudioManager.instance.StopLoopSound(spinAudioSource);
+
+        suctionAudioSource = null;
+        spinAudioSource = null;
+
     }
     protected override void UpdateDie()
     {
