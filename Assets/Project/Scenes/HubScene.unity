@@ -13488,6 +13488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeIlustration
       objectReference: {fileID: 0}
+    - target: {fileID: 2378520975804106174, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3718238106471669552, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
