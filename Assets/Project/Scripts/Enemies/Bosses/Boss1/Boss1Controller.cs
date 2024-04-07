@@ -190,7 +190,6 @@ public class Boss1Controller : BossController
     #region Dash Wall To Wall 
     protected void StartDashWallToWall()
     {
-        Debug.Log("START");
         dashesRemaining = totalDashesPerAttack;
 
         ResetDashValues();

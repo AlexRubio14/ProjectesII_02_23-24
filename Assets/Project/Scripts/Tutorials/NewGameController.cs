@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NewGameController : MonoBehaviour
@@ -40,9 +39,17 @@ public class NewGameController : MonoBehaviour
 
     }
 
+    private void GoToHub()
+    {
+        menuNavegation.GoToHub();
+        TransitionCanvasManager.instance.onFadeIn -= GoToHub;
+
+    }
+
     public void SubscribeToFadeIn()
     {
-        TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToHub;
+        TransitionCanvasManager.instance.onFadeIn += GoToHub;
+        TransitionCanvasManager.instance.FadeIn();
     }
 
 }

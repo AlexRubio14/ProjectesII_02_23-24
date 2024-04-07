@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
   m_Name: Mision 4
   m_EditorClassIdentifier: 
-  <questID>k__BackingField: 3
+  <questID>k__BackingField: 6
   <questTitle>k__BackingField: Mision 4
   <questName>k__BackingField: "El tama\xF1o si importa"
   <questDialogue>k__BackingField: []

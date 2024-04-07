@@ -115,8 +115,8 @@ public class QuestInfoMenu : MonoBehaviour
             GameObject newObj = new GameObject("Reward Text");
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
             newText.fontSize = rewardFontSize;
-            newText.font = fontAsset; 
-
+            newText.font = fontAsset;
+            newText.alignment = TextAlignmentOptions.Justified;
             switch (item.Value)
             {
                 case QuestObject.RewardType.UPGRADE:

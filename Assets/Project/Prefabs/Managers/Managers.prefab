@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageKey: DamageAddition
-  damageAddition: 30
+  damageAddition: 0.7
   fuelKey: FuelAddition
   fuelAddition: 100
 --- !u!114 &99130520360442118

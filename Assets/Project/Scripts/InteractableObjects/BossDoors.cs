@@ -31,10 +31,15 @@ public class BossDoors : InteractableObject
 
     }
 
+    private void TpPlayer()
+    {
+        TransitionCanvasManager.instance.onFadeIn -= TpPlayer;
+        PlayerManager.Instance.player.transform.position = posToSpawnPlayer.position;
+        TransitionCanvasManager.instance.FadeOut();
+    }
     public void SubscribeToFadeIn()
     {
-        TransitionCanvasManager.instance.onFadeIn += () => PlayerManager.Instance.player.transform.position = posToSpawnPlayer.position;
-        TransitionCanvasManager.instance.onFadeIn += TransitionCanvasManager.instance.FadeOut;
+        TransitionCanvasManager.instance.onFadeIn += TpPlayer;
     }
 
     public void DestroyDoor()
