@@ -903,18 +903,22 @@ MonoBehaviour:
   dashRotationSpeed: 0.3
   minSpawnDot: 0.6
   maxDistanceParticleTracker: 12
+  dashAudioClip: {fileID: 8300000, guid: 2d6deaaf40493974e99be559ec51f051, type: 3}
   spinSpeed: 13
   spinRotationSpeed: 0.1
   spinHeadRotationSpeed: 800
   spinDuration: 7.5
   spinStunDuration: 3.5
   bubbleSpinCD: 4
+  spinLoopAudioClip: {fileID: 8300000, guid: a24673abd9ca4c14a9f59cf79eb0c14e, type: 3}
+  hitWallsAudioClip: {fileID: 8300000, guid: 78fc16f959e56094998590fafeb0e833, type: 3}
   windBlow: {fileID: 5513138748001548416}
   maxSuctionPositionDistance: 12
   minSuctionPositionDistance: 25
   suctionMoveSpeed: 1
   suctionDuration: 12
   suctionBubbleSpawnTime: 4.5
+  suctionLoopAudioClip: {fileID: 8300000, guid: 406f15c62d5702741a4d31232479be60, type: 3}
 --- !u!95 &5770916434241578562
 Animator:
   serializedVersion: 5
@@ -3506,7 +3510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5102384735630160285, guid: db3a317e0d29aa9418d420731477906b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5102384735630160285, guid: db3a317e0d29aa9418d420731477906b, type: 3}
       propertyPath: moveSpeed
