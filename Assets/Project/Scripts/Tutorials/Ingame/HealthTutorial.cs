@@ -1,5 +1,8 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class HealthTutorial : Tutorial
 {
@@ -10,7 +13,6 @@ public class HealthTutorial : Tutorial
 
     [SerializeField]
     private MovementTutorial movementTutorial;
-
     protected override void TutorialMethod()
     {
         StartHealthTutorial();
@@ -28,10 +30,6 @@ public class HealthTutorial : Tutorial
 
         dialogueController.StartDialogue();
         
-        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls, null, MenuControlsHint.HintsPos.BOTTOM_RIGHT);
         TimeManager.Instance.PauseGame();
     }
 
@@ -39,7 +37,6 @@ public class HealthTutorial : Tutorial
     {
         tutorialCanvas.SetActive(false);
         tpTutorial.SetActive(false);
-        MenuControlsHint.Instance.UpdateHintControls(null);
         TimeManager.Instance.ResumeGame();
 
         dialogueController.onDialogueEnd -= EndTutorial;
@@ -62,5 +59,4 @@ public class HealthTutorial : Tutorial
             tpTutorial.SetActive(true);
         }
     }
-
 }

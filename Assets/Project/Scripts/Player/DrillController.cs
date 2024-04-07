@@ -66,14 +66,13 @@ public class DrillController : MonoBehaviour
     #endregion
 
     private LineRenderer[] lasers;
-    private BreakableWallController breakableWallController;
 
 
     [Space, SerializeField]
     private bool showGizmos = false;
 
     [Space, SerializeField]
-    private AudioClip drillClip;
+    private AudioClip[] drillClips;
 
     private SizeUpgradeController sizeUpgrade;
 
@@ -99,7 +98,7 @@ public class DrillController : MonoBehaviour
         sizeUpgrade = GetComponent<SizeUpgradeController>();    
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Drill();        
     }
@@ -139,48 +138,41 @@ public class DrillController : MonoBehaviour
         int totalHits = 0;
         foreach (RaycastHit2D hit in _hits)
         {
-            if (!breakableWallController)
+            BreakableWallController breakableWall = hit.collider.GetComponent<BreakableWallController>();
+            if (breakableWall.isHide)
             {
-                breakableWallController = hit.rigidbody.GetComponent<BreakableWallController>();
-                if (breakableWallController.isHide)
-                {
-                    breakableWallController = null;
-                    return;
-                }
+                breakableWall = null;
+                return;
             }
 
-            breakableWallController.ChangeTileContent(hit.centroid, null);
+            breakableWall.ChangeTileContent(hit.centroid, null);
 
-            Vector2 gridOffset = breakableWallController.GetGridOffset();
+            Vector2 gridOffset = breakableWall.GetGridOffset();
             Vector2 tilePos = hit.centroid;
-            UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y));
-            UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y));
-            UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y));
-            UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y));
+            UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y), breakableWall);
+            UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y), breakableWall);
+            UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y), breakableWall);
+            UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y), breakableWall);
 
             totalHits++;
         }
         
 
-        if (totalHits == 0)
-        {
-            breakableWallController = null;
-        }
-        else
+        if (totalHits != 0)
         {
             CameraController.Instance.SetTrauma(0.5f);
         }
     }
 
-    private void UpdateSideTile(Vector2 _tilePos)
+    private void UpdateSideTile(Vector2 _tilePos, BreakableWallController _breakableWall)
     {
-        Vector2 gridOffset = breakableWallController.GetGridOffset();
+        Vector2 gridOffset = _breakableWall.GetGridOffset();
 
-        if (breakableWallController.GetTileContent(_tilePos) == null)
+        if (_breakableWall.GetTileContent(_tilePos) == null)
             return;
 
         bool haveTileUp;
-        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x, _tilePos.y - gridOffset.y)) != null)
+        if (_breakableWall.GetTileContent(new Vector3(_tilePos.x, _tilePos.y - gridOffset.y)) != null)
         {
             haveTileUp = true;
         }
@@ -190,7 +182,7 @@ public class DrillController : MonoBehaviour
         }
 
         bool haveTileDown;
-        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x, _tilePos.y + gridOffset.y)) != null)
+        if (_breakableWall.GetTileContent(new Vector3(_tilePos.x, _tilePos.y + gridOffset.y)) != null)
         {
             haveTileDown = true;
         }
@@ -199,7 +191,7 @@ public class DrillController : MonoBehaviour
             haveTileDown = false;
         }
         bool haveTileRight;
-        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x - gridOffset.x, _tilePos.y )) != null)
+        if (_breakableWall.GetTileContent(new Vector3(_tilePos.x - gridOffset.x, _tilePos.y )) != null)
         {
             haveTileRight = true;
         }
@@ -208,7 +200,7 @@ public class DrillController : MonoBehaviour
             haveTileRight = false;
         }
         bool haveTileLeft;
-        if (breakableWallController.GetTileContent(new Vector3(_tilePos.x + gridOffset.x, _tilePos.y)) != null)
+        if (_breakableWall.GetTileContent(new Vector3(_tilePos.x + gridOffset.x, _tilePos.y)) != null)
         {
             haveTileLeft = true;
         }
@@ -303,7 +295,7 @@ public class DrillController : MonoBehaviour
             currentTile = aloneTile;
         }
 
-        breakableWallController.ChangeTileContent(_tilePos, currentTile);
+        _breakableWall.ChangeTileContent(_tilePos, currentTile);
 
     }
 
@@ -323,7 +315,8 @@ public class DrillController : MonoBehaviour
                     currentParticle.gameObject.transform.position = _hits[i].point;
                     currentParticle.Play(true);
                 }
-                AudioManager._instance.Play2dOneShotSound(drillClip, "Drill");
+                //AudioManager.instance.Play2dOneShotSound(drillClip, "Drill");
+                AudioManager.instance.PlayOneShotRandomSound(drillClips, "Drill", 0.7f, 0.9f, 0.8f);
             }
             else
             {
@@ -334,16 +327,19 @@ public class DrillController : MonoBehaviour
 
     private Vector3 GetNearestCannonPos(Vector2 _destinyPos)
     {
-        float distanceBetweenFirstPos = Vector2.Distance(laserCannons[0].position, _destinyPos);
-        float distanceBetweenSecondPos = Vector2.Distance(laserCannons[1].position, _destinyPos); ;
-        if (distanceBetweenFirstPos <= distanceBetweenSecondPos)
+        float currentDistance = 100;
+        int laserId = -1;
+        for (int i = 0; i < laserCannons.Length; i++)
         {
-            return laserCannons[0].position;
+            float thisDistance = Vector2.Distance(laserCannons[i].position, _destinyPos);
+            if (thisDistance < currentDistance)
+            {
+                currentDistance = thisDistance;
+                laserId = i;
+            }
         }
-        else
-        {
-            return laserCannons[1].position;
-        }
+
+        return laserCannons[laserId].position;
     }
 
     private ParticleSystem GetUnusedParticleSystem()
@@ -365,8 +361,8 @@ public class DrillController : MonoBehaviour
             return;
 
         Gizmos.color = Color.magenta;
-        
-        float raysOffset = (raysDelimiter * 2 * sizeUpgrade.sizeMultiplyer) / totalRays;
+        float sizeMultiplier = sizeUpgrade ? sizeUpgrade.sizeMultiplyer : 1f;
+        float raysOffset = (raysDelimiter * 2 * sizeMultiplier) / totalRays;
         Vector2 rayPos = transform.localPosition - (transform.up * (raysOffset  * Mathf.Floor(totalRays/2)));
 
         for (int i = 1; i < totalRays + 1; i++)

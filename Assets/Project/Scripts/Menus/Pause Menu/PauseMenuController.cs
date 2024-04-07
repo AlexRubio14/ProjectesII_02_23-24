@@ -1,7 +1,6 @@
-using System.Collections;
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,6 +11,8 @@ public class PauseMenuController : MonoBehaviour
     private InputActionReference pauseAction;
     [SerializeField]
     private InputActionReference resumeAction;
+    [SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
     [Space, Header("Pause Menu"), SerializeField]
     private Canvas pauseMenuCanvas;
@@ -62,12 +63,14 @@ public class PauseMenuController : MonoBehaviour
     {
         pauseAction.action.started += PauseGame;
         resumeAction.action.started += ResumeGame;
-
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
     }
     private void OnDisable()
     {
         pauseAction.action.started -= PauseGame;
         resumeAction.action.started -= ResumeGame;
+        InputSystem.onDeviceChange -= UpdateInputImages;
     }
 
     private void DisplayQuestsObtainedList()
@@ -255,13 +258,10 @@ public class PauseMenuController : MonoBehaviour
         TimeManager.Instance.PauseGame();
         pauseMenuCanvas.gameObject.SetActive(true);
 
-        SelectFirstQuestButon();
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
 
-        List<MenuControlsHint.ActionType> actions = new List<MenuControlsHint.ActionType>();
-        actions.Add(MenuControlsHint.ActionType.MOVE_MENU);
-        actions.Add(MenuControlsHint.ActionType.ACCEPT);
-        actions.Add(MenuControlsHint.ActionType.GO_BACK);
-        MenuControlsHint.Instance.UpdateHintControls(actions);
+        SelectFirstQuestButon();
     }
     public void SelectFirstQuestButon()
     {
@@ -293,22 +293,29 @@ public class PauseMenuController : MonoBehaviour
     {
         ResumeGame(new InputAction.CallbackContext());
     }
+
     private void ResumeGame(InputAction.CallbackContext obj)
     {
         InputController.Instance.ChangeActionMap("Player");
         TimeManager.Instance.ResumeGame();
         pauseMenuCanvas.gameObject.SetActive(false);
-
-        MenuControlsHint.Instance.UpdateHintControls(null);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void AbortMission()
     {
-
         PlayerManager.Instance.player.SubstractFuel(1000);
         PlayerManager.Instance.player.fuelConsume = -10;
         ResumeGame(new InputAction.CallbackContext());
+    }
 
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
 }
 

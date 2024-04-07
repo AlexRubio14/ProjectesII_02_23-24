@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     public static CameraController Instance;
 
-    [SerializeField]
-    private GameObject c_objectToFollow;
+    public GameObject objectToFollow;
 
     [Space, Header("Camera Shake"), SerializeField]
     private float traumaReduction;
@@ -79,8 +77,8 @@ public class CameraController : MonoBehaviour
         float offsetY = maxShakePosition * positionShake.y * positionY * (traumaLevel * traumaLevel);
 
         transform.position = new Vector3(
-            c_objectToFollow.transform.position.x + offsetX * sizeUpgrade.sizeMultiplyer,
-            c_objectToFollow.transform.position.y + offsetY * sizeUpgrade.sizeMultiplyer,
+            objectToFollow.transform.position.x + offsetX * sizeUpgrade.sizeMultiplyer,
+            objectToFollow.transform.position.y + offsetY * sizeUpgrade.sizeMultiplyer,
             transform.position.z
             );
     }

@@ -15,29 +15,31 @@ public class MenuNavegation : MonoBehaviour
 
     private void Start()
     {
-        List<MenuControlsHint.ActionType> neededControls = new List<MenuControlsHint.ActionType>();
-        neededControls.Add(MenuControlsHint.ActionType.ACCEPT);
-        neededControls.Add(MenuControlsHint.ActionType.GO_BACK);
-        neededControls.Add(MenuControlsHint.ActionType.MOVE_MENU);
-
-        MenuControlsHint.Instance.UpdateHintControls(neededControls);
-
         PlayerPrefs.Save();
+        TransitionCanvasManager.instance.FadeOut();
     }
 
     public void GoToHub()
     {
         SceneManager.LoadScene(hubScene);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void GoToTitleScreen()
     {
         SceneManager.LoadScene(titleScene);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void GoToGame()
     {
         SceneManager.LoadScene(gameScene);
+        TransitionCanvasManager.instance.onFadeIn -= GoToGame;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
     }
 
     public void Exit()

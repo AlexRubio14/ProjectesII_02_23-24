@@ -36,7 +36,8 @@ public class LongClickButtonController : MonoBehaviour
 
     private void ButtonPressed(InputAction.CallbackContext obj)
     {
-        pointDown = obj.started; 
+        pointDown = obj.started;
+        MenuUIHintController.instance.ShowInputs();
     }
 
     public void Update()
@@ -49,7 +50,7 @@ public class LongClickButtonController : MonoBehaviour
                 if (onLongClick != null)
                 {
                     onLongClick.Invoke();
-                    AudioManager._instance.Play2dOneShotSound(obtainClip, "MissionCompleted", 1, 1, 1);
+                    AudioManager.instance.Play2dOneShotSound(obtainClip, "MissionCompleted", 1, 1, 1);
                 }
 
                 Reset();

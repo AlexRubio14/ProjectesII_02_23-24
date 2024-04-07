@@ -15,7 +15,7 @@ public class Music : MonoBehaviour
         IEnumerator waitAudioManager()
         {
             yield return new WaitForEndOfFrame();
-            audioSource = AudioManager._instance.Play2dLoop(titleScreenAudio, "Music", 1, 1, 1);
+            audioSource = AudioManager.instance.Play2dLoop(titleScreenAudio, "Music", 1, 1, 1);
         }
 
         StartCoroutine(waitAudioManager());
@@ -23,7 +23,7 @@ public class Music : MonoBehaviour
 
     private void OnDisable()
     {
-        AudioManager._instance.StopLoopSound(audioSource);
+        AudioManager.instance.StopLoopSound(audioSource);
     }
 
 }

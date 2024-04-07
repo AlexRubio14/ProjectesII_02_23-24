@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
   m_Name: Mision 3
   m_EditorClassIdentifier: 
-  <questID>k__BackingField: 8
+  <questID>k__BackingField: 5
   <questTitle>k__BackingField: Mision 3
   <questName>k__BackingField: Y se hizo la luz
   <questDialogue>k__BackingField: []
@@ -26,8 +26,6 @@ MonoBehaviour:
       Value: 10
     - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
       Value: 6
-    - Key: {fileID: 11400000, guid: cd379e840f2a70146bb284b74ce08085, type: 2}
-      Value: 1
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}

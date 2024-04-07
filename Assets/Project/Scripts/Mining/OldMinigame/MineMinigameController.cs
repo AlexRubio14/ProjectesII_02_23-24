@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 
 public class MineMinigameController : MonoBehaviour
 {
@@ -13,14 +15,9 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private InputActionReference cancelMinigameAction;
 
-    [Space, SerializeField]
-    private Image leftInputHint;
-    [SerializeField]
-    private Image rightInputHint;
-    [SerializeField]
-    private Sprite[] leftInputSprites;
-    [SerializeField]
-    private Sprite[] rightInputSprites;
+    [Space, SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
+    private Canvas[] activeCanvas;
 
     [Space, Header("Lasers"), SerializeField]
     private float laserChargeSpeed;
@@ -110,6 +107,11 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private AudioSource rightLaserSource;
 
+    private void Awake()
+    {
+        activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+    }
+
     private void Start()
     {
         startPos = oreBox.transform.localPosition;
@@ -148,12 +150,14 @@ public class MineMinigameController : MonoBehaviour
 
         TimeManager.Instance.PauseGame();
 
-        AudioManager._instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
-        AudioManager._instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
 
-        InputSystem.onDeviceChange += UpdateInputHints;
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
 
-        UpdateInputHints(null, InputDeviceChange.Added);
+        DisplayCanvas(false);
+
     }
 
     private void OnDisable()
@@ -168,7 +172,9 @@ public class MineMinigameController : MonoBehaviour
 
 
         TimeManager.Instance.ResumeGame();
-        InputSystem.onDeviceChange += UpdateInputHints;
+        InputSystem.onDeviceChange -= UpdateInputImages;
+
+        DisplayCanvas(true);
     }
 
     // Update is called once per frame
@@ -256,8 +262,8 @@ public class MineMinigameController : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
-        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.LeftEnergyLevelSize.x, miningItem.c_currentItem.LeftEnergyLevelSize.y));
-        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.c_currentItem.RightEnergyLevelSize.x, miningItem.c_currentItem.RightEnergyLevelSize.y));
+        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.currentItem.LeftEnergyLevelSize.x, miningItem.currentItem.LeftEnergyLevelSize.y));
+        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.currentItem.RightEnergyLevelSize.x, miningItem.currentItem.RightEnergyLevelSize.y));
     }
 
     private void CheckAdvanceProgress()
@@ -320,10 +326,10 @@ public class MineMinigameController : MonoBehaviour
 
     private void EndMining()
     {
-        AudioManager._instance.StopLoopSound(rightLaserSource);
-        AudioManager._instance.StopLoopSound(leftLaserSource);
+        AudioManager.instance.StopLoopSound(rightLaserSource);
+        AudioManager.instance.StopLoopSound(leftLaserSource);
 
-        AudioManager._instance.Play2dOneShotSound(endMiningClip, "Mining", 0.2f);
+        AudioManager.instance.Play2dOneShotSound(endMiningClip, "Mining", 0.2f);
 
         ThrowMinerals(CalculateMinerals(integrityValue));
 
@@ -336,7 +342,6 @@ public class MineMinigameController : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
     private short CalculateMinerals(float _currentIntegrity)
@@ -376,7 +381,7 @@ public class MineMinigameController : MonoBehaviour
         {
             PickableItemController currItem = Instantiate(pickableItemPrefab, miningItem.transform.position, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.c_currentItem = miningItem.c_currentItem;
+            currItem.InitializeItem(miningItem.currentItem);
 
             float randomX = Random.Range(-1, 2);
             float randomY = Random.Range(-1, 2);
@@ -405,7 +410,7 @@ public class MineMinigameController : MonoBehaviour
     {
         for (int i = 0; i < mineralTypeImages.Length; i++)
         {
-            mineralTypeImages[i].sprite = miningItem.c_currentItem.PickableSprite;
+            mineralTypeImages[i].sprite = miningItem.currentItem.PickableSprite;
         }
     }
 
@@ -439,8 +444,8 @@ public class MineMinigameController : MonoBehaviour
 
     private void CancelMinigame(InputAction.CallbackContext obj)
     {
-        AudioManager._instance.StopLoopSound(rightLaserSource);
-        AudioManager._instance.StopLoopSound(leftLaserSource);
+        AudioManager.instance.StopLoopSound(rightLaserSource);
+        AudioManager.instance.StopLoopSound(leftLaserSource);
 
         progressValue = 0;
         integrityValue = 0;
@@ -448,15 +453,23 @@ public class MineMinigameController : MonoBehaviour
         PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
 
         gameObject.SetActive(false);
-        MenuControlsHint.Instance.UpdateHintControls(null);
     }
 
-    private void UpdateInputHints(InputDevice arg1, InputDeviceChange arg2)
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {
-        rightInputHint.sprite = rightInputSprites[(int)InputController.Instance.GetControllerType()];
-        leftInputHint.sprite = leftInputSprites[(int)InputController.Instance.GetControllerType()];
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
-
+    public void DisplayCanvas(bool IsEnabled)
+    {
+        foreach (Canvas item in activeCanvas)
+        {
+            if (item.transform.parent && item.transform.parent.gameObject != gameObject)
+                item.gameObject.SetActive(IsEnabled);
+        }
+    }
 
     #endregion
 

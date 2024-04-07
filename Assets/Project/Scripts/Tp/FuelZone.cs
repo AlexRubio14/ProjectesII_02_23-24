@@ -21,7 +21,7 @@ public class FuelZone : MonoBehaviour
             if (PlayerManager.Instance.player.GetFuel() < PlayerManager.Instance.player.GetMaxFuel() - 3f)
             {
                 PlayerManager.Instance.player.refillFuelParticles.Play();
-                healingSource = AudioManager._instance.Play2dLoop(healingClip, "Teleport");
+                healingSource = AudioManager.instance.Play2dLoop(healingClip, "HealingSFX");
             }
         }
     }
@@ -35,13 +35,12 @@ public class FuelZone : MonoBehaviour
                 PlayerManager.Instance.player.refillFuelParticles.Stop();
                 if (healingSource)
                 {
-                    AudioManager._instance.StopLoopSound(healingSource);
+                    AudioManager.instance.StopLoopSound(healingSource);
                     healingSource = null;
                 }
             }
             else if (PlayerManager.Instance.player.refillFuelParticles.isStopped)
             {
-                Debug.Log("Sex");
                 PlayerManager.Instance.player.refillFuelParticles.Play();
             }
         }
@@ -56,7 +55,7 @@ public class FuelZone : MonoBehaviour
 
             if (healingSource)
             {
-                AudioManager._instance.StopLoopSound(healingSource);
+                AudioManager.instance.StopLoopSound(healingSource);
                 healingSource = null;
             }
         }

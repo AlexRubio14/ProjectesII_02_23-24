@@ -1,17 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy02 : Enemy
 {
     [Space, Header("--- ENEMY 02"), SerializeField]
-    private float timeFollowing = 5.0f;
+    private float timeToExplode;
+
+    private float timeToExplodeWaited = 0.0f;
+
     [SerializeField]
-    private GameObject c_explosionParticles;
+    private GameObject explosion;
+
+    private Animator animator;
+
+
 
     void Awake()
     {
         InitEnemy();
+        animator = GetComponent<Animator>();    
     }
     private void FixedUpdate()
     {
@@ -29,6 +35,7 @@ public class Enemy02 : Enemy
             case EnemyStates.CHASING:
                 PerformDetection();
                 ChaseBehaviour();
+                WaitForExplode();
                 break;
             case EnemyStates.KNOCKBACK:
                 KnockbackBehaviour();
@@ -76,9 +83,10 @@ public class Enemy02 : Enemy
             case EnemyStates.PATROLLING:
                 break;
             case EnemyStates.CHASING:
+                animator.SetBool("Exploding", false);
                 break;
             case EnemyStates.KNOCKBACK:
-                c_rb2d.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
             default:
                 break;
@@ -91,7 +99,8 @@ public class Enemy02 : Enemy
             case EnemyStates.PATROLLING:
                 break;
             case EnemyStates.CHASING:
-                Invoke("Die", timeFollowing);
+                animator.SetBool("Exploding", true);
+                timeToExplodeWaited = 0;
                 break;
             case EnemyStates.KNOCKBACK:
                 break;
@@ -100,26 +109,29 @@ public class Enemy02 : Enemy
         }
     }
 
+    private void WaitForExplode()
+    {
+        timeToExplodeWaited += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
+
+        if(timeToExplodeWaited >= timeToExplode)
+        {
+            Die();
+        }
+    }
     override public void Die()
     {
-        AudioManager._instance.Play2dOneShotSound(deathClip, "Enemy", 1, 0.9f, 1.1f);
-        Instantiate(c_explosionParticles, transform.position, Quaternion.identity);
+        AudioManager.instance.Play2dOneShotSound(deathClip, "Enemy", 1, 0.9f, 1.1f);
+        Instantiate(explosion, transform.position, Quaternion.identity);
         base.Die();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Player"))
-        {
             Die();
-        }
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(BULLET_TAG))
+        if (collision.collider.CompareTag(BULLET_TAG))
         {
-            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
+            float bulletDamage = collision.collider.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);
             ChangeState(EnemyStates.KNOCKBACK);
             StartKnockback(collision.transform.position, knockbackForce);

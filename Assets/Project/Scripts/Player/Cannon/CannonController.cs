@@ -42,7 +42,7 @@ public class CannonController : MonoBehaviour
 
     private PlayerController playerController;
 
-    Slider sliderHealthBar;
+    private Slider sliderHealthBar;
 
 
     private void Awake()
@@ -78,13 +78,15 @@ public class CannonController : MonoBehaviour
 
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
-        int index = 0;
         foreach (RaycastHit2D hit in hits)
         {
-            index++;
+            if (!hit.rigidbody)
+                continue;
+
             float distance = Vector2.Distance(transform.position, hit.point);
             float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
             Vector3 dir = (hit.rigidbody.transform.position - transform.position);
+
             if (minDisntance > distance && 
                 !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
             {
@@ -98,14 +100,18 @@ public class CannonController : MonoBehaviour
 
         if (nearestEnemy)
         {
+            Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
+            if (!currentEnemy) return;
+
             if (!aimTarget.activeInHierarchy)
             {
                 aimTarget.SetActive(true);
             }
 
             aimTarget.transform.position = nearestEnemy.transform.position;
-            Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
+            
             sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
+            
         }
         else if (aimTarget.activeInHierarchy)
             aimTarget.SetActive(false);
@@ -120,6 +126,9 @@ public class CannonController : MonoBehaviour
     }
     public void Shoot()
     {
+        if (playerController.GetState() == PlayerController.State.MINING)
+            return;
+
         currentDelay += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
         if (autoShoot)
         {
@@ -128,7 +137,7 @@ public class CannonController : MonoBehaviour
 
         if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
         {
-            AudioManager._instance.Play2dOneShotSound(shootClip, "Laser");
+            AudioManager.instance.Play2dOneShotSound(shootClip, "Laser");
 
             currentDelay = 0;
             Instantiate(laserPrefab, posToSpawnBullets.position, transform.rotation);

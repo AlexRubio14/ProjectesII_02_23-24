@@ -9,7 +9,6 @@ public class CheckQuestController : MonoBehaviour
 {
     private QuestObject currentQuest;
 
-    private DisplayQuestController displayQuestController;
 
     
     [Header("Card List"), SerializeField]
@@ -51,7 +50,6 @@ public class CheckQuestController : MonoBehaviour
     {
         cardList = new List<QuestCard>();
 
-        displayQuestController = GetComponentInParent<DisplayQuestController>();
         completeText = completeButton.GetComponentInChildren<TextMeshProUGUI>();
         selectText = selectButton.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -163,7 +161,7 @@ public class CheckQuestController : MonoBehaviour
         dialogueController.gameObject.SetActive(true);
         dialogueController.StartDialogue();
 
-        AudioManager._instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
+        AudioManager.instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
     }
 
     private void SelectQuest()

@@ -6,12 +6,19 @@ public class PowerUpManager : MonoBehaviour
 {
     public static PowerUpManager Instance;
 
-    public enum PowerUpType {NONE, FUEL, ARMOR, DAMAGE }
+    public enum PowerUpType {NONE, FUEL, DAMAGE }
 
 
-    public float Armor { get; private set; } // Esta variable se usara para dividir el danyo recibido
+    [SerializeField]
+    private string damageKey;
     public float Damage { get; private set; } // Esta variable se usara par multiplicar el danyo hecho
+    [SerializeField]
+    private float damageAddition;
+    [Space, SerializeField]
+    private string fuelKey;
     public float Fuel { get; private set; } // Esta variable se usa para sumar la cantidad de fuel total
+    [SerializeField]
+    private float fuelAddition;
 
     private void Awake()
     {
@@ -25,9 +32,20 @@ public class PowerUpManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(Instance);
 
-        Armor = 1;
-        Damage = 1;
-        Fuel = 0;
+        if (PlayerPrefs.HasKey(fuelKey))
+        {
+            Damage = PlayerPrefs.GetFloat(damageKey);
+            Fuel = PlayerPrefs.GetFloat(fuelKey);
+        }
+        else
+        {
+            Damage = 1;
+            Fuel = 0;
+
+            PlayerPrefs.SetFloat(damageKey, Damage);
+            PlayerPrefs.SetFloat(fuelKey, Fuel);
+            PlayerPrefs.Save();
+        }
 
     }
 
@@ -37,16 +55,20 @@ public class PowerUpManager : MonoBehaviour
         switch (_powerUpType)
         {
             case PowerUpType.FUEL:
-                Fuel += 100;
-                break;
-            case PowerUpType.ARMOR:
-                Armor += 0.5f;
+                Fuel += fuelAddition;
+                PlayerPrefs.SetFloat(fuelKey, Fuel);
                 break;
             case PowerUpType.DAMAGE:
-                Damage += 0.7f;
+                Damage += damageAddition;
+                PlayerPrefs.SetFloat(damageKey, Damage);
+
                 break;
             default:
                 break;
         }
+        
+        PlayerPrefs.Save();
+
     }
+
 }

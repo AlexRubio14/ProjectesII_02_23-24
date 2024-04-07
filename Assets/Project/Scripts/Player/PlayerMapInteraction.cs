@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerMapInteraction : MonoBehaviour
 {
@@ -21,10 +17,9 @@ public class PlayerMapInteraction : MonoBehaviour
     [Header("Interact Hint"), SerializeField]
     private SpriteRenderer interactHint;
     [SerializeField]
-    private Sprite hideUpgradeSprite;
-
+    private UpgradeObject lightUpgradeObject;
     [SerializeField]
-    private GameObject c_lockedUpgradeImage;
+    private Sprite missingUpgradeSprite;
 
     [SerializeField]
     private Sprite[] interactKeySprite;
@@ -74,27 +69,35 @@ public class PlayerMapInteraction : MonoBehaviour
             interactHint.gameObject.SetActive(false);
             return;
         }
-        else if (nearestObject)
+        else if (nearestObject && nearestObject.GetNearestTransform())
         {
             interactHint.gameObject.SetActive(true);
             interactHint.transform.position = nearestObject.GetNearestTransform().position;
         }
 
 
-        if (nearestObject.isHide)
+        if (nearestObject.upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.upgradeNeeded) ||
+            nearestObject.isHide && !UpgradeManager.Instance.CheckObtainedUpgrade(lightUpgradeObject))
         {
-            interactHint.sprite = hideUpgradeSprite;
+            interactHint.sprite = missingUpgradeSprite;
         }
-        else if(nearestObject.isInteractable && nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded) || 
-            nearestObject.isInteractable && !nearestObject.c_upgradeNeeded 
-            )
+        else if (nearestObject.isHide)
+        {
+            interactHint.sprite = lightUpgradeObject.UpgradeSprite;
+        }
+        else if (nearestObject.upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.upgradeNeeded) && !nearestObject.isInteractable)
+        {
+            interactHint.sprite = nearestObject.upgradeNeeded.UpgradeSprite;
+        }
+        else if(nearestObject.isInteractable && 
+            (nearestObject.upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.upgradeNeeded) && nearestObject.isInteractable || !nearestObject.upgradeNeeded))
         {
 
             interactHint.sprite = interactKeySprite[(int)InputController.Instance.GetControllerType()];
         }
-        else if(nearestObject.c_upgradeNeeded && !UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
+        else if(nearestObject.upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.upgradeNeeded))
         {
-            interactHint.sprite = nearestObject.c_upgradeNeeded.UpgradeSprite;
+            interactHint.sprite = nearestObject.upgradeNeeded.UpgradeSprite;
         }
         else
         {
@@ -106,12 +109,13 @@ public class PlayerMapInteraction : MonoBehaviour
     {
         if (nearestObject && //Si existe un objeto cercano
             nearestObject.isInteractable && //Si se puede interactuar con el
-            !nearestObject.isHide //Si no esta oculto
+            !nearestObject.isHide && //Si no esta oculto
+            showCanvas
             )
         {
             //Si no necesita mejora o necesita una mejora y la tiene
-            if (!nearestObject.c_upgradeNeeded || 
-                nearestObject.c_upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.c_upgradeNeeded))
+            if (!nearestObject.upgradeNeeded || 
+                nearestObject.upgradeNeeded && UpgradeManager.Instance.CheckObtainedUpgrade(nearestObject.upgradeNeeded))
             {
                 nearestObject.Interact(); //Interactua con el objeto
             }

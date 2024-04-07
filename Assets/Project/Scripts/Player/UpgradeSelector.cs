@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using AYellowpaper.SerializedCollections;
-using UnityEngine.Events;
 
 public class UpgradeSelector : MonoBehaviour
 {
@@ -68,12 +67,11 @@ public class UpgradeSelector : MonoBehaviour
     private GameObject lightUpgrade;
 
     [Space, Header("Size Changer"), SerializeField]
-    private SizeUpgradeController sizeUpgrade;
-    [SerializeField]
     private AudioClip shrinkSizeAudioClip;
     [SerializeField]
     private AudioClip growUpSizeAudioClip;
     private AudioSource sizeAudioSource;
+    private SizeUpgradeController sizeUpgrade;
 
     [Space, Header("Fuel Consume"), SerializeField]
     private float boostConsume;
@@ -183,11 +181,11 @@ public class UpgradeSelector : MonoBehaviour
     {
         if (!obtainedUpgrades[upgradePositions[_pos]])
             return;
-        
+
         switch (upgradePositions[_pos].type)
         {
             case UpgradeObject.UpgradeType.BOOST:
-                bool isPressed = obj.action.IsPressed();
+                bool isPressed = obj.action != null ? obj.action.IsPressed() : false;
                 ToggleBoost(_pos, isPressed);
                 break;
             case UpgradeObject.UpgradeType.LIGHT:
@@ -204,9 +202,11 @@ public class UpgradeSelector : MonoBehaviour
         }
 
     }
+
     private void ToggleBoost(Position _pos, bool _pressed)
     {
         //Upgrade 0
+
 
         if (!upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST] && _pressed)
         {
@@ -216,8 +216,8 @@ public class UpgradeSelector : MonoBehaviour
             //Restar el consumo de fuel
             playerController.fuelConsume -= boostConsume;
             boostParticles.Play(true);
-            AudioManager._instance.Play2dOneShotSound(startBoost, "Boost");
-            boostSource = AudioManager._instance.Play2dLoop(boost, "Boost");
+            AudioManager.instance.Play2dOneShotSound(startBoost, "Boost");
+            boostSource = AudioManager.instance.Play2dLoop(boost, "Boost");
 
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
@@ -229,8 +229,8 @@ public class UpgradeSelector : MonoBehaviour
             //Resetear el consumo de fuel sumando
             playerController.fuelConsume += boostConsume;
             boostParticles.Stop(true);
-            AudioManager._instance.StopLoopSound(boostSource);
-            AudioManager._instance.Play2dOneShotSound(finishBoost, "Boost");
+            AudioManager.instance.StopLoopSound(boostSource);
+            AudioManager.instance.Play2dOneShotSound(finishBoost, "Boost");
         }
     }
 
@@ -244,12 +244,12 @@ public class UpgradeSelector : MonoBehaviour
             //Restar el consumo de fuel
             playerController.fuelConsume -= lightConsume;
 
-            AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
-            loopLightSource = AudioManager._instance.Play2dLoop(loopLightClip, "Light");
+            AudioManager.instance.Play2dOneShotSound(SwitchLightClip, "Light");
+            loopLightSource = AudioManager.instance.Play2dLoop(loopLightClip, "Light");
         }
         else
         {
-            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(loopLightSource));
+            StartCoroutine(AudioManager.instance.FadeOutSFXLoop(loopLightSource));
             lightUpgrade.SetActive(false);
             upgradesToggled[(int)UpgradeObject.UpgradeType.LIGHT] = false;
             ChangeBackground(_pos, lightUpgrade.activeInHierarchy);
@@ -257,7 +257,7 @@ public class UpgradeSelector : MonoBehaviour
 
             playerController.fuelConsume += lightConsume;
 
-            AudioManager._instance.Play2dOneShotSound(SwitchLightClip, "Light");
+            AudioManager.instance.Play2dOneShotSound(SwitchLightClip, "Light");
         }
     }
     private void ToggleDrill(Position _pos)
@@ -345,6 +345,17 @@ public class UpgradeSelector : MonoBehaviour
         foreach (KeyValuePair<Position, Image> item in inputHintImagePositions)
         {
             item.Value.sprite = inputHintSprites[item.Key][(int)InputController.Instance.GetControllerType()];
+        }
+    }
+
+    public void StopAllUpgrades()
+    {
+        foreach (KeyValuePair<Position, UpgradeObject> item in upgradePositions)
+        {
+            if (upgradesToggled[(int)item.Value.type])
+            {
+                ToggleUpgrade(item.Key, new InputAction.CallbackContext());
+            }
         }
     }
 }

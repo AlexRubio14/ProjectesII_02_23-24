@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class MineralController : InteractableObject
 {
     [field: Space, Header("Mineral"), SerializeField]
-    public ItemObject c_currentItem { private set; get; }
+    public ItemObject currentItem { private set; get; }
 
     [field : SerializeField]
     public short MaxItemsToReturn { private set; get; }
@@ -19,9 +19,11 @@ public class MineralController : InteractableObject
 
     private PlayerMineryController player;
 
-    private SpriteRenderer c_spriteR;
+    private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private SpriteRenderer fog;
 
-    private BoxCollider2D c_boxCollider;
+    private BoxCollider2D boxCollider;
     private Vector2 originalBoxSize;
     private Vector2 originalBoxOffset;
 
@@ -34,23 +36,23 @@ public class MineralController : InteractableObject
 
     private void Awake()
     {
-        c_spriteR = GetComponent<SpriteRenderer>();
-        c_boxCollider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         if(isHide)
         {
-            c_spriteR.sprite = hideSprite;
-            originalBoxSize = c_boxCollider.size;
-            originalBoxOffset = c_boxCollider.offset;
-            c_boxCollider.size = Vector2.one * 0.1f;
-            c_boxCollider.offset = originalBoxOffset;
+            spriteRenderer.sprite = hideSprite;
+            originalBoxSize = boxCollider.size;
+            originalBoxOffset = boxCollider.offset;
+            boxCollider.size = Vector2.one * 0.1f;
+            boxCollider.offset = originalBoxOffset;
         }
-        else
+        else if(spriteRenderer)
         {
             if (isBeta)
-                c_spriteR.sprite = c_currentItem.BetaSprite;
+                spriteRenderer.sprite = currentItem.BetaSprite;
             else
-                c_spriteR.sprite = c_currentItem.MapSprite;
+                spriteRenderer.sprite = currentItem.MapSprite;
         }
 
         currentRockHealth = mineralRockBaseHealth;
@@ -60,7 +62,7 @@ public class MineralController : InteractableObject
         player = PlayerManager.Instance.player.gameObject.GetComponent<PlayerMineryController>();
 
         
-        vfxUnhideColor = new Color(c_currentItem.EffectsColor.r, c_currentItem.EffectsColor.g, c_currentItem.EffectsColor.b, 0.1f);
+        vfxUnhideColor = new Color(currentItem.EffectsColor.r, currentItem.EffectsColor.g, currentItem.EffectsColor.b, 0.1f);
 
         if (isHide)
         {
@@ -70,12 +72,13 @@ public class MineralController : InteractableObject
         else
         {
             SetupParticles(vfxUnhideColor);
+            SetupFogAndLight();
         }
 
         mineralsHealth = new float[MaxItemsToReturn];
         for (int i = 0; i < MaxItemsToReturn; i++)
         {
-            mineralsHealth[i] = c_currentItem.BaseMineralHealth;
+            mineralsHealth[i] = currentItem.BaseMineralHealth;
         }
 
     }
@@ -88,17 +91,27 @@ public class MineralController : InteractableObject
     public override void UnHide()
     {
         base.UnHide();
-        c_boxCollider.size = originalBoxSize;
-        c_boxCollider.offset = originalBoxOffset;
+        boxCollider.size = originalBoxSize;
+        boxCollider.offset = originalBoxOffset;
 
         if (isBeta)
-            c_spriteR.sprite = c_currentItem.BetaSprite;
+            spriteRenderer.sprite = currentItem.BetaSprite;
         else
-            c_spriteR.sprite = c_currentItem.MapSprite;
+            spriteRenderer.sprite = currentItem.MapSprite;
 
         isInteractable = true;
         isHide = false;
 
         SetupParticles(vfxUnhideColor);
+
+        SetupFogAndLight();
+    }
+
+
+    private void SetupFogAndLight()
+    {
+        fog.color =  new Color (currentItem.EffectsColor.r, currentItem.EffectsColor.g, currentItem.EffectsColor.b, 0.05f);
+
+        GetComponentInChildren<Light2D>().color = currentItem.EffectsColor;
     }
 }

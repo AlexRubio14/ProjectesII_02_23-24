@@ -156,7 +156,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.Core-Purrrllector
+    Standalone: com.Raccoon-Interactive.Core-Purrrllector
   buildNumber:
     Bratwurst: 0
     Standalone: 0

@@ -1,81 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
-public class PickableItemController : MonoBehaviour
+public class PickableItemController : FloatingItem
 {
-    [SerializeField]
-    public ItemObject c_currentItem;
-    [SerializeField]
-    private float moveSpeed;
-    [SerializeField]
-    private float minDistanceToGetItem;
-    private bool playerThrow;
-
-    [SerializeField]
-    private AudioClip collectClip;
+    [Space, Header("PickableItem"), SerializeField]
+    public ItemObject currentItem;
 
     [HideInInspector]
     public bool followPlayer = true;
 
-    private Transform c_playerTransform;
-    private Rigidbody2D c_rb2d;
-    private void Awake()
+    public Action onItemPicked;
+
+
+    public void InitializeItem(ItemObject _currentItem)
     {
-        c_rb2d = GetComponent<Rigidbody2D>();
+        currentItem = _currentItem;
+        spriteRenderer.sprite = currentItem.PickableSprite;
+        light2D.color = currentItem.EffectsColor;
     }
 
-    private void Start()
+    protected override void ChaseAction()
     {
-        GetComponent<SpriteRenderer>().sprite = c_currentItem.PickableSprite;
-        GetComponentInChildren<Light2D>().color = c_currentItem.EffectsColor;
+        if (!followPlayer)
+            return;
+        Vector2 dir = (PlayerManager.Instance.player.transform.position - transform.position).normalized;
+        rb2d.AddForce(dir * moveSpeed, ForceMode2D.Force);
 
+        CheckGetDistance(PlayerManager.Instance.player.transform);
+    }
+    protected override void ObtainAction()
+    {
+        if (onItemPicked != null)
+            onItemPicked();
+        InventoryManager.Instance.ChangeRunItemAmount(currentItem, 1);
+        AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
+        Destroy(gameObject);
     }
 
-    private void FixedUpdate()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        FollowPlayer();
+        animator.SetTrigger("Collision");
     }
-
-    private void FollowPlayer()
-    {
-        if (followPlayer && c_playerTransform)
-        {
-            Vector2 dir = (c_playerTransform.position - transform.position).normalized;
-            c_rb2d.AddForce(dir * moveSpeed, ForceMode2D.Force);
-
-            CheckGetDistance();
-        }
-    }
-    private void CheckGetDistance()
-    {
-        if (Vector2.Distance(c_playerTransform.position, transform.position) <= minDistanceToGetItem)
-        {
-            InventoryManager.Instance.ChangeRunItemAmount(c_currentItem, 1);
-            AudioManager._instance.Play2dOneShotSound(collectClip, "Items");
-            Destroy(gameObject);
-        }
-    }
-
-    public void ImpulseItem(Vector2 _dir, float _throwSpeed)
-    {
-        c_rb2d.AddForce(_dir * _throwSpeed, ForceMode2D.Impulse);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (followPlayer && collision.CompareTag("Player") && !playerThrow)
-        {
-            c_playerTransform = collision.transform;
-        }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (playerThrow && collision.CompareTag("Player"))
-        {
-            playerThrow = false;
-        }
+        if (collision.CompareTag("Player"))
+            canChase = true;
     }
 }

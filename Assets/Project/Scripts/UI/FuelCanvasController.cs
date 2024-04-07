@@ -105,7 +105,8 @@ public class FuelCanvasController : MonoBehaviour
 
     private void OnDisable()
     {
-        playerController.OnHit -= Hitted;
+        if(playerController)
+            playerController.OnHit -= Hitted;
     }
 
 

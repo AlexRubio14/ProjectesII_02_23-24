@@ -38,6 +38,8 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: bd806acfc0ed28343ac20594fda134c5, type: 2}
       Value: 1
-  obtainedQuest: 0
+    - Key: {fileID: 11400000, guid: d360710b326bcd049a2e26cdb6fc2fb0, type: 2}
+      Value: 1
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy01 : Enemy
@@ -10,7 +8,8 @@ public class Enemy01 : Enemy
     public float eatingForce; 
     [SerializeField]
     public int eatingHeal;
-    
+    [SerializeField]
+    private ParticleSystem eatingParticles;
 
     [SerializeField]
     private AudioClip impactPlayerClip;
@@ -78,12 +77,13 @@ public class Enemy01 : Enemy
 
     protected void StopEating()
     {
-        currentHealth += eatingHeal;
         ChangeState(EnemyStates.CHASING);
-        
     }
     private void StartEating(Vector2 collisionPoint)
     {
+        currentHealth = Mathf.Clamp(currentHealth + eatingHeal, 0, maxHealth); 
+        
+        eatingParticles.Play();
         StartKnockback(collisionPoint, eatingForce);
         ChangeState(EnemyStates.EXTRA);
         Invoke("StopEating", eatingDuration); 
@@ -103,7 +103,7 @@ public class Enemy01 : Enemy
             case EnemyStates.CHASING:
                 break;
             case EnemyStates.KNOCKBACK:
-                c_rb2d.velocity = Vector2.zero;
+                rb2d.velocity = Vector2.zero;
                 break;
             default:
                 break;
@@ -128,19 +128,15 @@ public class Enemy01 : Enemy
     {
         if(collision.collider.CompareTag("Player"))
         {
-            AudioManager._instance.Play2dOneShotSound(impactPlayerClip, "Enemy");
+            AudioManager.instance.Play2dOneShotSound(impactPlayerClip, "Enemy");
             StartEating(collision.contacts[0].point); 
         }
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
+        else if (collision.collider.CompareTag(BULLET_TAG) && currentState != EnemyStates.EXTRA)
         {
-            float bulletDamage = collision.GetComponent<Laser>().GetBulletDamage();
+            float bulletDamage = collision.collider.GetComponent<Laser>().GetBulletDamage();
             GetHit(bulletDamage);
             ChangeState(EnemyStates.KNOCKBACK);
-            StartKnockback(collision.transform.position, knockbackForce); 
+            StartKnockback(collision.transform.position, knockbackForce);
         }
     }
 }

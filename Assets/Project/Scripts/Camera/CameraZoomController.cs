@@ -28,6 +28,9 @@ public class CameraZoomController : MonoBehaviour
 
     private void CheckIfZoom()
     {
+        if (Vector2.Distance(transform.position, PlayerManager.Instance.player.transform.position) > 100)
+            return;
+            
         if (!zooming && currentCamera.orthographicSize >= defaultCameraSize)
         {
             zoomProcess -= zoomSpeed * Time.fixedDeltaTime;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744c512bfa748134d8a6260c58c08170, type: 3}
   m_Name: Mision 4
   m_EditorClassIdentifier: 
-  <questID>k__BackingField: 11
+  <questID>k__BackingField: 6
   <questTitle>k__BackingField: Mision 4
   <questName>k__BackingField: "El tama\xF1o si importa"
   <questDialogue>k__BackingField: []
@@ -26,6 +26,8 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
       Value: 15
+    - Key: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}
+      Value: 1
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: 1d576083a4a86864ab8513b7849915e0, type: 2}

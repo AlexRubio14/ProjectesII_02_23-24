@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -61,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float mapDamage;
     [SerializeField]
+    private float invulnerabilityDuration;
+    private float invulnerabilityTimeWaited;
+    [SerializeField]
     private float idleFuelConsume;
     [SerializeField]
     private float movingFuelConsume;
@@ -69,6 +71,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Action OnHit;
     public ParticleSystem refillFuelParticles;
+    public ParticleSystem bubbleFuelParticles;
 
     [Space, Header("Death"), SerializeField]
     private GameObject explosionParticles;
@@ -99,6 +102,8 @@ public class PlayerController : MonoBehaviour
     private PlayerMapInteraction mapInteraction;
     private AutoHelpController autoHelpController;
     private SizeUpgradeController sizeUpgrade;
+    private UpgradeSelector upgradeSelector;
+
 
     private void Awake()
     {
@@ -109,7 +114,7 @@ public class PlayerController : MonoBehaviour
         shipLight = GetComponentInChildren<Light2D>();
         autoHelpController = GetComponent<AutoHelpController>();
         sizeUpgrade = GetComponent<SizeUpgradeController>();    
-
+        upgradeSelector = GetComponent<UpgradeSelector>();
     }
     
     private void Start()
@@ -122,6 +127,7 @@ public class PlayerController : MonoBehaviour
         canDash = true;
 
         currentDashTime = 0;
+        invulnerabilityTimeWaited = invulnerabilityDuration;
     }
 
     private void OnEnable()
@@ -156,15 +162,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {        
-        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+    {
+        ConsumeFuel();
 
-        if(Input.GetKey(KeyCode.L))
-        {
-            fuelConsume = 100;
-        }
-
-        CheckIfCanDash();
+        //CheckIfCanDash();
     }
 
     private void FixedUpdate()
@@ -190,6 +191,9 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
+        invulnerabilityTimeWaited += Time.fixedDeltaTime;
+
     }
 
     #region Movement
@@ -268,6 +272,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Ship Fuel
+    private void ConsumeFuel()
+    {
+        fuel = Mathf.Clamp(fuel, 0, Mathf.Infinity);
+
+        if (Input.GetKey(KeyCode.L))
+        {
+            fuelConsume = 100;
+        }
+    }
     void LoseFuel()
     {
         fuel = Mathf.Clamp(fuel + fuelConsume * Time.fixedDeltaTime * TimeManager.Instance.timeParameter, 0, GetMaxFuel());
@@ -296,7 +309,7 @@ public class PlayerController : MonoBehaviour
         shipLight.pointLightOuterRadius /= 4;
 
         engineParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        AudioManager._instance.Play2dOneShotSound(enginePoweringOff, "Death", 1, 1, 1);
+        AudioManager.instance.Play2dOneShotSound(enginePoweringOff, "Death", 1, 1, 1);
     }
     private void ExploteShip()
     {
@@ -311,20 +324,28 @@ public class PlayerController : MonoBehaviour
         Instantiate(explosionParticles, transform.position, Quaternion.identity);
         InventoryManager.Instance.EndRun(false);
         shipLight.intensity = 0;
-        Invoke("ReturnToHub", timeToReturnHub);
-        AudioManager._instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
 
+        TransitionCanvasManager.instance.FadeIn();
+
+        TransitionCanvasManager.instance.onFadeIn += ReturnToHub;
         
-
+        AudioManager.instance.Play2dOneShotSound(deathExplosion, "Death", 1, 1, 1);
     }
+
+    private void ReturnToHub()
+    {
+        TransitionCanvasManager.instance.onFadeIn -= ReturnToHub;
+        FindObjectOfType<MenuNavegation>().GoToHub();
+    }
+
+
     private void ThrowMinerals(ItemObject _objectType, int _itemsToReturn)
     {
         for (int i = 0; i < _itemsToReturn; i++)
         {
             float randomX = UnityEngine.Random.Range(-1, 2);
             float randomY = UnityEngine.Random.Range(-1, 2);
-            Vector2 randomDir = new Vector2(randomX, randomY);
-            randomDir.Normalize();
+            Vector2 randomDir = new Vector2(randomX, randomY).normalized;
 
             float spawnOffset = 1;
 
@@ -332,10 +353,9 @@ public class PlayerController : MonoBehaviour
 
             PickableItemController currItem = Instantiate(pickableItemPrefab, spawnPos, Quaternion.identity).GetComponent<PickableItemController>();
 
-            currItem.c_currentItem = _objectType;
-            currItem.followPlayer = false;
-            
+            currItem.InitializeItem(_objectType);
 
+            currItem.followPlayer = false;
 
             float throwSpeed = UnityEngine.Random.Range(0, mineralMaxThrowSpeed);
             currItem.ImpulseItem(randomDir, throwSpeed);
@@ -348,13 +368,10 @@ public class PlayerController : MonoBehaviour
         GetComponent<UpgradeSelector>().enabled = false;
         mapInteraction.enabled = false;
     }
-    private void ReturnToHub()
-    {
-        SceneManager.LoadScene("HubScene");
-    }
 
-    public void GetDamage(float value, Vector2 damagePos)
+    public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {
+
         switch (currentState)
         {
             case State.MINING:
@@ -371,8 +388,11 @@ public class PlayerController : MonoBehaviour
 
         Knockback(damagePos);
 
-        fuel -= value / PowerUpManager.Instance.Armor;
-
+        if (invulnerabilityDuration <= invulnerabilityTimeWaited)
+        {
+            fuel -=  GetMaxFuel() * _damagePercentage / 100;
+            invulnerabilityTimeWaited = 0;
+        }
 
         if (OnHit != null)
             OnHit();
@@ -473,12 +493,14 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case State.FREEZE:
-                engineParticles.gameObject.SetActive(false);
+                engineParticles.Stop();
                 rb2d.velocity = Vector2.zero;
+                upgradeSelector.StopAllUpgrades();
                 break;
             case State.DEAD:
                 knockbackScale *= 2;
-                StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
+                StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
+                upgradeSelector.StopAllUpgrades();
                 break;
             default:
                 break;
@@ -509,10 +531,10 @@ public class PlayerController : MonoBehaviour
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
         if (obj.started && currentState == State.IDLE)
-           engineSource = AudioManager._instance.Play2dLoop(engineClip, "Engine");
+           engineSource = AudioManager.instance.Play2dLoop(engineClip, "Engine");
 
         if (obj.canceled && engineSource != null)
-            StartCoroutine(AudioManager._instance.FadeOutSFXLoop(engineSource));
+            StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
 
         accelerationValue = obj.ReadValue<float>();
     }
@@ -535,25 +557,23 @@ public class PlayerController : MonoBehaviour
         rb2d.angularVelocity = 0.0f;
     }
 
-
+    
+    
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))
         {
             GetDamage(mapDamage, collision.contacts[0].point);
-            AudioManager._instance.Play2dOneShotSound(collisionClip, "Player");
-        }
-
-        if(collision.collider.CompareTag("Enemy"))
+            AudioManager.instance.Play2dOneShotSound(collisionClip, "Player");
+        }else if(collision.collider.CompareTag("Enemy"))
         {
             Enemy enemy = collision.collider.GetComponent<Enemy>();
             GetDamage(enemy.damage, collision.GetContact(0).point);
         }
-    }
-
-    public void StopEngineSource()
-    {
-        if(engineSource != null)
-            engineSource.Stop();
+        else if (collision.collider.CompareTag("Boss") || collision.collider.CompareTag("BossLaser"))
+        {
+            GetDamage(collision.gameObject.GetComponentInParent<BossController>().contactDamage, collision.GetContact(0).point);
+        }
     }
 }

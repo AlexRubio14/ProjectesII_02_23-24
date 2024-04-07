@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Tutorial : MonoBehaviour
 {
     [SerializeField]
-    protected string tutorialkey;
+    public string tutorialkey;
 
     [TextArea, SerializeField]
     public string[] dialogues;
@@ -13,7 +13,7 @@ public abstract class Tutorial : MonoBehaviour
     [SerializeField]
     protected DialogueController dialogueController;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         if (PlayerPrefs.HasKey(tutorialkey))
         {
