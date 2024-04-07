@@ -29,8 +29,15 @@ public class DisplayTpsInMenu : DisplayTps
     public override void OnButtonClick(int id)
     {
         SelectTpsManager.instance.SetIdToTeleport(id);
-        ShopMusic.instance.StopMusic();
-        menuNavegation.GoToGame();
+        TransitionCanvasManager.instance.FadeIn();
+        SubsribeToFadeIn();
+
+    }
+
+    public void SubsribeToFadeIn()
+    {
+        TransitionCanvasManager.instance.onFadeIn += ShopMusic.instance.StopMusic;
+        TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToGame;
     }
 
     private void OnDisable()

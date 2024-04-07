@@ -1641,6 +1641,7 @@ GameObject:
   - component: {fileID: 6472397422948884280}
   - component: {fileID: 6483806586022571937}
   - component: {fileID: 1310337965091036556}
+  - component: {fileID: 5861890717631321755}
   m_Layer: 5
   m_Name: GameSelectTpCanvas
   m_TagString: Untagged
@@ -1663,7 +1664,7 @@ RectTransform:
   - {fileID: 3737355521937540367}
   - {fileID: 7392344905936218988}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1733,6 +1734,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5861890717631321755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916726705109612103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c67c74a8a4e0b4c9c0baed8a6f94e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hubScene: HubScene
+  titleScene: TitleScreen
+  gameScene: Map
 --- !u!1 &5001451248754063054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,7 +3060,6 @@ GameObject:
   - component: {fileID: 6652485994408138424}
   - component: {fileID: 8757950886744727438}
   - component: {fileID: 1330041425406228870}
-  - component: {fileID: 9165105710972631590}
   - component: {fileID: 6827905350798421866}
   - component: {fileID: 7320761686945500138}
   m_Layer: 5
@@ -3131,28 +3146,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonsLayout: {fileID: 5895074371337386547}
   bt: {fileID: 3883756979416885319, guid: 0e7c4a2af74597349b1b170e4a951d18, type: 3}
-  menuNavegation: {fileID: 9165105710972631590}
+  menuNavegation: {fileID: 5861890717631321755}
   tpMenu: {fileID: 8266688442663362904}
   menuMapController: {fileID: 7320761686945500138}
   resumeAction: {fileID: 2631651688888783702, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   actionsSprites:
     _serializedList: []
   inputsObject: {fileID: 186969997171935545}
---- !u!114 &9165105710972631590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8266688442663362904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c67c74a8a4e0b4c9c0baed8a6f94e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hubScene: HubScene
-  titleScene: TitleScreen
-  gameScene: Map
 --- !u!114 &6827905350798421866
 MonoBehaviour:
   m_ObjectHideFlags: 0

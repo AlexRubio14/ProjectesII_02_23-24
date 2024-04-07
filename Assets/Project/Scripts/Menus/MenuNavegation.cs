@@ -16,6 +16,7 @@ public class MenuNavegation : MonoBehaviour
     private void Start()
     {
         PlayerPrefs.Save();
+        TransitionCanvasManager.instance.FadeOut();
     }
 
     public void GoToHub()
@@ -31,6 +32,8 @@ public class MenuNavegation : MonoBehaviour
     public void GoToGame()
     {
         SceneManager.LoadScene(gameScene);
+        TransitionCanvasManager.instance.onFadeIn -= GoToGame;
+
     }
 
     public void Exit()

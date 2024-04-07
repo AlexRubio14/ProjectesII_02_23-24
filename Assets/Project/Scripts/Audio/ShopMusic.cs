@@ -29,5 +29,7 @@ public class ShopMusic : MonoBehaviour
     public void StopMusic()
     {
         AudioManager.instance.StopLoopSound(audioSource);
+        TransitionCanvasManager.instance.onFadeIn -= instance.StopMusic;
+
     }
 }

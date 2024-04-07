@@ -31,7 +31,7 @@ MonoBehaviour:
       Value: 4
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
       Value: 8
-    - Key: {fileID: 11400000, guid: cd379e840f2a70146bb284b74ce08085, type: 2}
+    - Key: {fileID: 11400000, guid: 405565fce67da464ba33a387ac332ad5, type: 2}
       Value: 1
   rewards:
     _serializedList:

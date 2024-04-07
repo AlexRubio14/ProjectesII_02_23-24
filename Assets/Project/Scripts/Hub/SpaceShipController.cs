@@ -14,12 +14,17 @@ public class SpaceShipController : MonoBehaviour
         if (!SelectTpsManager.instance.tpList[0].discovered)
         {
             SelectTpsManager.instance.SetIdToTeleport(1);
-            ShopMusic.instance.StopMusic();
-            menuNavegation.GoToGame();
+            TransitionCanvasManager.instance.FadeIn();
         }
         else
         {
             selectTpCanvas.SetActive(true);
         }
+    }
+
+    public void SubscribeToFadeIn()
+    {
+        ShopMusic.instance.StopMusic();
+        TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToGame; ;
     }
 }
