@@ -326,16 +326,19 @@ public class DrillController : MonoBehaviour
 
     private Vector3 GetNearestCannonPos(Vector2 _destinyPos)
     {
-        float distanceBetweenFirstPos = Vector2.Distance(laserCannons[0].position, _destinyPos);
-        float distanceBetweenSecondPos = Vector2.Distance(laserCannons[1].position, _destinyPos); ;
-        if (distanceBetweenFirstPos <= distanceBetweenSecondPos)
+        float currentDistance = 100;
+        int laserId = -1;
+        for (int i = 0; i < laserCannons.Length; i++)
         {
-            return laserCannons[0].position;
+            float thisDistance = Vector2.Distance(laserCannons[i].position, _destinyPos);
+            if (thisDistance < currentDistance)
+            {
+                currentDistance = thisDistance;
+                laserId = i;
+            }
         }
-        else
-        {
-            return laserCannons[1].position;
-        }
+
+        return laserCannons[laserId].position;
     }
 
     private ParticleSystem GetUnusedParticleSystem()

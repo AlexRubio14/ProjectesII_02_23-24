@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,9 +5,9 @@ public class NotificationController : MonoBehaviour
 {
     
     [SerializeField]
-    private Image c_itemImage;
+    private Image itemImage;
     [SerializeField]
-    private TextMeshProUGUI c_text;
+    private TextMeshProUGUI text;
 
     [Space, SerializeField]
     private float timeToDisapear;
@@ -33,11 +31,11 @@ public class NotificationController : MonoBehaviour
         notificationType = _item;
         currentAmount = _itemAmount;
 
-        c_itemImage.sprite = notificationType.PickableSprite;
+        itemImage.sprite = notificationType.PickableSprite;
         string currentItemAmountSign = "+"; 
         if (currentAmount <= 0)
             currentItemAmountSign = "";
-        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.ItemName;
+        text.text = currentItemAmountSign + currentAmount + " " + notificationType.ItemName;
 
 
     }
@@ -56,7 +54,7 @@ public class NotificationController : MonoBehaviour
         if (currentAmount <= 0)
             currentItemAmountSign = "";
 
-        c_text.text = currentItemAmountSign + currentAmount + " " + notificationType.ItemName;
+        text.text = currentItemAmountSign + currentAmount + " " + notificationType.ItemName;
     }
 
 }

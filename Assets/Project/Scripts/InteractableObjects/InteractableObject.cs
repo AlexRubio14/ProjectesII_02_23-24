@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,7 +5,7 @@ abstract public class InteractableObject : MonoBehaviour
 {
 
     [field: SerializeField, Tooltip("Solo es necesario asignarle algo si podemos interactuar con el objeto y necesita una mejora")]
-    public UpgradeObject c_upgradeNeeded { get; private set; }
+    public UpgradeObject upgradeNeeded { get; private set; }
 
     [SerializeField]
     public bool isInteractable = true;    

@@ -5373,7 +5373,7 @@ Transform:
   - {fileID: 8425547812211473044}
   - {fileID: 5184738072117709022}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4181270967838813588
 Rigidbody2D:
@@ -5464,10 +5464,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3786dd6d433274abb4e48b11c2afa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  l_steeringBehaviours:
+  steeringBehaviours:
   - {fileID: 3024556263979690734}
   - {fileID: 1181596179253775783}
-  l_detectors:
+  detectors:
   - {fileID: 5997103419151096230}
   - {fileID: 2450130724856854608}
   iaData: {fileID: 6668970655071454642}

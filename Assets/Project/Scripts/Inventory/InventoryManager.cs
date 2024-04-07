@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
-using UnityEngine.UIElements;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -50,12 +48,14 @@ public class InventoryManager : MonoBehaviour
     }
     public void ResetInventory()
     {
-        Dictionary<ItemObject, short> storedItems = allItems;
+        SerializedDictionary<ItemObject, short> storedItems = new SerializedDictionary<ItemObject, short>();
 
-        foreach (KeyValuePair<ItemObject, short> item in storedItems)
+        foreach (KeyValuePair<ItemObject, short> item in allItems)
         {
-            allItems[item.Key] = 0;
+            storedItems.Add(item.Key, 0);
         }
+
+        allItems = storedItems;
     }
 
     public void ChangeRunItemAmount(ItemObject _itemType, short _itemsToAdd)

@@ -92,7 +92,7 @@ public abstract class Enemy : EnemyIA, IHealth
 
     protected void MoveToTarget()
     {
-        Vector2 direction = movementDirectionSolver.GetDirectionToMove(l_steeringBehaviours, iaData);
+        Vector2 direction = movementDirectionSolver.GetDirectionToMove(steeringBehaviours, iaData);
 
         rb2d.AddForce(direction * speed * TimeManager.Instance.timeParameter, ForceMode2D.Force);
 
@@ -205,8 +205,11 @@ public abstract class Enemy : EnemyIA, IHealth
 
         foreach (Transform spot in moveSpots)
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(spot.position, 0.2f);
+            if (spot)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(spot.position, 0.2f);
+            }
         }
     }
 }

@@ -64,7 +64,7 @@ public class PauseMenuController : MonoBehaviour
         pauseAction.action.started += PauseGame;
         resumeAction.action.started += ResumeGame;
         InputSystem.onDeviceChange += UpdateInputImages;
-
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
     }
     private void OnDisable()
     {

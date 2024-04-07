@@ -8,7 +8,7 @@ public class LaserManager : MonoBehaviour
     [SerializeField]
     private int numberOfBalls = 20;
 
-    private List<GameObject> l_lasers;
+    private List<GameObject> lasers;
 
     [SerializeField]
     private GameObject laser;

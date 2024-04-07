@@ -34,7 +34,6 @@ public class NewGameController : MonoBehaviour
 
         InventoryManager.Instance.ResetInventory();
 
-
     }
 
 }
