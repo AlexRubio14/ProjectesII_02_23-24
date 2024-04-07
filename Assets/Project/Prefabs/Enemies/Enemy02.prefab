@@ -351,7 +351,7 @@ MonoBehaviour:
   - {fileID: 613125535928429517}
   iaData: {fileID: 931764774973105053}
   movementDirectionSolver: {fileID: 6505329190034688335}
-  <maxHealth>k__BackingField: 250
+  <maxHealth>k__BackingField: 180
   speed: 32
   <damage>k__BackingField: 40
   moveSpots:
