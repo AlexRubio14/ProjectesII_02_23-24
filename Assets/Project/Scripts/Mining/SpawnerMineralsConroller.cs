@@ -17,6 +17,7 @@ public class SpawnerMineralsConroller : MonoBehaviour
         }
         while (lastSpawner == currentSpawner);
 
+
         spawners[currentSpawner].SetActive(true);
 
         SpawnerMineralsManager.Instance.lastSpawner = currentSpawner;

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Opt 2.2
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 9
-  <questTitle>k__BackingField: Opt. 2.1
-  <questName>k__BackingField: Asalto
+  <questTitle>k__BackingField: Opt. 2.2
+  <questName>k__BackingField: Asalto II
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
