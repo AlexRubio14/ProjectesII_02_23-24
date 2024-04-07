@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 
-public class SpawnerMineralsMnager : MonoBehaviour
+public class SpawnerMineralsManager : MonoBehaviour
 {
     public int lastSpawner;
 
-    public static SpawnerMineralsMnager Instance;
+    public static SpawnerMineralsManager Instance;
     private void Awake()
     {
         if (Instance != null && Instance != this)

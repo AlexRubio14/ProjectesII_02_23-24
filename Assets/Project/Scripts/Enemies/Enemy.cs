@@ -183,7 +183,6 @@ public abstract class Enemy : EnemyIA, IHealth
 
         float randNum = Random.Range(0, maxThrowSpeed);
         float throwSpeed = randNum * 50;
-        Debug.Log(randNum);
         bubble.ImpulseItem(randomDir, throwSpeed);
         bubble.transform.up = randomDir;
 
