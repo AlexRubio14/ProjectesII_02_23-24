@@ -72,7 +72,7 @@ public class DrillController : MonoBehaviour
     private bool showGizmos = false;
 
     [Space, SerializeField]
-    private AudioClip drillClip;
+    private AudioClip[] drillClips;
 
     private SizeUpgradeController sizeUpgrade;
 
@@ -315,7 +315,8 @@ public class DrillController : MonoBehaviour
                     currentParticle.gameObject.transform.position = _hits[i].point;
                     currentParticle.Play(true);
                 }
-                AudioManager.instance.Play2dOneShotSound(drillClip, "Drill");
+                //AudioManager.instance.Play2dOneShotSound(drillClip, "Drill");
+                AudioManager.instance.PlayOneShotRandomSound(drillClips, "Drill", 0.7f, 0.9f, 0.8f);
             }
             else
             {

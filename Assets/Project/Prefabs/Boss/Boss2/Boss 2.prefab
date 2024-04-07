@@ -3447,6 +3447,8 @@ MonoBehaviour:
   rockSpawnParticles: {fileID: 0}
   rockMovementSpeed: 6.5
   rockRotationSpeed: 4
+  avalancheAudioClip: {fileID: 8300000, guid: 168901cc363f33b409a818b672191452, type: 3}
+  hideAudioClip: {fileID: 8300000, guid: 0b6c39d7fe97fa8468cc904c29a86f98, type: 3}
   totalDashesAmount: 3
   castDuration: 3
   castTrackDuration: 2
@@ -3454,13 +3456,17 @@ MonoBehaviour:
   bubblesPerDash: 2
   minBubblesDashDot: 0.3
   dashCollisionRotationAngle: 50
+  trackAudioClip: {fileID: 8300000, guid: 0c86d2dc588a9aa42937f9a732cfa39b, type: 3}
+  lockAudioClip: {fileID: 8300000, guid: 50e6ccbb7ff366c42bc335f0af30ad0b, type: 3}
+  dashAudioClip: {fileID: 8300000, guid: d40fff6b1f5ec894ab7367ddb6d1eb65, type: 3}
   breakableWallCreate: {fileID: 0}
   posToSpawnBreakableWall: {fileID: 6739509001107285923}
   createBreakableWallDuration: 12
   offsetBetweenCreateBW: 0.2
-  breakableWallWidth: 5
-  createBreakableWallSpeed: 5
+  breakableWallWidth: 9
+  createBreakableWallSpeed: 5.5
   createBreakableWallRotationSpeed: 8
+  createWallAudioClip: {fileID: 8300000, guid: 59171ce4ce2fc554e9ef1ef6b384b590, type: 3}
   finRenderer: {fileID: 8486531661824631268}
   tailRenderer: {fileID: 3341524003739635949}
   timeToEnrock: 4

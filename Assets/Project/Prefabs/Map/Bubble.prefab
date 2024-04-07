@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 120
   minDistanceToGetItem: 1.3
-  collectClip: {fileID: 8300000, guid: 1c5cfcbe38b9b4e4daeb342494f00b05, type: 3}
+  collectClip: {fileID: 8300000, guid: 0c86d2dc588a9aa42937f9a732cfa39b, type: 3}
   fuelRecover: 25
 --- !u!58 &1609251044947042584
 CircleCollider2D:
