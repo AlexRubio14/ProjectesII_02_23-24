@@ -15501,7 +15501,11 @@ MonoBehaviour:
   threeSideTileRight: {fileID: 11400000, guid: 66affec7bfe66eb45a271571265cc987, type: 2}
   threeSideTileLeft: {fileID: 11400000, guid: 7653edc87985f0c4099c51aeb34c500b, type: 2}
   showGizmos: 1
-  drillClip: {fileID: 8300000, guid: 0f0ed528ac6e1454a8f29fc0fa15ba4b, type: 3}
+  drillClips:
+  - {fileID: 8300000, guid: bea81885c38a8ad40b739eda32a0d75a, type: 3}
+  - {fileID: 8300000, guid: 239cfcc6e6966ec4cba1ab11d2627102, type: 3}
+  - {fileID: 8300000, guid: 682ad5f4347b4ba4e92000303573267a, type: 3}
+  - {fileID: 8300000, guid: ebde5896d965b014eb302cd70b749cca, type: 3}
 --- !u!114 &6238323751129512243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15751,7 +15755,6 @@ MonoBehaviour:
   - {fileID: 670545847217739927}
   playerSprite: {fileID: 7617439251563457418}
   tpParticlesPrefab: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
-  timeToEndTp: 0.7
   timeToStopParticles: 0.7
   teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
 --- !u!1 &4329926445472445026

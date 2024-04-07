@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO.Pipes;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -46,6 +44,13 @@ public class Boss2Controller : BossController
     private Action startRockDropAction;
     private Action updateRockDropAction;
 
+    [SerializeField]
+    private AudioClip avalancheAudioClip;
+    [SerializeField]
+    private AudioClip hideAudioClip;
+
+    private AudioSource avalancheAS;
+    private AudioSource hideAS;
 
     [Space, Header("Dashes"), SerializeField]
     private int totalDashesAmount;
@@ -63,9 +68,19 @@ public class Boss2Controller : BossController
     private float minBubblesDashDot;
     [SerializeField]
     private float dashCollisionRotationAngle;
+    private bool canTrack;
+    private bool canLock;
+
 
     private Action startDashesAction;
     private Action updateDashesAction;
+    [SerializeField]
+    private AudioClip trackAudioClip;
+    [SerializeField]
+    private AudioClip lockAudioClip;
+    [SerializeField]
+    private AudioClip dashAudioClip;
+
 
 
     [Space, Header("Create Breakable Wall"), SerializeField]
@@ -86,6 +101,11 @@ public class Boss2Controller : BossController
     private float createBreakableWallRotationSpeed;
     private Action startCreateBreakableWallAction;
     private Action updateCreateBreakableWallAction;
+
+    [SerializeField]
+    private AudioClip createWallAudioClip;
+    private AudioSource createWallAS;
+
 
     [Space, Header("Die"), SerializeField]
     private SpriteRenderer finRenderer;
@@ -213,6 +233,8 @@ public class Boss2Controller : BossController
 
         rockMovementPosition = mapBottomCorners[UnityEngine.Random.Range(0, mapBottomCorners.Length)].position;
         gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
+        avalancheAS = AudioManager.instance.Play2dLoop(avalancheAudioClip, "Boss2");
+        hideAS = AudioManager.instance.Play2dLoop(hideAudioClip, "Boss2");
 
     }
 
@@ -232,6 +254,13 @@ public class Boss2Controller : BossController
         {
             //Moverse hacia dentro de la zona
             MoveTo(arenaMiddlePos.position);
+            if (avalancheAS)
+            {
+                AudioManager.instance.StopLoopSound(avalancheAS);
+                AudioManager.instance.StopLoopSound(hideAS);
+                avalancheAS = null;
+                hideAS = null;
+            }
             return;
         }
         
@@ -259,6 +288,7 @@ public class Boss2Controller : BossController
         Vector2 dirToLook = (arenaMiddlePos.position - transform.position).normalized;
         LookForwardDirection(dirToLook, rockRotationSpeed);
         animator.SetBool("Moving", false);
+
     }
 
 
@@ -340,7 +370,8 @@ public class Boss2Controller : BossController
         animator.ResetTrigger("Dash");
         animator.ResetTrigger("Collision");
         animator.ResetTrigger("ChargeDash");
-        
+        canTrack = true;
+        canLock = true;
     }
     private void UpdateDashes()
     {
@@ -349,6 +380,11 @@ public class Boss2Controller : BossController
 
             if (dashesDone >= totalDashesAmount)
             {
+                if (canTrack)
+                {
+                    AudioManager.instance.Play2dOneShotSound(trackAudioClip, "Boss2");
+                    canTrack = false;
+                }
                 GenerateRandomAttack();
                 return;
             }
@@ -370,7 +406,13 @@ public class Boss2Controller : BossController
             LookForwardDirection(targetDir, rockRotationSpeed);
             return;
         }
-        animator.SetTrigger("HoldToDash");
+
+        if (canLock)
+        {
+            animator.SetTrigger("HoldToDash");
+            AudioManager.instance.Play2dOneShotSound(lockAudioClip, "Boss2");
+            canLock = false;
+        }
 
         if (castTimeWaited < castDuration)
             return;
@@ -410,7 +452,9 @@ public class Boss2Controller : BossController
 
 
         animator.SetTrigger("Dash");
-        
+        canLock = true;
+        canTrack = true;
+        AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss2");
     }
 
     #endregion
@@ -422,6 +466,8 @@ public class Boss2Controller : BossController
 
         createBreakableWallTimeWaited = 0;
         createBreakableWallDir = transform.right;
+
+        createWallAS = AudioManager.instance.Play2dLoop(createWallAudioClip, "Boss2");
     }
     private void UpdateCreateBreakableWall()
     {
@@ -462,7 +508,9 @@ public class Boss2Controller : BossController
 
         if (createBreakableWallTimeWaited >= createBreakableWallDuration)
         {
+            AudioManager.instance.StopLoopSound(createWallAS);
             GenerateRandomAttack();
+
         }
     }
 
@@ -504,6 +552,8 @@ public class Boss2Controller : BossController
         gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
 
         circleCollider.enabled = false;
+
+        AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss2");
 
     }
 
