@@ -359,10 +359,6 @@ public class PlayerController : MonoBehaviour
         GetComponent<UpgradeSelector>().enabled = false;
         mapInteraction.enabled = false;
     }
-    private void ReturnToHub()
-    {
-        SceneManager.LoadScene("HubScene");
-    }
 
     public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerTpController : MonoBehaviour
 {
@@ -15,8 +16,6 @@ public class PlayerTpController : MonoBehaviour
 
     [Space, Header("TP"), SerializeField]
     private GameObject tpParticlesPrefab;
-    [SerializeField]
-    private float timeToEndTp;
 
     [SerializeField]
     private float timeToStopParticles;
@@ -86,7 +85,8 @@ public class PlayerTpController : MonoBehaviour
     private void StopParticles()
     {
         tpParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        Invoke("TpEnd", timeToEndTp);
+        TpEnd();
+        //Invoke("TpEnd", timeToEndTp);
         playerController.refillFuelParticles.Stop();
 
 
