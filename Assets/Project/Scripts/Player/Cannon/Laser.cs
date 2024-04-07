@@ -27,11 +27,11 @@ public class Laser : MonoBehaviour
 
     private Vector2 startPosition;
     private float currentDistance;
-    private Rigidbody2D c_rb;
+    private Rigidbody2D rb2d;
 
     private void Awake()
     {
-        c_rb = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -49,7 +49,7 @@ public class Laser : MonoBehaviour
     private void Start()
     {
         startPosition = transform.position;
-        c_rb.velocity = transform.up * speed;
+        rb2d.velocity = transform.up * speed;
     }
 
     private void Update()
@@ -73,7 +73,7 @@ public class Laser : MonoBehaviour
         }
         else if (Vector2.Dot ((autoAimTarget.transform.position - transform.position).normalized, transform.up) > 0.2f)
         {
-            c_rb.velocity = (autoAimTarget.transform.position - transform.position).normalized * speed * TimeManager.Instance.timeParameter;
+            rb2d.velocity = (autoAimTarget.transform.position - transform.position).normalized * speed * TimeManager.Instance.timeParameter;
         }
     }
 
@@ -104,19 +104,19 @@ public class Laser : MonoBehaviour
     {
         //Comprobar la rotacion de donde deberia chocar
         //Crear el cosos que choca
-        c_rb.velocity = Vector2.zero;
+        rb2d.velocity = Vector2.zero;
         Destroy(gameObject);
     }
 
     private void LaserPause()
     {
-        c_rb.velocity = Vector2.zero;
-        c_rb.angularVelocity = 0.0f;
+        rb2d.velocity = Vector2.zero;
+        rb2d.angularVelocity = 0.0f;
     }
 
     private void LaserResume()
     {
-        c_rb.velocity = transform.up * speed;
+        rb2d.velocity = transform.up * speed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

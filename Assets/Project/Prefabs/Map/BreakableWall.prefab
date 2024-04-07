@@ -320,7 +320,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1296534951
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1f98ebd519e574d92fdd30330433ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <c_upgradeNeeded>k__BackingField: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
+  <upgradeNeeded>k__BackingField: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
   isInteractable: 0
   <isHide>k__BackingField: 0
   grid: {fileID: 0}

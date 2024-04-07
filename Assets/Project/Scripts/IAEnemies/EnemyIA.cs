@@ -6,10 +6,10 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyIA : MonoBehaviour
 {
     [Header("--- IA"), SerializeField]
-    protected List<SteeringBehaviour> l_steeringBehaviours;
+    protected List<SteeringBehaviour> steeringBehaviours;
 
     [SerializeField] 
-    protected List<Detector> l_detectors;
+    protected List<Detector> detectors;
 
     [SerializeField]
     protected IAData iaData;
@@ -22,7 +22,7 @@ public class EnemyIA : MonoBehaviour
 
     protected void PerformDetection()
     {
-        foreach (Detector detector in l_detectors)
+        foreach (Detector detector in detectors)
             detector.Detect(iaData);
     }
 }

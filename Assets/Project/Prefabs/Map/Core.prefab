@@ -70,7 +70,7 @@ Transform:
   - {fileID: 2387537467482245377}
   - {fileID: 4610417101653480466}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5779246795071984872
 SpriteRenderer:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567e2f062a102aa468903d12647596ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <c_upgradeNeeded>k__BackingField: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
+  <upgradeNeeded>k__BackingField: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
   isInteractable: 1
   <isHide>k__BackingField: 0
   grid: {fileID: 0}

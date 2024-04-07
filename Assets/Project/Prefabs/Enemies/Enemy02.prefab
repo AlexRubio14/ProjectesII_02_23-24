@@ -343,12 +343,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1812a1f4479f9347b9c66d8f7cdb3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  l_steeringBehaviours:
+  steeringBehaviours:
   - {fileID: 3427558254540586823}
   - {fileID: 5426298853241899069}
-  l_detectors:
-  - {fileID: 613125535928429517}
+  detectors:
   - {fileID: 1079477967935640561}
+  - {fileID: 613125535928429517}
   iaData: {fileID: 931764774973105053}
   movementDirectionSolver: {fileID: 6505329190034688335}
   <maxHealth>k__BackingField: 250
