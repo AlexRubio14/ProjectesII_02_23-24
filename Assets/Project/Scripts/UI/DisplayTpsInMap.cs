@@ -66,6 +66,8 @@ public class DisplayTpsInMap : DisplayTps
         playerTpController.EnablePlayer(true);
         playerTpController.DisplayCanvas(true);
 
+        TransitionCanvasManager.instance.FadeOut();
+
         PlayerManager.Instance.player.ChangeState(PlayerController.State.IDLE);
         ResumeGameButton();
 

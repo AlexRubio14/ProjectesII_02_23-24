@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NewGameController : MonoBehaviour
@@ -7,6 +8,9 @@ public class NewGameController : MonoBehaviour
     private QuestObject firstQuest;
     [SerializeField]
     protected string firstTutorialkey;
+
+    [SerializeField]
+    private MenuNavegation menuNavegation;
 
     private void Start()
     {
@@ -34,6 +38,11 @@ public class NewGameController : MonoBehaviour
 
         InventoryManager.Instance.ResetInventory();
 
+    }
+
+    public void SubscribeToFadeIn()
+    {
+        TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToHub;
     }
 
 }

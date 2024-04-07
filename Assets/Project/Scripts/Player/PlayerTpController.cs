@@ -56,7 +56,9 @@ public class PlayerTpController : MonoBehaviour
         
         Invoke("StopParticles", timeToStopParticles);
 
-        if(onTpStart != null)
+        TransitionCanvasManager.instance.FadeIn();
+
+        if (onTpStart != null)
             onTpStart();
     }
 
@@ -76,7 +78,7 @@ public class PlayerTpController : MonoBehaviour
 
         foreach (Canvas item in activeCanvas)
         {
-            if(item.gameObject != transform.parent.gameObject)
+            if(item.gameObject != transform.parent.gameObject && item.gameObject != TransitionCanvasManager.instance.gameObject)
                 item.gameObject.SetActive(IsEnabled);
         }
     }
@@ -86,6 +88,7 @@ public class PlayerTpController : MonoBehaviour
         tpParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         Invoke("TpEnd", timeToEndTp);
         playerController.refillFuelParticles.Stop();
+
 
         if (onTpParticlesStop != null)
             onTpParticlesStop();
