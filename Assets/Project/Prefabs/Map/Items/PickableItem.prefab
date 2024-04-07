@@ -113,7 +113,7 @@ MonoBehaviour:
   moveSpeed: 4.5
   minDistanceToGetItem: 1.3
   collectClip: {fileID: 8300000, guid: 997076410a258004aac3ea09989d5e2a, type: 3}
-  c_currentItem: {fileID: 0}
+  currentItem: {fileID: 0}
   followPlayer: 1
 --- !u!95 &4893854165630699584
 Animator:
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8260599322080872635}
   - component: {fileID: 1975282743705886895}
   - component: {fileID: 5229639110160669802}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1742496995
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

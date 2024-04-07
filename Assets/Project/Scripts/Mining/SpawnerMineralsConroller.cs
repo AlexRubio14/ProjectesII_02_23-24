@@ -10,7 +10,7 @@ public class SpawnerMineralsConroller : MonoBehaviour
     void Awake()
     {
         int currentSpawner;
-        int lastSpawner = SpawnerMineralsMnager.Instance.lastSpawner; 
+        int lastSpawner = SpawnerMineralsManager.Instance.lastSpawner; 
         do
         {
             currentSpawner = Random.Range(0, spawners.Length);
@@ -19,6 +19,6 @@ public class SpawnerMineralsConroller : MonoBehaviour
 
         spawners[currentSpawner].SetActive(true);
 
-        SpawnerMineralsMnager.Instance.lastSpawner = currentSpawner;
+        SpawnerMineralsManager.Instance.lastSpawner = currentSpawner;
     }
 }
