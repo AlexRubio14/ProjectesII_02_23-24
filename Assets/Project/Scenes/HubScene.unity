@@ -13803,6 +13803,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectTpCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2415865649733766274, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: menuNavegation
       value: 
@@ -13849,15 +13853,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_LocalPosition.x
