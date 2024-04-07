@@ -466,7 +466,7 @@ public class MineMinigameController : MonoBehaviour
     {
         foreach (Canvas item in activeCanvas)
         {
-            if (item.transform.parent.gameObject != gameObject)
+            if (item.transform.parent && item.transform.parent.gameObject != gameObject)
                 item.gameObject.SetActive(IsEnabled);
         }
     }

@@ -122,9 +122,6 @@ public class Boss1Controller : BossController
 
         headSR = head.GetComponent<SpriteRenderer>();
 
-        PickableItemController currentItem = crystalDrop.GetComponent<PickableItemController>();
-        currentItem.InitializeItem(currentItem.currentItem);
-
         SetSuctionWindActive(false);
     }
 
