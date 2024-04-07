@@ -53,4 +53,12 @@ public class SelectTpsManager : MonoBehaviour
             tpList[i].discovered = false;
         }
     }
+
+    public void BoostTpReset()
+    {
+        for (int i = 1; i < tpList.Count; i++)
+        {
+            tpList[i].discovered = false;
+        }
+    }
 }

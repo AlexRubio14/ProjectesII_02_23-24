@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Tp 3
   m_EditorClassIdentifier: 
   <id>k__BackingField: 3
-  <zoneName>k__BackingField: Rocky Mountains
-  <zoneImage>k__BackingField: {fileID: 21300000, guid: a8aded3ff674c6e4997c956255ef213c, type: 3}
+  <zoneName>k__BackingField: "Monta\xF1as Rocosas"
   discovered: 1
