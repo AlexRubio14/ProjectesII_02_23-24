@@ -862,7 +862,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5831948351815915904}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f2b879d5a6d2d1478bfad974bb4840c, type: 3}
   m_Name: 
@@ -896,7 +896,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
-  crystralDrop: {fileID: 3143803412406442294}
+  crystalDrop: {fileID: 3143803412406442294}
   totalDashesPerAttack: 2
   spawnOffset: 30
   dashSpeed: 17
@@ -2548,6 +2548,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6131840467359070495, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6367322862775916959, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}
       propertyPath: m_Drag
       value: 0.8
@@ -2562,6 +2566,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6367322862775916959, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}
       propertyPath: m_UseGlobalAngle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337086799209468008, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7676132289814837664, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}

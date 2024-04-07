@@ -5,8 +5,7 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController Instance;
 
-    [SerializeField]
-    private GameObject objectToFollow;
+    public GameObject objectToFollow;
 
     [Space, Header("Camera Shake"), SerializeField]
     private float traumaReduction;

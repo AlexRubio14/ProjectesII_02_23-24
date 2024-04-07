@@ -67,6 +67,7 @@ public class SizeUpgradeController : MonoBehaviour
         }
         else
         {
+            Debug.Log("NADA");
             shipSpriteFloatFX.canFloat = false;
         }
 

@@ -1,34 +1,104 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class BossDialogue : Tutorial
 {
 
+    [Space, SerializeField]
+    private string dialogueString;
+
     [SerializeField]
-    private GameObject boss;
+    private MonoBehaviour[] bossScripts;
+    [SerializeField]
+    private GameObject bossCanvas;
+    [Space, SerializeField]
+    private GameObject cameraFollowTarget;
+    [SerializeField]
+    private float cameraSizeBossFight;
+    private float baseCamSize;
+    [SerializeField]
+    private PickableItemController endFightItem;
+
+
+    [HideInInspector]
+    public BossDoors door;
+
+
+    private Camera cam;
+
+    protected override void Awake()
+    {
+        foreach (MonoBehaviour item in bossScripts)
+            item.enabled = false;
+
+        bossCanvas.SetActive(false);
+        
+        endFightItem.onItemPicked += OnFightEnd;
+    }
+
+    private void Start()
+    {
+        cam = CameraController.Instance.GetComponent<Camera>();
+        baseCamSize = cam.orthographicSize;
+    }
 
     protected override void TutorialMethod()
     {
-        dialogueController.onDialogueEnd += EndTutorial;
 
-        dialogueController.dialogues = dialogues;
-        dialogueController.gameObject.SetActive(true);
+        CameraController.Instance.objectToFollow = cameraFollowTarget;
+        cam.orthographicSize = cameraSizeBossFight;
 
-        dialogueController.StartDialogue();
-        TimeManager.Instance.PauseGame();
+
+        if (!PlayerPrefs.HasKey(dialogueString))
+        {
+            dialogueController.onDialogueEnd += EndTutorial;
+
+            dialogueController.dialogues = dialogues;
+            dialogueController.gameObject.SetActive(true);
+
+            dialogueController.StartDialogue();
+            TimeManager.Instance.PauseGame();
+        }
+        else
+            EndTutorial();
+        
+        
     }
 
     protected override void EndTutorial()
     {
         TimeManager.Instance.ResumeGame();
 
-        boss.SetActive(true);
+        foreach (MonoBehaviour item in bossScripts)
+            item.enabled = true;
+
+        bossCanvas.SetActive(true);
 
         dialogueController.onDialogueEnd -= EndTutorial;
 
+        PlayerPrefs.SetInt(dialogueString, 1);
+
+        endFightItem.onItemPicked += OnFightEnd;
+
+    }
+
+    private void OnFightEnd()
+    {
         PlayerPrefs.SetInt(tutorialkey, 1);
 
-        Destroy(this);
+        bossCanvas.SetActive(false);
+
+        //Volver a la posicion de la puerta
+        PlayerManager.Instance.player.transform.position = door.transform.position;
+        door.DestroyDoor();
+
+        cam.orthographicSize = baseCamSize;
+        CameraController.Instance.objectToFollow = PlayerManager.Instance.player.gameObject;
+
+    }
+
+    private void OnDisable()
+    {
+        endFightItem.onItemPicked -= OnFightEnd;
     }
 }
