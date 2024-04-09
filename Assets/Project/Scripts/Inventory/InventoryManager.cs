@@ -46,6 +46,14 @@ public class InventoryManager : MonoBehaviour
             allItems[item.Key] = item.Value;
         }
     }
+    public void SaveItems()
+    {
+        foreach (KeyValuePair<ItemObject, short> item in allItems)
+        {
+            PlayerPrefs.SetInt(item.Key.ItemName, item.Value);
+        }
+    }
+
     public void ResetInventory()
     {
         SerializedDictionary<ItemObject, short> storedItems = new SerializedDictionary<ItemObject, short>();
@@ -56,6 +64,9 @@ public class InventoryManager : MonoBehaviour
         }
 
         allItems = storedItems;
+
+        SaveItems();
+
     }
 
     public void ChangeRunItemAmount(ItemObject _itemType, short _itemsToAdd)
@@ -94,6 +105,8 @@ public class InventoryManager : MonoBehaviour
         {
             allItems[item.Key] -= item.Value;
         }
+
+        SaveItems();
     }
 
 
@@ -145,13 +158,10 @@ public class InventoryManager : MonoBehaviour
                 }
             }
 
-            foreach (KeyValuePair<ItemObject, short> item in allItems)
-            {
-                PlayerPrefs.SetInt(item.Key.ItemName, item.Value);
-            }
-
         }
 
         runItems.Clear();
+
+        SaveItems();
     }
 }

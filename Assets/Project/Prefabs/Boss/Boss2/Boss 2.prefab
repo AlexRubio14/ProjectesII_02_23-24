@@ -3402,7 +3402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55661e4383beb304fb4c8518349e58bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1250
+  maxHealth: 2300
   healthBar: {fileID: 0}
   <contactDamage>k__BackingField: 35
   currentPhase: 0

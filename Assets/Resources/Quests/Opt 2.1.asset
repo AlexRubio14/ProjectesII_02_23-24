@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 8
   <questTitle>k__BackingField: Opt. 2.1
-  <questName>k__BackingField: Asalto
+  <questName>k__BackingField: Miaurmamento Avanzado
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
-    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 10
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
       Value: 16
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 10
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: d32714e89bf8bc642a345ee197efd096, type: 2}

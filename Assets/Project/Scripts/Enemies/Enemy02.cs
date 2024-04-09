@@ -19,6 +19,7 @@ public class Enemy02 : Enemy
         InitEnemy();
         animator = GetComponent<Animator>();    
     }
+
     private void FixedUpdate()
     {
         Behaviour();
@@ -124,6 +125,18 @@ public class Enemy02 : Enemy
         Instantiate(explosion, transform.position, Quaternion.identity);
         base.Die();
     }
+
+    protected override void EnemyPause()
+    {
+        base.EnemyPause();
+        animator.enabled = false;
+    }
+
+    protected override void EnemyResume()
+    {
+        animator.enabled = true;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

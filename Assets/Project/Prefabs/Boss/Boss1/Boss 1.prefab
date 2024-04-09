@@ -867,7 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2b879d5a6d2d1478bfad974bb4840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1750
+  maxHealth: 2000
   healthBar: {fileID: 0}
   <contactDamage>k__BackingField: 25
   currentPhase: 0
@@ -897,6 +897,7 @@ MonoBehaviour:
     m_Bits: 4096
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   crystalDrop: {fileID: 3143803412406442294}
+  explisionClip: {fileID: 0}
   totalDashesPerAttack: 2
   spawnOffset: 30
   dashSpeed: 17

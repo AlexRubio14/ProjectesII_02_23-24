@@ -10,8 +10,6 @@ public class SelectTpsManager : MonoBehaviour
 
     private int idToTeleport;
 
-   
-
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -23,6 +21,9 @@ public class SelectTpsManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(gameObject);
+
+        LoadTps();
+
     }
 
     public void AddDiscoveredTp(int key)
@@ -32,9 +33,11 @@ public class SelectTpsManager : MonoBehaviour
             if (tpList[i].id == key)
             {
                 tpList[i].discovered = true;
+                SaveTPs();
                 return;
             }
         }
+
     }
 
     public int GetIdToTeleport()
@@ -52,13 +55,22 @@ public class SelectTpsManager : MonoBehaviour
         {
             tpList[i].discovered = false;
         }
+
+        SaveTPs();
     }
 
-    public void BoostTpReset()
+    private void LoadTps()
     {
-        for (int i = 1; i < tpList.Count; i++)
-        {
-            tpList[i].discovered = false;
-        }
+        foreach (TpObject item in tpList)
+            item.discovered = PlayerPrefs.HasKey("Tp_" + item.id) && PlayerPrefs.GetInt("Tp_" + item.id) == 1;
     }
+
+    public void SaveTPs()
+    {
+        foreach (TpObject item in tpList)
+            PlayerPrefs.SetInt("Tp_" + item.id, item.discovered ? 1 : 0);
+
+        PlayerPrefs.Save();
+    }
+
 }

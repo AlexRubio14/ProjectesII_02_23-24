@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
 
@@ -36,8 +34,6 @@ public class QuestObject : ScriptableObject
 
 
     public bool obtainedQuest = false;
-
     public bool completedQuest = false;
-
     public bool newQuest = true;
 }

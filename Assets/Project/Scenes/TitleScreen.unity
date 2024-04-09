@@ -5716,11 +5716,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -20
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -20
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
       propertyPath: m_AnchoredPosition.x

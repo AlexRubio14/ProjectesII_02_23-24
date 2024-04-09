@@ -24,10 +24,10 @@ MonoBehaviour:
   <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
-    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 4
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
       Value: 16
+    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
+      Value: 4
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: f2a3a1e76f8f2d64b809d13372fdea8c, type: 2}
