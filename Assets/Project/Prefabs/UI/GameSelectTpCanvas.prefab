@@ -3151,7 +3151,15 @@ MonoBehaviour:
   menuMapController: {fileID: 7320761686945500138}
   resumeAction: {fileID: 2631651688888783702, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   actionsSprites:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 3025357496518856892}
+      Value:
+      - {fileID: 21300000, guid: 6f1b2ea0d163e49469ccb1e30493c2f4, type: 3}
+      - {fileID: 21300000, guid: 101d2664033fafd48800a1d0ddc89af0, type: 3}
+    - Key: {fileID: 5392737354502259408}
+      Value:
+      - {fileID: 21300000, guid: 4d46b6a2783c1ea43bf03e6574107b5d, type: 3}
+      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
   inputsObject: {fileID: 186969997171935545}
 --- !u!114 &6827905350798421866
 MonoBehaviour:

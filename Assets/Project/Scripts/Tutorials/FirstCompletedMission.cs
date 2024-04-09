@@ -36,8 +36,6 @@ public class FirstCompletedMission : Tutorial
 
         PlayerPrefs.SetInt(tutorialkey, 1);
 
-        SelectTpsManager.instance.BoostTpReset();
-
         Button[] mission = FindObjectsOfType<Button>(); 
         List<Button> btList = new List<Button>();
         foreach(Button bt in mission)

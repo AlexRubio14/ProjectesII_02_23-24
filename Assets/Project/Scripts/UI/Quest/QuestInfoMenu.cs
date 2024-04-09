@@ -138,6 +138,8 @@ public class QuestInfoMenu : MonoBehaviour
     public void ObtainCurrentQuest()
     {
         currentQuest.obtainedQuest = true;
+
+        QuestManager.Instance.SaveQuests();
     }
     public void RemoveQuestInfo()
     {

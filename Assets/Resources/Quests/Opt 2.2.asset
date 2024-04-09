@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 9
   <questTitle>k__BackingField: Opt. 2.2
-  <questName>k__BackingField: Asalto II
+  <questName>k__BackingField: Asalto
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
+    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
+      Value: 25
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
       Value: 20
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
       Value: 10
-    - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
-      Value: 25
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: d32714e89bf8bc642a345ee197efd096, type: 2}
