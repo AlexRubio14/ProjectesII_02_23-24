@@ -85,8 +85,6 @@ public class Boss1Controller : BossController
     [SerializeField]
     private AudioClip hitWallsAudioClip;
 
-
-
     [Space, Header("Suction"), SerializeField]
     private GameObject windBlow;
     private ParticleSystem[] windBlowEmitter;
@@ -116,7 +114,8 @@ public class Boss1Controller : BossController
 
     private Vector2 dieExitDirection;
 
-
+    private Vector2 pauseSpeed;
+    private bool activeAnimatorOnPause;
     private Animator animator;
 
 
@@ -141,6 +140,19 @@ public class Boss1Controller : BossController
 
         SetSuctionWindActive(false);
     }
+
+    private void OnEnable()
+    {
+        TimeManager.Instance.pauseAction += OnPauseAction;
+        TimeManager.Instance.resumeAction += OnResumeAction;
+    }
+
+    private void OnDisable()
+    {
+        TimeManager.Instance.pauseAction -= OnPauseAction;
+        TimeManager.Instance.resumeAction -= OnResumeAction;
+    }
+
 
     private void Update()
     {
@@ -249,10 +261,10 @@ public class Boss1Controller : BossController
     {
         //Calcular un poco de rotacion para que se acerque muy poco a poco al player
         Vector2 playerDir = (PlayerManager.Instance.player.transform.position - head.transform.position).normalized;
-        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime * dashRotationSpeed).normalized;
+        dashDirection = Vector2.Lerp(dashDirection, playerDir, Time.deltaTime * TimeManager.Instance.timeParameter * dashRotationSpeed).normalized;
 
         //mover al bicho y rotarlo hacia la direccion
-        rb2d.velocity = dashDirection * dashSpeed;
+        rb2d.velocity = dashDirection * dashSpeed * TimeManager.Instance.timeParameter;
         head.right = dashDirection;
 
         float distanceFromMiddlePos = Vector2.Distance(head.position, arenaMiddlePos.position);
@@ -337,16 +349,16 @@ public class Boss1Controller : BossController
 
     private void UpdateSpin()
     {
-        bubbleSpinTimeWaited += Time.deltaTime;
+        bubbleSpinTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         //Comprobar el tiempo que lleva girando
-        spinTimeWaited += Time.deltaTime;
+        spinTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         if (spinTimeWaited >= spinDuration)
         {
 
             //Espera stuneado
-            spinStunTimeWaited += Time.deltaTime;
+            spinStunTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
             headSR.sprite = stunnedHeadSprite;
             if (spinAudioSource)
             {
@@ -362,8 +374,8 @@ public class Boss1Controller : BossController
                 foreach (CircleCollider2D item in collisions)
                     item.gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
                 rb2d.angularVelocity = 0;
-                head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime * 3f).normalized;
-                rb2d.velocity = head.right * spinSpeed * 0.75f;
+                head.right = Vector2.Lerp(head.right, exitDirection, Time.deltaTime * TimeManager.Instance.timeParameter * 3f).normalized;
+                rb2d.velocity = head.right * spinSpeed * 0.75f * TimeManager.Instance.timeParameter;
 
                 if (Vector2.Distance(head.position, arenaMiddlePos.position) > outOfZoneDistance)
                 {
@@ -377,10 +389,10 @@ public class Boss1Controller : BossController
         }
 
         //Girar la cabeza
-        head.rotation *= Quaternion.Euler(0,0, spinHeadRotationSpeed * Time.deltaTime);
+        head.rotation *= Quaternion.Euler(0,0, spinHeadRotationSpeed * Time.deltaTime * TimeManager.Instance.timeParameter);
 
         //Mover hacia la direccion que este siguiendo
-        rb2d.velocity = spinDirection * spinSpeed;
+        rb2d.velocity = spinDirection * spinSpeed * TimeManager.Instance.timeParameter;
         
 
     }
@@ -458,7 +470,7 @@ public class Boss1Controller : BossController
 
     protected void UpdateSuction()
     {
-        suctionTimeWaited += Time.deltaTime;
+        suctionTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         rb2d.velocity = Vector2.zero;
 
@@ -482,13 +494,13 @@ public class Boss1Controller : BossController
     
     private void MoveHeadSuction(Vector2 _targetPos, float _suctionSpeed)
     {
-        Vector2 nextPos = Vector2.Lerp(head.position, _targetPos, Time.deltaTime * _suctionSpeed);
+        Vector2 nextPos = Vector2.Lerp(head.position, _targetPos, Time.deltaTime * TimeManager.Instance.timeParameter * _suctionSpeed);
         head.position = nextPos;
         head.right = (PlayerManager.Instance.player.transform.position - head.position).normalized;
     }
     private void InstantiateBubblesDuringSuction()
     {
-        suctionBubbleTimeWatied += Time.deltaTime;
+        suctionBubbleTimeWatied += Time.deltaTime * TimeManager.Instance.timeParameter;
 
         if (suctionBubbleTimeWatied <= suctionBubbleSpawnTime)
             return;
@@ -576,8 +588,8 @@ public class Boss1Controller : BossController
     }
     protected override void UpdateDie()
     {
-        head.right = Vector2.Lerp(head.right, dieExitDirection, Time.deltaTime * 3f).normalized;
-        rb2d.velocity = head.right * spinSpeed * 0.75f;
+        head.right = Vector2.Lerp(head.right, dieExitDirection, Time.deltaTime * TimeManager.Instance.timeParameter * 3f).normalized;
+        rb2d.velocity = head.right * spinSpeed * 0.75f * TimeManager.Instance.timeParameter;
 
         if (Vector2.Distance(head.position, arenaMiddlePos.position) > outOfZoneDistance)
         {
@@ -644,6 +656,20 @@ public class Boss1Controller : BossController
         }
         else
             spawnTrackerParticles.Stop();
+    }
+
+    private void OnPauseAction()
+    {
+        pauseSpeed = rb2d.velocity;
+        activeAnimatorOnPause = animator.enabled;
+        animator.enabled = false;
+        rb2d.velocity = Vector2.zero;
+    }
+
+    private void OnResumeAction()
+    {
+        rb2d.velocity = pauseSpeed;
+        animator.enabled = activeAnimatorOnPause;
     }
 
 }

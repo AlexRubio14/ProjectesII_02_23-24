@@ -136,6 +136,7 @@ public class PauseMenuController : MonoBehaviour
         SetRewardValues(_selectedQuest);
 
         _selectedQuest.newQuest = false;
+        QuestManager.Instance.SaveQuests();
     }
     private void SetRequirementValues(QuestObject _selectedQuest)
     {

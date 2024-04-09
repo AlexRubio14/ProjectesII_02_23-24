@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
         dashAction.action.performed += DashAction;
 
         TimeManager.Instance.pauseAction += PlayerPause;
+        TimeManager.Instance.resumeAction += PlayerResume;
 
     }
 
@@ -159,6 +160,7 @@ public class PlayerController : MonoBehaviour
         dashAction.action.performed -= DashAction;
 
         TimeManager.Instance.pauseAction -= PlayerPause;
+        TimeManager.Instance.resumeAction -= PlayerResume;
     }
 
     void Update()
@@ -555,11 +557,17 @@ public class PlayerController : MonoBehaviour
     {
         rb2d.velocity = Vector2.zero;
         rb2d.angularVelocity = 0.0f;
+        rb2d.bodyType = RigidbodyType2D.Static;
     }
 
-    
-    
-    
+    private void PlayerResume()
+    {
+        rb2d.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Map") || collision.collider.CompareTag("BreakableWall"))

@@ -60,12 +60,13 @@ public abstract class Enemy : EnemyIA, IHealth
     protected void OnEnable()
     {
         TimeManager.Instance.pauseAction += EnemyPause;
+        TimeManager.Instance.resumeAction += EnemyResume;
     }
 
     protected void OnDisable()
     {
         TimeManager.Instance.pauseAction -= EnemyPause;
-
+        TimeManager.Instance.resumeAction -= EnemyResume;
     }
 
     #region Behaviours Functions
@@ -191,14 +192,18 @@ public abstract class Enemy : EnemyIA, IHealth
 
     #endregion
 
-    private void EnemyPause()
+    protected virtual void EnemyPause()
     {
         rb2d.velocity = Vector2.zero;
         rb2d.angularVelocity = 0.0f;
     }
 
+    protected virtual void EnemyResume()
+    {
 
-    private void OnDrawGizmosSelected()
+    }
+
+    protected void OnDrawGizmosSelected()
     {
         if (showGizmos == false)
             return;

@@ -27,8 +27,18 @@ public class UpgradeManager : MonoBehaviour
 
         foreach (UpgradeObject item in allUpgrades)
         {
-            UpgradesObtained.Add(item, false);
+            if (PlayerPrefs.HasKey(item.UpgradeName) && PlayerPrefs.GetInt(item.UpgradeName) == 1)
+            {
+                UpgradesObtained.Add(item, true);
+            }
+            else
+            {
+                UpgradesObtained.Add(item, false);
+                PlayerPrefs.SetInt(item.UpgradeName, 0);
+            }
         }
+
+        PlayerPrefs.Save();
     }
 
     private void Update()
@@ -45,6 +55,8 @@ public class UpgradeManager : MonoBehaviour
     public void ObtainUpgrade(UpgradeObject _currentUpgrade)
     {
         UpgradesObtained[_currentUpgrade] = true;
+
+        PlayerPrefs.SetInt(_currentUpgrade.UpgradeName, 1);
     }
 
     public bool CheckObtainedUpgrade(UpgradeObject _currentUpgrade)
@@ -55,5 +67,11 @@ public class UpgradeManager : MonoBehaviour
             return false;
     }
 
-
+    public void ResetUpgrades()
+    {
+        foreach (UpgradeObject item in allUpgrades)
+        {
+            UpgradesObtained[item] = false;
+        }
+    }
 }

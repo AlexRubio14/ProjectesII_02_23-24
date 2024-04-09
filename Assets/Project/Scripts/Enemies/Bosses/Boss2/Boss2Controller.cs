@@ -553,7 +553,27 @@ public class Boss2Controller : BossController
 
         circleCollider.enabled = false;
 
+        if (avalancheAS)
+        {
+            AudioManager.instance.StopLoopSound(avalancheAS);
+            avalancheAS = null;
+        }
+
+        if (hideAS)
+        {
+            AudioManager.instance.StopLoopSound(hideAS);
+            hideAS = null;
+        }
+
+        if (createWallAS)
+        {
+            AudioManager.instance.StopLoopSound(createWallAS);
+            createWallAS = null;
+        }
+
+
         AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss2");
+
 
     }
 

@@ -351,7 +351,7 @@ MonoBehaviour:
   - {fileID: 613125535928429517}
   iaData: {fileID: 931764774973105053}
   movementDirectionSolver: {fileID: 6505329190034688335}
-  <maxHealth>k__BackingField: 180
+  <maxHealth>k__BackingField: 250
   speed: 32
   <damage>k__BackingField: 40
   moveSpots:
@@ -371,7 +371,7 @@ MonoBehaviour:
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
   showGizmos: 1
-  timeToExplode: 6
+  timeToExplode: 4
   explosion: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}
 --- !u!95 &8588124914710935735
 Animator:

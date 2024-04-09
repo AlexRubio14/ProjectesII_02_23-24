@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +22,7 @@ public class QuestManager : MonoBehaviour
         DontDestroyOnLoad(Instance);
 
         allQuests = Resources.LoadAll<QuestObject>("Quests");
+        LoadQuests();
         selectedQuestID = 0;
     }
 
@@ -90,4 +90,38 @@ public class QuestManager : MonoBehaviour
         selectedQuestID = _id;
     }
 
+    public void ResetQuests()
+    {
+        QuestObject[] quests = Resources.LoadAll<QuestObject>("Quests");
+        foreach (QuestObject item in quests)
+        {
+            item.obtainedQuest = false;
+            item.completedQuest = false;
+            item.newQuest = true;
+        }
+
+        SaveQuests();
+    }
+
+    private void LoadQuests()
+    {
+        foreach (QuestObject item in allQuests)
+        {
+            item.obtainedQuest = PlayerPrefs.HasKey("Quest_" + item.questID + "_obtained") && PlayerPrefs.GetInt("Quest_" + item.questID + "_obtained") == 1;
+            item.completedQuest = PlayerPrefs.HasKey("Quest_" + item.questID + "_completed") && PlayerPrefs.GetInt("Quest_" + item.questID + "_completed") == 1;
+            item.newQuest = !PlayerPrefs.HasKey("Quest_" + item.questID + "_new") || PlayerPrefs.GetInt("Quest_" + item.questID + "_new") == 1;
+
+        }
+    }
+    public void SaveQuests()
+    {
+        foreach (QuestObject item in allQuests)
+        {
+            PlayerPrefs.SetInt("Quest_" + item.questID + "_obtained", item.obtainedQuest ? 1 : 0);
+            PlayerPrefs.SetInt("Quest_" + item.questID + "_completed", item.completedQuest ? 1 : 0);
+            PlayerPrefs.SetInt("Quest_" + item.questID + "_new", item.newQuest ? 1 : 0);
+        }
+
+        PlayerPrefs.Save();
+    }
 }

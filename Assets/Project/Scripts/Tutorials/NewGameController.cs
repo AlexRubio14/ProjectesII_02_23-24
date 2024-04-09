@@ -27,16 +27,10 @@ public class NewGameController : MonoBehaviour
         SelectTpsManager.instance.ResetTpObjects();
 
         PlayerPrefs.DeleteAll();
-        QuestObject[] quests = Resources.LoadAll<QuestObject>("Quests");
-        foreach (QuestObject item in quests)
-        {
-            item.obtainedQuest = false;
-            item.completedQuest = false;
-            item.newQuest = true;
-        }
-
+        
+        QuestManager.Instance.ResetQuests();
         InventoryManager.Instance.ResetInventory();
-
+        UpgradeManager.Instance.ResetUpgrades();
     }
 
     private void GoToHub()

@@ -9,6 +9,6 @@ public class TpObject : ScriptableObject
     [field: SerializeField]
     public string zoneName { get; private set; }
 
-    [field: SerializeField]
-    public bool discovered;
+    [SerializeField]
+    public bool discovered = false;
 }

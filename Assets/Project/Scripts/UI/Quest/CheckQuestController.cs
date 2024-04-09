@@ -106,6 +106,8 @@ public class CheckQuestController : MonoBehaviour
         if (currentQuest.newQuest)
             currentQuest.newQuest = false;
 
+        QuestManager.Instance.SaveQuests();
+
         //Settear que los items que necesita la quest hagan el efecto de flotar
         foreach (KeyValuePair<ItemObject, short> item in _quest.neededItems)
         {
@@ -116,6 +118,8 @@ public class CheckQuestController : MonoBehaviour
     {
         InventoryManager.Instance.Buy(currentQuest.neededItems);
         currentQuest.completedQuest = true;
+
+        QuestManager.Instance.SaveQuests();
 
         foreach (KeyValuePair<ScriptableObject, QuestObject.RewardType> item in currentQuest.rewards)
         {
