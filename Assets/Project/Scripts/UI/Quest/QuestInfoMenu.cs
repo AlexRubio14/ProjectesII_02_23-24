@@ -74,7 +74,7 @@ public class QuestInfoMenu : MonoBehaviour
             Image newImage = newObj.AddComponent<Image>();
             requirementImages.Add(newImage);
             newImage.sprite = item.Key.PickableSprite;
-            
+            newImage.preserveAspect = true;
 
             newObj.transform.SetParent(requirementsLayout.transform);
             ImageFloatEffect floatFX = newObj.AddComponent<ImageFloatEffect>();
@@ -89,14 +89,11 @@ public class QuestInfoMenu : MonoBehaviour
             newText.font = fontAsset; 
             requirementTexts.Add(newText);
             if (showCurrentItems)
-            {
                 newText.text = item.Key.ItemName + "   " + inventory[item.Key] + " / " + item.Value;
-            }
             else
-            {
                 newText.text = item.Key.ItemName + " x " + item.Value;
-            }
             newText.enableAutoSizing = true;
+            newText.fontSizeMin = 14;
             newText.horizontalAlignment = HorizontalAlignmentOptions.Center;
             newText.verticalAlignment = VerticalAlignmentOptions.Middle;
             newText.enableWordWrapping = false;
