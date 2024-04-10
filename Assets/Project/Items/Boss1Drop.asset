@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Boss1Drop
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Cristal Meowcestral
+  <ItemName>k__BackingField: Cristal Miawcestral
   <BetaSprite>k__BackingField: {fileID: 0}
   <MapSprite>k__BackingField: {fileID: 0}
   <PickableSprite>k__BackingField: {fileID: 21300000, guid: 100b42d0571c81148817103999a70629, type: 3}
