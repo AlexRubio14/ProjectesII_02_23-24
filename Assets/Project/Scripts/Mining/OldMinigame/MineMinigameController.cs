@@ -23,9 +23,6 @@ public class MineMinigameController : MonoBehaviour
     private float laserChargeSpeed;
     [SerializeField]
     private float laserDischargeSpeed;
-
-    [SerializeField]
-    private Vector2 neededSizes;
     
     [SerializeField]
     private Color correctEnergyColor = Color.blue;
@@ -128,9 +125,6 @@ public class MineMinigameController : MonoBehaviour
         progressBarSlider.maxValue = maxIntegrity;
 
         currentMultiplierSpeed = 1;
-
-        leftLaser.SetCurrentEnergyLevel(50f);
-        rightLaser.SetCurrentEnergyLevel(50f);
 
         SetupQuantityText();
         SetupMineralTypeImages();
@@ -262,8 +256,15 @@ public class MineMinigameController : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
-        leftLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.currentItem.LeftEnergyLevelSize.x, miningItem.currentItem.LeftEnergyLevelSize.y));
-        rightLaser.SetNeedEnergyLevel(Random.Range(10f, 90f), Random.Range(miningItem.currentItem.RightEnergyLevelSize.x, miningItem.currentItem.RightEnergyLevelSize.y));
+
+        float leftLaserValue = Random.Range(10f, 90f);
+        float rightLaserValue = Random.Range(10f, 90f);
+
+        leftLaser.SetNeedEnergyLevel(leftLaserValue, Random.Range(miningItem.currentItem.LeftEnergyLevelSize.x, miningItem.currentItem.LeftEnergyLevelSize.y));
+        rightLaser.SetNeedEnergyLevel(rightLaserValue, Random.Range(miningItem.currentItem.RightEnergyLevelSize.x, miningItem.currentItem.RightEnergyLevelSize.y));
+
+        leftLaser.SetCurrentEnergyLevel(leftLaserValue);
+        rightLaser.SetCurrentEnergyLevel(rightLaserValue);
     }
 
     private void CheckAdvanceProgress()
