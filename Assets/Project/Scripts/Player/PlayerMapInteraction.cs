@@ -26,6 +26,9 @@ public class PlayerMapInteraction : MonoBehaviour
 
     public bool showCanvas;
 
+    [Space, SerializeField]
+    private bool showGizmos;
+
     private void Start()
     {
         showCanvas = true;
@@ -133,8 +136,11 @@ public class PlayerMapInteraction : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, checkRadius);
+        if (!showGizmos)
+            return;
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 
 }
