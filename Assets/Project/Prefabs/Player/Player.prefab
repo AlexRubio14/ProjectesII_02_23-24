@@ -15371,7 +15371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactAction: {fileID: -4293622716152061987, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  checkRadius: 2
+  checkRadius: 3
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -15382,6 +15382,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 35915400d6ec2ad4db1b29d7c7a0526d, type: 3}
   - {fileID: 21300000, guid: c01a1548b10ef4c4992c29241cd38f51, type: 3}
   showCanvas: 0
+  showGizmos: 0
 --- !u!114 &697992122945508969
 MonoBehaviour:
   m_ObjectHideFlags: 0
