@@ -1082,9 +1082,8 @@ MonoBehaviour:
       Value:
       - {fileID: 21300000, guid: 4d46b6a2783c1ea43bf03e6574107b5d, type: 3}
       - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
-  laserChargeSpeed: 25
-  laserDischargeSpeed: 15
-  neededSizes: {x: 30, y: 80}
+  laserChargeSpeed: 30
+  laserDischargeSpeed: 20
   correctEnergyColor: {r: 0.3019608, g: 0.8980392, b: 0.33333334, a: 1}
   wrongEnergyColor: {r: 0.78431374, g: 0.20392157, b: 0.16470589, a: 1}
   laserSliderSpeed: 5
@@ -1096,19 +1095,19 @@ MonoBehaviour:
   rightLaserParticles: {fileID: 3779498173179561672}
   progressBarSlider: {fileID: 6991850848142364571}
   integrity: {fileID: 2034922421588692019}
-  progressSpeed: 4
-  breakSpeed: 6.5
+  progressSpeed: 6
+  breakSpeed: 8
   maxIntegrity: 100
   maxMultiplierSpeed: 4
-  multiplierUpSpeed: 1.5
-  multipliersDownSpeed: 6
-  shakeMagnitude: 1.5
+  multiplierUpSpeed: 3.5
+  multipliersDownSpeed: 8
+  shakeMagnitude: 1.7
   oreBox: {fileID: 5960572276851173938}
   rightLaserPivot: {fileID: 8906084340829743810}
   leftLaserPivot: {fileID: 4009990243727180844}
   maxAngleRotation: 10
   pickableItemPrefab: {fileID: 6678534543415543241, guid: db3a317e0d29aa9418d420731477906b, type: 3}
-  maxThrowSpeed: 3.5
+  maxThrowSpeed: 4
   percentText:
   - {fileID: 6824661381988163203}
   - {fileID: 5382166473088437656}
