@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Mision 4
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 6
-  <questTitle>k__BackingField: Mision 4
-  <questName>k__BackingField: "El tama\xF1o si importa"
+  <questTitle>k__BackingField: 4th Upgrade
+  <questName>k__BackingField: Size Matters
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField:
-  - Ahora miausmo tienes instalada la mejora.
+  - I'll install the new upgrade right nyaw!
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

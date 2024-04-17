@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Mision 3
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 5
-  <questTitle>k__BackingField: Mision 3
-  <questName>k__BackingField: Y se hizo la luz
+  <questTitle>k__BackingField: 3th Upgrade
+  <questName>k__BackingField: New Spotlights
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField:
-  - Inmiaudiato tienes la mejora en tu nave.
+  - 'Immiaauudiately you will have the upgrade on your ship. '
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}

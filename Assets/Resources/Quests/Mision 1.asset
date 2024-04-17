@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Mision 1
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 0
-  <questTitle>k__BackingField: Mision 1
-  <questName>k__BackingField: Nuevo Inicio
+  <questTitle>k__BackingField: 1st Upgrade
+  <questName>k__BackingField: New beginning
   <questDialogue>k__BackingField:
-  - "\xA1Bienvenido intr\xE9pido recolector de nucleos! Nos encontramos en nuestra
-    base terrestre."
-  - Aqui tienes tu nave para poder realizar tu primera inmersion.
-  - Pero pareces muy novato, asi que para ponerte a prueba. Mina con la nave estos
-    materiales, completa este encargo y tendras una recompensa. Buena suerte.
+  - Welcome fearless core collector! We are at our spacecraft base.
+  - Here you've your spaceship to be able to make your first dive to the mysterious
+    underground of this planet.
+  - As you are a freshman, I will test your skills! Mine these materials with the
+    ship, complete this order and you will have a reward. Good luck!
   <questDialogueEnd>k__BackingField:
-  - "\xA1Puurrrfecto! Cuando te vuelvas a montar en tu nave ya tendras la mejora
-    instalada."
+  - Puurrrfect! When you get back on your ship, you will already have the upgrade
+    installed.
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
