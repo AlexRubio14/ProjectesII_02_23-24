@@ -40,6 +40,11 @@ public class TpButton : MonoBehaviour
         displayTps.OnButtonClick(tpObject.id);
     }
 
+    public TpObject GetTp()
+    {
+        return tpObject;
+    }
+
     public void BackToHub()
     {
         menuNavegation.GoToHub();
