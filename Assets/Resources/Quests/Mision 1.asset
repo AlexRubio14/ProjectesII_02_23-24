@@ -43,3 +43,4 @@ MonoBehaviour:
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1
+  stringMissionObjective: Recollect the minerals

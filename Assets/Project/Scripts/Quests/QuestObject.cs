@@ -36,4 +36,7 @@ public class QuestObject : ScriptableObject
     public bool obtainedQuest = false;
     public bool completedQuest = false;
     public bool newQuest = true;
+
+    public string stringMissionObjective;
+    public string stringMissionCompleted = "Go base to complete the mission";
 }
