@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Opt 1.1
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 1
-  <questTitle>k__BackingField: Opt. 1.1
-  <questName>k__BackingField: Sin tiempo para morir
+  <questTitle>k__BackingField: Fuel Upgrade 1
+  <questName>k__BackingField: No Time to Die
   <questDialogue>k__BackingField:
-  - " \xA1Saludos! Antes de que te lances nuevamente a las entra\xF1as del planeta,
-    hay noticias emocionantes que debo compartir contigo. "
-  - "No solo puedo crearte mejoras funcionales para tu nave, sino tambi\xE9n mejoras
-    b\xE1sicas que transformar\xE1n tu experiencia en tu travesia a traves de las
-    cuevas mas profundas de este planeta."
+  - Before you launch yourself back into the bowels of the planet, there is exciting
+    news I must share with you!
+  - I'm not only able to create special upgrades for your spaceship, moreover I can
+    create basic upgrades to improve your experience on your journey.
+  - I'm miaauutastic!
   <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
@@ -34,6 +34,6 @@ MonoBehaviour:
       Value: 2
     - Key: {fileID: 11400000, guid: 193e1c8766041d74f8115e8a7f78ad76, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

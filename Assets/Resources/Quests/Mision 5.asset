@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Mision 5
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 7
-  <questTitle>k__BackingField: Mision 5
-  <questName>k__BackingField: "\xA1Nos acercamos al Nucleo!"
+  <questTitle>k__BackingField: Core Collector
+  <questName>k__BackingField: Closer to the Core
   <questDialogue>k__BackingField:
-  - "\xA1Esta es tu ultima mision!"
-  - 'Consigue derrotar el ultimo jefe que se encuentra '
+  - This is your last quest! Purrfect!
+  - 'Manage to defeat the last boss found deep underground, in dark and dangerous
+    areas. '
   <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
@@ -33,6 +34,6 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
       Value: 0
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

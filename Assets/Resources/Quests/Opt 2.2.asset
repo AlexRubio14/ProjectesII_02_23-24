@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Opt 2.2
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 9
-  <questTitle>k__BackingField: Opt. 2.2
-  <questName>k__BackingField: Asalto
+  <questTitle>k__BackingField: Damage Upgrade 2
+  <questName>k__BackingField: Assault
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
@@ -31,6 +31,6 @@ MonoBehaviour:
       Value: 2
     - Key: {fileID: 11400000, guid: 3aa4b05bd98348d40b5ceeefeeac37b1, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

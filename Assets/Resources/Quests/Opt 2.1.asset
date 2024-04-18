@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Opt 2.1
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 8
-  <questTitle>k__BackingField: Opt. 2.1
-  <questName>k__BackingField: Miaurmamento Avanzado
+  <questTitle>k__BackingField: 'Damage Upgrade 1 '
+  <questName>k__BackingField: Advanced Weaponry
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
@@ -29,6 +29,6 @@ MonoBehaviour:
       Value: 2
     - Key: {fileID: 11400000, guid: 694e226c5ee95b742967c27d80380e0f, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

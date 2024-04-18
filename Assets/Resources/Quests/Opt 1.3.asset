@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Opt 1.3
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 3
-  <questTitle>k__BackingField: Opt. 1.3
-  <questName>k__BackingField: Gato Arabe
+  <questTitle>k__BackingField: Fuel Upgrade 3
+  <questName>k__BackingField: More More More
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
@@ -31,6 +31,6 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 11400000, guid: f2a3a1e76f8f2d64b809d13372fdea8c, type: 2}
       Value: 2
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

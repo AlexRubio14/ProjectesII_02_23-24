@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Opt 2.3
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 10
-  <questTitle>k__BackingField: Opt. 2.3
-  <questName>k__BackingField: Desintegrador de Purrteria
+  <questTitle>k__BackingField: Damage Upgrade 3
+  <questName>k__BackingField: Aimed Blaster
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
@@ -31,6 +31,6 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 11400000, guid: d32714e89bf8bc642a345ee197efd096, type: 2}
       Value: 2
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1

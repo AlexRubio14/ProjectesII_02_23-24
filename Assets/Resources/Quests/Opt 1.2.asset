@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Opt 1.2
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 2
-  <questTitle>k__BackingField: Opt. 1.2
-  <questName>k__BackingField: Tomate un respiro
+  <questTitle>k__BackingField: Fuel Upgrade 2
+  <questName>k__BackingField: Take a Break
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField: []
   neededItems:
@@ -29,6 +29,6 @@ MonoBehaviour:
       Value: 2
     - Key: {fileID: 11400000, guid: c0c3993ecb1e77f4580fd4defe12856a, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
   newQuest: 1
