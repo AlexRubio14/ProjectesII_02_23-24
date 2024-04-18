@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DrillUpgrade
   m_EditorClassIdentifier: 
   <type>k__BackingField: 2
-  <UpgradeName>k__BackingField: Purrforador
-  <UpgradeDescription>k__BackingField: Destuir paredes quebradas
+  <UpgradeName>k__BackingField: Mining Lasers
+  <UpgradeDescription>k__BackingField: Destroy broken walls
   <UpgradeSprite>k__BackingField: {fileID: 21300000, guid: 2177c061fc46af948af03094e54e28b9, type: 3}

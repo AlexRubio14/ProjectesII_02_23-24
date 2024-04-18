@@ -37,6 +37,6 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
-  newQuest: 1
+  newQuest: 0
