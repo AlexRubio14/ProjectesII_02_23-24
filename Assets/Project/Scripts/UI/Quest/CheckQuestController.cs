@@ -79,7 +79,7 @@ public class CheckQuestController : MonoBehaviour
             if (canBuy)
                 completeButton.Select();
             //completeButtonFloatEffect.canFloat = canBuy;
-            completeText.text = "To Complete";
+            completeText.text = "Complete";
 
 
             selectButton.gameObject.SetActive(true);
@@ -87,12 +87,12 @@ public class CheckQuestController : MonoBehaviour
             if (_quest == QuestManager.Instance.GetSelectedQuest())
             {
                 selectButton.interactable = false;
-                selectText.text = "Fijada";
+                selectText.text = "Selected";
             }
             else
             {
                 selectButton.interactable = true;
-                selectText.text = "Fijar";
+                selectText.text = "Select";
             }
         }
         else
