@@ -36,4 +36,11 @@ MonoBehaviour:
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1
-  stringMissionObjective: Recollect the minerals
+  missionHintDictionary:
+    _serializedList:
+    - Key: 0
+      Value: Collect the minerals
+    - Key: 1
+      Value: Collect the last few minerals
+    - Key: 2
+      Value: Go base to complete the mission

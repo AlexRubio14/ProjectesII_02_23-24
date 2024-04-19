@@ -1,5 +1,6 @@
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObjects/Quest")]
 public class QuestObject : ScriptableObject
@@ -37,6 +38,8 @@ public class QuestObject : ScriptableObject
     public bool completedQuest = false;
     public bool newQuest = true;
 
-    public string stringMissionObjective;
-    public string stringMissionCompleted = "Go base to complete the mission";
+    public enum QuestState { MISSION_STARTED, MAIN_OBJECTIVE_DONE, MISSION_COMPLETED}
+
+    [SerializedDictionary("MISSION STATE", "STRING")]
+    public SerializedDictionary<QuestState, string> missionHintDictionary;
 }

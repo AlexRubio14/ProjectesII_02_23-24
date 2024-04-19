@@ -40,7 +40,14 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: d360710b326bcd049a2e26cdb6fc2fb0, type: 2}
       Value: 1
-  obtainedQuest: 0
-  completedQuest: 0
-  newQuest: 1
-  stringMissionObjective: Recollect the minerals
+  obtainedQuest: 1
+  completedQuest: 1
+  newQuest: 0
+  missionHintDictionary:
+    _serializedList:
+    - Key: 0
+      Value: Collect the minerals
+    - Key: 1
+      Value: Collect the last few minerals
+    - Key: 2
+      Value: Go base to complete the mission

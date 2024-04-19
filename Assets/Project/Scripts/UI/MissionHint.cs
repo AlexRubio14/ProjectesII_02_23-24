@@ -11,15 +11,28 @@ public class MissionHint : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI hintText;
 
+    public int currentMissionIndex {  get; private set; }
+
+    private void Awake()
+    {
+        currentMissionIndex = 0;
+    }
+
     private void Start()
     {
-        foreach (QuestObject obj in missionsToHint)
+        for (int i = 0; i < missionsToHint.Count; i ++)
         {
-            if (!obj.completedQuest)
+            if (!missionsToHint[i].completedQuest)
             {
-                hintText.text = obj.stringMissionObjective;
+                hintText.text = missionsToHint[i].missionHintDictionary[QuestObject.QuestState.MISSION_STARTED];
+                currentMissionIndex = i;
                 return;
             }
         }
+    }
+
+    public void changeHintString(QuestObject.QuestState _missionState)
+    {
+        hintText.text = missionsToHint[currentMissionIndex].missionHintDictionary[_missionState];
     }
 }

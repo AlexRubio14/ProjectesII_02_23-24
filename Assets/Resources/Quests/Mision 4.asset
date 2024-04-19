@@ -37,4 +37,11 @@ MonoBehaviour:
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1
-  stringMissionObjective: Defeat the boss
+  missionHintDictionary:
+    _serializedList:
+    - Key: 0
+      Value: Defeat the boss
+    - Key: 1
+      Value: Collect the last few minerals
+    - Key: 2
+      Value: Go base to complete the mission
