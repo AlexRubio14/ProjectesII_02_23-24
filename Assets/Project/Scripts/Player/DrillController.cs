@@ -78,6 +78,7 @@ public class DrillController : MonoBehaviour
 
     private void Awake()
     {
+        //Creamos los Line Renderers que simularan los rayos que lanza la nave
         lasers = new LineRenderer[totalRays];
         for (int i = 0; i < totalRays; i++)
         {
@@ -87,6 +88,7 @@ public class DrillController : MonoBehaviour
             currLaser.enabled = false;
             currLaser.numCapVertices = 90;
             currLaser.material = laserMaterial;
+            currLaser.textureMode = LineTextureMode.Tile;
             currLaser.startWidth = laserWidth;
             currLaser.SetPositions(new Vector3[2]);
             currLaser.colorGradient = laserColor;

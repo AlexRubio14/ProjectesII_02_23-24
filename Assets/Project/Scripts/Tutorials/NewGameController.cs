@@ -31,6 +31,7 @@ public class NewGameController : MonoBehaviour
         QuestManager.Instance.ResetQuests();
         InventoryManager.Instance.ResetInventory();
         UpgradeManager.Instance.ResetUpgrades();
+        PowerUpManager.Instance.ResetPowerUps();
     }
 
     private void GoToHub()

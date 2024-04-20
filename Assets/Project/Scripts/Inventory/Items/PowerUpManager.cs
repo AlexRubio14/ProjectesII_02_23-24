@@ -39,16 +39,10 @@ public class PowerUpManager : MonoBehaviour
         }
         else
         {
-            Damage = 1;
-            Fuel = 0;
-
-            PlayerPrefs.SetFloat(damageKey, Damage);
-            PlayerPrefs.SetFloat(fuelKey, Fuel);
-            PlayerPrefs.Save();
+            ResetPowerUps();
         }
 
     }
-
 
     public void PowerUpObtained(PowerUpType _powerUpType) 
     {
@@ -71,4 +65,12 @@ public class PowerUpManager : MonoBehaviour
 
     }
 
+    public void ResetPowerUps()
+    {
+        Damage = 1;
+        Fuel = 0;
+        PlayerPrefs.SetFloat(damageKey, Damage);
+        PlayerPrefs.SetFloat(fuelKey, Fuel);
+        PlayerPrefs.Save();
+    }
 }

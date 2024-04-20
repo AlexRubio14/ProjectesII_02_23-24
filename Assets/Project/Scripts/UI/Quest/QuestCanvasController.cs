@@ -3,25 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using AYellowpaper.SerializedCollections;
+using UnityEngine.InputSystem;
 
 public class QuestCanvasController : MonoBehaviour
 {
-    [SerializeField]
+    [Header("Input"), SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
+
+    [Space, Header("Quest Canvas"), SerializeField]
     private GameObject needImagePrefab;
     [SerializeField]
     private GameObject needTextPrefab;
 
-    [SerializeField]
+    [Space, SerializeField]
     private TextMeshProUGUI questTitleText;
     [SerializeField]
     private LayoutGroup layoutQuest;
 
+    [Space, SerializeField]
+    private GameObject noSelectecQuestText;
+
+    [Space, SerializeField]
+    private GameObject canCompleteQuestText;
+
     private List<Image> prizeImages;
     private List<TextMeshProUGUI> prizeTexts;
 
+    [Space, SerializeField]
+    private Color defaultTextColor;
+    [SerializeField]
+    private Color doneTextColor;
+
     private QuestObject currentQuest;
 
-    [SerializeField]
+    [Space, SerializeField]
     private float timeToWaitForFloat;
 
 
@@ -35,19 +51,33 @@ public class QuestCanvasController : MonoBehaviour
         SetupQuestCanvas(QuestManager.Instance.GetSelectedQuest());
     }
 
+    private void OnEnable()
+    {
+        InventoryManager.Instance.obtainItemAction += UpdateQuestCanvas;
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.Instance.obtainItemAction -= UpdateQuestCanvas;
+        InputSystem.onDeviceChange -= UpdateInputImages;
+    }
+
     public void SetupQuestCanvas(QuestObject _quest)
     {
         currentQuest = _quest;
 
+        questTitleText.gameObject.SetActive(currentQuest);
+        layoutQuest.gameObject.SetActive(currentQuest);
+        noSelectecQuestText.SetActive(!currentQuest);
+
+        //Comprobamos si tenemos que mostrar el texto de si hay alguna quest para completar
+        canCompleteQuestText.SetActive(QuestManager.Instance.CanCompleteSomeQuest());
+
         if (!currentQuest)
-        {
-            gameObject.SetActive(false);
             return;
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+
         questTitleText.text = currentQuest.questName;
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
@@ -57,10 +87,10 @@ public class QuestCanvasController : MonoBehaviour
             newImage.sprite = item.Key.PickableSprite;
             TextMeshProUGUI newText = Instantiate(needTextPrefab, layoutQuest.transform).GetComponent<TextMeshProUGUI>();
             prizeTexts.Add(newText);
+            SetMineralsTextColor(newText, InventoryManager.Instance.GetTotalItemAmount(item.Key), item.Value);
         }
 
         UpdateQuestCanvas();
-
     }
     
     private void UpdateQuestCanvas(ItemObject _itemType = null, short _itemAmount = 0)
@@ -86,8 +116,26 @@ public class QuestCanvasController : MonoBehaviour
             }
 
             prizeTexts[index].text = InventoryManager.Instance.GetTotalItemAmount(item.Key) + " / " + item.Value;
-                        
+            SetMineralsTextColor(prizeTexts[index], InventoryManager.Instance.GetTotalItemAmount(item.Key), item.Value);
+
             index++;
+        }
+
+        //Comprobamos si tenemos que mostrar el texto de si hay alguna quest para completar
+        canCompleteQuestText.SetActive(QuestManager.Instance.CanCompleteSomeQuest());
+    }
+
+    private void SetMineralsTextColor(TextMeshProUGUI _text, short _inventoryAmount, short _neededAmount)
+    {
+        if (_inventoryAmount >= _neededAmount)
+        {
+            //Tenemos todos los minerales cambiar el color a Verde
+            _text.color = doneTextColor;
+        }
+        else
+        {
+            //No tenemos los materiales necesarios cambiar el color a Amarillo
+            _text.color = defaultTextColor;
         }
     }
 
@@ -110,15 +158,12 @@ public class QuestCanvasController : MonoBehaviour
         
     }
 
-    private void OnEnable()
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {
-        InventoryManager.Instance.obtainItemAction += UpdateQuestCanvas;   
-    }
-
-    private void OnDisable()
-    {
-        InventoryManager.Instance.obtainItemAction -= UpdateQuestCanvas;
-
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
     }
 
 }
