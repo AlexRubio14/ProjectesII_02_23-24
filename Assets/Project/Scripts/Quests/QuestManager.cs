@@ -124,4 +124,35 @@ public class QuestManager : MonoBehaviour
 
         PlayerPrefs.Save();
     }
+
+
+    public bool CanCompleteSomeQuest()
+    {
+        foreach (QuestObject item in allQuests)
+        {
+            if (item.obtainedQuest && !item.completedQuest)
+            {
+                if (CanCompleteQuest(item))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool CanCompleteQuest(QuestObject _quest)
+    {
+        Dictionary<ItemObject, short> inventory = InventoryManager.Instance.GetAllItems();
+        foreach (KeyValuePair<ItemObject, short> item in _quest.neededItems)
+        {
+            if (inventory[item.Key] < item.Value)
+                return false;
+        }
+
+        return true;
+    }
+
+
 }

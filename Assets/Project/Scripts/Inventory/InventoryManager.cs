@@ -71,6 +71,7 @@ public class InventoryManager : MonoBehaviour
 
         SaveItems();
 
+        Destroy(this);
     }
 
     public void ChangeRunItemAmount(ItemObject _itemType, short _itemsToAdd)
