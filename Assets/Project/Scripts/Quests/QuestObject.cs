@@ -1,6 +1,7 @@
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObjects/Quest")]
 public class QuestObject : ScriptableObject
@@ -38,8 +39,10 @@ public class QuestObject : ScriptableObject
     public bool completedQuest = false;
     public bool newQuest = true;
 
-    public enum QuestState { MISSION_STARTED, MAIN_OBJECTIVE_DONE, MISSION_COMPLETED}
-
+    public enum QuestObjectives { NEED_ALL_MATERIALS, NEED_ONE_MATERIAL, GO_BASE}
+   
     [SerializedDictionary("MISSION STATE", "STRING")]
-    public SerializedDictionary<QuestState, string> missionHintDictionary;
+    public SerializedDictionary<QuestObjectives, string> missionHintDictionary;
+    [field: SerializeField]
+    public ItemObject neededMaterial { private set; get; }
 }

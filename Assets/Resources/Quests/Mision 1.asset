@@ -40,14 +40,13 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: d360710b326bcd049a2e26cdb6fc2fb0, type: 2}
       Value: 1
-  obtainedQuest: 1
-  completedQuest: 1
-  newQuest: 0
+  obtainedQuest: 0
+  completedQuest: 0
+  newQuest: 1
   missionHintDictionary:
     _serializedList:
     - Key: 0
-      Value: Collect the minerals
-    - Key: 1
-      Value: Collect the last few minerals
+      Value: Collect all minerals
     - Key: 2
-      Value: Go base to complete the mission
+      Value: Go base to complete first mission
+  <neededMaterial>k__BackingField: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}

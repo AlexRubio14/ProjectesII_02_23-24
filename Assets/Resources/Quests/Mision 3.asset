@@ -38,8 +38,7 @@ MonoBehaviour:
   missionHintDictionary:
     _serializedList:
     - Key: 0
-      Value: Collect the minerals
-    - Key: 1
-      Value: Collect the last few minerals
+      Value: Collect all minerals
     - Key: 2
-      Value: Go base to complete the mission
+      Value: Go base to complete first mission
+  <neededMaterial>k__BackingField: {fileID: 0}
