@@ -37,3 +37,12 @@ MonoBehaviour:
   obtainedQuest: 1
   completedQuest: 0
   newQuest: 1
+  missionHintDictionary:
+    _serializedList:
+    - Key: 1
+      Value: Defeat the boss
+    - Key: 0
+      Value: Collect the minerals
+    - Key: 2
+      Value: Go base to complete the mission
+  <neededMaterial>k__BackingField: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}
