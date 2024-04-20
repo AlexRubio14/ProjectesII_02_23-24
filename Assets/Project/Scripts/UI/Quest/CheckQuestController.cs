@@ -29,6 +29,8 @@ public class CheckQuestController : MonoBehaviour
     private Button completeButton;
     private TextMeshProUGUI completeText;
     [SerializeField]
+    private GameObject completeExclamation;
+    [SerializeField]
     private Button selectButton;
     [SerializeField]
     private Button backButton;
@@ -76,9 +78,12 @@ public class CheckQuestController : MonoBehaviour
         {
             bool canBuy = InventoryManager.Instance.CanBuy(_quest.neededItems);
             completeButton.interactable = canBuy;
+            completeExclamation.SetActive(canBuy);
+
             if (canBuy)
                 completeButton.Select();
-            //completeButtonFloatEffect.canFloat = canBuy;
+
+
             completeText.text = "Complete";
 
 

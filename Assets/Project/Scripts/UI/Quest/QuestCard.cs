@@ -23,6 +23,9 @@ public class QuestCard : MonoBehaviour
     [SerializeField]
     private Color completed;
 
+    [SerializeField]
+    private GameObject exclamationObject;
+
     [HideInInspector]
     public QuestObject currentQuest;
 
@@ -69,6 +72,9 @@ public class QuestCard : MonoBehaviour
             //Desactivarlo
             questStateBackground.gameObject.SetActive(false);
         }
+
+        if (currentQuest.completedQuest || !QuestManager.Instance.CanCompleteQuest(currentQuest))
+            exclamationObject.SetActive(false);
 
     }
 

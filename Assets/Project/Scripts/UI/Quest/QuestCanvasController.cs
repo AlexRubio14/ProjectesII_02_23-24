@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using AYellowpaper.SerializedCollections;
 using UnityEngine.InputSystem;
+using System.Xml;
 
 public class QuestCanvasController : MonoBehaviour
 {
@@ -95,6 +96,12 @@ public class QuestCanvasController : MonoBehaviour
     
     private void UpdateQuestCanvas(ItemObject _itemType = null, short _itemAmount = 0)
     {
+        
+        canCompleteQuestText.SetActive(QuestManager.Instance.CanCompleteSomeQuest());
+
+        if (!currentQuest)
+            return;
+
         int index = 0;
 
         foreach (KeyValuePair<ItemObject, short> item in currentQuest.neededItems)
@@ -122,7 +129,6 @@ public class QuestCanvasController : MonoBehaviour
         }
 
         //Comprobamos si tenemos que mostrar el texto de si hay alguna quest para completar
-        canCompleteQuestText.SetActive(QuestManager.Instance.CanCompleteSomeQuest());
     }
 
     private void SetMineralsTextColor(TextMeshProUGUI _text, short _inventoryAmount, short _neededAmount)
