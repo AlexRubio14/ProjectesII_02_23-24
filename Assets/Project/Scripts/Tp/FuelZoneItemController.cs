@@ -42,7 +42,7 @@ public class FuelZoneItemController : MonoBehaviour
         lerpProcess = 0;
         //Play a las particulas
         fuelZoneItemsController.GetUnusedParticles().Play(true);
-        AudioManager.instance.Play2dOneShotSound(tpItemClip, "Teleport", 0.6f, 0.6f, 1.6f);
+        AudioManager.instance.Play2dOneShotSound(tpItemClip, "TpInteraction", 0.6f, 0.6f, 1.6f);
         gameObject.SetActive(false);
     }
 

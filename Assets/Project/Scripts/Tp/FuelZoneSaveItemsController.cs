@@ -53,7 +53,7 @@ public class FuelZoneSaveItemsController : MonoBehaviour
                 fuelItem.Initialize(PlayerManager.Instance.player.transform.position, transform.parent.position, curretItem.PickableSprite);
             }
 
-            AudioManager.instance.Play2dOneShotSound(dropItemClip, "Teleport", 0.8f, 0.6f, 1.4f);
+            AudioManager.instance.Play2dOneShotSound(dropItemClip, "TpInteraction", 0.8f, 0.6f, 1.4f);
 
         }
 
