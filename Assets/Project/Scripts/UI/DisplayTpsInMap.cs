@@ -20,7 +20,15 @@ public class DisplayTpsInMap : DisplayTps
     [SerializeField]
     private GameObject inputsObject;
 
-    protected void OnEnable()
+    private void Start()
+    {
+        playerTpController = PlayerManager.Instance.player.GetComponent<PlayerTpController>();
+        selectTpControllers = FindObjectsOfType<SelectTpController>();
+
+        CreateDiscoveredTpList();
+    }
+
+    protected override void OnEnable()
     {
         resumeAction.action.started += ResumeGame;
         InputSystem.onDeviceChange += UpdateInputImages;
@@ -30,6 +38,10 @@ public class DisplayTpsInMap : DisplayTps
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+
+        UpdateDiscoveredTpList();
+        base.OnEnable();
+
     }
     private void OnDisable()
     {
@@ -40,12 +52,6 @@ public class DisplayTpsInMap : DisplayTps
         Cursor.visible = false;
     }
 
-    private void Start()
-    {
-        CreateDiscoveredTpList();
-        playerTpController = PlayerManager.Instance.player.GetComponent<PlayerTpController>();
-        selectTpControllers = FindObjectsOfType<SelectTpController>();
-    }
 
     public override void OnButtonClick(int id)
     {

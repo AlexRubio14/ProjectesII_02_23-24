@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
+using Microsoft.Win32.SafeHandles;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -53,6 +55,8 @@ public class InventoryManager : MonoBehaviour
             PlayerPrefs.SetInt(item.Key.ItemName, item.Value);
         }
     }
+ 
+
 
     public void ResetInventory()
     {
@@ -149,13 +153,9 @@ public class InventoryManager : MonoBehaviour
             foreach (KeyValuePair<ItemObject, short> item in runItems)
             {
                 if (item.Key.PowerUp == PowerUpManager.PowerUpType.NONE )
-                {
                     allItems[item.Key] += item.Value;
-                }
                 else
-                {
                     PowerUpManager.Instance.PowerUpObtained(item.Key.PowerUp);
-                }
             }
 
         }
@@ -163,5 +163,11 @@ public class InventoryManager : MonoBehaviour
         runItems.Clear();
 
         SaveItems();
+    }
+
+    public void SaveRunItem(ItemObject _currentItem, short _ammount)
+    {
+        allItems[_currentItem] += _ammount;
+        runItems[_currentItem] -= _ammount;
     }
 }

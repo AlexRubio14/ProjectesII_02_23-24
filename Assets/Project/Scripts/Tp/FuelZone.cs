@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FuelZone : MonoBehaviour
@@ -11,6 +9,11 @@ public class FuelZone : MonoBehaviour
     private AudioClip healingClip;
     private AudioSource healingSource;
 
+    private FuelZoneSaveItemsController saveItems;
+    private void Awake()
+    {
+        saveItems = GetComponent<FuelZoneSaveItemsController>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,6 +26,7 @@ public class FuelZone : MonoBehaviour
                 PlayerManager.Instance.player.refillFuelParticles.Play();
                 healingSource = AudioManager.instance.Play2dLoop(healingClip, "HealingSFX");
             }
+            saveItems.enabled = true;
         }
     }
 
@@ -58,6 +62,7 @@ public class FuelZone : MonoBehaviour
                 AudioManager.instance.StopLoopSound(healingSource);
                 healingSource = null;
             }
+            saveItems.enabled = false;
         }
     }
 }
