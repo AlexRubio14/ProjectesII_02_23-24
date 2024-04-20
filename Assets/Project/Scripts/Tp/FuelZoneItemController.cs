@@ -9,6 +9,13 @@ public class FuelZoneItemController : MonoBehaviour
     private Vector2 startPos;
     private Vector2 endPos;
     private SpriteRenderer spriteRenderer;
+
+    [Space, SerializeField]    
+    private FuelZoneSaveItemsController fuelZoneItemsController;
+
+
+    [SerializeField]
+    private AudioClip tpItemClip;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -16,15 +23,29 @@ public class FuelZoneItemController : MonoBehaviour
 
     private void Update()
     {
+        MoveToTP();
+    }
+
+    private void MoveToTP()
+    {
         lerpProcess += Time.deltaTime * moveSpeed;
         transform.position = Vector2.Lerp(startPos, endPos, lerpProcess);
 
         if (lerpProcess > 1)
         {
-            lerpProcess = 0;
-            gameObject.SetActive(false);
+            EnterTP();
         }
     }
+
+    private void EnterTP()
+    {
+        lerpProcess = 0;
+        //Play a las particulas
+        fuelZoneItemsController.GetUnusedParticles().Play(true);
+        AudioManager.instance.Play2dOneShotSound(tpItemClip, "Teleport", 0.6f, 0.6f, 1.6f);
+        gameObject.SetActive(false);
+    }
+
 
     public void Initialize(Vector2 _startPos, Vector2 _endPos, Sprite _itemSprite)
     {

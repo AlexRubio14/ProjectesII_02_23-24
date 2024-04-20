@@ -153,13 +153,9 @@ public class InventoryManager : MonoBehaviour
             foreach (KeyValuePair<ItemObject, short> item in runItems)
             {
                 if (item.Key.PowerUp == PowerUpManager.PowerUpType.NONE )
-                {
                     allItems[item.Key] += item.Value;
-                }
                 else
-                {
                     PowerUpManager.Instance.PowerUpObtained(item.Key.PowerUp);
-                }
             }
 
         }

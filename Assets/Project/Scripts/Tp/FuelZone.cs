@@ -9,10 +9,10 @@ public class FuelZone : MonoBehaviour
     private AudioClip healingClip;
     private AudioSource healingSource;
 
-    private FuelZoneSaveItems saveItems;
+    private FuelZoneSaveItemsController saveItems;
     private void Awake()
     {
-        saveItems = GetComponent<FuelZoneSaveItems>();
+        saveItems = GetComponent<FuelZoneSaveItemsController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
