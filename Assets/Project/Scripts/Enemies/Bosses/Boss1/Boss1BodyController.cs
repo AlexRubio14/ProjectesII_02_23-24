@@ -137,6 +137,9 @@ public class Boss1BodyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Map"))
             mainBossController.ChangeSpinDirection(collision, transform.position);
 
+        if (collision.gameObject.CompareTag("Player"))
+            mainBossController.ChangeSpinDirection(collision, transform.position);
+
         if (collision.collider.CompareTag("Bullet"))
         {
             mainBossController.GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
