@@ -21,7 +21,7 @@ public class FuelBubbleController : FloatingItem
     protected override void ObtainAction()
     {
         //Sumar combustible
-        PlayerManager.Instance.player.SubstractFuel(-fuelRecover);
+        PlayerManager.Instance.player.SubstractFuelPercentage(-fuelRecover);
         //Spawnear Particulas que sean hijas del player
         PlayerManager.Instance.player.bubbleFuelParticles.Play();
 

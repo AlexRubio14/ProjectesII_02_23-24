@@ -13,7 +13,10 @@ public class CannonController : MonoBehaviour
     private GameObject laserPrefab;
 
     [Space, Header("Shoot"), SerializeField]
-    private float shootingRange;
+    private float shortShootingRange;
+    [SerializeField]
+    private float longShootingRange;
+    private float currentShootingRange;
     [SerializeField]
     private float reloadDelay;
     private float currentDelay;
@@ -57,6 +60,8 @@ public class CannonController : MonoBehaviour
     {
         shootAction.action.started += ShootAction;
         shootAction.action.canceled += ShootAction;
+
+        SetShortAttackShootRange();
     }
 
     private void OnDisable()
@@ -68,17 +73,25 @@ public class CannonController : MonoBehaviour
     private void FixedUpdate()
     {
         CheckNearestEnemy();
+        SetAimTarget();
         RotateCanon();
         Shoot();
     }
 
     private void CheckNearestEnemy()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, shootingRange, Vector2.zero, 0, enemiesLayer);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, currentShootingRange, Vector2.zero, 0, enemiesLayer);
 
+        nearestEnemy = FindNearestHit(hits);
+
+        
+    }
+
+    private Rigidbody2D FindNearestHit(RaycastHit2D[] _hits)
+    {
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
-        foreach (RaycastHit2D hit in hits)
+        foreach (RaycastHit2D hit in _hits)
         {
             if (!hit.rigidbody)
                 continue;
@@ -87,7 +100,7 @@ public class CannonController : MonoBehaviour
             float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
             Vector3 dir = (hit.rigidbody.transform.position - transform.position);
 
-            if (minDisntance > distance && 
+            if (minDisntance > distance &&
                 !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
             {
                 Debug.DrawLine(transform.position, transform.position + dir.normalized * multuplyValue, Color.green, 0.01f);
@@ -96,25 +109,29 @@ public class CannonController : MonoBehaviour
             }
         }
 
-        nearestEnemy = foundEnemy;
+        return foundEnemy;
+    }
 
-        if (nearestEnemy)
+    private void SetAimTarget()
+    {
+        if (!nearestEnemy)
         {
-            Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
-            if (!currentEnemy) return;
-
-            if (!aimTarget.activeInHierarchy)
-            {
-                aimTarget.SetActive(true);
-            }
-
-            aimTarget.transform.position = nearestEnemy.transform.position;
-            
-            sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
-            
+            if (aimTarget.activeInHierarchy)
+                aimTarget.SetActive(false);
+            return;
         }
-        else if (aimTarget.activeInHierarchy)
-            aimTarget.SetActive(false);
+
+        Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
+        if (!currentEnemy) return;
+
+        if (!aimTarget.activeInHierarchy)
+        {
+            aimTarget.SetActive(true);
+        }
+
+        aimTarget.transform.position = nearestEnemy.transform.position;
+
+        sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
     }
     private void RotateCanon()
     {
@@ -162,6 +179,16 @@ public class CannonController : MonoBehaviour
 
     }
 
+    public void SetLongAttackShootRange()
+    {
+        currentShootingRange = longShootingRange;
+    }
+
+    public void SetShortAttackShootRange()
+    {
+        currentShootingRange = shortShootingRange;
+    }
+
     #region Input
     private void ShootAction(InputAction.CallbackContext obj)
     {
@@ -175,6 +202,6 @@ public class CannonController : MonoBehaviour
             return;
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, shootingRange);
+        Gizmos.DrawWireSphere(transform.position, currentShootingRange);
     }
 }

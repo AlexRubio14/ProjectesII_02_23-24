@@ -51,35 +51,34 @@ public class Boss1Controller : BossController
     private Action dashStart;
     private Action dashUpdate;
 
-    [SerializeField]
+    [Space, SerializeField]
     private AudioClip dashAudioClip;
 
     [Space, Header("Spin"), SerializeField]
     private float spinSpeed;
     [SerializeField]
-    private float spinRotationSpeed;
-    [SerializeField]
     private float spinHeadRotationSpeed;
     private Vector2 spinDirection;
-
     [SerializeField]
     private float spinDuration;
     private float spinTimeWaited;
-
     [SerializeField]
     private float spinStunDuration;
     private float spinStunTimeWaited;
+    [SerializeField]
+    private float spinBounceToPlayerDot;
+
 
     private Vector2 exitDirection;
 
-    [SerializeField]
+    [Space, SerializeField]
     private float bubbleSpinCD;
     private float bubbleSpinTimeWaited;
 
     private Action spinStart;
     private Action spinUpdate;
 
-    [SerializeField]
+    [Space, SerializeField]
     private AudioClip spinLoopAudioClip;
     private AudioSource spinAudioSource;
     [SerializeField]
@@ -104,11 +103,10 @@ public class Boss1Controller : BossController
     private float suctionBubbleSpawnTime;
     private float suctionBubbleTimeWatied;
 
-
     private Action suctionStart;
     private Action suctionUpdate;
 
-    [SerializeField]
+    [Space, SerializeField]
     private AudioClip suctionLoopAudioClip;
     private AudioSource suctionAudioSource;
 
@@ -397,14 +395,12 @@ public class Boss1Controller : BossController
 
     }
     public void ChangeSpinDirection(Collision2D _collision, Vector2 _currentPos)
-    {        
-        float minimumDot = 0.6f;
-
+    {
         Vector2 targetDirection = (spinDirection + _collision.contacts[0].normal).normalized;
 
         Vector2 playerDirection = (PlayerManager.Instance.player.transform.position - head.position).normalized;
         //Si el player no esta en otra direccion y esta suficientemente lejos de la pared
-        if (Vector2.Dot(playerDirection, targetDirection) > minimumDot)
+        if (Vector2.Dot(playerDirection, targetDirection) > spinBounceToPlayerDot)
             targetDirection = (targetDirection + playerDirection).normalized;
 
         spinDirection = targetDirection;
@@ -475,13 +471,13 @@ public class Boss1Controller : BossController
         rb2d.velocity = Vector2.zero;
 
         CheckIfActivateWindBlow();
-        InstantiateBubblesDuringSuction();
 
         if (suctionTimeWaited < suctionDuration)
         {
             Vector2 targetPosition = (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance;
             MoveHeadSuction(targetPosition, suctionMoveSpeed);
             CameraController.Instance.AddLowTrauma();
+            InstantiateBubblesDuringSuction();
         }
         else
         {
@@ -577,14 +573,8 @@ public class Boss1Controller : BossController
             dieExitDirection = rb2d.velocity.normalized;
 
         ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
-        if (suctionAudioSource)
-            AudioManager.instance.StopLoopSound(suctionAudioSource);
-        if (spinAudioSource)
-            AudioManager.instance.StopLoopSound(spinAudioSource);
-
-        suctionAudioSource = null;
-        spinAudioSource = null;
-
+        AudioManager.instance.StopLoopSound(suctionAudioSource);
+        AudioManager.instance.StopLoopSound(spinAudioSource);
     }
     protected override void UpdateDie()
     {

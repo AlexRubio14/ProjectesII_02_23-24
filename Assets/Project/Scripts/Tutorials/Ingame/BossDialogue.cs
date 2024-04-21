@@ -25,7 +25,7 @@ public class BossDialogue : Tutorial
 
 
     private Camera cam;
-
+    private CannonController cannon;
     protected override void Awake()
     {
         foreach (MonoBehaviour item in bossScripts)
@@ -40,6 +40,7 @@ public class BossDialogue : Tutorial
     {
         cam = CameraController.Instance.GetComponent<Camera>();
         baseCamSize = cam.orthographicSize;
+        cannon = PlayerManager.Instance.player.GetComponentInChildren<CannonController>();
     }
 
     protected override void TutorialMethod()
@@ -48,6 +49,7 @@ public class BossDialogue : Tutorial
         CameraController.Instance.objectToFollow = cameraFollowTarget;
         cam.orthographicSize = cameraSizeBossFight;
 
+        cannon.SetLongAttackShootRange();
 
         if (!PlayerPrefs.HasKey(dialogueString))
         {
@@ -91,7 +93,7 @@ public class BossDialogue : Tutorial
         //Volver a la posicion de la puerta
         PlayerManager.Instance.player.transform.position = door.transform.position;
         door.DestroyDoor();
-
+        cannon.SetShortAttackShootRange();
         cam.orthographicSize = baseCamSize;
         CameraController.Instance.objectToFollow = PlayerManager.Instance.player.gameObject;
 

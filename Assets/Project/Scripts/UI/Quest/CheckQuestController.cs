@@ -171,6 +171,7 @@ public class CheckQuestController : MonoBehaviour
         dialogueController.StartDialogue();
 
         AudioManager.instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
+        completeExclamation.SetActive(false);
     }
 
     private void SelectQuest()

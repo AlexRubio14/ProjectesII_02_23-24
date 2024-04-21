@@ -15327,14 +15327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAction: {fileID: 8648923338690527996, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  dashAction: {fileID: -8261811738350408096, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   movementSpeed: 50
   externalMovementSpeed: 0
-  dashForce: 28
-  timeCanDash: 2
-  dashFuelConsume: 3
-  timeDashing: 0.1
-  dashSpeedDrag: 2.5
   rotationSpeed: 0.55
   knockbackScale: 10
   knockbackRotation: 1
@@ -16195,7 +16189,8 @@ MonoBehaviour:
   shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   posToSpawnBullets: {fileID: 4204113142784814922}
   laserPrefab: {fileID: 1805159943047549904, guid: b6480ce03b4600c42b61c93f23ce547d, type: 3}
-  shootingRange: 8
+  shortShootingRange: 8
+  longShootingRange: 16
   reloadDelay: 0.8
   canShootStates: 000000000100000005000000
   enemiesLayer:
@@ -16208,7 +16203,7 @@ MonoBehaviour:
   shootClip: {fileID: 8300000, guid: c69f20320ecc8a342a4d44e87231d232, type: 3}
   autoShoot: 1
   aimTarget: {fileID: 0}
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &7633618979059987651
 GameObject:
   m_ObjectHideFlags: 0
