@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
-using Microsoft.Win32.SafeHandles;
-using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
