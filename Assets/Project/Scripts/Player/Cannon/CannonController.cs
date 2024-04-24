@@ -1,12 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI; 
 
 public class CannonController : MonoBehaviour
 {
-    [Header("Input"), SerializeField]
-    private InputActionReference shootAction;
-
     [Space, Header("External References"), SerializeField]
     private Transform posToSpawnBullets;
     [SerializeField]
@@ -20,7 +16,6 @@ public class CannonController : MonoBehaviour
     [SerializeField]
     private float reloadDelay;
     private float currentDelay;
-    private bool isShooting;
     [SerializeField]
     private PlayerController.State[] canShootStates;
     private Rigidbody2D nearestEnemy;
@@ -31,14 +26,13 @@ public class CannonController : MonoBehaviour
     [SerializeField]
     private ParticleSystem shootParticles;
     private Animator shootinAnim;
+    [Space, SerializeField]
+    private GameObject aimTarget;
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip shootClip;
 
-    [Space, Header("AutoShoot"), SerializeField]
-    private bool autoShoot;
-    [SerializeField]
-    private GameObject aimTarget;
+    
 
     [Space, SerializeField]
     private bool showGizmos;
@@ -53,21 +47,20 @@ public class CannonController : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         shootinAnim = GetComponentInChildren<Animator>();
         sliderHealthBar = aimTarget.GetComponentInChildren<Slider>();
-        isShooting = false;
     }
 
     private void OnEnable()
     {
-        shootAction.action.started += ShootAction;
-        shootAction.action.canceled += ShootAction;
+        BossManager.Instance.onBossEnter += SetLongAttackShootRange;
+        BossManager.Instance.onBossExit += SetShortAttackShootRange;
 
         SetShortAttackShootRange();
     }
 
     private void OnDisable()
     {
-        shootAction.action.started -= ShootAction;
-        shootAction.action.canceled -= ShootAction;
+        BossManager.Instance.onBossEnter += SetLongAttackShootRange;
+        BossManager.Instance.onBossExit += SetShortAttackShootRange;
     }
 
     private void FixedUpdate()
@@ -147,12 +140,8 @@ public class CannonController : MonoBehaviour
             return;
 
         currentDelay += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
-        if (autoShoot)
-        {
-            isShooting = nearestEnemy;
-        }
 
-        if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
+        if (currentDelay >= reloadDelay && nearestEnemy && CheckPlayerState())
         {
             AudioManager.instance.Play2dOneShotSound(shootClip, "Laser");
 
@@ -188,13 +177,6 @@ public class CannonController : MonoBehaviour
     {
         currentShootingRange = shortShootingRange;
     }
-
-    #region Input
-    private void ShootAction(InputAction.CallbackContext obj)
-    {
-        isShooting = obj.action.IsInProgress();
-    }
-    #endregion
 
     private void OnDrawGizmosSelected()
     {

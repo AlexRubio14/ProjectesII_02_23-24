@@ -3,7 +3,9 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     [SerializeField]
-    private float speed;
+    private float bulletSpeed;
+    [SerializeField]
+    private float bossBulletSpeed;
     [SerializeField]
     private int damage;
     [SerializeField]
@@ -49,7 +51,8 @@ public class Laser : MonoBehaviour
     private void Start()
     {
         startPosition = transform.position;
-        rb2d.velocity = transform.up * speed;
+        float currentSpeed = BossManager.Instance.onBoss ? bossBulletSpeed : bulletSpeed;
+        rb2d.velocity = transform.up * currentSpeed;
     }
 
     private void Update()
@@ -73,7 +76,7 @@ public class Laser : MonoBehaviour
         }
         else if (Vector2.Dot ((autoAimTarget.transform.position - transform.position).normalized, transform.up) > 0.2f)
         {
-            rb2d.velocity = (autoAimTarget.transform.position - transform.position).normalized * speed * TimeManager.Instance.timeParameter;
+            rb2d.velocity = (autoAimTarget.transform.position - transform.position).normalized * bulletSpeed * TimeManager.Instance.timeParameter;
         }
     }
 
@@ -116,7 +119,7 @@ public class Laser : MonoBehaviour
 
     private void LaserResume()
     {
-        rb2d.velocity = transform.up * speed;
+        rb2d.velocity = transform.up * bulletSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

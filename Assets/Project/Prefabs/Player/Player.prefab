@@ -9980,7 +9980,7 @@ MonoBehaviour:
   m_Intensity: 0.6
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc67b10a2c3b5f34e7530be5774afb96de8369b5c794f3d1b79fa9872134
+  m_ApplyToSortingLayers: 00000000c53ddf15a78d474de364dc67b10a2c3b5f34e7530be5774afb96de8369b5c794f3d1b79fa98721341fe198f6
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -16186,7 +16186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac313606fcd29e4f9611b3642890424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootAction: {fileID: -860886376346359602, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   posToSpawnBullets: {fileID: 4204113142784814922}
   laserPrefab: {fileID: 1805159943047549904, guid: b6480ce03b4600c42b61c93f23ce547d, type: 3}
   shortShootingRange: 8
@@ -16200,9 +16199,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 266240
   shootParticles: {fileID: 4590653105361512190}
-  shootClip: {fileID: 8300000, guid: c69f20320ecc8a342a4d44e87231d232, type: 3}
-  autoShoot: 1
   aimTarget: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: c69f20320ecc8a342a4d44e87231d232, type: 3}
   showGizmos: 1
 --- !u!1 &7633618979059987651
 GameObject:

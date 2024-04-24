@@ -18,9 +18,14 @@ public class BossDoors : InteractableObject
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (PlayerPrefs.HasKey(currentDialogue.tutorialkey))
-            DestroyDoor();
+        DestroyDoor();
 
+        BossManager.Instance.onBossExit += DestroyDoor;
+    }
+
+    private void OnDestroy()
+    {
+        BossManager.Instance.onBossExit -= DestroyDoor;
     }
 
     public override void Interact()
@@ -28,13 +33,13 @@ public class BossDoors : InteractableObject
         TransitionCanvasManager.instance.FadeIn();
         SubscribeToFadeIn();
         currentDialogue.door = this;
-
     }
 
     private void TpPlayer()
     {
         TransitionCanvasManager.instance.onFadeIn -= TpPlayer;
         PlayerManager.Instance.player.transform.position = posToSpawnPlayer.position;
+        BossManager.Instance.onBossEnter();
         TransitionCanvasManager.instance.FadeOut();
     }
     public void SubscribeToFadeIn()
@@ -44,6 +49,9 @@ public class BossDoors : InteractableObject
 
     public void DestroyDoor()
     {
+        if (!PlayerPrefs.HasKey(currentDialogue.tutorialkey))
+            return;
+
         spriteRenderer.sprite = brokenDoorSprite;
         gameObject.layer = 0;
         GetComponentInChildren<Light2D>().enabled = false;
