@@ -36,7 +36,7 @@ Transform:
   - {fileID: 2961559142409145753}
   - {fileID: 2438331887982672571}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7004272045897514233
 SpriteRenderer:
@@ -102,7 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34f928b7e9414b44858abccf1f50c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  bulletSpeed: 10
+  bossBulletSpeed: 16
   damage: 40
   maxDistance: 100
   collisionLaserPrefab: {fileID: 3977992916784669842, guid: 1054eb3d318f7764bae02f5b5635e94f, type: 3}

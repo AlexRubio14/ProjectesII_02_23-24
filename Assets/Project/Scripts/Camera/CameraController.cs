@@ -6,6 +6,10 @@ public class CameraController : MonoBehaviour
     public static CameraController Instance;
 
     public GameObject objectToFollow;
+    [SerializeField]
+    private float defaultCameraSize;
+    [SerializeField]
+    private float bossCameraSize;
 
     [Space, Header("Camera Shake"), SerializeField]
     private float traumaReduction;
@@ -26,16 +30,27 @@ public class CameraController : MonoBehaviour
     private float maxTraumaAdd;
 
     private SizeUpgradeController sizeUpgrade;
+    private Camera cam;
 
     private void Awake()
     {
+        BossManager.Instance.onBossEnter += SetBossCameraSize;
+        BossManager.Instance.onBossExit += SetDefaultCameraSize;
+
         if (Instance != null && Instance != this)
             Destroy(gameObject);
 
         Instance = this;
 
+        cam = GetComponent<Camera>();
+
     }
 
+    private void OnDestroy()
+    {
+        BossManager.Instance.onBossEnter -= SetBossCameraSize;
+        BossManager.Instance.onBossExit -= SetDefaultCameraSize;
+    }
     private void Start()
     {
         sizeUpgrade = FindObjectOfType<SizeUpgradeController>();
@@ -124,4 +139,14 @@ public class CameraController : MonoBehaviour
         traumaLevel = _trauma;
         traumaLevel = Mathf.Clamp(traumaLevel, 0, maxTraumaLevel);
     }
+
+    public void SetDefaultCameraSize()
+    {
+        cam.orthographicSize = defaultCameraSize;
+    }
+    public void SetBossCameraSize()
+    {
+        cam.orthographicSize = bossCameraSize;
+    }
+
 }

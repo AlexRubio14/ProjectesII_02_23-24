@@ -3404,15 +3404,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2300
   healthBar: {fileID: 0}
-  <contactDamage>k__BackingField: 35
+  <contactDamage>k__BackingField: 30
   currentPhase: 0
   phaseChangerPercentage:
     _serializedList:
     - Key: 0
       Value: 0
     - Key: 1
-      Value: 0
-    - Key: 2
       Value: 0
   arenaMiddlePos: {fileID: 0}
   bossMainSR: {fileID: 5792044154566138187}

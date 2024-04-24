@@ -185,12 +185,6 @@ public class Boss1Controller : BossController
         onStartPhaseAttacks.Add(Phase.PHASE_1, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_1, updateActions.ToArray());
 
-        //Fase 2
-        startActions = new List<Action>();
-        updateActions = new List<Action>();
-
-        onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
-        onUpdatePhaseAttacks.Add(Phase.PHASE_2, updateActions.ToArray());
 
         //Cuando este muerto
         startActions = new List<Action>();

@@ -196,13 +196,6 @@ public class Boss2Controller : BossController
         onStartPhaseAttacks.Add(Phase.PHASE_1, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_1, updateActions.ToArray());
 
-        //Fase 2
-        startActions = new List<Action>();
-        updateActions = new List<Action>();
-
-        onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
-        onUpdatePhaseAttacks.Add(Phase.PHASE_2, updateActions.ToArray());
-
         //Cuando este muerto
         startActions = new List<Action>();
         updateActions = new List<Action>();
@@ -490,11 +483,25 @@ public class Boss2Controller : BossController
             int multiplier = (int)Mathf.Ceil(i / 2);
             int sign = i % 2 == 0 ? 1 : -1;
 
+
+            int totalTilesBetweenPositions = (int)(Vector2.Distance(transform.position, posToSpawnBreakableWall.position) / 0.25f);
+            //En este for rellenamos el medio de la poisicion del boss y la de en frente suya
+            for (int j = 0; j < totalTilesBetweenPositions; j++)
+            {
+                Vector2 starterPosition = transform.position + ((posToSpawnBreakableWall.position - transform.position).normalized * (j * 0.25f));
+                breakableWallCreate.ChangeTileContent(
+                starterPosition + direction * offsetBetweenCreateBW * sign * multiplier,
+                defaultTile
+                );
+            }
+
+            //Ponemos un tile en la la posicion del boss para asegurarnos que no falte
             breakableWallCreate.ChangeTileContent(
                 (Vector2)transform.position + direction * offsetBetweenCreateBW * sign * multiplier,
                 defaultTile
                 );
 
+            //Ponemos un tile en la la posicion en la frente del boss
             breakableWallCreate.ChangeTileContent(
                 (Vector2)posToSpawnBreakableWall.position + direction * offsetBetweenCreateBW * sign * multiplier,
                 defaultTile

@@ -867,17 +867,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2b879d5a6d2d1478bfad974bb4840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2000
+  maxHealth: 1650
   healthBar: {fileID: 0}
-  <contactDamage>k__BackingField: 25
+  <contactDamage>k__BackingField: 20
   currentPhase: 0
   phaseChangerPercentage:
     _serializedList:
     - Key: 0
       Value: 0
     - Key: 1
-      Value: 0
-    - Key: 2
       Value: 0
   head: {fileID: 4657057829718688486}
   tail:
@@ -905,7 +903,7 @@ MonoBehaviour:
   minSpawnDot: 0.6
   maxDistanceParticleTracker: 12
   dashAudioClip: {fileID: 8300000, guid: 2d6deaaf40493974e99be559ec51f051, type: 3}
-  spinSpeed: 12
+  spinSpeed: 11
   spinHeadRotationSpeed: 800
   spinDuration: 7.5
   spinStunDuration: 3.5
@@ -914,7 +912,7 @@ MonoBehaviour:
   spinLoopAudioClip: {fileID: 8300000, guid: a24673abd9ca4c14a9f59cf79eb0c14e, type: 3}
   hitWallsAudioClip: {fileID: 8300000, guid: 78fc16f959e56094998590fafeb0e833, type: 3}
   windBlow: {fileID: 5513138748001548416}
-  maxSuctionPositionDistance: 12
+  maxSuctionPositionDistance: 10
   minSuctionPositionDistance: 25
   suctionMoveSpeed: 1
   suctionDuration: 12

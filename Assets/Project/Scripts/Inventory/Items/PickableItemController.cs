@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PickableItemController : FloatingItem
 {
@@ -16,6 +17,8 @@ public class PickableItemController : FloatingItem
     {
         currentItem = _currentItem;
         spriteRenderer.sprite = currentItem.PickableSprite;
+        if (!light2D)
+            light2D = GetComponentInChildren<Light2D>();
         light2D.color = currentItem.EffectsColor;
     }
 

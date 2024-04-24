@@ -14,9 +14,6 @@ public class BossDialogue : Tutorial
     [Space, SerializeField]
     private GameObject cameraFollowTarget;
     [SerializeField]
-    private float cameraSizeBossFight;
-    private float baseCamSize;
-    [SerializeField]
     private PickableItemController endFightItem;
 
 
@@ -24,8 +21,6 @@ public class BossDialogue : Tutorial
     public BossDoors door;
 
 
-    private Camera cam;
-    private CannonController cannon;
     protected override void Awake()
     {
         foreach (MonoBehaviour item in bossScripts)
@@ -36,20 +31,11 @@ public class BossDialogue : Tutorial
         endFightItem.onItemPicked += OnFightEnd;
     }
 
-    private void Start()
-    {
-        cam = CameraController.Instance.GetComponent<Camera>();
-        baseCamSize = cam.orthographicSize;
-        cannon = PlayerManager.Instance.player.GetComponentInChildren<CannonController>();
-    }
-
     protected override void TutorialMethod()
     {
 
+        BossManager.Instance.onBossEnter();
         CameraController.Instance.objectToFollow = cameraFollowTarget;
-        cam.orthographicSize = cameraSizeBossFight;
-
-        cannon.SetLongAttackShootRange();
 
         if (!PlayerPrefs.HasKey(dialogueString))
         {
@@ -92,11 +78,8 @@ public class BossDialogue : Tutorial
 
         //Volver a la posicion de la puerta
         PlayerManager.Instance.player.transform.position = door.transform.position;
-        door.DestroyDoor();
-        cannon.SetShortAttackShootRange();
-        cam.orthographicSize = baseCamSize;
         CameraController.Instance.objectToFollow = PlayerManager.Instance.player.gameObject;
-
+        BossManager.Instance.onBossExit();
     }
 
     private void OnDisable()
