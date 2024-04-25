@@ -95,7 +95,7 @@ MonoBehaviour:
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
-    m_Bits: 4224
+    m_Bits: 5248
   spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 0
 --- !u!1 &1941519944893691061
@@ -252,7 +252,7 @@ Transform:
   - {fileID: 3874927624965997897}
   - {fileID: 3885256371599684818}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &768391568925790214
 Rigidbody2D:
