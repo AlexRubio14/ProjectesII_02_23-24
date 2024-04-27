@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 public class Boss3Controller : BossController
 {
@@ -35,6 +34,23 @@ public class Boss3Controller : BossController
         onStartPhaseAttacks.Add(Phase.DEAD, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.DEAD, updateActions.ToArray());
     }
+
+    #region Move Behaviour
+
+
+    #endregion
+
+
+    #region ThrowBehaviour
+
+
+    #endregion
+
+
+    #region Envoirment Behaviour
+
+
+    #endregion
 
     public override void GetDamage(float _damage)
     {
