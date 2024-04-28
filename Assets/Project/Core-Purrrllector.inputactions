@@ -294,7 +294,7 @@
                 {
                     "name": "",
                     "id": "5eafcc8a-84a4-4b8d-b4d2-45866ab4a94e",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -392,8 +392,41 @@
                 },
                 {
                     "name": "",
-                    "id": "d3b8d130-fb9c-4225-9233-c5fd0d3031d3",
-                    "path": "<Keyboard>/space",
+                    "id": "687aecfb-d292-4ab3-b802-488f8717c7ae",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebd1af06-350f-4a39-a73d-77cc0079e46a",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60b9a1bb-11d6-4218-a611-593e40faa17d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "073e22d4-2572-4db5-b141-131985062d49",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
