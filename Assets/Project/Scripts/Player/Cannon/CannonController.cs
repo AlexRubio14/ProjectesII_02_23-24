@@ -90,13 +90,13 @@ public class CannonController : MonoBehaviour
                 continue;
 
             float distance = Vector2.Distance(transform.position, hit.point);
-            float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
-            Vector3 dir = (hit.rigidbody.transform.position - transform.position);
+            float multuplyValue = (hit.collider.transform.position - transform.position).magnitude;
+            Vector3 dir = (hit.collider.transform.position - transform.position).normalized;
 
             if (minDisntance > distance &&
-                !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
+                !Physics2D.Raycast(transform.position, dir, multuplyValue, mapLayer))
             {
-                Debug.DrawLine(transform.position, transform.position + dir.normalized * multuplyValue, Color.green, 0.01f);
+                Debug.DrawLine(transform.position, transform.position + dir * multuplyValue, Color.green, 0.01f);
                 foundEnemy = hit.rigidbody;
                 minDisntance = distance;
             }

@@ -686,6 +686,7 @@ public class Boss2Controller : BossController
     public override void GetDamage(float _damage)
     {
         currentHealth -= _damage;
+        hitColorLerpProcess = 0;
 
         UpdateHealthBar();
     }
@@ -719,15 +720,10 @@ public class Boss2Controller : BossController
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Bullet"))
-        {
             GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
-            hitColorLerpProcess = 0;
-        }
 
         if (collision.collider.CompareTag("Map"))
-        {
             CollisionWithWall(collision);
-        }
 
     }
 
