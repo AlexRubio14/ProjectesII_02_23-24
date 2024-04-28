@@ -470,10 +470,11 @@ public class PlayerController : MonoBehaviour
             movementDirection = currDirection;
         }
     }
+
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
         if (obj.started && currentState == State.IDLE)
-           engineSource = AudioManager.instance.Play2dLoop(engineClip, "Engine");
+            engineSource = AudioManager.instance.Play2dLoop(engineClip, "Engine");
 
         if (obj.canceled && engineSource != null)
             StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
