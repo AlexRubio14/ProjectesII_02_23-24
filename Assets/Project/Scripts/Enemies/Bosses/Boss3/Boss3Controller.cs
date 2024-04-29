@@ -183,7 +183,7 @@ public class Boss3Controller : BossController
         {
             //Normal
             PlaceEnvironment(normalEnvironmentPool);
-            dangerEnvironmentToSkip++;
+            dangerEnvironmentSkiped++;
         }
     }
     private void PlaceEnvironment(EnvironmentPool _environmentPool)

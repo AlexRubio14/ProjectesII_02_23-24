@@ -160,6 +160,10 @@ public class Boss2Controller : BossController
     {
         TimeManager.Instance.pauseAction -= OnPauseAction;
         TimeManager.Instance.resumeAction -= OnResumeAction;
+
+        AudioManager.instance.StopLoopSound(avalancheAS);
+        AudioManager.instance.StopLoopSound(hideAS);
+        AudioManager.instance.StopLoopSound(createWallAS);
     }
 
     void Update()
@@ -546,6 +550,11 @@ public class Boss2Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.StopLoopSound(avalancheAS);
+        AudioManager.instance.StopLoopSound(hideAS);
+        AudioManager.instance.StopLoopSound(createWallAS);
+
+
         timeToEnrockWaited = 0;
         timeToEnrockLayeringWaited = 0;
 
@@ -559,25 +568,6 @@ public class Boss2Controller : BossController
         gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
 
         circleCollider.enabled = false;
-
-        if (avalancheAS)
-        {
-            AudioManager.instance.StopLoopSound(avalancheAS);
-            avalancheAS = null;
-        }
-
-        if (hideAS)
-        {
-            AudioManager.instance.StopLoopSound(hideAS);
-            hideAS = null;
-        }
-
-        if (createWallAS)
-        {
-            AudioManager.instance.StopLoopSound(createWallAS);
-            createWallAS = null;
-        }
-
 
         AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss2");
 

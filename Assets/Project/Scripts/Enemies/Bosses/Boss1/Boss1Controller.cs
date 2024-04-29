@@ -149,7 +149,11 @@ public class Boss1Controller : BossController
     {
         TimeManager.Instance.pauseAction -= OnPauseAction;
         TimeManager.Instance.resumeAction -= OnResumeAction;
+
+        AudioManager.instance.StopLoopSound(suctionAudioSource);
+        AudioManager.instance.StopLoopSound(spinAudioSource);
     }
+
 
 
     private void Update()
@@ -545,6 +549,9 @@ public class Boss1Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.StopLoopSound(suctionAudioSource);
+        AudioManager.instance.StopLoopSound(spinAudioSource);
+
         headSR.sprite = deadHeadSprite;
 
         head.GetComponent<CircleCollider2D>().enabled = false;
@@ -567,8 +574,7 @@ public class Boss1Controller : BossController
             dieExitDirection = rb2d.velocity.normalized;
 
         ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
-        AudioManager.instance.StopLoopSound(suctionAudioSource);
-        AudioManager.instance.StopLoopSound(spinAudioSource);
+        
     }
     protected override void UpdateDie()
     {
