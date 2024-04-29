@@ -116,6 +116,7 @@ public class Boss3Controller : BossController
 
         PlaceNewEnvironment();
 
+        BossManager.Instance.onBossEnter();
 
     }
     private void Behaviour()
