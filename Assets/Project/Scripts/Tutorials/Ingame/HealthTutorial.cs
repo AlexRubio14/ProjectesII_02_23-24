@@ -11,6 +11,9 @@ public class HealthTutorial : Tutorial
     [SerializeField]
     private GameObject tpTutorial;
 
+    [SerializeField]
+    private MovementTutorial movementTutorial;
+
     protected override void TutorialMethod()
     {
         StartHealthTutorial();
@@ -41,6 +44,9 @@ public class HealthTutorial : Tutorial
         dialogueController.onDialogueLineStart -= OnDialogueLineStarted;
 
         PlayerPrefs.SetInt(tutorialkey, 1);
+
+        movementTutorial.StartTutorial();
+        movementTutorial.gameObject.SetActive(true);
 
         Destroy(this);
     }
