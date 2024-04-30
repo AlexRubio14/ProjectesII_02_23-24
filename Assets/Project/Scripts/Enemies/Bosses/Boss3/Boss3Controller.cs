@@ -55,10 +55,15 @@ public class Boss3Controller : BossController
 
     private SpriteRenderer bodySR;
     private SpriteRenderer[] limbsSR;
+
+
+    private Animator animator;
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         bodySR = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         limbsSR = GetComponentsInChildren<SpriteRenderer>();
     }
     private void Update()
@@ -67,6 +72,13 @@ public class Boss3Controller : BossController
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
 
         CheckHitColor();
+
+
+        if (Input.GetKeyDown(KeyCode.U)) 
+        {
+            animator.SetTrigger("HandThrow");
+        }
+
     }
 
     protected override void SetupPhaseAttacks()
