@@ -39,7 +39,6 @@ public abstract class DisplayTps : MonoBehaviour
     protected void UpdateDiscoveredTpList()
     {
         List<TpObject> tpList = SelectTpsManager.instance.tpList;
-
         for (int i = 0; i < discoveredTpButtonList.Count; i++)
         {
             discoveredTpButtonList[i].GetComponent<Button>().interactable = tpList[i].discovered;

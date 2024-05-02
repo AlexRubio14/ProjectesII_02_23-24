@@ -1,15 +1,14 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectTpController : MonoBehaviour
 {
-    public int id;
+    public TpObject tp;
 
     public Transform tpPosition;
 
     private void Start()
     {
-        if (SelectTpsManager.instance.GetIdToTeleport() == id)
+        if (SelectTpsManager.instance.GetIdToTeleport() == tp.id)
             PlayerManager.Instance.player.transform.position = tpPosition.position;
     }
 
@@ -17,7 +16,8 @@ public class SelectTpController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            SelectTpsManager.instance.AddDiscoveredTp(id);
+            SelectTpsManager.instance.AddDiscoveredTp(tp.id);
+            SelectTpsManager.instance.SetIdToTeleport(tp.id);
         }
     }
 }

@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,6 +41,7 @@ public class DisplayTpsInMap : DisplayTps
         Cursor.visible = true;
 
         UpdateDiscoveredTpList();
+        StartCoroutine(SelectShipPosition());
         base.OnEnable();
 
     }
@@ -59,7 +61,7 @@ public class DisplayTpsInMap : DisplayTps
 
         foreach (SelectTpController item in selectTpControllers)
         {
-            if(item.id == id)
+            if(item.tp.id == id)
             {
                 positionToTravel = item.tpPosition.position;
                 break;
@@ -90,6 +92,7 @@ public class DisplayTpsInMap : DisplayTps
         InputController.Instance.ChangeActionMap("Menu");
         TimeManager.Instance.PauseGame();
 
+
     }
 
     public void ReturnToHub()
@@ -118,6 +121,25 @@ public class DisplayTpsInMap : DisplayTps
         TimeManager.Instance.ResumeGame();
         tpMenu.gameObject.SetActive(false);
     }
+
+    private IEnumerator SelectShipPosition()
+    {
+        yield return new WaitForEndOfFrame();
+        List<TpObject> tpList = SelectTpsManager.instance.tpList;
+        int currentTp = SelectTpsManager.instance.GetIdToTeleport();
+        for (int i = 0; i < discoveredTpButtonList.Count; i++)
+        {
+            if (currentTp == tpList[i].id)
+            {
+                Debug.Log(currentTp);
+                discoveredTpButtonList[i].GetComponent<Button>().Select();
+                //Poner nave
+                Debug.LogWarning("Poner nave en el menu no implementado");
+                break;
+            }
+        }
+    }
+
 
     private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {

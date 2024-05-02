@@ -19,6 +19,10 @@ public class MenuMapController : MonoBehaviour
         SetSelectedTeleport(0);
     }
 
+    private void OnEnable()
+    {
+        InitializeTpImages();
+    }
     private void InitializeTpImages()
     {
         for (int i = 0; i < SelectTpsManager.instance.tpList.Count; i++)
@@ -31,7 +35,6 @@ public class MenuMapController : MonoBehaviour
     {
         tpPosition[currentSelectedTp].SetActive(true);
 
-        //tpPosition[tpId].transform.GetChild(1).gameObject.SetActive(false);
         SelectedImage.transform.position = tpPosition[tpId].transform.position;
 
         currentSelectedTp = tpId;

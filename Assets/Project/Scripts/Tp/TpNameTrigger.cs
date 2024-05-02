@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class TpNameTrigger : MonoBehaviour
 {
-    [SerializeField]
-    private string nameTp;
-
     [SerializeField]
     private TextMeshProUGUI textTp;
 
@@ -17,11 +15,13 @@ public class TpNameTrigger : MonoBehaviour
 
     private bool playerInTrigger;
 
+    private SelectTpController selectTp;
     private void Awake()
     {
         textTp.text = " ";
         playerInTrigger = false;
         currentFadeTime = fadeTime;
+        selectTp = GetComponent<SelectTpController>();
     }
 
     private void Update()
@@ -42,7 +42,7 @@ public class TpNameTrigger : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            textTp.text = nameTp;
+            textTp.text = selectTp.tp.zoneName;
             playerInTrigger = true;
             currentFadeTime = 0; 
         }
