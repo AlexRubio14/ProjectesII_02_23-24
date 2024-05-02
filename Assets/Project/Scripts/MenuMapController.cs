@@ -9,7 +9,12 @@ public class MenuMapController : MonoBehaviour
     private List<GameObject> tpPosition = new List<GameObject>();
 
     [SerializeField]
-    private Image SelectedImage;
+    private Image selectedImage;
+
+    [SerializeField]
+    private Image spaceshipImage;
+    [SerializeField]
+    private float spaceshipOffset;
 
     private int currentSelectedTp = 0;
 
@@ -22,6 +27,7 @@ public class MenuMapController : MonoBehaviour
     private void OnEnable()
     {
         InitializeTpImages();
+        StartCoroutine(SelectShipPosition());
     }
     private void InitializeTpImages()
     {
@@ -35,8 +41,18 @@ public class MenuMapController : MonoBehaviour
     {
         tpPosition[currentSelectedTp].SetActive(true);
 
-        SelectedImage.transform.position = tpPosition[tpId].transform.position;
+        selectedImage.transform.position = tpPosition[tpId].transform.position;
 
         currentSelectedTp = tpId;
+    }
+
+    private IEnumerator SelectShipPosition()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if(spaceshipImage != null)
+            spaceshipImage.transform.position = 
+                tpPosition[SelectTpsManager.instance.GetIdToTeleport() - 1].transform.position + 
+                Vector3.up * spaceshipOffset;    
     }
 }

@@ -41,7 +41,8 @@ public abstract class DisplayTps : MonoBehaviour
         List<TpObject> tpList = SelectTpsManager.instance.tpList;
         for (int i = 0; i < discoveredTpButtonList.Count; i++)
         {
-            discoveredTpButtonList[i].GetComponent<Button>().interactable = tpList[i].discovered;
+            Button bt = discoveredTpButtonList[i].GetComponent<Button>();
+            bt.interactable = tpList[i].discovered;
         }
     }
 
@@ -68,7 +69,20 @@ public abstract class DisplayTps : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        if (discoveredTpButtonList.Count > 0)
-            discoveredTpButtonList[0].SelectButton();
-    }     
+        SelectLastTpUsed();
+    }    
+    
+    protected void SelectLastTpUsed()
+    {
+        List<TpObject> tpList = SelectTpsManager.instance.tpList;
+        int currentId = SelectTpsManager.instance.GetIdToTeleport();
+
+        for (int i = 0; i < discoveredTpButtonList.Count; i++)
+        {
+            if (currentId == tpList[i].id)
+            {
+                discoveredTpButtonList[i].GetComponent<Button>().Select();
+            }
+        }
+    }
 }

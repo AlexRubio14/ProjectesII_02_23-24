@@ -41,7 +41,6 @@ public class DisplayTpsInMap : DisplayTps
         Cursor.visible = true;
 
         UpdateDiscoveredTpList();
-        StartCoroutine(SelectShipPosition());
         base.OnEnable();
 
     }
@@ -121,25 +120,6 @@ public class DisplayTpsInMap : DisplayTps
         TimeManager.Instance.ResumeGame();
         tpMenu.gameObject.SetActive(false);
     }
-
-    private IEnumerator SelectShipPosition()
-    {
-        yield return new WaitForEndOfFrame();
-        List<TpObject> tpList = SelectTpsManager.instance.tpList;
-        int currentTp = SelectTpsManager.instance.GetIdToTeleport();
-        for (int i = 0; i < discoveredTpButtonList.Count; i++)
-        {
-            if (currentTp == tpList[i].id)
-            {
-                Debug.Log(currentTp);
-                discoveredTpButtonList[i].GetComponent<Button>().Select();
-                //Poner nave
-                Debug.LogWarning("Poner nave en el menu no implementado");
-                break;
-            }
-        }
-    }
-
 
     private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {
