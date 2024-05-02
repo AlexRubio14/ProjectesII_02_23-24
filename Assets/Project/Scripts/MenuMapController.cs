@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MenuMapController : MonoBehaviour
 {
     [SerializeField]
-    private List<Image> tpPosition = new List<Image>();
+    private List<GameObject> tpPosition = new List<GameObject>();
 
     [SerializeField]
     private Image SelectedImage;
@@ -23,15 +23,15 @@ public class MenuMapController : MonoBehaviour
     {
         for (int i = 0; i < SelectTpsManager.instance.tpList.Count; i++)
         {
-            tpPosition[i].enabled = SelectTpsManager.instance.tpList[i].discovered;
+            tpPosition[i].SetActive(SelectTpsManager.instance.tpList[i].discovered);
         }
     }
 
     public void SetSelectedTeleport(int tpId)
     {
-        tpPosition[currentSelectedTp].enabled = true;
+        tpPosition[currentSelectedTp].SetActive(true);
 
-        tpPosition[tpId].enabled = false;
+        //tpPosition[tpId].transform.GetChild(1).gameObject.SetActive(false);
         SelectedImage.transform.position = tpPosition[tpId].transform.position;
 
         currentSelectedTp = tpId;
