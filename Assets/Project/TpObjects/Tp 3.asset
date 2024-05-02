@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tp 3
   m_EditorClassIdentifier: 
   <id>k__BackingField: 3
-  <zoneName>k__BackingField: Rocky Caverns
-  discovered: 0
+  <zoneName>k__BackingField: Boss 1
+  discovered: 1

@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -59,7 +60,7 @@ public class DisplayTpsInMap : DisplayTps
 
         foreach (SelectTpController item in selectTpControllers)
         {
-            if(item.id == id)
+            if(item.tp.id == id)
             {
                 positionToTravel = item.tpPosition.position;
                 break;
@@ -89,6 +90,7 @@ public class DisplayTpsInMap : DisplayTps
     {
         InputController.Instance.ChangeActionMap("Menu");
         TimeManager.Instance.PauseGame();
+
 
     }
 
