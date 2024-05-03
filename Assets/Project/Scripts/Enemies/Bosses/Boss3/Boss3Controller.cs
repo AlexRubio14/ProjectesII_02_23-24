@@ -41,7 +41,11 @@ public class Boss3Controller : BossController
     
 
     [Header("Throw"), SerializeField]
-    private float temp;
+    private float timeToThrow;
+    private float timeToThrowWaited = 0;
+
+    private int[] lastThrowId;
+
 
     private Action behaviourActionStart;
     private Action behaviourActionUpdate;
@@ -72,13 +76,6 @@ public class Boss3Controller : BossController
             onUpdatePhaseAttacks[currentPhase][currentAttackID]();
 
         CheckHitColor();
-
-
-        if (Input.GetKeyDown(KeyCode.U)) 
-        {
-            animator.SetTrigger("HandThrow");
-        }
-
     }
 
     protected override void SetupPhaseAttacks()
@@ -122,11 +119,20 @@ public class Boss3Controller : BossController
         dangerEnvironmentPool.lastEnvironmentId[0] = -1;
         dangerEnvironmentPool.lastEnvironmentId[1] = -1;
 
+
         nextEnvironmentPosition = enviromentStarterPosition.position;
 
         RandomizeNextDangerZone();
 
         PlaceNewEnvironment();
+
+        //Inicializar variables lanzamientos
+        lastThrowId = new int[2];
+
+        lastThrowId[0] = -1;
+        lastThrowId[1] = -1;
+        timeToThrowWaited = 0;
+
 
         BossManager.Instance.onBossEnter();
 
@@ -135,19 +141,45 @@ public class Boss3Controller : BossController
     {
         MoveBehaviour();
         CheckIfEnvironmentFar();
+        WaitToThrow();
     }
 
     #region Move Behaviour
     private void MoveBehaviour()
     {
-        rb2d.position = Vector2.Lerp(rb2d.position, rb2d.position + Vector2.right, Time.deltaTime * movementSpeed);
+        rb2d.position = Vector2.Lerp(rb2d.position, rb2d.position + Vector2.right, movementSpeed * Time.deltaTime * TimeManager.Instance.timeParameter);
     }
 
     #endregion
 
 
     #region Throw Behaviour
+    private void WaitToThrow()
+    {
+        timeToThrowWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
 
+        if (timeToThrowWaited >= timeToThrow)
+        {
+            animator.SetTrigger("HandThrow");
+            timeToThrowWaited = 0;
+        }
+    }
+
+
+    private void Throw()
+    {
+        Debug.Log("Tira cositas");
+    }
+
+    private void ThrowBoulder()
+    {
+
+    }
+
+    private void ThrowBreakableRocks() 
+    { 
+
+    }
 
     #endregion
 
@@ -272,11 +304,11 @@ public class Boss3Controller : BossController
     #region Die
     protected override void StartDie()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Morido");
     }
     protected override void UpdateDie()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("MORIDODSADSADA");
     }
     #endregion
 
