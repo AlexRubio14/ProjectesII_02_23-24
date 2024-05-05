@@ -23,10 +23,6 @@ public class Boss2Controller : BossController
     [SerializeField]
     private float rockStarterPosXOffset;
     [SerializeField]
-    private int rockSize;
-    [SerializeField]
-    private int rockBorderValue;
-    [SerializeField]
     private Boss2BreakableRockController[] breakableRocks;
     [SerializeField]
     private float rockDropDuration;
@@ -224,7 +220,6 @@ public class Boss2Controller : BossController
         //Activar las particulas del spawn
         rockSpawnParticles.Play();
 
-
         rockDropTimeWaited = 0;
         rockCDTimeWaited = 0;
 
@@ -251,13 +246,10 @@ public class Boss2Controller : BossController
         {
             //Moverse hacia dentro de la zona
             MoveTo(arenaMiddlePos.position);
-            if (avalancheAS)
-            {
-                AudioManager.instance.StopLoopSound(avalancheAS);
-                AudioManager.instance.StopLoopSound(hideAS);
-                avalancheAS = null;
-                hideAS = null;
-            }
+            AudioManager.instance.StopLoopSound(avalancheAS);
+            AudioManager.instance.StopLoopSound(hideAS);
+            avalancheAS = null;
+            hideAS = null;
             return;
         }
         
@@ -315,7 +307,7 @@ public class Boss2Controller : BossController
         breakableRocks[_rockId].transform.position = randomPos;
 
         //Reiniciar la roca
-        ResetRockTiles(breakableRocks[_rockId].tilemap);
+        breakableRocks[_rockId].ResetRockSize();
 
         //Activar el la roca
         breakableRocks[_rockId].gameObject.SetActive(true);
@@ -327,22 +319,7 @@ public class Boss2Controller : BossController
         breakableRocks[_rockId].rb2d.angularVelocity = randomRotationForce;
 
     }
-    private void ResetRockTiles(Tilemap _tilemap)
-    {
-        for (int i = -rockSize; i < rockSize + 1; i++)
-        {
-            for (int j = -rockSize; j < rockSize + 1; j++)
-            {
-                if (Mathf.Abs(i) + Mathf.Abs(j) < rockBorderValue)
-                {
-                    //Puedo poner trozo de piedra
-                    Vector3Int tilePos = new Vector3Int(i, j, 0);
-                    _tilemap.SetTile(tilePos, defaultTile);
-                }
-            }
-        }
-    }
-
+    
     private void CheckIfEndRockDrop()
     {
         rockDropTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;

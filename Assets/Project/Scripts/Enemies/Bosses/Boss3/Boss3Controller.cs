@@ -9,15 +9,67 @@ public class Boss3Controller : BossController
     struct EnvironmentPool
     {
         public Pool[] environmentPool;
-        public int[] lastEnvironmentId;
+        public int[] lastEnvironmentId { set; get; }
     }
 
     [Serializable]
     struct Pool
     {
         public GameObject[] objectsPool;
+        public float maxDistanceToDisable;
+
+        public GameObject GetDisabledItem()
+        {
+            foreach (GameObject item in objectsPool)
+            {
+                if (!item.activeInHierarchy)
+                    return item;
+            }
+
+            return null;
+        }
+
+        public void CheckDisableDistance(Vector2 _objectToCheck)
+        {
+            foreach (GameObject item in objectsPool)
+            {
+                if (item.activeInHierarchy && Vector2.Distance(_objectToCheck, item.transform.position) > maxDistanceToDisable)
+                    item.SetActive(false);
+            }
+        }
+
     }
 
+    [Serializable]
+    struct ThrowItem
+    {
+        public Pool pool;
+        public float itemsToThrow;
+        public Vector2 throwOffset;
+        public Vector2 throwForce;
+        public float rotationForce;
+        public List<GameObject> ThrowCurrentItem(Vector2 _spawnPoint)
+        {
+            List<GameObject> usedItems = new List<GameObject>();
+            for (int i = 0; i < itemsToThrow; i++)
+            {
+                Vector2 direction = (Vector2.left + new Vector2(0, -UnityEngine.Random.Range(throwOffset.x, throwOffset.y)) * i).normalized;
+                GameObject itemToThrow = pool.GetDisabledItem();
+                if (!itemToThrow)
+                    return usedItems;
+                itemToThrow.SetActive(true);
+                itemToThrow.transform.position = _spawnPoint;
+                Rigidbody2D itemRb2d = itemToThrow.GetComponent<Rigidbody2D>();
+                float force = UnityEngine.Random.Range(throwForce.x, throwForce.y);
+                itemRb2d.AddForce(direction * force, ForceMode2D.Impulse);
+                itemRb2d.angularVelocity = UnityEngine.Random.Range(-rotationForce, rotationForce);
+
+                usedItems.Add(itemToThrow);
+            }
+
+            return usedItems;
+        }
+    }
 
     [Header("Movement"), SerializeField]
     private float movementSpeed;
@@ -26,7 +78,7 @@ public class Boss3Controller : BossController
     private EnvironmentPool normalEnvironmentPool;
     [SerializeField]
     private EnvironmentPool dangerEnvironmentPool;
-    [SerializeField]
+    [Space, SerializeField]
     private float environmentOffset;
     [SerializeField]
     private Transform enviromentStarterPosition;
@@ -39,13 +91,24 @@ public class Boss3Controller : BossController
     [Space, SerializeField]
     private float maxDistanceToDisableEnvironment;
     
+    private enum ThrowTypes { NONE, BOULDER, BREAKABLE_ROCKS, BUBBLES };
 
     [Header("Throw"), SerializeField]
+    private Transform handPosition;
+    [SerializeField]
     private float timeToThrow;
     private float timeToThrowWaited = 0;
 
-    private int[] lastThrowId;
+    private ThrowTypes[] lastThrowType;
 
+    [Header("Boulder"), SerializeField]
+    private ThrowItem boulders;
+
+    [Header("BreakableRocks"), SerializeField]
+    private ThrowItem breakableRocks;
+
+    [Header("Bubbles"), SerializeField]
+    private ThrowItem bubbles;
 
     private Action behaviourActionStart;
     private Action behaviourActionUpdate;
@@ -127,11 +190,14 @@ public class Boss3Controller : BossController
         PlaceNewEnvironment();
 
         //Inicializar variables lanzamientos
-        lastThrowId = new int[2];
+        lastThrowType = new ThrowTypes[2];
 
-        lastThrowId[0] = -1;
-        lastThrowId[1] = -1;
+        lastThrowType[0] = ThrowTypes.NONE;
+        lastThrowType[1] = ThrowTypes.NONE;
         timeToThrowWaited = 0;
+
+        RandomizeNextThrow();
+
 
 
         BossManager.Instance.onBossEnter();
@@ -142,6 +208,8 @@ public class Boss3Controller : BossController
         MoveBehaviour();
         CheckIfEnvironmentFar();
         WaitToThrow();
+        CheckPoolsDistance();
+        CheckIfDead();
     }
 
     #region Move Behaviour
@@ -164,21 +232,47 @@ public class Boss3Controller : BossController
             timeToThrowWaited = 0;
         }
     }
-
-
     private void Throw()
     {
-        Debug.Log("Tira cositas");
-    }
+        RandomizeNextThrow();
 
-    private void ThrowBoulder()
+        switch (lastThrowType[0])
+        {
+            case ThrowTypes.BOULDER:
+                boulders.ThrowCurrentItem(handPosition.position);
+                break;
+            case ThrowTypes.BREAKABLE_ROCKS:
+                List<GameObject> breakableRocksList = breakableRocks.ThrowCurrentItem(handPosition.position);
+                foreach (GameObject breakableRock in breakableRocksList)
+                    breakableRock.GetComponent<Boss2BreakableRockController>().ResetRockSize();
+                break;
+            case ThrowTypes.BUBBLES:
+                bubbles.ThrowCurrentItem(handPosition.position);
+                break;
+            default:
+                break;
+        }
+
+    }
+    private void RandomizeNextThrow()
     {
+        ThrowTypes randomThrow = (ThrowTypes)UnityEngine.Random.Range(1, (int)ThrowTypes.BUBBLES + 1);
+        //Si el numero esta repetido con los dos anteriores llamaremos a la misma funcion haciendola recursiva
+        if (randomThrow != ThrowTypes.NONE && (randomThrow == lastThrowType[0] || randomThrow == lastThrowType[1]))
+        {
+            RandomizeNextThrow();
+            return;
+        }
+
+        //Guardaremos el id de la 
+        lastThrowType[1] = lastThrowType[0];
+        lastThrowType[0] = randomThrow;
 
     }
-
-    private void ThrowBreakableRocks() 
-    { 
-
+    private void CheckPoolsDistance()
+    {
+        boulders.pool.CheckDisableDistance(transform.position);
+        breakableRocks.pool.CheckDisableDistance(transform.position);
     }
 
     #endregion
@@ -191,22 +285,10 @@ public class Boss3Controller : BossController
 
         //Comprobar si estan muy lejos 
         foreach (Pool pool in normalEnvironmentPool.environmentPool)
-        {
-            foreach (GameObject item in pool.objectsPool)
-            {
-                if (item.activeInHierarchy && Vector2.Distance(transform.position, item.transform.position) > maxDistanceToDisableEnvironment)
-                    item.SetActive(false);
-            }
-        }
+            pool.CheckDisableDistance(transform.position);
 
         foreach (Pool pool in dangerEnvironmentPool.environmentPool)
-        {
-            foreach (GameObject item in pool.objectsPool)
-            {
-                if (item.activeInHierarchy && Vector2.Distance(transform.position, item.transform.position) > maxDistanceToDisableEnvironment)
-                    item.SetActive(false);
-            }
-        }
+            pool.CheckDisableDistance(transform.position);
     }
 
     private void RandomizeNextDangerZone()
@@ -234,7 +316,7 @@ public class Boss3Controller : BossController
     private void PlaceEnvironment(EnvironmentPool _environmentPool)
     {
         Pool environmentPool = RecursiveSelectRandomEnvironmentPool(_environmentPool);
-        GameObject environmentToPlace = GetEnvironmentFromPool(environmentPool);
+        GameObject environmentToPlace = environmentPool.GetDisabledItem();
         if (environmentToPlace == null)
             return;
 
@@ -262,16 +344,6 @@ public class Boss3Controller : BossController
         _environmentPool.lastEnvironmentId[0] = randomValue;
 
         return _environmentPool.environmentPool[randomValue];
-    }
-    private GameObject GetEnvironmentFromPool(Pool _environmentPool)
-    {
-        foreach (GameObject item in _environmentPool.objectsPool)
-        {
-            if (!item.activeInHierarchy)
-                return item;
-        }
-
-        return null;
     }
 
     #endregion
