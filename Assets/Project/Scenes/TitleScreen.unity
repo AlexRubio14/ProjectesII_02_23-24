@@ -6012,6 +6012,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 960221500625838530, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 88539057}
+    - target: {fileID: 960221500625838530, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSfxVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 1321838089563693821, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6144,6 +6152,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1465655546}
+    - target: {fileID: 8086938449526694025, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 88539057}
+    - target: {fileID: 8086938449526694025, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusicVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 8463904919972074636, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

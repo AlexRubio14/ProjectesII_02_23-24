@@ -12,6 +12,9 @@ public class PauseMenuQuestCard : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI questTagText;
 
+    [SerializeField]
+    private GameObject imageCompleted;
+
     [Space, SerializeField]
     private Color completeColorTag;
     [SerializeField]
@@ -46,6 +49,10 @@ public class PauseMenuQuestCard : MonoBehaviour
         entry.callback.AddListener((eventData) => { pauseMenu.DisplayQuest(currentQuest); } );
 
         eventTrigger.triggers.Add(entry);
+    }
+    private void OnEnable()
+    {
+        imageCompleted.SetActive(!currentQuest.completedQuest && QuestManager.Instance.CanCompleteQuest(currentQuest)); 
     }
 
     public void SetupQuest(QuestObject _currentQuest)

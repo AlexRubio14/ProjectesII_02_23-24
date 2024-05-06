@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mision 3
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 5
-  <questTitle>k__BackingField: 3th Upgrade
+  <questTitle>k__BackingField: Light Upgrade
   <questName>k__BackingField: New Spotlights
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField:
@@ -32,9 +32,9 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: 421d4d9ec1c62634db8c2e6d3bda2b31, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
-  newQuest: 1
+  newQuest: 0
   missionHintDictionary:
     _serializedList:
     - Key: 0

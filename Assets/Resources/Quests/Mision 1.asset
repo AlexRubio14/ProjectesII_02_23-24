@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mision 1
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 0
-  <questTitle>k__BackingField: 1st Upgrade
+  <questTitle>k__BackingField: Boost Upgrade
   <questName>k__BackingField: New beginning
   <questDialogue>k__BackingField:
   - Welcome fearless core collector! We are at our spacecraft base.
@@ -40,9 +40,9 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: d360710b326bcd049a2e26cdb6fc2fb0, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
-  newQuest: 1
+  newQuest: 0
   missionHintDictionary:
     _serializedList:
     - Key: 0
