@@ -7,6 +7,9 @@ public class BossDoors : InteractableObject
     [Space, SerializeField]
     private Transform posToSpawnPlayer;
     [SerializeField]
+    public Transform posToBack;
+
+    [SerializeField]
     private BossDialogue currentDialogue;
 
     [SerializeField]

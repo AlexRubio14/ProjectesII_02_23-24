@@ -116,8 +116,6 @@ public class Boss1Controller : BossController
     private bool activeAnimatorOnPause;
     private Animator animator;
 
-
-
     protected void Awake()
     {
         rb2d = head.GetComponent<Rigidbody2D>();
