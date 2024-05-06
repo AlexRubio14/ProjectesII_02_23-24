@@ -27,7 +27,7 @@ public class FuelBubbleController : FloatingItem
 
 
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

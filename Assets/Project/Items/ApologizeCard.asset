@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: ApologizeCard
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Carta de disculpas
+  <ItemName>k__BackingField: ApologizeCard
   <BetaSprite>k__BackingField: {fileID: 0}
   <MapSprite>k__BackingField: {fileID: 0}
   <PickableSprite>k__BackingField: {fileID: 21300000, guid: 066c054bdc6ba324f891ec4abead5038, type: 3}
   <EffectsColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <BaseMineralHealth>k__BackingField: 0
-  <EnergyLevelSize>k__BackingField: {x: 0, y: 0}
+  <LeftEnergyLevelSize>k__BackingField: {x: 0, y: 0}
+  <RightEnergyLevelSize>k__BackingField: {x: 0, y: 0}
   <PowerUp>k__BackingField: 0

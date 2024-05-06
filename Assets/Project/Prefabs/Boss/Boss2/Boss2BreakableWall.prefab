@@ -39,7 +39,7 @@ Transform:
   - {fileID: 7518082861245333441}
   - {fileID: 6425642693020589315}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &139328740122476515
 Grid:
@@ -172,7 +172,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1296534951
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1f98ebd519e574d92fdd30330433ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <c_upgradeNeeded>k__BackingField: {fileID: 11400000, guid: f23b853442276d34a8f28c665b8bf0eb, type: 2}
+  <upgradeNeeded>k__BackingField: {fileID: 0}
   isInteractable: 0
   <isHide>k__BackingField: 0
   grid: {fileID: 139328740122476515}
@@ -285,7 +285,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistanceFromStartPos: 50
+  defaultTile: {fileID: 11400000, guid: 7c0343178b625dc40ad933d4df82b932, type: 2}
+  rockSize: 4
+  rockBorderValue: 7
   bubble: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
+  checkDistance: 1
 --- !u!1 &4162644537069814901
 GameObject:
   m_ObjectHideFlags: 0

@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (KeyValuePair<ItemObject, short> item in InventoryManager.Instance.GetRunItems())
         {
-            ThrowMinerals(item.Key, (int)item.Value);
+            ThrowMinerals(item.Key, item.Value);
         }
 
         spriteRenderer.enabled = false;

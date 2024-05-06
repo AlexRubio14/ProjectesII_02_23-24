@@ -23,10 +23,6 @@ public class Boss2Controller : BossController
     [SerializeField]
     private float rockStarterPosXOffset;
     [SerializeField]
-    private int rockSize;
-    [SerializeField]
-    private int rockBorderValue;
-    [SerializeField]
     private Boss2BreakableRockController[] breakableRocks;
     [SerializeField]
     private float rockDropDuration;
@@ -160,6 +156,10 @@ public class Boss2Controller : BossController
     {
         TimeManager.Instance.pauseAction -= OnPauseAction;
         TimeManager.Instance.resumeAction -= OnResumeAction;
+
+        AudioManager.instance.StopLoopSound(avalancheAS);
+        AudioManager.instance.StopLoopSound(hideAS);
+        AudioManager.instance.StopLoopSound(createWallAS);
     }
 
     void Update()
@@ -220,7 +220,6 @@ public class Boss2Controller : BossController
         //Activar las particulas del spawn
         rockSpawnParticles.Play();
 
-
         rockDropTimeWaited = 0;
         rockCDTimeWaited = 0;
 
@@ -247,13 +246,10 @@ public class Boss2Controller : BossController
         {
             //Moverse hacia dentro de la zona
             MoveTo(arenaMiddlePos.position);
-            if (avalancheAS)
-            {
-                AudioManager.instance.StopLoopSound(avalancheAS);
-                AudioManager.instance.StopLoopSound(hideAS);
-                avalancheAS = null;
-                hideAS = null;
-            }
+            AudioManager.instance.StopLoopSound(avalancheAS);
+            AudioManager.instance.StopLoopSound(hideAS);
+            avalancheAS = null;
+            hideAS = null;
             return;
         }
         
@@ -311,7 +307,7 @@ public class Boss2Controller : BossController
         breakableRocks[_rockId].transform.position = randomPos;
 
         //Reiniciar la roca
-        ResetRockTiles(breakableRocks[_rockId].tilemap);
+        breakableRocks[_rockId].ResetRockSize();
 
         //Activar el la roca
         breakableRocks[_rockId].gameObject.SetActive(true);
@@ -323,22 +319,7 @@ public class Boss2Controller : BossController
         breakableRocks[_rockId].rb2d.angularVelocity = randomRotationForce;
 
     }
-    private void ResetRockTiles(Tilemap _tilemap)
-    {
-        for (int i = -rockSize; i < rockSize + 1; i++)
-        {
-            for (int j = -rockSize; j < rockSize + 1; j++)
-            {
-                if (Mathf.Abs(i) + Mathf.Abs(j) < rockBorderValue)
-                {
-                    //Puedo poner trozo de piedra
-                    Vector3Int tilePos = new Vector3Int(i, j, 0);
-                    _tilemap.SetTile(tilePos, defaultTile);
-                }
-            }
-        }
-    }
-
+    
     private void CheckIfEndRockDrop()
     {
         rockDropTimeWaited += Time.deltaTime * TimeManager.Instance.timeParameter;
@@ -546,6 +527,11 @@ public class Boss2Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.StopLoopSound(avalancheAS);
+        AudioManager.instance.StopLoopSound(hideAS);
+        AudioManager.instance.StopLoopSound(createWallAS);
+
+
         timeToEnrockWaited = 0;
         timeToEnrockLayeringWaited = 0;
 
@@ -559,25 +545,6 @@ public class Boss2Controller : BossController
         gameObject.layer = LayerMask.NameToLayer("BossNoHitWalls");
 
         circleCollider.enabled = false;
-
-        if (avalancheAS)
-        {
-            AudioManager.instance.StopLoopSound(avalancheAS);
-            avalancheAS = null;
-        }
-
-        if (hideAS)
-        {
-            AudioManager.instance.StopLoopSound(hideAS);
-            hideAS = null;
-        }
-
-        if (createWallAS)
-        {
-            AudioManager.instance.StopLoopSound(createWallAS);
-            createWallAS = null;
-        }
-
 
         AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss2");
 
@@ -686,6 +653,7 @@ public class Boss2Controller : BossController
     public override void GetDamage(float _damage)
     {
         currentHealth -= _damage;
+        hitColorLerpProcess = 0;
 
         UpdateHealthBar();
     }
@@ -719,15 +687,10 @@ public class Boss2Controller : BossController
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Bullet"))
-        {
             GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
-            hitColorLerpProcess = 0;
-        }
 
         if (collision.collider.CompareTag("Map"))
-        {
             CollisionWithWall(collision);
-        }
 
     }
 

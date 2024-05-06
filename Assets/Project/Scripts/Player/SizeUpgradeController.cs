@@ -86,7 +86,7 @@ public class SizeUpgradeController : MonoBehaviour
 
     private void ChangeCamSize()
     {
-        if (cam.orthographicSize > normalCamSize)
+        if (cam.orthographicSize > normalCamSize || BossManager.Instance.onBoss)
             return;
         cam.orthographicSize = Mathf.Lerp(smallCamSize, normalCamSize, growProcess);
     }
