@@ -376,11 +376,11 @@ public class Boss3Controller : BossController
     #region Die
     protected override void StartDie()
     {
-        Debug.Log("Morido");
+        
     }
     protected override void UpdateDie()
     {
-        Debug.Log("MORIDODSADSADA");
+        MoveBehaviour();
     }
     #endregion
 

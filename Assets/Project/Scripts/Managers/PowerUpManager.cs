@@ -32,19 +32,18 @@ public class PowerUpManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(Instance);
 
-        Damage = 1.0f;
-        Fuel = 10000;
+        if (PlayerPrefs.HasKey(fuelKey))
+        {
+            Damage = PlayerPrefs.GetFloat(damageKey);
+            Fuel = PlayerPrefs.GetFloat(fuelKey);
+        }
+        else
+        {
+            ResetPowerUps();
+        }
 
-        //if (PlayerPrefs.HasKey(fuelKey))
-        //{
-        //    Damage = PlayerPrefs.GetFloat(damageKey);
-        //    Fuel = PlayerPrefs.GetFloat(fuelKey);
-        //}
-        //else
-        //{
-        //    ResetPowerUps();
-        //}
-
+        Damage = 2.4f;
+        Fuel = 200;
     }
 
     public void PowerUpObtained(PowerUpType _powerUpType) 
