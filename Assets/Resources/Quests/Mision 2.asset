@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mision 2
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 4
-  <questTitle>k__BackingField: 2nd Upgrade
+  <questTitle>k__BackingField: Drill Upgrade
   <questName>k__BackingField: Deep Down
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField:
@@ -37,9 +37,9 @@ MonoBehaviour:
       Value: 0
     - Key: {fileID: 11400000, guid: f83f0d14248a2cd428d85530f0a5f8ec, type: 2}
       Value: 1
-  obtainedQuest: 0
+  obtainedQuest: 1
   completedQuest: 0
-  newQuest: 1
+  newQuest: 0
   missionHintDictionary:
     _serializedList:
     - Key: 1
