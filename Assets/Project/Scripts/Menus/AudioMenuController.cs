@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -13,12 +14,13 @@ public class AudioMenuController : MonoBehaviour
     [SerializeField]
     private Slider sfxSlider;
 
-    private string musicVolume = "MusicVolume";
-    private string sfxVolume = "SfxVolume";
+    
 
+    [SerializeField]
+    private List<Button> buttonList;
     private void Awake()
     {
-        if(PlayerPrefs.HasKey(musicVolume))
+        if(PlayerPrefs.HasKey(AudioManager.instance.musicVolume))
         {
             LoadVolume();
         }
@@ -32,23 +34,35 @@ public class AudioMenuController : MonoBehaviour
     public void SetMusicVolume()
     {
         float volume = musicSlider.value;
-        audioMixer.SetFloat(musicVolume, Mathf.Log10(volume) * 20);
-        PlayerPrefs.SetFloat(musicVolume, volume);
+        audioMixer.SetFloat(AudioManager.instance.musicVolume, Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat(AudioManager.instance.musicVolume, volume);
     }
 
     public void SetSfxVolume()
     {
         float volume = sfxSlider.value;
-        audioMixer.SetFloat(sfxVolume, Mathf.Log10(volume) * 20);
-        PlayerPrefs.SetFloat(sfxVolume, volume);
+        audioMixer.SetFloat(AudioManager.instance.sfxVolume, Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat(AudioManager.instance.sfxVolume, volume);
     }
 
     private void LoadVolume()
     {
-        musicSlider.value = PlayerPrefs.GetFloat(musicVolume);
-        sfxSlider.value = PlayerPrefs.GetFloat(sfxVolume);
+        musicSlider.value = PlayerPrefs.GetFloat(AudioManager.instance.musicVolume);
+        sfxSlider.value = PlayerPrefs.GetFloat(AudioManager.instance.sfxVolume);
 
         SetMusicVolume();
         SetSfxVolume();
+    }
+
+    public void DeactiveButtons()
+    {
+        foreach (Button bt in buttonList)
+            bt.interactable = false;
+    }
+
+    public void ActivateButtons()
+    {
+        foreach (Button bt in buttonList)
+            bt.interactable = true;
     }
 }
