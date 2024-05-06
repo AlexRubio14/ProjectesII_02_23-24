@@ -114,11 +114,25 @@ public class Boss3Controller : BossController
     private Action behaviourActionUpdate;
 
 
-    [Space, SerializeField]
+    [Space, Header("Damage"), SerializeField]
     private Color hitColor;
     [SerializeField]
     private float hitColorLerpSpeed;
     private float hitColorLerpProcess = 1;
+
+    private Vector2 dieExitDirection;
+    [SerializeField]
+    private float diedRotationSpeed;
+    [SerializeField]
+    private float diedExitSpeed;
+    [SerializeField]
+    private Transform cameraLookObj;
+    [SerializeField]
+    private Transform behindAvalanche;
+    [SerializeField]
+    private GameObject limitZone;
+    [SerializeField]
+    private GameObject dropItem;
 
     private SpriteRenderer bodySR;
     private SpriteRenderer[] limbsSR;
@@ -132,6 +146,9 @@ public class Boss3Controller : BossController
         bodySR = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         limbsSR = GetComponentsInChildren<SpriteRenderer>();
+
+        animator.SetFloat("Speed", 1);
+
     }
     private void Update()
     {
@@ -376,11 +393,25 @@ public class Boss3Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        limitZone.SetActive(true);
+        dropItem.SetActive(true);
+
+        cameraLookObj.SetParent(null);
+        behindAvalanche.SetParent(null);
+        limitZone.transform.SetParent(null);
+        dropItem.transform.SetParent(null);
+        PickableItemController pickableItem = dropItem.GetComponent<PickableItemController>();
+        pickableItem.InitializeItem(pickableItem.currentItem);
         
+        dieExitDirection = Vector2.right;
+
+        animator.SetFloat("Speed", 3);
     }
     protected override void UpdateDie()
     {
-        MoveBehaviour();
+        dieExitDirection = Vector2.Lerp(dieExitDirection, Vector2.up, diedRotationSpeed * Time.deltaTime * TimeManager.Instance.timeParameter).normalized;
+        transform.up = dieExitDirection;
+        rb2d.position = Vector2.Lerp(rb2d.position, rb2d.position + dieExitDirection, diedExitSpeed * Time.deltaTime * TimeManager.Instance.timeParameter);
     }
     #endregion
 
