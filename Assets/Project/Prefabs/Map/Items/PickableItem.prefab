@@ -115,6 +115,7 @@ MonoBehaviour:
   collectClip: {fileID: 8300000, guid: 997076410a258004aac3ea09989d5e2a, type: 3}
   currentItem: {fileID: 0}
   followPlayer: 1
+  pickParticles: {fileID: 4144012966540495878, guid: fb2a5543eea755041b62f13420c50eb9, type: 3}
 --- !u!95 &4893854165630699584
 Animator:
   serializedVersion: 5

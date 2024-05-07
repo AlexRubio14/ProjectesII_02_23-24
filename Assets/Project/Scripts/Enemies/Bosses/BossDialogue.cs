@@ -90,7 +90,8 @@ public class BossDialogue : Tutorial
         TransitionCanvasManager.instance.FadeIn();
 
         TransitionCanvasManager.instance.onFadeIn += GoToMap;
-
+        foreach (MonoBehaviour item in bossScripts)
+            item.enabled = false;
         dialogueController.onDialogueEnd -= EndFight;
     }
 

@@ -111,11 +111,15 @@ public class AudioManager : MonoBehaviour
         }
     }
     
-    public void PlayOneShotRandomSound(AudioClip[] _clips, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 1) 
+    public void PlayOneShotRandomSound2d(AudioClip[] _clips, string mixerGroup, float _volume = 1, float _minPitch = 0.75f, float _maxPitch = 1.25f) 
     {
-        Play2dOneShotSound(_clips[Random.Range(0, _clips.Length)], mixerGroup, _minPitch, _maxPitch, _volume);
+        Play2dOneShotSound(_clips[Random.Range(0, _clips.Length)], mixerGroup, _volume, _minPitch, _maxPitch);
     }
-
+    public void PlayOneShotRandomSound3d(AudioClip[] _clips, string mixerGroup, float _radius, Vector2 _pos, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 1)
+    {
+        Play3dOneShotSound(_clips[Random.Range(0, _clips.Length)], mixerGroup, _radius, _pos, _minPitch, _maxPitch, _volume);
+    }
+   
     public AudioSource Play2dLoop(AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.7f) 
     {
         AudioSource _as = GetUnused2dAS();
@@ -124,7 +128,6 @@ public class AudioManager : MonoBehaviour
 
         return _as;
     }
-
     public AudioSource Play3dLoop(AudioClip _clip, string mixerGroup, float _radius, Vector2 _pos, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f) 
     {
         AudioSource _as = GetUnused3dAS();
@@ -134,6 +137,7 @@ public class AudioManager : MonoBehaviour
         PlayLoopSound(_as, _clip, mixerGroup, _minPitch, _maxPitch, _volume);
         return _as;
     }
+
 
     public void PlayLoopSound(AudioSource _as, AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f)
     {   
