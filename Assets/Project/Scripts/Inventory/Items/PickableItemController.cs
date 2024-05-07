@@ -9,7 +9,8 @@ public class PickableItemController : FloatingItem
 
     [HideInInspector]
     public bool followPlayer = true;
-
+    [SerializeField]
+    private GameObject pickParticles;
     public Action onItemPicked;
 
 
@@ -37,6 +38,7 @@ public class PickableItemController : FloatingItem
             onItemPicked();
         InventoryManager.Instance.ChangeRunItemAmount(currentItem, 1);
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
+        Instantiate(pickParticles, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
 

@@ -140,6 +140,24 @@ public class Boss3Controller : BossController
 
     private Animator animator;
 
+
+    [Space, Header("Audio"), SerializeField]
+    private AudioClip[] damageClips;
+    [SerializeField]
+    private AudioClip[] crawlClips;
+    [Space, SerializeField]
+    private AudioClip castThrowClip;
+    [SerializeField]
+    private AudioClip throwBouldersClip;
+    [SerializeField]
+    private AudioClip throwBreakableWallsClip;
+    [SerializeField]
+    private AudioClip throwBubblesClip;
+
+    [SerializeField]
+    private AudioClip dieClip;
+
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -149,6 +167,18 @@ public class Boss3Controller : BossController
 
         animator.SetFloat("Speed", 1);
 
+        animator.enabled = false;
+        behindAvalanche.gameObject.SetActive(false);
+    }
+    private void OnEnable()
+    {
+        animator.enabled = true;
+        behindAvalanche.gameObject.SetActive(true);
+    }
+    private void OnDisable()
+    {
+        animator.enabled = false;
+        behindAvalanche.gameObject.SetActive(false);
     }
     private void Update()
     {
@@ -234,7 +264,10 @@ public class Boss3Controller : BossController
     {
         rb2d.position = Vector2.Lerp(rb2d.position, rb2d.position + Vector2.right, movementSpeed * Time.deltaTime * TimeManager.Instance.timeParameter);
     }
-
+    private void PlayCrawlClip()
+    {
+        AudioManager.instance.PlayOneShotRandomSound2d(crawlClips, "Boss3", 0.2f, 0.7f, 1.3f);
+    }
     #endregion
 
 
@@ -247,6 +280,7 @@ public class Boss3Controller : BossController
         {
             animator.SetTrigger("HandThrow");
             timeToThrowWaited = 0;
+            AudioManager.instance.Play2dOneShotSound(castThrowClip, "Boss3");
         }
     }
     private void Throw()
@@ -257,14 +291,18 @@ public class Boss3Controller : BossController
         {
             case ThrowTypes.BOULDER:
                 boulders.ThrowCurrentItem(handPosition.position);
+                AudioManager.instance.Play2dOneShotSound(throwBouldersClip, "Boss3");
                 break;
             case ThrowTypes.BREAKABLE_ROCKS:
                 List<GameObject> breakableRocksList = breakableRocks.ThrowCurrentItem(handPosition.position);
                 foreach (GameObject breakableRock in breakableRocksList)
                     breakableRock.GetComponent<Boss2BreakableRockController>().ResetRockSize();
+                
+                AudioManager.instance.Play2dOneShotSound(throwBreakableWallsClip, "Boss3");
                 break;
             case ThrowTypes.BUBBLES:
                 bubbles.ThrowCurrentItem(handPosition.position);
+                AudioManager.instance.Play2dOneShotSound(throwBubblesClip, "Boss3");
                 break;
             default:
                 break;
@@ -376,6 +414,8 @@ public class Boss3Controller : BossController
         currentHealth -= _damage;
         hitColorLerpProcess = 0;
         UpdateHealthBar();
+        AudioManager.instance.PlayOneShotRandomSound2d(damageClips, "Boss3");
+
     }
     private void CheckHitColor()
     {
@@ -411,9 +451,13 @@ public class Boss3Controller : BossController
         dieExitDirection = Vector2.right;
 
         animator.SetFloat("Speed", 3);
+
+        AudioManager.instance.Play2dOneShotSound(dieClip, "Boss3", 1, 1, 1);
     }
     protected override void UpdateDie()
     {
+        if (Vector2.Distance(transform.position, PlayerManager.Instance.player.transform.position) > 60)
+            return;
         dieExitDirection = Vector2.Lerp(dieExitDirection, Vector2.up, diedRotationSpeed * Time.deltaTime * TimeManager.Instance.timeParameter).normalized;
         transform.up = dieExitDirection;
         rb2d.position = Vector2.Lerp(rb2d.position, rb2d.position + dieExitDirection, diedExitSpeed * Time.deltaTime * TimeManager.Instance.timeParameter);
@@ -425,4 +469,5 @@ public class Boss3Controller : BossController
         if (collision.collider.CompareTag("Bullet"))
             GetDamage(collision.gameObject.GetComponent<Laser>().GetBulletDamage());
     }
+
 }

@@ -10,10 +10,12 @@ public class MovementTutorial : Tutorial
     [SerializeField]
     private Image accelerateImage;
     [SerializeField]
+    private GameObject accelerateText;
+
+    [Space, SerializeField]
     private Sprite[] rotateSprites;
     [SerializeField]
     private Sprite[] accelerateSprites;
-
     [Space, SerializeField]
     private float maxDistanceFromPlayer;
     private Vector2 playerStartPos;
@@ -26,6 +28,7 @@ public class MovementTutorial : Tutorial
     private void OnEnable()
     {
         InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
     }
 
     private void OnDisable()
@@ -35,7 +38,6 @@ public class MovementTutorial : Tutorial
     public void StartTutorial()
     {
         playerStartPos = PlayerManager.Instance.player.transform.position;
-        UpdateInputImages(null, InputDeviceChange.Added);
 
     }
 
@@ -44,7 +46,7 @@ public class MovementTutorial : Tutorial
         InputController.ControllerType controllerType = InputController.Instance.GetControllerType();
         rotateImage.sprite = rotateSprites[(int)controllerType];
 
-        accelerateImage.gameObject.SetActive(controllerType == InputController.ControllerType.GAMEPAD);
+        accelerateText.SetActive(controllerType == InputController.ControllerType.GAMEPAD);
         accelerateImage.sprite = accelerateSprites[(int)controllerType];
 
     }
