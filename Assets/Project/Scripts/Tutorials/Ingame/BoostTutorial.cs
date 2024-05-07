@@ -9,8 +9,6 @@ public class BoostTutorial : Tutorial
 
     [SerializeField]
     private UpgradeObject boost;
-    [SerializeField]
-    private GameObject windColumn;
 
     protected override void TutorialMethod()
     {
@@ -28,7 +26,6 @@ public class BoostTutorial : Tutorial
     private void StartBoostTutorial()
     {
         boostCanvasTutorial.gameObject.SetActive(true);
-        windColumn.SetActive(true);
 
         dialogueController.onDialogueEnd += EndTutorial;
 

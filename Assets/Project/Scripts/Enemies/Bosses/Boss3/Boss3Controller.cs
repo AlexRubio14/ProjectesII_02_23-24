@@ -22,7 +22,7 @@ public class Boss3Controller : BossController
         {
             foreach (GameObject item in objectsPool)
             {
-                if (!item.activeInHierarchy)
+                if (!item.activeInHierarchy)    
                     return item;
             }
 
@@ -344,6 +344,11 @@ public class Boss3Controller : BossController
         environmentToPlace.transform.position = nextEnvironmentPosition;
 
         nextEnvironmentPosition += Vector2.right * environmentOffset;
+
+        BreakableWallController breakableWall = environmentToPlace.GetComponentInChildren<BreakableWallController>();
+        if (breakableWall)
+            StartCoroutine(breakableWall.LoadStarterTilemapState());
+
 
     }
     private Pool RecursiveSelectRandomEnvironmentPool(EnvironmentPool _environmentPool)

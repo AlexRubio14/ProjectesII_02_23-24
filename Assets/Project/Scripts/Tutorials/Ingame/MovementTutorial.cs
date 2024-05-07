@@ -41,8 +41,12 @@ public class MovementTutorial : Tutorial
 
     public void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
     {
-        rotateImage.sprite = rotateSprites[(int)InputController.Instance.GetControllerType()];
-        accelerateImage.sprite = accelerateSprites[(int)InputController.Instance.GetControllerType()];
+        InputController.ControllerType controllerType = InputController.Instance.GetControllerType();
+        rotateImage.sprite = rotateSprites[(int)controllerType];
+
+        accelerateImage.gameObject.SetActive(controllerType == InputController.ControllerType.GAMEPAD);
+        accelerateImage.sprite = accelerateSprites[(int)controllerType];
+
     }
 
     private void FixedUpdate()
