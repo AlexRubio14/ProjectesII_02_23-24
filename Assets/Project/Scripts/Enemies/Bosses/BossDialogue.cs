@@ -99,7 +99,7 @@ public class BossDialogue : Tutorial
     {
         PlayerManager.Instance.player.transform.position = door.posToBack.position;
         CameraController.Instance.objectToFollow = PlayerManager.Instance.player.gameObject;
-
+        TransitionCanvasManager.instance.onFadeIn -= GoToMap;
         BossManager.Instance.onBossExit();
         TransitionCanvasManager.instance.FadeOut();
     }

@@ -5810,17 +5810,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2829131721549817202, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3143179838279309928, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
       propertyPath: m_Name
       value: MenusInputsCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5630949504488241480, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6316622744360435245, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
       propertyPath: m_Pivot.x
