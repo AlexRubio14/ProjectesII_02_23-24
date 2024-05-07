@@ -41,9 +41,6 @@ public class PowerUpManager : MonoBehaviour
         {
             ResetPowerUps();
         }
-
-        Damage = 2.4f;
-        Fuel = 200;
     }
 
     public void PowerUpObtained(PowerUpType _powerUpType) 

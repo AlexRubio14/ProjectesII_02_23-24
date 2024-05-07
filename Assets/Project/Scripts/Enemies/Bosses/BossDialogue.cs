@@ -79,8 +79,8 @@ public class BossDialogue : Tutorial
         bossCanvas.SetActive(false);
 
         dialogueController.dialogues = endDialogues;
-        dialogueController.StartDialogue();
         dialogueController.gameObject.SetActive(true);
+        dialogueController.StartDialogue();
 
         dialogueController.onDialogueEnd += EndFight;
     }

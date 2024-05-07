@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -6,6 +8,7 @@ public class BreakableWallController : InteractableObject
     private Grid breakableWallGrid;
     private Tilemap breakableWallTilemap;
 
+    private Dictionary<Vector3Int, TileBase> starterTiles;
     private void Awake()
     {
         breakableWallGrid = GetComponentInParent<Grid>();
@@ -14,13 +17,11 @@ public class BreakableWallController : InteractableObject
     private void Start()
     {
         if (isHide)
-        {
             SetupParticles(vfxHideColor);
-        }
-        else
-        {
+        else if (interactableParticles)
             interactableParticles.Stop();
-        }
+
+        SaveStarterTilemapState();
     }
 
     public override void Interact()
@@ -58,6 +59,30 @@ public class BreakableWallController : InteractableObject
         interactableParticles.Stop();
 
         isHide = false;
+    }
+
+    private void SaveStarterTilemapState()
+    {
+        starterTiles = new Dictionary<Vector3Int, TileBase>();
+        BoundsInt bounds = breakableWallTilemap.cellBounds;
+
+        for (int x = bounds.min.x; x < bounds.max.x; x++)
+        {
+            for (int y = bounds.min.y; y < bounds.max.y; y++)
+            {
+                Vector3Int tilePos = new Vector3Int(x, y, 0);
+                starterTiles.Add(tilePos, breakableWallTilemap.GetTile(tilePos));
+            }
+        }
+
+    }
+    public IEnumerator LoadStarterTilemapState()
+    {
+        yield return new WaitForEndOfFrame();
+        foreach (KeyValuePair<Vector3Int, TileBase> item in starterTiles)
+        {
+            breakableWallTilemap.SetTile(item.Key, item.Value);
+        }
     }
 
 
