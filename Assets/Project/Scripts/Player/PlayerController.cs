@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private AudioClip collisionClip;
     [SerializeField]
     private AudioClip engineClip;
-    private AudioSource engineSource;
+    public AudioSource engineSource { get; private set; }
 
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction mapInteraction;
