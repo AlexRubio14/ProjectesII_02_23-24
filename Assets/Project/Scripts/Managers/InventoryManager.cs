@@ -30,6 +30,25 @@ public class InventoryManager : MonoBehaviour
         runItems = new Dictionary<ItemObject, short>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            CheatAddOneOfEveryMaterial();
+    }
+
+    private void CheatAddOneOfEveryMaterial()
+    {
+
+        Dictionary<ItemObject, short> cheatList = new Dictionary<ItemObject, short>();
+        foreach (KeyValuePair<ItemObject, short> item in allItems)
+            cheatList.Add(item.Key, item.Value);
+
+        foreach (KeyValuePair<ItemObject, short> item in cheatList)
+            allItems[item.Key] += 5;
+
+    }
+
+
     private void LoadItems()
     {
         Dictionary<ItemObject, short> storedItems = new Dictionary<ItemObject, short>();
@@ -53,8 +72,6 @@ public class InventoryManager : MonoBehaviour
             PlayerPrefs.SetInt(item.Key.ItemName, item.Value);
         }
     }
- 
-
 
     public void ResetInventory()
     {
