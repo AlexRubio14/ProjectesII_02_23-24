@@ -19,6 +19,10 @@ public class CreditsController : MonoBehaviour
 
     private bool allKilled;
 
+    [SerializeField]
+    private AudioClip audioClip;
+    private AudioSource audioSource;
+
     private void Start()
     {
         allKilled = false;
@@ -33,6 +37,8 @@ public class CreditsController : MonoBehaviour
     {
         TransitionCanvasManager.instance.FadeOut();
         TransitionCanvasManager.instance.onFadeOut += StartDialogue;
+
+        audioSource = AudioManager.instance.Play2dLoop(audioClip, "Music", 1.0f, 1.0f, 1.0f);
     }
 
     public void StartDialogue()
@@ -76,7 +82,8 @@ public class CreditsController : MonoBehaviour
     }
     private void GoToTitleScene()
     {
-        PlayerManager.Instance.player.engineSource.Stop();  
+        PlayerManager.Instance.player.engineSource.Stop();
+        AudioManager.instance.StopLoopSound(audioSource); 
         TransitionCanvasManager.instance.onFadeIn -= GoToTitleScene;
         SceneManager.LoadScene("TitleScreen");
     }

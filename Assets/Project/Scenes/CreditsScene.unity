@@ -3872,6 +3872,8 @@ MonoBehaviour:
   - {fileID: 1658080656}
   - {fileID: 1378699673}
   cannonController: {fileID: 1434427427}
+  audioClip: {fileID: 8300000, guid: cbea70e7c3de05045b17dea1b14dce08, type: 3}
+  audioSource: {fileID: 1610283527}
 --- !u!1001 &476102017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21554,6 +21556,11 @@ MonoBehaviour:
 --- !u!4 &1610283526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8472911716521364800, guid: a6793e6e8d5566c4a9f74885e3029810, type: 3}
+  m_PrefabInstance: {fileID: 1610283523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1610283527 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2710599507721073680, guid: a6793e6e8d5566c4a9f74885e3029810, type: 3}
   m_PrefabInstance: {fileID: 1610283523}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1610283535 stripped
