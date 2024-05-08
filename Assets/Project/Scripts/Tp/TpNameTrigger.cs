@@ -17,13 +17,18 @@ public class TpNameTrigger : MonoBehaviour
     {
         textTp.text = " ";
         playerInTrigger = false;
-        currentFadeTime = fadeTime;
+        currentFadeTime = 0;
         selectTp = GetComponent<SelectTpController>();
     }
 
     private void Update()
     {
-        if(playerInTrigger && currentFadeTime < fadeTime)
+        FadeText();
+    }
+
+    private void FadeText()
+    {
+        if (playerInTrigger && currentFadeTime < fadeTime)
         {
             currentFadeTime += Time.deltaTime;
             textTp.color = new Color(textTp.color.r, textTp.color.g, textTp.color.b, currentFadeTime);
@@ -34,7 +39,6 @@ public class TpNameTrigger : MonoBehaviour
             textTp.color = new Color(textTp.color.r, textTp.color.g, textTp.color.b, currentFadeTime);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))

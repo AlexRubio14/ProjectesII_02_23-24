@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,6 @@ public class PauseMenuController : MonoBehaviour
 {
     [Header("Inputs"), SerializeField]
     private InputActionReference pauseAction;
-    [SerializeField]
-    private InputActionReference resumeAction;
     [SerializedDictionary("UI Image", "Input Sprites")]
     public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
@@ -18,6 +17,8 @@ public class PauseMenuController : MonoBehaviour
     private Canvas pauseMenuCanvas;
     [SerializeField]
     private Button continueButton;
+    [SerializeField]
+    private Button firstButtonSelected;
 
     [Space, Header("Quest List"), SerializeField]
     private Transform cardLayout;
@@ -62,14 +63,12 @@ public class PauseMenuController : MonoBehaviour
     private void OnEnable()
     {
         pauseAction.action.started += PauseGame;
-        resumeAction.action.started += ResumeGame;
         InputSystem.onDeviceChange += UpdateInputImages;
         UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
     }
     private void OnDisable()
     {
         pauseAction.action.started -= PauseGame;
-        resumeAction.action.started -= ResumeGame;
         InputSystem.onDeviceChange -= UpdateInputImages;
     }
 
@@ -255,14 +254,15 @@ public class PauseMenuController : MonoBehaviour
 
     private void PauseGame(InputAction.CallbackContext obj)
     {
-        InputController.Instance.ChangeActionMap("Menu");
         TimeManager.Instance.PauseGame();
         pauseMenuCanvas.gameObject.SetActive(true);
 
+        firstButtonSelected.Select();
+
+        InputController.Instance.ChangeActionMap("Menu");
+
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-
-        SelectFirstQuestButon();
     }
     public void SelectFirstQuestButon()
     {
