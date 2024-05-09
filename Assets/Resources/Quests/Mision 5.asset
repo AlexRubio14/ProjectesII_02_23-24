@@ -16,7 +16,7 @@ MonoBehaviour:
   <questTitle>k__BackingField: Core Collector
   <questName>k__BackingField: Closer to the Core
   <questDialogue>k__BackingField:
-  - This is your last quest! Purrfect!
+  - This is your last mission! Purrfect!
   - 'Manage to defeat the last boss found deep underground, in dark and dangerous
     areas. '
   <questDialogueEnd>k__BackingField: []
@@ -38,7 +38,7 @@ MonoBehaviour:
       Value: 0
   obtainedQuest: 0
   completedQuest: 0
-  newQuest: 0
+  newQuest: 1
   missionHintDictionary:
     _serializedList:
     - Key: 0

@@ -265,6 +265,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 592936226956119463, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
   m_PrefabInstance: {fileID: 1503805522}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &88539057 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5293302776526871698, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
+  m_PrefabInstance: {fileID: 1503805522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88539056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799d704490e629247ba73b869b41accc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &91027928 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8086938449526694025, guid: 1f83da9037b534943acec0d891b5757b, type: 3}
@@ -6787,6 +6798,7 @@ MonoBehaviour:
   firstQuest: {fileID: 11400000, guid: 6cbed1bff522bae4aa640c36e75fb700, type: 2}
   firstTutorialkey: FirstTimeTutorial
   menuNavegation: {fileID: 507392028}
+  audioMenuController: {fileID: 88539057}
 --- !u!1 &1547340047
 GameObject:
   m_ObjectHideFlags: 0

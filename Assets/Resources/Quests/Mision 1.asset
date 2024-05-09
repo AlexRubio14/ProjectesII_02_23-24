@@ -20,7 +20,7 @@ MonoBehaviour:
   - Here you've your spaceship to be able to make your first dive to the mysterious
     underground of this planet.
   - As you are a freshman, I will test your skills! Mine these materials with the
-    ship, complete this order and you will have a reward. Good luck!
+    ship, complete this mission and you will have a reward. Good luck!
   <questDialogueEnd>k__BackingField:
   - Puurrrfect! When you get back on your ship, you will already have the upgrade
     installed.
@@ -40,9 +40,9 @@ MonoBehaviour:
       Value: 1
     - Key: {fileID: 11400000, guid: d360710b326bcd049a2e26cdb6fc2fb0, type: 2}
       Value: 1
-  obtainedQuest: 1
-  completedQuest: 1
-  newQuest: 0
+  obtainedQuest: 0
+  completedQuest: 0
+  newQuest: 1
   missionHintDictionary:
     _serializedList:
     - Key: 0
