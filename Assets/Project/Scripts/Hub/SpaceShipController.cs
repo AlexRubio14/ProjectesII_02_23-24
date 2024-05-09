@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpaceShipController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class SpaceShipController : MonoBehaviour
         {
             SelectTpsManager.instance.SetIdToTeleport(1);
             TransitionCanvasManager.instance.FadeIn();
+            TransitionCanvasManager.instance.onFadeIn += GoToGame;
         }
         else
         {
@@ -26,5 +28,11 @@ public class SpaceShipController : MonoBehaviour
     {
         ShopMusic.instance.StopMusic();
         TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToGame;
+    }
+
+    public void GoToGame()
+    {
+        TransitionCanvasManager.instance.onFadeIn -= GoToGame;
+        SceneManager.LoadScene("Map");
     }
 }
