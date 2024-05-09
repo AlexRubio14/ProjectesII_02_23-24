@@ -85,6 +85,10 @@ public class CreditsController : MonoBehaviour
         PlayerManager.Instance.player.engineSource.Stop();
         AudioManager.instance.StopLoopSound(audioSource); 
         TransitionCanvasManager.instance.onFadeIn -= GoToTitleScene;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
         SceneManager.LoadScene("TitleScreen");
     }
 }
