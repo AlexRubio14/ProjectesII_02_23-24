@@ -16,44 +16,29 @@ public class AudioMenuController : MonoBehaviour
     
     [SerializeField]
     private List<Button> buttonList;
-    private void Awake()
+
+    private void OnEnable()
     {
-        if(PlayerPrefs.HasKey(AudioManager.instance.musicVolumeString))
-        {
-            LoadVolume();
-        }
-        else
-        {
-
-            SetMusicVolume();
-            SetSfxVolume();
-        }
+        LoadVolume();
     }
-
-    public void SetMusicVolume()
+    public void UpdateMusicVolume()
     {
         float volume = (musicSlider.value / 10) + 0.0001f;
-        AudioManager.instance.musicVolume = volume;
-        audioMixer.SetFloat(AudioManager.instance.musicVolumeString, Mathf.Log10(volume) * 20);
-        PlayerPrefs.SetFloat(AudioManager.instance.musicVolumeString, volume);
+        AudioVolumeManager.instance.SaveMusicValue(volume);
     }
 
-    public void SetSfxVolume()  
+    public void UpdateSfxVolume()  
     {
         float volume = (sfxSlider.value / 10) + 0.0001f;
-        AudioManager.instance.sfxVolume = volume;
-        audioMixer.SetFloat(AudioManager.instance.sfxVolumeString, Mathf.Log10(volume) * 20);
-        PlayerPrefs.SetFloat(AudioManager.instance.sfxVolumeString, volume);
+        AudioVolumeManager.instance.SaveSfxValue(volume);
     }
 
     private void LoadVolume()
     {
-        musicSlider.value = PlayerPrefs.GetFloat(AudioManager.instance.musicVolumeString) * 10;
-        sfxSlider.value = PlayerPrefs.GetFloat(AudioManager.instance.sfxVolumeString) * 10;
-
-        SetMusicVolume();
-        SetSfxVolume();
+        musicSlider.value = AudioVolumeManager.instance.musicValue * 10;
+        sfxSlider.value = AudioVolumeManager.instance.sfxValue * 10;
     }
+
 
     public void DeactiveButtons()
     {
@@ -66,21 +51,5 @@ public class AudioMenuController : MonoBehaviour
         foreach (Button bt in buttonList)
             bt.interactable = true;
     }
-
-    private void OnDisable()
-    {
-        SetMusicVolume();
-        SetSfxVolume();
-    }
-
-    public void SetVolumeAfterErasePlayerPrefs()
-    {
-        musicSlider.value = AudioManager.instance.musicVolume;
-        sfxSlider.value = AudioManager.instance.sfxVolume;
-
-        SetMusicVolume();
-        SetSfxVolume();
-    }
-
 
 }

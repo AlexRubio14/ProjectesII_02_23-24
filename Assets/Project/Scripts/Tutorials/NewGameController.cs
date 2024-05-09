@@ -30,8 +30,6 @@ public class NewGameController : MonoBehaviour
 
         PlayerPrefs.DeleteAll();
 
-        audioMenuController.SetVolumeAfterErasePlayerPrefs();
-
         QuestManager.Instance.ResetQuests();
         InventoryManager.Instance.ResetInventory();
         UpgradeManager.Instance.ResetUpgrades();

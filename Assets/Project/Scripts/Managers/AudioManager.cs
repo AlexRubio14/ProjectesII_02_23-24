@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,12 +20,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     GameObject actions3dASObj;
     private AudioSource[] actions3dAS;
-
-    public string musicVolumeString { get; private set; } = "MusicVolume";
-    public string sfxVolumeString { get; private set; } = "SfxVolume";
-
-    public float musicVolume;
-    public float sfxVolume;
 
     private void Awake()
     {
@@ -55,11 +48,6 @@ public class AudioManager : MonoBehaviour
             actions3dAS[i].playOnAwake = false;
             actions3dAS[i].outputAudioMixerGroup = mixerGroup;
         }
-    }
-
-    public void Start()
-    {
-        LoadVolume();
     }
 
     public AudioSource GetUnused2dAS() 
@@ -175,17 +163,4 @@ public class AudioManager : MonoBehaviour
         else
             yield return null;
     }
-
-    private void LoadVolume()
-    {
-        if(PlayerPrefs.HasKey(musicVolumeString))
-        {
-            float fMusicVolume = PlayerPrefs.GetFloat(musicVolumeString);
-            float fSfxVolume = PlayerPrefs.GetFloat(sfxVolumeString);
-
-            mixer.SetFloat(musicVolumeString, Mathf.Log10(fMusicVolume) * 20f);
-            mixer.SetFloat(sfxVolumeString, Mathf.Log10(fSfxVolume) * 20f);
-        }
-    }
-
 }
