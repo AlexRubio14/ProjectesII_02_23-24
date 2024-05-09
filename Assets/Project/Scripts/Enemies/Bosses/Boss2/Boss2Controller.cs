@@ -134,6 +134,8 @@ public class Boss2Controller : BossController
     [SerializeField]
     private float hitColorLerpSpeed;
     private float hitColorLerpProcess;
+    [SerializeField]
+    private AudioClip damagedClip;
 
     private Vector2 pauseSpeed;
 
@@ -665,7 +667,7 @@ public class Boss2Controller : BossController
     {
         currentHealth -= _damage;
         hitColorLerpProcess = 0;
-
+        AudioManager.instance.Play2dOneShotSound(damagedClip, "Boss2");
         UpdateHealthBar();
     }
     private void CheckHitColor()

@@ -909,7 +909,7 @@ MonoBehaviour:
   spinDuration: 7.5
   spinStunDuration: 3.5
   spinBounceToPlayerDot: 0.75
-  bubbleSpinCD: 3
+  bubbleSpinCD: 1.5
   spinLoopAudioClip: {fileID: 8300000, guid: a24673abd9ca4c14a9f59cf79eb0c14e, type: 3}
   hitWallsAudioClip: {fileID: 8300000, guid: 78fc16f959e56094998590fafeb0e833, type: 3}
   windBlow: {fileID: 5513138748001548416}
@@ -919,6 +919,7 @@ MonoBehaviour:
   suctionDuration: 12
   suctionBubbleSpawnTime: 3
   suctionLoopAudioClip: {fileID: 8300000, guid: 406f15c62d5702741a4d31232479be60, type: 3}
+  damageClip: {fileID: 8300000, guid: b4f79c27b93743a41af4e4edb8cf7518, type: 3}
 --- !u!95 &5770916434241578562
 Animator:
   serializedVersion: 5

@@ -72,6 +72,8 @@ public class FuelCanvasController : MonoBehaviour
     private Image lowFuelBorder;
     private bool canFuelBorder;
 
+    [Space, SerializeField]
+    private AudioClip lowFuelBeep;
     private void Awake()
     {
         sliderFloatEffect = GetComponentInChildren<ImageFloatEffect>();
@@ -210,13 +212,12 @@ public class FuelCanvasController : MonoBehaviour
 
         foreach (Image item in backgrounds)
             item.color = Color.Lerp(starterColor, warningColor, colorFadeProgress);
-        
+
 
         if (colorFadeProgress >= 1)
             turningRedUI = false;
         else if (colorFadeProgress <= 0)
             turningRedUI = true;
-
     }
     private void BorderColorLowFuel(float _currFuel)
     {
@@ -232,7 +233,7 @@ public class FuelCanvasController : MonoBehaviour
         if (turningRedBorder)
             dangerBorderProcess = Mathf.Clamp(
                 dangerBorderProcess + dangerBorderSpeed / Mathf.Clamp(_currFuel / borderFuelInfluence, minFuelInfluence, maxFuelInfluence) * Time.deltaTime,
-                dangerBorderAlpha[0], 
+                dangerBorderAlpha[0],
                 dangerBorderAlpha[1]);
         else
             dangerBorderProcess = Mathf.Clamp(
@@ -240,10 +241,13 @@ public class FuelCanvasController : MonoBehaviour
                 dangerBorderAlpha[0],
                 dangerBorderAlpha[1]);
 
-        lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, dangerBorderProcess); 
+        lowFuelBorder.color = new Color(lowFuelBorder.color.r, lowFuelBorder.color.g, lowFuelBorder.color.b, dangerBorderProcess);
 
         if (dangerBorderProcess >= dangerBorderAlpha[1])
+        {
             turningRedBorder = false;
+            AudioManager.instance.Play2dOneShotSound(lowFuelBeep, "LowFuelBeep", 1, 1, 1.1f);
+        }
         else if (dangerBorderProcess <= dangerBorderAlpha[0])
             turningRedBorder = true;
 

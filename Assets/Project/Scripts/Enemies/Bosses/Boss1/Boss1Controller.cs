@@ -111,6 +111,8 @@ public class Boss1Controller : BossController
     private AudioSource suctionAudioSource;
 
     private Vector2 dieExitDirection;
+    [Space, SerializeField]
+    private AudioClip damageClip;
 
     private Vector2 pauseSpeed;
     private bool activeAnimatorOnPause;
@@ -206,7 +208,7 @@ public class Boss1Controller : BossController
     public override void GetDamage(float _damage)
     {
         currentHealth -= _damage;
-
+        AudioManager.instance.Play2dOneShotSound(damageClip, "Boss1");
         UpdateHealthBar();
     }
 

@@ -3475,6 +3475,7 @@ MonoBehaviour:
   deadEnrockTilemap: {fileID: 1411182137672120007}
   hitColor: {r: 1, g: 0.35686275, b: 0.35686275, a: 1}
   hitColorLerpSpeed: 0.9
+  damagedClip: {fileID: 8300000, guid: 77ebbaacd4cb92743a414d049a2ffaf9, type: 3}
 --- !u!50 &6588458626399498315
 Rigidbody2D:
   serializedVersion: 4
