@@ -4880,7 +4880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialkey: SelectMissionTutorial
   dialogues:
-  - Pulsa el boton de fijar para poder ver la mision durante la inmersion
+  - Press Select in order to see the mission in a layout while you are inmersed.
   dialogueController: {fileID: 1688875427}
   firstMission: {fileID: 11400000, guid: 6cbed1bff522bae4aa640c36e75fb700, type: 2}
   selectButtonCanvas: {fileID: 1028275579}
