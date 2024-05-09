@@ -1,5 +1,4 @@
 using AYellowpaper.SerializedCollections;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -63,6 +62,7 @@ public class DisplayTpsInMap : DisplayTps
             if(item.tp.id == id)
             {
                 positionToTravel = item.tpPosition.position;
+                item.CheckTpOnLightZone();
                 break;
             }
         }

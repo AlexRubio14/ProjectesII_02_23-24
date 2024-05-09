@@ -44,11 +44,18 @@ public class SizeUpgradeController : MonoBehaviour
         enabled = false;
     }
 
+    private void OnDisable()
+    {
+        audioMixer.SetFloat("SFXPitch", pitchVolumeBigSize);
+    }
+
     // Update is called once per frame
     void Update()
     {
         CheckGrowOrShrink(); 
     }
+
+
 
     private void CheckGrowOrShrink()
     {    
