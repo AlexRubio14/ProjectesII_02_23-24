@@ -25,6 +25,6 @@ public class SpaceShipController : MonoBehaviour
     public void SubscribeToFadeIn()
     {
         ShopMusic.instance.StopMusic();
-        TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToGame; ;
+        TransitionCanvasManager.instance.onFadeIn += menuNavegation.GoToGame;
     }
 }
