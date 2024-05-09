@@ -15,6 +15,9 @@ public class CoreController : InteractableObject
 
     private Camera cam;
 
+    [Space, SerializeField]
+    private AudioClip collectCoreClip;
+
     private void Awake()
     {
         coreLight = GetComponentInChildren<Light2D>();
@@ -39,7 +42,9 @@ public class CoreController : InteractableObject
         glowUp = true;
         floatEffect.enabled = false;
 
-        Invoke("FadeIn", timeToChangeScene); 
+        Invoke("FadeIn", timeToChangeScene);
+
+        AudioManager.instance.Play2dOneShotSound(collectCoreClip, "SFX");
 
         cam = CameraController.Instance.GetComponent<Camera>();
     }
