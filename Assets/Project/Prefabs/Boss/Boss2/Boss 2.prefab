@@ -3366,6 +3366,7 @@ GameObject:
   - component: {fileID: 6588458626399498315}
   - component: {fileID: 7815307420883179885}
   - component: {fileID: 2456807922739987827}
+  - component: {fileID: 6924874820846138867}
   m_Layer: 16
   m_Name: Boss 2
   m_TagString: Boss
@@ -3446,7 +3447,7 @@ MonoBehaviour:
   rockRotationSpeed: 4
   avalancheAudioClip: {fileID: 8300000, guid: 168901cc363f33b409a818b672191452, type: 3}
   hideAudioClip: {fileID: 8300000, guid: 0b6c39d7fe97fa8468cc904c29a86f98, type: 3}
-  totalDashesAmount: 3
+  totalDashesAmount: 30
   castDuration: 3
   castTrackDuration: 2
   dashForce: 370
@@ -3557,6 +3558,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6924874820846138867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8901510486937569676}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f1ed82a3087574093f08b2172413e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spritesColor:
+  - {fileID: 5792044154566138187}
+  - {fileID: 8486531661824631268}
+  - {fileID: 3341524003739635949}
+  speed: 5
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  endColor: {r: 1, g: 0.28773582, b: 0.28773582, a: 1}
+  <canLerp>k__BackingField: 0
 --- !u!1001 &1465010222156253907
 PrefabInstance:
   m_ObjectHideFlags: 0

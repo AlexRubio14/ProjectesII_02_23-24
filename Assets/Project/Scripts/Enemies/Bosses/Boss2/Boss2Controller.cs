@@ -17,6 +17,7 @@ public class Boss2Controller : BossController
     private Animator animator;
     [SerializeField]
     private GameObject bubblePrefab;
+    private SpritesColorLerpEffect spritesColorLerp;
 
     [Space, Header("Rock Drop"), SerializeField]
     private Transform rockStarterPos;
@@ -141,6 +142,7 @@ public class Boss2Controller : BossController
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
+        spritesColorLerp = GetComponent<SpritesColorLerpEffect>();  
         rockSpawnParticles.Stop();
 
         hitColorLerpProcess = 1;
@@ -385,11 +387,16 @@ public class Boss2Controller : BossController
         {
             animator.SetTrigger("HoldToDash");
             AudioManager.instance.Play2dOneShotSound(lockAudioClip, "Boss2");
+            spritesColorLerp.enabled = true;
+            spritesColorLerp.canLerp = true;
             canLock = false;
         }
 
         if (castTimeWaited < castDuration)
             return;
+
+        
+
 
         //EmpezarDash
         DoDash();
@@ -429,6 +436,9 @@ public class Boss2Controller : BossController
         canLock = true;
         canTrack = true;
         AudioManager.instance.Play2dOneShotSound(dashAudioClip, "Boss2");
+
+        spritesColorLerp.canLerp = false;
+        spritesColorLerp.enabled = false;
     }
 
     #endregion
