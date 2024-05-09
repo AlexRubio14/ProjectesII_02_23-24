@@ -15076,6 +15076,7 @@ GameObject:
   - component: {fileID: 5663581563948604064}
   - component: {fileID: 2710599507721073680}
   - component: {fileID: 1306045602590068316}
+  - component: {fileID: 6930727904937921232}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -15517,11 +15518,6 @@ MonoBehaviour:
   downUpgradeAction: {fileID: -7893445427389807243, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   leftUpgradeAction: {fileID: -5749262144971248650, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   rightUpgradeAction: {fileID: -1784829170732850432, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  startBoost: {fileID: 8300000, guid: b32c62d132e3b03459b242b36a3d3d34, type: 3}
-  boost: {fileID: 8300000, guid: b4ef97c998fe64d46b3a7a633aa8698f, type: 3}
-  finishBoost: {fileID: 8300000, guid: e2b553493f0d6524fbe607b4597a7a89, type: 3}
-  SwitchLightClip: {fileID: 8300000, guid: 8a78ae566216fe748a3008fe63d0ae9b, type: 3}
-  loopLightClip: {fileID: 8300000, guid: 11c5188e3cdf1e74185ea628fe5af719, type: 3}
   unselectedBackground: {fileID: 21300000, guid: e97b5e3c6a9323744a9e28e26e176f33, type: 3}
   selectedBackground: {fileID: 21300000, guid: 7a91800427b9a244a92bfd65cceb7176, type: 3}
   backgroundImagePositions:
@@ -15594,6 +15590,13 @@ MonoBehaviour:
   drillConsume: 1.3
   lightConsume: 0.3
   sizeChangerConsume: 0.5
+  startBoost: {fileID: 8300000, guid: b32c62d132e3b03459b242b36a3d3d34, type: 3}
+  boost: {fileID: 8300000, guid: b4ef97c998fe64d46b3a7a633aa8698f, type: 3}
+  finishBoost: {fileID: 8300000, guid: e2b553493f0d6524fbe607b4597a7a89, type: 3}
+  SwitchLightClip: {fileID: 8300000, guid: 8a78ae566216fe748a3008fe63d0ae9b, type: 3}
+  loopLightClip: {fileID: 8300000, guid: 11c5188e3cdf1e74185ea628fe5af719, type: 3}
+  turnOnDrillClip: {fileID: 8300000, guid: d3c61e593c7381049b20453b16f75cf9, type: 3}
+  turnOffDrillClip: {fileID: 8300000, guid: 1b3b64f4132ef5a4eacfab44962b925e, type: 3}
 --- !u!114 &670545847217739927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15751,6 +15754,23 @@ MonoBehaviour:
   tpParticlesPrefab: {fileID: 5115220595492137219, guid: fbde77a870ff73240a3143b3784cfc02, type: 3}
   timeToStopParticles: 0.7
   teleportClip: {fileID: 8300000, guid: 32f33460ab80437478e135c9d00e7762, type: 3}
+--- !u!111 &6930727904937921232
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270609692860242859}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 22d2dfc22339e0f409154571af2ec7b9, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e24f1c3833eea374c80672f69722769f, type: 2}
+  - {fileID: 7400000, guid: 22d2dfc22339e0f409154571af2ec7b9, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &4329926445472445026
 GameObject:
   m_ObjectHideFlags: 0
@@ -15779,7 +15799,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8472911716521364800}
   m_RootOrder: -2
@@ -16132,15 +16152,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7365033839176144436}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.43, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.4574, y: 0.055, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7926791603597339530}
   m_Father: {fileID: 3241196548388471080}
   m_RootOrder: -2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &7564754186488038013
 GameObject:
   m_ObjectHideFlags: 0
@@ -16168,7 +16188,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3241196548388471080}
   m_Father: {fileID: 8472911716521364800}
@@ -16333,15 +16353,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7686264573825968600}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.108, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.26271337, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.025, y: 0, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.4, z: 0.21}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4204113142784814922}
   m_Father: {fileID: 2888034062527476590}
   m_RootOrder: -2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &2572935983543157794
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16383,8 +16403,8 @@ SpriteRenderer:
   m_SortingLayerID: 366951877
   m_SortingLayer: 10
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.07450981, g: 0.5568628, b: 0.93725497, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 7a8a512dba6c9e744b17845d99ecfcd8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GrassExternalVelocityTrigger : MonoBehaviour
 {
+    [SerializeField]
+    private AudioClip leafCollisionClip;
+
     private GrassVelocityController grassVelocityController;
 
     private GameObject player;
@@ -38,6 +41,8 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
             {
                 StartCoroutine(EaseIn(playerRb2D.velocity.x * grassVelocityController.ExternalInfluenceStrength));
             }
+
+            AudioManager.instance.Play2dOneShotSound(leafCollisionClip, "Leafs", 1, 0.5f, 1.5f);
         }
     }
 
@@ -72,7 +77,6 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
             velocityLastFrame = playerRb2D.velocity.x;
         }
     }
-
     private IEnumerator EaseIn(float XVelocity)
     {
         easeInCoroutineRunning = true;

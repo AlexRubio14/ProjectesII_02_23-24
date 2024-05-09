@@ -96,13 +96,23 @@ public class MineMinigameController : MonoBehaviour
     private Image[] mineralTypeImages;
 
     [Space, Header("Audio"), SerializeField]
-    private AudioClip miningClip;
+    private AudioClip startLaserClip;
     [SerializeField]
-    private AudioClip endMiningClip;
+    private AudioClip laserLoopClip;
+    [SerializeField]
+    private AudioClip breakRockLoopClip;
+    [SerializeField]
+    private AudioClip stopLaserClip;
+    [SerializeField]
+    private AudioClip breakRockClip;
     [SerializeField]
     private AudioSource leftLaserSource;
     [SerializeField]
+    private AudioSource leftLaserBreakSource;
+    [SerializeField]
     private AudioSource rightLaserSource;
+    [SerializeField]
+    private AudioSource rightLaserBreakSource;
 
     private void Awake()
     {
@@ -144,8 +154,12 @@ public class MineMinigameController : MonoBehaviour
 
         TimeManager.Instance.PauseGame();
 
-        AudioManager.instance.PlayLoopSound(rightLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
-        AudioManager.instance.PlayLoopSound(leftLaserSource, miningClip, "Mining", 0.01f, 1, 0.2f);
+        AudioManager.instance.Play2dOneShotSound(startLaserClip, "Mining", 0.2f);
+
+        AudioManager.instance.PlayLoopSound(rightLaserSource, laserLoopClip, "Mining", 1, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(rightLaserBreakSource, breakRockLoopClip, "Mining", 1, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(leftLaserSource, laserLoopClip, "Mining", 1, 1, 0.2f);
+        AudioManager.instance.PlayLoopSound(leftLaserBreakSource, breakRockLoopClip, "Mining", 1, 1, 0.2f);
 
         InputSystem.onDeviceChange += UpdateInputImages;
         UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
@@ -210,11 +224,11 @@ public class MineMinigameController : MonoBehaviour
 
     private void CheckLasersEnergy()
     {
-        CheckCurrentLaserEnergy(rightLaser, rightLaserSlider, rightLaserParticles, rightLaserSource);
-        CheckCurrentLaserEnergy(leftLaser, leftLaserSlider, leftLaserParticles, leftLaserSource);   
+        CheckCurrentLaserEnergy(rightLaser, rightLaserSlider, rightLaserParticles, rightLaserSource, rightLaserBreakSource);
+        CheckCurrentLaserEnergy(leftLaser, leftLaserSlider, leftLaserParticles, leftLaserSource, leftLaserBreakSource);   
     }
 
-    private void CheckCurrentLaserEnergy(MinigameBarController _currentLaser, Slider _currentLaserSlider, ParticleSystem _currentParticles, AudioSource currentAudioSource)
+    private void CheckCurrentLaserEnergy(MinigameBarController _currentLaser, Slider _currentLaserSlider, ParticleSystem _currentParticles, AudioSource _laserAS, AudioSource _breakRockAS)
     {
         float currentEnergy = _currentLaser.GetCurrentEnergy();
         float currentNeededEnergy = _currentLaser.GetNeedEnergy();
@@ -228,8 +242,8 @@ public class MineMinigameController : MonoBehaviour
             _currentLaser.CorrectEnergy = true;
 
             _currentLaserSlider.value += Time.deltaTime * laserSliderSpeed;
-            currentAudioSource.pitch = 2f;
-
+            _laserAS.volume = 0.2f;
+            _breakRockAS.volume = 0f;
         }
         else
         {
@@ -237,7 +251,8 @@ public class MineMinigameController : MonoBehaviour
             _currentLaser.SetCurrentEnergyPointerColor(wrongEnergyColor);
             _currentLaser.CorrectEnergy = false;
             _currentLaserSlider.value -= Time.deltaTime * laserSliderSpeed;
-            currentAudioSource.pitch = 1.2f;
+            _laserAS.volume = 0f;
+            _breakRockAS.volume = 0.2f;
         }
 
         if (_currentLaserSlider.value >= 0.9f && _currentParticles.isStopped)
@@ -328,9 +343,12 @@ public class MineMinigameController : MonoBehaviour
     private void EndMining()
     {
         AudioManager.instance.StopLoopSound(rightLaserSource);
+        AudioManager.instance.StopLoopSound(rightLaserBreakSource);
         AudioManager.instance.StopLoopSound(leftLaserSource);
+        AudioManager.instance.StopLoopSound(leftLaserBreakSource);
 
-        AudioManager.instance.Play2dOneShotSound(endMiningClip, "Mining", 0.2f);
+        AudioManager.instance.Play2dOneShotSound(stopLaserClip, "Mining", 1f);
+        AudioManager.instance.Play2dOneShotSound(breakRockClip, "Mining", 0.2f);
 
         ThrowMinerals(CalculateMinerals(integrityValue));
 

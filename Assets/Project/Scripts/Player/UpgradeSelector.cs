@@ -15,20 +15,7 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private InputActionReference rightUpgradeAction;
 
-    [Header("Audio Boost"), SerializeField]
-    private AudioClip startBoost;
-    [SerializeField]
-    private AudioClip boost;
-    [SerializeField]
-    private AudioClip finishBoost;
-    private AudioSource boostSource;
-
-    [Header("Audio Light"), SerializeField]
-    private AudioClip SwitchLightClip;
-    [SerializeField]
-    private AudioClip loopLightClip;
-    private AudioSource loopLightSource;
-
+    
     public enum Position { UP, DOWN, RIGHT, LEFT }
 
     [Header("Backgrounds"), SerializeField]
@@ -81,6 +68,26 @@ public class UpgradeSelector : MonoBehaviour
     private float lightConsume;
     [SerializeField]
     private float sizeChangerConsume;
+
+    [Space, Header("Audio Boost"), SerializeField]
+    private AudioClip startBoost;
+    [SerializeField]
+    private AudioClip boost;
+    [SerializeField]
+    private AudioClip finishBoost;
+    private AudioSource boostSource;
+
+    [Space, Header("Audio Light"), SerializeField]
+    private AudioClip SwitchLightClip;
+    [SerializeField]
+    private AudioClip loopLightClip;
+    private AudioSource loopLightSource;
+
+    [Space, Header("Audio Drill"), SerializeField]
+    private AudioClip turnOnDrillClip;
+    [SerializeField]
+    private AudioClip turnOffDrillClip;
+
 
 
     private PlayerController playerController;
@@ -273,7 +280,7 @@ public class UpgradeSelector : MonoBehaviour
             //Restar el consumo de fuel
             playerController.fuelConsume -= drillConsume;
             autoHelpController.enabled = false;
-            
+            AudioManager.instance.Play2dOneShotSound(turnOnDrillClip, "Drill");
         }
         else
         {
@@ -286,6 +293,7 @@ public class UpgradeSelector : MonoBehaviour
             //Resetear el consumo de fuel sumando
             playerController.fuelConsume += drillConsume;
             autoHelpController.enabled = true;
+            AudioManager.instance.Play2dOneShotSound(turnOffDrillClip, "Drill");
         }
     }
     private void ToggleSizeChanger(Position _pos)

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1249371403
-  m_SortingLayer: 10
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7e465c2542d37bc49962e8ca17fc57ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -143,3 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2de317935153247a64f17c50091efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leafCollisionClip: {fileID: 8300000, guid: af69821e7b06bb140803f26ff389b71f, type: 3}
