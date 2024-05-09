@@ -3250,6 +3250,7 @@ GameObject:
   - component: {fileID: 2156482308317944900}
   - component: {fileID: 3347954702648716362}
   - component: {fileID: 2308700757427735010}
+  - component: {fileID: 3891212106718255483}
   m_Layer: 5
   m_Name: ButtonBack
   m_TagString: Untagged
@@ -3475,6 +3476,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3891212106718255483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505973053786218926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5988abe75aba3144bb8bc7812880f4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3574397585538824996
 GameObject:
   m_ObjectHideFlags: 0
@@ -5583,6 +5596,7 @@ GameObject:
   - component: {fileID: 6945223751760172834}
   - component: {fileID: 6110011136520976249}
   - component: {fileID: 4706022648891395132}
+  - component: {fileID: 6923919228423758468}
   m_Layer: 5
   m_Name: ButtonResume
   m_TagString: Untagged
@@ -5784,6 +5798,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6923919228423758468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570336976020806008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5988abe75aba3144bb8bc7812880f4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5652048553692388126
 GameObject:
   m_ObjectHideFlags: 0
@@ -6194,7 +6220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseAction: {fileID: 5422022957932358153, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
-  resumeAction: {fileID: 2631651688888783702, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   actionsSprites:
     _serializedList:
     - Key: {fileID: 4899841175865108252}
@@ -6206,7 +6231,7 @@ MonoBehaviour:
       - {fileID: 21300000, guid: 4d46b6a2783c1ea43bf03e6574107b5d, type: 3}
       - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
   pauseMenuCanvas: {fileID: 2742210413428064604}
-  continueButton: {fileID: 6945223751760172834}
+  continueButton: {fileID: 2156482308317944900}
   firstButtonSelected: {fileID: 6945223751760172834}
   cardLayout: {fileID: 4686470196324184340}
   cardPrefab: {fileID: 9126330276772748410, guid: 29bd3dc77b25a6c4f93d0ce3ef513a78, type: 3}

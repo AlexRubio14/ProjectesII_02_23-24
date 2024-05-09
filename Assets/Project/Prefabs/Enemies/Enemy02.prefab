@@ -370,6 +370,7 @@ MonoBehaviour:
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
+  damagedClip: {fileID: 8300000, guid: 43f3f1e6ce7942e47999ddc7ba18f7a1, type: 3}
   showGizmos: 1
   timeToExplode: 4
   explosion: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}

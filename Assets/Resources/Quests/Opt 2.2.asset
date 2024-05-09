@@ -34,3 +34,6 @@ MonoBehaviour:
   obtainedQuest: 1
   completedQuest: 0
   newQuest: 1
+  missionHintDictionary:
+    _serializedList: []
+  <neededMaterial>k__BackingField: {fileID: 0}
