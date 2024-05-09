@@ -23,6 +23,12 @@ public class Electro : MonoBehaviour
 
     private bool lightOn;
     private Rigidbody2D playerRb2d;
+
+    [Space, SerializeField]
+    private AudioClip powerOnClip;
+    [SerializeField]
+    private AudioClip powerOffClip;
+
     private void Start()
     {
         spotLight = PlayerManager.Instance.player.GetComponentInChildren<Light2D>();
@@ -57,11 +63,13 @@ public class Electro : MonoBehaviour
             {
                 //Sale
                 lightOn = true;
+                AudioManager.instance.Play2dOneShotSound(powerOnClip, "Electro");
             }
             else
             {
                 //Entra
                 lightOn = false;
+                AudioManager.instance.Play2dOneShotSound(powerOffClip, "Electro");
             }
 
             if (lightOn && spotLight.pointLightOuterRadius != maxRangeLight ||

@@ -3412,6 +3412,7 @@ MonoBehaviour:
       Value: 0
     - Key: 1
       Value: 0
+  victoryThemeClip: {fileID: 8300000, guid: a96719bb4ced491429be60a8068cf9af, type: 3}
   arenaMiddlePos: {fileID: 0}
   bossMainSR: {fileID: 5792044154566138187}
   mapBottomCorners:
@@ -3421,8 +3422,6 @@ MonoBehaviour:
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   rockStarterPos: {fileID: 0}
   rockStarterPosXOffset: 17
-  rockSize: 4
-  rockBorderValue: 7
   breakableRocks:
   - {fileID: 0}
   - {fileID: 0}

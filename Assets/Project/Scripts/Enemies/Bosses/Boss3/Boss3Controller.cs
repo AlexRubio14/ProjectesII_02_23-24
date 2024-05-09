@@ -438,6 +438,8 @@ public class Boss3Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.Play2dOneShotSound(victoryThemeClip, "VictoryTheme", 1, 1, 1);
+
         limitZone.SetActive(true);
         dropItem.SetActive(true);
 

@@ -527,6 +527,8 @@ public class Boss2Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.Play2dOneShotSound(victoryThemeClip, "VictoryTheme", 1, 1, 1);
+
         AudioManager.instance.StopLoopSound(avalancheAS);
         AudioManager.instance.StopLoopSound(hideAS);
         AudioManager.instance.StopLoopSound(createWallAS);
@@ -538,7 +540,6 @@ public class Boss2Controller : BossController
 
         //Parar las particulas del spawn
         rockSpawnParticles.Stop();
-
 
         rockDropTimeWaited = 0;
         rockCDTimeWaited = 0;

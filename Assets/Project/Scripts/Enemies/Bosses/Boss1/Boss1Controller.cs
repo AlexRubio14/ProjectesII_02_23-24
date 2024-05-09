@@ -547,6 +547,8 @@ public class Boss1Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.Play2dOneShotSound(victoryThemeClip, "VictoryTheme", 1, 1, 1);
+
         AudioManager.instance.StopLoopSound(suctionAudioSource);
         AudioManager.instance.StopLoopSound(spinAudioSource);
 

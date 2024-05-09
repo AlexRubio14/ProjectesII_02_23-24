@@ -98,6 +98,8 @@ MonoBehaviour:
   bucleCount: 4
   minRangeLight: 2
   exitDirection: {x: 0, y: 0}
+  powerOnClip: {fileID: 8300000, guid: 0864ee5c4e7f97a4dbe32ab48bd95388, type: 3}
+  powerOffClip: {fileID: 8300000, guid: a845d5831188ba04db95f384a803d959, type: 3}
 --- !u!1 &1377138631204078857
 GameObject:
   m_ObjectHideFlags: 0
