@@ -9726,8 +9726,8 @@ MonoBehaviour:
   dialogues:
   - 'Congratulations! You''ve completed your first mission.
 
-    Now enter mission
-    2 to fix it'
+    Now enter in Drill
+    Upgrade mission to select it'
   dialogueController: {fileID: 1688875427}
   selectMissionTutorial: {fileID: 690278483}
 --- !u!4 &1563674178
