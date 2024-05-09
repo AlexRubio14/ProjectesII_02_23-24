@@ -15,8 +15,15 @@ public class MissionHint : MonoBehaviour
 
     private int currentMissionIndex;
 
+    private ImageFloatEffect floatEffect;
+    private TextColorLerpEffect textColorEffect;
+
     private void Awake()
     {
+        floatEffect = GetComponentInChildren<ImageFloatEffect>();
+        textColorEffect = GetComponentInChildren<TextColorLerpEffect>();
+        floatEffect.canFloat = false;
+        textColorEffect.canLerp = false;
         currentMissionIndex = 0;
     }
 
@@ -62,6 +69,8 @@ public class MissionHint : MonoBehaviour
                     break;
                 case QuestObject.QuestObjectives.GO_BASE:
                     hintText.text = item.Value;
+                    floatEffect.canFloat = true;
+                    textColorEffect.canLerp = true;
                     break;
                 default:
                     break;
