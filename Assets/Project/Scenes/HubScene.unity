@@ -2813,7 +2813,7 @@ MonoBehaviour:
   dialogues:
   - Welcome to my shop!
   - Here on the left counter you can see your inventory.
-  - Go to 1st quest and complete it!
+  - Go to Boost Upgrade mission and complete it!
   dialogueController: {fileID: 1688875427}
   shopTutorial: {fileID: 1009540629}
 --- !u!1 &391344610
