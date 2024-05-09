@@ -318,7 +318,7 @@ public class DrillController : MonoBehaviour
                     currentParticle.Play(true);
                 }
                 //AudioManager.instance.Play2dOneShotSound(drillClip, "Drill");
-                AudioManager.instance.PlayOneShotRandomSound2d(drillClips, "Drill", 0.7f, 0.9f, 0.8f);
+                AudioManager.instance.PlayOneShotRandomSound2d(drillClips, "Drill", 0.8f, 0.7f, 0.9f);
             }
             else
             {

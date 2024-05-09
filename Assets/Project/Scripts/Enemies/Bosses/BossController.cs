@@ -30,7 +30,8 @@ public abstract class BossController : MonoBehaviour
     protected Action onDieUpdate;
 
     protected Rigidbody2D rb2d;
-
+    [SerializeField]
+    protected AudioClip victoryThemeClip;
 
     protected void Start()
     {

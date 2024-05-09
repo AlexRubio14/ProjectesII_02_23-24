@@ -877,6 +877,7 @@ MonoBehaviour:
       Value: 0
     - Key: 1
       Value: 0
+  victoryThemeClip: {fileID: 8300000, guid: a96719bb4ced491429be60a8068cf9af, type: 3}
   head: {fileID: 4657057829718688486}
   tail:
   - {fileID: 229679617157027731}
