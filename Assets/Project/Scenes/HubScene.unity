@@ -8574,7 +8574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Quest
+  m_text: New Mission
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e6da0b81662a4a499a539a3bb9bd74b, type: 2}
   m_sharedMaterial: {fileID: 8861312158205022935, guid: 2e6da0b81662a4a499a539a3bb9bd74b, type: 2}

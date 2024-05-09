@@ -11,6 +11,8 @@ public class NewGameController : MonoBehaviour
     [SerializeField]
     private MenuNavegation menuNavegation;
 
+    [SerializeField]
+    private AudioMenuController audioMenuController;
     private void Start()
     {
         Button continueButton = GetComponent<Button>();
@@ -27,7 +29,9 @@ public class NewGameController : MonoBehaviour
         SelectTpsManager.instance.ResetTpObjects();
 
         PlayerPrefs.DeleteAll();
-        
+
+        audioMenuController.SetVolumeAfterErasePlayerPrefs();
+
         QuestManager.Instance.ResetQuests();
         InventoryManager.Instance.ResetInventory();
         UpgradeManager.Instance.ResetUpgrades();

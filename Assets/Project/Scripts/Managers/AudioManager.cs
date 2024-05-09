@@ -22,8 +22,11 @@ public class AudioManager : MonoBehaviour
     GameObject actions3dASObj;
     private AudioSource[] actions3dAS;
 
-    public string musicVolume { get; private set; } = "MusicVolume";
-    public string sfxVolume { get; private set; } = "SfxVolume";
+    public string musicVolumeString { get; private set; } = "MusicVolume";
+    public string sfxVolumeString { get; private set; } = "SfxVolume";
+
+    public float musicVolume;
+    public float sfxVolume;
 
     private void Awake()
     {
@@ -175,13 +178,13 @@ public class AudioManager : MonoBehaviour
 
     private void LoadVolume()
     {
-        if(PlayerPrefs.HasKey(musicVolume))
+        if(PlayerPrefs.HasKey(musicVolumeString))
         {
-            float fMusicVolume = PlayerPrefs.GetFloat(musicVolume);
-            float fSfxVolume = PlayerPrefs.GetFloat(sfxVolume);
+            float fMusicVolume = PlayerPrefs.GetFloat(musicVolumeString);
+            float fSfxVolume = PlayerPrefs.GetFloat(sfxVolumeString);
 
-            mixer.SetFloat(musicVolume, Mathf.Log10(fMusicVolume) * 20f);
-            mixer.SetFloat(sfxVolume, Mathf.Log10(fSfxVolume) * 20f);
+            mixer.SetFloat(musicVolumeString, Mathf.Log10(fMusicVolume) * 20f);
+            mixer.SetFloat(sfxVolumeString, Mathf.Log10(fSfxVolume) * 20f);
         }
     }
 
