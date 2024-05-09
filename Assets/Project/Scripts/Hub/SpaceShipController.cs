@@ -33,6 +33,7 @@ public class SpaceShipController : MonoBehaviour
     public void GoToGame()
     {
         TransitionCanvasManager.instance.onFadeIn -= GoToGame;
+        ShopMusic.instance.StopMusic();
         SceneManager.LoadScene("Map");
     }
 }
