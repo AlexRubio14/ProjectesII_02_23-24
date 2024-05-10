@@ -27,9 +27,9 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
       Value: 10
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-      Value: 18
+      Value: 12
     - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 14
+      Value: 8
     - Key: {fileID: 11400000, guid: 58d218b93ea796f4a9b91203c79a64cb, type: 2}
       Value: 1
   rewards:
