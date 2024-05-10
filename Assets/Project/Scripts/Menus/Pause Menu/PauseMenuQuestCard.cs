@@ -12,6 +12,9 @@ public class PauseMenuQuestCard : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI questTagText;
 
+    [SerializeField]
+    private GameObject imageCompleted;
+
     [Space, SerializeField]
     private Color completeColorTag;
     [SerializeField]
@@ -47,6 +50,10 @@ public class PauseMenuQuestCard : MonoBehaviour
 
         eventTrigger.triggers.Add(entry);
     }
+    private void OnEnable()
+    {
+        imageCompleted.SetActive(!currentQuest.completedQuest && QuestManager.Instance.CanCompleteQuest(currentQuest)); 
+    }
 
     public void SetupQuest(QuestObject _currentQuest)
     {
@@ -60,19 +67,19 @@ public class PauseMenuQuestCard : MonoBehaviour
             //Completada
             currentImage.color = completedBackgroundColor;
             questTagBackground.color = completeColorTag;
-            questTagText.text = "Completada";
+            questTagText.text = "Completed";
         }
         else if (QuestManager.Instance.GetSelectedQuest() == currentQuest)
         {
             //Seleccionada
             questTagBackground.color = selectedColorTag;
-            questTagText.text = "Seleccionado";
+            questTagText.text = "Selected";
         }
         else if (currentQuest.newQuest)
         {
             //Mision nueva
             questTagBackground.color = newQuestColorTag;
-            questTagText.text = "Nuevo";
+            questTagText.text = "New";
         }
         else
         {

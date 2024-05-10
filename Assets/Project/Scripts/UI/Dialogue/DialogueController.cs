@@ -38,6 +38,8 @@ public class DialogueController : MonoBehaviour
     private AudioClip catSound;
     [SerializeField]
     private AudioClip catDialogueSound;
+    [SerializeField]
+    private AudioClip clickSound;
     private int dialogueSoundIndex;
 
     [HideInInspector]
@@ -91,6 +93,7 @@ public class DialogueController : MonoBehaviour
             {
                 DisplayNextDialogue();
             }
+            AudioManager.instance.Play2dOneShotSound(clickSound, "Button");
         }
     }
 

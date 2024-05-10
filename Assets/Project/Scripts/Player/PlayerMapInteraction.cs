@@ -26,6 +26,9 @@ public class PlayerMapInteraction : MonoBehaviour
 
     public bool showCanvas;
 
+    [Space, SerializeField]
+    private bool showGizmos;
+
     private void Start()
     {
         showCanvas = true;
@@ -43,22 +46,32 @@ public class PlayerMapInteraction : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckNearInteractableObject();
+        CheckNearestInteractableObject();
         ShowNeededUpgrade();
 
     }
-    private void CheckNearInteractableObject()
+    private void CheckNearestInteractableObject()
     {
-        RaycastHit2D hit2D = Physics2D.CircleCast(transform.position, checkRadius, Vector2.zero, 0.0f, interactableLayer);
+        RaycastHit2D[] hit2D = Physics2D.CircleCastAll(transform.position, checkRadius, Vector2.zero, 0.0f, interactableLayer);
 
-        if (hit2D)
+        Collider2D nearestCollider = null;
+        float minDistance = 0;
+        foreach (RaycastHit2D item in hit2D)
         {
-            nearestObject = hit2D.collider.GetComponent<InteractableObject>();
+            float currentDistance = Vector2.Distance(transform.position, item.transform.position);
+            if (!nearestCollider || minDistance > currentDistance)
+            {
+                nearestCollider = item.collider;
+                minDistance = currentDistance;
+            }
         }
+
+
+
+        if (nearestCollider)
+            nearestObject = nearestCollider.GetComponent<InteractableObject>();
         else
-        {
             nearestObject = null;
-        }
     }
 
     private void ShowNeededUpgrade()
@@ -133,8 +146,11 @@ public class PlayerMapInteraction : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, checkRadius);
+        if (!showGizmos)
+            return;
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 
 }

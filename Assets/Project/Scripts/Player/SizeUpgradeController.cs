@@ -44,11 +44,18 @@ public class SizeUpgradeController : MonoBehaviour
         enabled = false;
     }
 
+    private void OnDisable()
+    {
+        audioMixer.SetFloat("SFXPitch", pitchVolumeBigSize);
+    }
+
     // Update is called once per frame
     void Update()
     {
         CheckGrowOrShrink(); 
     }
+
+
 
     private void CheckGrowOrShrink()
     {    
@@ -67,7 +74,6 @@ public class SizeUpgradeController : MonoBehaviour
         }
         else
         {
-            Debug.Log("NADA");
             shipSpriteFloatFX.canFloat = false;
         }
 
@@ -87,7 +93,7 @@ public class SizeUpgradeController : MonoBehaviour
 
     private void ChangeCamSize()
     {
-        if (cam.orthographicSize > normalCamSize)
+        if (cam.orthographicSize > normalCamSize || BossManager.Instance.onBoss)
             return;
         cam.orthographicSize = Mathf.Lerp(smallCamSize, normalCamSize, growProcess);
     }

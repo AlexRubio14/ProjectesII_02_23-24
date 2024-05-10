@@ -13,10 +13,8 @@ public class PlayerController : MonoBehaviour
     private InputActionReference rotationAction;
     [SerializeField]
     private InputActionReference accelerateAction;
-    [SerializeField]
-    private InputActionReference dashAction;
 
-    public enum State { IDLE, MOVING, DASHING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
+    public enum State { IDLE, MOVING, MINING, KNOCKBACK, INVENCIBILITY, FREEZE, DEAD};
     private State currentState;
 
     private Rigidbody2D rb2d;
@@ -26,21 +24,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementDirection;
     [HideInInspector]
     public float externalMovementSpeed;
-
-    [Space, Header("Dash"), SerializeField]
-    private float dashForce;
-    private bool canDash;
-    private float lastTimeDash;
-    [SerializeField]
-    private float timeCanDash;
-    [SerializeField]
-    private float dashFuelConsume;
-    [Space, SerializeField]
-    private float timeDashing;
-    private float currentDashTime;
-    private Vector2 dashDirection;
-    [Space, SerializeField]
-    private float dashSpeedDrag;
 
     [Space, Header("Rotation"), SerializeField]
     private float rotationSpeed;
@@ -96,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private AudioClip collisionClip;
     [SerializeField]
     private AudioClip engineClip;
-    private AudioSource engineSource;
+    public AudioSource engineSource { get; private set; }
 
     private SpriteRenderer spriteRenderer;
     private PlayerMapInteraction mapInteraction;
@@ -124,9 +107,6 @@ public class PlayerController : MonoBehaviour
 
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
 
-        canDash = true;
-
-        currentDashTime = 0;
         invulnerabilityTimeWaited = invulnerabilityDuration;
     }
 
@@ -140,7 +120,6 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.performed += AccelerateAction;
         accelerateAction.action.canceled += AccelerateAction;
 
-        dashAction.action.performed += DashAction;
 
         TimeManager.Instance.pauseAction += PlayerPause;
         TimeManager.Instance.resumeAction += PlayerResume;
@@ -156,8 +135,6 @@ public class PlayerController : MonoBehaviour
         accelerateAction.action.started -= AccelerateAction;
         accelerateAction.action.performed -= AccelerateAction;
         accelerateAction.action.canceled -= AccelerateAction;
-
-        dashAction.action.performed -= DashAction;
 
         TimeManager.Instance.pauseAction -= PlayerPause;
         TimeManager.Instance.resumeAction -= PlayerResume;
@@ -181,9 +158,6 @@ public class PlayerController : MonoBehaviour
                 CheckIdleOrMovingState();
                 LoseFuel();
                 CheckEnableEngineParticles();
-                break;
-            case State.DASHING:
-                DashingBehaviour();
                 break;
             case State.MINING:
                 break;
@@ -211,49 +185,15 @@ public class PlayerController : MonoBehaviour
     private void Rotation()
     {
         Vector2 autoHelp = autoHelpController.autoHelpDirection;
-            float autoHelpMutliplier = 3;
-            //En caso de que se tenga que aplicar la auto ayuda
-            //Y el player no este tocando ningun input
-            //Y la ultima direccion no este mirando directo a la pared
-            //Se usara la ultima direccion de movimiento
+        float autoHelpMutliplier = 3;
+        //En caso de que se tenga que aplicar la auto ayuda
+        //Y el player no este tocando ningun input
+        //Y la ultima direccion no este mirando directo a la pared
+        //Se usara la ultima direccion de movimiento
         Vector2 movementAndAutoHelpDirection = movementDirection.normalized * autoHelpMutliplier + autoHelp;
         Vector2 normalizedInputDirection = movementAndAutoHelpDirection.normalized;
         float signedAngle = Vector2.SignedAngle(transform.right, normalizedInputDirection);
         rb2d.AddTorque(signedAngle * (rotationSpeed * sizeUpgrade.sizeMultiplyer) * TimeManager.Instance.timeParameter);
-    }
-    private void Dash()
-    {
-        currentState = State.DASHING;
-
-        dashDirection = movementDirection.normalized * dashForce;
-
-        SubstractFuel(dashFuelConsume);
-    }
-
-    private void DashingBehaviour()
-    {
-        currentDashTime += Time.fixedDeltaTime;
-
-        if(currentDashTime >= timeDashing)
-        {
-            rb2d.velocity = rb2d.velocity / dashSpeedDrag;
-            currentDashTime = 0;
-            currentState = State.IDLE;
-        }
-        else
-        {
-            rb2d.velocity = dashDirection;
-        }
-    }
-
-    private void CheckIfCanDash()
-    {
-        lastTimeDash += Time.deltaTime;
-
-        if (lastTimeDash >= timeCanDash) 
-        {
-            canDash = true;
-        }
     }
 
     private void CheckEnableEngineParticles()
@@ -318,7 +258,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (KeyValuePair<ItemObject, short> item in InventoryManager.Instance.GetRunItems())
         {
-            ThrowMinerals(item.Key, (int)item.Value);
+            ThrowMinerals(item.Key, item.Value);
         }
 
         spriteRenderer.enabled = false;
@@ -392,7 +332,7 @@ public class PlayerController : MonoBehaviour
 
         if (invulnerabilityDuration <= invulnerabilityTimeWaited)
         {
-            fuel -=  GetMaxFuel() * _damagePercentage / 100;
+            SubstractFuelPercentage(_damagePercentage);
             invulnerabilityTimeWaited = 0;
         }
 
@@ -406,9 +346,9 @@ public class PlayerController : MonoBehaviour
         hitParticles.Play();
     }
 
-    public void SubstractFuel(float value)
+    public void SubstractFuelPercentage(float value)
     {
-        fuel -= value;
+        fuel -= GetMaxFuel() * value / 100;
     }
     public float GetFuel()
     {
@@ -530,25 +470,16 @@ public class PlayerController : MonoBehaviour
             movementDirection = currDirection;
         }
     }
+
     private void AccelerateAction(InputAction.CallbackContext obj)
     {
         if (obj.started && currentState == State.IDLE)
-           engineSource = AudioManager.instance.Play2dLoop(engineClip, "Engine");
+            engineSource = AudioManager.instance.Play2dLoop(engineClip, "Engine");
 
         if (obj.canceled && engineSource != null)
             StartCoroutine(AudioManager.instance.FadeOutSFXLoop(engineSource));
 
         accelerationValue = obj.ReadValue<float>();
-    }
-
-    private void DashAction(InputAction.CallbackContext obj)
-    {
-        if(canDash)
-        {
-            canDash = false;
-            lastTimeDash = 0;
-            Dash();
-        }
     }
 
     #endregion

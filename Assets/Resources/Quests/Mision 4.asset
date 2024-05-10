@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Mision 4
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 6
-  <questTitle>k__BackingField: Mision 4
-  <questName>k__BackingField: "El tama\xF1o si importa"
+  <questTitle>k__BackingField: Size Upgrade
+  <questName>k__BackingField: Size Matters
   <questDialogue>k__BackingField: []
   <questDialogueEnd>k__BackingField:
-  - Ahora miausmo tienes instalada la mejora.
+  - I'll install the new upgrade right nyaw!
   neededItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 8ddcb4d81f153ca4e83237167ac71994, type: 2}
@@ -25,7 +25,7 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
       Value: 15
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-      Value: 16
+      Value: 8
     - Key: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}
       Value: 1
   rewards:
@@ -37,3 +37,12 @@ MonoBehaviour:
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1
+  missionHintDictionary:
+    _serializedList:
+    - Key: 1
+      Value: Defeat the boss
+    - Key: 0
+      Value: Collect the minerals
+    - Key: 2
+      Value: Go base to complete the mission
+  <neededMaterial>k__BackingField: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}

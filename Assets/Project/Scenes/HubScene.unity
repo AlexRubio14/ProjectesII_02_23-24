@@ -157,6 +157,7 @@ RectTransform:
   m_Children:
   - {fileID: 331764999}
   - {fileID: 365583561}
+  - {fileID: 1804766948}
   - {fileID: 334913702}
   - {fileID: 1229400353}
   - {fileID: 1194639323}
@@ -243,8 +244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialkey: QuestTutorial
   dialogues:
-  - Este de aqui es el boton de completar, si lo pulsas y tienes los materiales necesarios,
-    me quedare con los materiales que te indico.
+  - This is the completed button, if you have the necessary materials, I will keep
+    them an reward you with upgrades.
   dialogueController: {fileID: 1688875427}
   questTutorialCanvas: {fileID: 1271392436}
   requirementsTutorial: {fileID: 699557413}
@@ -478,7 +479,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -241, y: 440.15314}
+  m_AnchoredPosition: {x: -190, y: 432}
   m_SizeDelta: {x: 319.7862, y: 82.308}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &91187009
@@ -674,7 +675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 241, y: 440.15314}
+  m_AnchoredPosition: {x: 190, y: 432}
   m_SizeDelta: {x: 319.7862, y: 82.308}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &110128348
@@ -1272,6 +1273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 220134992}
   - component: {fileID: 220134993}
+  - component: {fileID: 220134994}
   m_Layer: 5
   m_Name: ExitSplash
   m_TagString: Untagged
@@ -1299,7 +1301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -39}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &220134993
@@ -1310,6 +1312,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220134991}
   m_CullTransparentMesh: 1
+--- !u!114 &220134994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220134991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6509804}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &223520677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,7 +2233,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Volver al men\xFA"
+  m_text: Back to menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -2314,7 +2346,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 87.5}
-  m_SizeDelta: {x: 162.2802, y: 52.8428}
+  m_SizeDelta: {x: 205.0735, y: 52.8428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &361665961
 MonoBehaviour:
@@ -2779,10 +2811,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialkey: ShopTutorial
   dialogues:
-  - "\xA1Bienvenido a mi tienda!"
-  - Aqui en el mostrador de la izquierda puedes ver todos los materiales que traigas
-    de vuelta a la base despues de una inmersion.
-  - Ves a la mision 1 y completala.
+  - Welcome to my shop!
+  - Here on the left counter you can see your inventory.
+  - Go to Boost Upgrade mission and complete it!
   dialogueController: {fileID: 1688875427}
   shopTutorial: {fileID: 1009540629}
 --- !u!1 &391344610
@@ -2940,6 +2971,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 9126330276772748410, guid: b596d2cb2e2ca1c449df9c65e3a0a946, type: 3}
   questCanvas: {fileID: 35765341}
   completeButton: {fileID: 365583557}
+  completeExclamation: {fileID: 1804766947}
   selectButton: {fileID: 334913698}
   backButton: {fileID: 1229400355}
   dialogueController: {fileID: 1688875427}
@@ -3492,7 +3524,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 100.55951}
-  m_SizeDelta: {x: 177.4964, y: 42.7362}
+  m_SizeDelta: {x: 153.4482, y: 42.7362}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516033579
 MonoBehaviour:
@@ -3747,7 +3779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Volver al HUB
+  m_text: Exit Shop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -4566,7 +4598,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 100.56}
-  m_SizeDelta: {x: 156.2162, y: 42.7362}
+  m_SizeDelta: {x: 212.3288, y: 42.7362}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &647861603
 MonoBehaviour:
@@ -4740,7 +4772,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "S\xED"
+  m_text: Yes
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -4848,7 +4880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialkey: SelectMissionTutorial
   dialogues:
-  - Pulsa el boton de fijar para poder ver la mision durante la inmersion
+  - Press Select in order to see the mission in a layout while you are inmersed.
   dialogueController: {fileID: 1688875427}
   firstMission: {fileID: 11400000, guid: 6cbed1bff522bae4aa640c36e75fb700, type: 2}
   selectButtonCanvas: {fileID: 1028275579}
@@ -4955,8 +4987,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 1000, y: 147.61902}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 628.9551, y: 147.619}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &720060514
 MonoBehaviour:
@@ -4978,10 +5010,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xBFQuieres volver al menu principal?"
+  m_text: Do you want to go to the menu?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d95754a2973eb7343ba13e2b6e453be3, type: 2}
-  m_sharedMaterial: {fileID: -2080066064294990652, guid: d95754a2973eb7343ba13e2b6e453be3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f61f566bfbc393d48a566b427eb189a7, type: 2}
+  m_sharedMaterial: {fileID: 4389424548507568522, guid: f61f566bfbc393d48a566b427eb189a7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5005,8 +5037,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5113,7 +5145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Recompensa
+  m_text: Rewards
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
   m_sharedMaterial: {fileID: -6656050521578960225, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
@@ -5226,8 +5258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 25.1243}
-  m_SizeDelta: {x: 1000, y: 283.4268}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 906.9517, y: 243.2207}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &834427967
 MonoBehaviour:
@@ -5633,7 +5665,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fijar
+  m_text: Pin up
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -5963,6 +5995,112 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906478388}
   m_CullTransparentMesh: 1
+--- !u!1 &922260177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 922260178}
+  - component: {fileID: 922260180}
+  - component: {fileID: 922260179}
+  - component: {fileID: 922260181}
+  - component: {fileID: 922260182}
+  m_Layer: 5
+  m_Name: ShopExclamation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &922260178
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922260177}
+  m_LocalRotation: {x: -0, y: -0, z: 0.10452846, w: 0.9945219}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1354007413}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -657, y: 181}
+  m_SizeDelta: {x: 125, y: 125}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &922260179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922260177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 51e84969b7974d847ab901df84ea9e70, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &922260180
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922260177}
+  m_CullTransparentMesh: 1
+--- !u!114 &922260181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922260177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  maxExpand: 1.4
+  minExpand: 1
+  <canFloat>k__BackingField: 1
+--- !u!114 &922260182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922260177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5280a297573a5441bb133c807f9a8a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &925281898
 GameObject:
   m_ObjectHideFlags: 0
@@ -6763,7 +6901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.72156864}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.77254903}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7056,7 +7194,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 87.17908}
-  m_SizeDelta: {x: 156.2162, y: 42.7362}
+  m_SizeDelta: {x: 197.4105, y: 42.7362}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1156812378
 MonoBehaviour:
@@ -7153,7 +7291,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 280, y: 150}
+  m_CellSize: {x: 280, y: 120}
   m_Spacing: {x: 50, y: 30}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -7608,7 +7746,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Recompensa
+  m_text: Rewards
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
   m_sharedMaterial: {fileID: -6656050521578960225, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
@@ -8301,7 +8439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Inventario
+  m_text: Inventory
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9ae18f0815654d44a8d1f037c44982c3, type: 2}
   m_sharedMaterial: {fileID: -599112872114260589, guid: 9ae18f0815654d44a8d1f037c44982c3, type: 2}
@@ -8436,7 +8574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Nueva Mision
+  m_text: New Mission
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e6da0b81662a4a499a539a3bb9bd74b, type: 2}
   m_sharedMaterial: {fileID: 8861312158205022935, guid: 2e6da0b81662a4a499a539a3bb9bd74b, type: 2}
@@ -8544,6 +8682,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2087683795}
+  - {fileID: 922260178}
   - {fileID: 1928734249}
   - {fileID: 1579659939}
   - {fileID: 220134992}
@@ -9229,7 +9368,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 100.880905}
-  m_SizeDelta: {x: 162.2802, y: 52.8428}
+  m_SizeDelta: {x: 220.5709, y: 52.8428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539008539
 MonoBehaviour:
@@ -9585,10 +9724,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialkey: FirstCompletedMission
   dialogues:
-  - 'Felicidades! Has completado tu primera mision.
+  - 'Congratulations! You''ve completed your first mission.
 
-    Ahora entra en la mision
-    2 para fijarla'
+    Now enter in Drill
+    Upgrade mission to select it'
   dialogueController: {fileID: 1688875427}
   selectMissionTutorial: {fileID: 690278483}
 --- !u!4 &1563674178
@@ -9821,7 +9960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -300, y: 100}
+  m_AnchoredPosition: {x: -300, y: 60}
   m_SizeDelta: {x: 358.97083, y: 82.30798}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1579659940
@@ -9947,7 +10086,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 2087683794}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -9959,7 +10098,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 110128351}
         m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
@@ -10761,7 +10900,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Requisitos
+  m_text: Rquirements
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
   m_sharedMaterial: {fileID: -6656050521578960225, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
@@ -11014,6 +11153,99 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797010711}
+  m_CullTransparentMesh: 1
+--- !u!1 &1804766947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804766948}
+  - component: {fileID: 1804766951}
+  - component: {fileID: 1804766950}
+  - component: {fileID: 1804766949}
+  m_Layer: 5
+  m_Name: Exclamation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1804766948
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804766947}
+  m_LocalRotation: {x: -0, y: -0, z: -0.09884343, w: 0.99510306}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 35765338}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.345}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 336.95004, y: -158.20303}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1804766949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804766947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2b168e8861d594e97d0fe0503ad246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  maxExpand: 1.3
+  minExpand: 1.02
+  <canFloat>k__BackingField: 1
+--- !u!114 &1804766950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804766947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 51e84969b7974d847ab901df84ea9e70, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1804766951
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804766947}
   m_CullTransparentMesh: 1
 --- !u!1 &1809403173
 GameObject:
@@ -11385,7 +11617,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Aceptar
+  m_text: Accept
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -11885,18 +12117,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1928734255}
-        m_TargetAssemblyTypeName: SpaceShipController, Assembly-CSharp
-        m_MethodName: SubscribeToFadeIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!114 &1928734251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12305,7 +12525,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Completada
+  m_text: Complete
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -12440,7 +12660,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Requisitos
+  m_text: Requirements
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
   m_sharedMaterial: {fileID: -6656050521578960225, guid: fa500aca66cd60f44854f12cea440e73, type: 2}
@@ -12553,7 +12773,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 100.88043}
-  m_SizeDelta: {x: 184.3867, y: 52.8428}
+  m_SizeDelta: {x: 159.405, y: 52.8428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047494869
 MonoBehaviour:
@@ -13399,7 +13619,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Atr\xE1s"
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -13487,10 +13707,6 @@ PrefabInstance:
     - target: {fileID: 2378520975804106174, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_Name
       value: UpgradeIlustration
-      objectReference: {fileID: 0}
-    - target: {fileID: 2378520975804106174, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3718238106471669552, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -13581,6 +13797,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1083.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 429.206
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -13607,6 +13831,14 @@ PrefabInstance:
     - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -622.00024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -265.823
       objectReference: {fileID: 0}
     - target: {fileID: 8180925324940427738, guid: ac1ae185abef66a4ebf5756a21e86948, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -13803,10 +14035,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectTpCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2415865649733766274, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: menuNavegation
       value: 
@@ -13849,18 +14077,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
-      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4136468105579203200, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}

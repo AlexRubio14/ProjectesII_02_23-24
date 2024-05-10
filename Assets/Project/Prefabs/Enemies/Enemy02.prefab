@@ -95,7 +95,7 @@ MonoBehaviour:
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
-    m_Bits: 4224
+    m_Bits: 5248
   spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 0
 --- !u!1 &1941519944893691061
@@ -252,7 +252,7 @@ Transform:
   - {fileID: 3874927624965997897}
   - {fileID: 3885256371599684818}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &768391568925790214
 Rigidbody2D:
@@ -370,6 +370,7 @@ MonoBehaviour:
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: 996433437872585479e4e0c2b34879da, type: 3}
+  damagedClip: {fileID: 8300000, guid: 43f3f1e6ce7942e47999ddc7ba18f7a1, type: 3}
   showGizmos: 1
   timeToExplode: 4
   explosion: {fileID: 6254618165117323142, guid: 81ad3268af2e73342b7ef2bc58af3953, type: 3}

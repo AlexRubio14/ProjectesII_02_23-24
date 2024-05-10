@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tp 6
   m_EditorClassIdentifier: 
   <id>k__BackingField: 6
-  <zoneName>k__BackingField: Jefe 2
-  discovered: 0
+  <zoneName>k__BackingField: Boss 2
+  discovered: 1

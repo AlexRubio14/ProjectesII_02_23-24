@@ -764,3 +764,4 @@ MonoBehaviour:
   - {fileID: 1696231792222394414}
   catSound: {fileID: 8300000, guid: 68f3b41490195f74dbaf9a6ed76b243d, type: 3}
   catDialogueSound: {fileID: 8300000, guid: 1bd7be6afecc5094baa17f2ff77d15fe, type: 3}
+  clickSound: {fileID: 8300000, guid: 46436cde2bf46fc43949bb0f2a77cce7, type: 3}

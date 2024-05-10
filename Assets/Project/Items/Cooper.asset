@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Cooper
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Miaukita
+  <ItemName>k__BackingField: Meowkita
   <BetaSprite>k__BackingField: {fileID: 21300000, guid: 0c9f8b966f6acd84a9901886bcabd2b2, type: 3}
   <MapSprite>k__BackingField: {fileID: 21300000, guid: 122a4530f21d2e245ba231d62d5b6b7d, type: 3}
   <PickableSprite>k__BackingField: {fileID: 21300000, guid: 7d176ad3b4fedda4d993173f2ef05ada, type: 3}

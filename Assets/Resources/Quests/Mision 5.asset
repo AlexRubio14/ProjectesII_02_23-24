@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Mision 5
   m_EditorClassIdentifier: 
   <questID>k__BackingField: 7
-  <questTitle>k__BackingField: Mision 5
-  <questName>k__BackingField: "\xA1Nos acercamos al Nucleo!"
+  <questTitle>k__BackingField: Core Collector
+  <questName>k__BackingField: Closer to the Core
   <questDialogue>k__BackingField:
-  - "\xA1Esta es tu ultima mision!"
-  - 'Consigue derrotar el ultimo jefe que se encuentra '
+  - This is your last mission! Purrfect!
+  - 'Manage to defeat the last boss found deep underground, in dark and dangerous
+    areas. '
   <questDialogueEnd>k__BackingField: []
   neededItems:
     _serializedList:
@@ -26,9 +27,11 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: 449215be9da996944992211e5a5d7cd7, type: 2}
       Value: 10
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-      Value: 18
+      Value: 12
     - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
-      Value: 14
+      Value: 8
+    - Key: {fileID: 11400000, guid: 58d218b93ea796f4a9b91203c79a64cb, type: 2}
+      Value: 1
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
@@ -36,3 +39,10 @@ MonoBehaviour:
   obtainedQuest: 0
   completedQuest: 0
   newQuest: 1
+  missionHintDictionary:
+    _serializedList:
+    - Key: 0
+      Value: Collect all minerals
+    - Key: 2
+      Value: Go base to complete the mission
+  <neededMaterial>k__BackingField: {fileID: 0}

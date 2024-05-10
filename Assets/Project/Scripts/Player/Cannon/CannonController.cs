@@ -1,23 +1,21 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI; 
 
 public class CannonController : MonoBehaviour
 {
-    [Header("Input"), SerializeField]
-    private InputActionReference shootAction;
-
     [Space, Header("External References"), SerializeField]
     private Transform posToSpawnBullets;
     [SerializeField]
     private GameObject laserPrefab;
 
     [Space, Header("Shoot"), SerializeField]
-    private float shootingRange;
+    private float shortShootingRange;
+    [SerializeField]
+    private float longShootingRange;
+    private float currentShootingRange;
     [SerializeField]
     private float reloadDelay;
     private float currentDelay;
-    private bool isShooting;
     [SerializeField]
     private PlayerController.State[] canShootStates;
     private Rigidbody2D nearestEnemy;
@@ -28,14 +26,13 @@ public class CannonController : MonoBehaviour
     [SerializeField]
     private ParticleSystem shootParticles;
     private Animator shootinAnim;
+    [Space, SerializeField]
+    private GameObject aimTarget;
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip shootClip;
 
-    [Space, Header("AutoShoot"), SerializeField]
-    private bool autoShoot;
-    [SerializeField]
-    private GameObject aimTarget;
+    
 
     [Space, SerializeField]
     private bool showGizmos;
@@ -50,71 +47,84 @@ public class CannonController : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         shootinAnim = GetComponentInChildren<Animator>();
         sliderHealthBar = aimTarget.GetComponentInChildren<Slider>();
-        isShooting = false;
     }
 
     private void OnEnable()
     {
-        shootAction.action.started += ShootAction;
-        shootAction.action.canceled += ShootAction;
+        BossManager.Instance.onBossEnter += SetLongAttackShootRange;
+        BossManager.Instance.onBossExit += SetShortAttackShootRange;
+
+        SetShortAttackShootRange();
     }
 
     private void OnDisable()
     {
-        shootAction.action.started -= ShootAction;
-        shootAction.action.canceled -= ShootAction;
+        BossManager.Instance.onBossEnter += SetLongAttackShootRange;
+        BossManager.Instance.onBossExit += SetShortAttackShootRange;
     }
 
     private void FixedUpdate()
     {
         CheckNearestEnemy();
+        SetAimTarget();
         RotateCanon();
         Shoot();
     }
 
     private void CheckNearestEnemy()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, shootingRange, Vector2.zero, 0, enemiesLayer);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, currentShootingRange, Vector2.zero, 0, enemiesLayer);
 
+        nearestEnemy = FindNearestHit(hits);
+
+        
+    }
+
+    private Rigidbody2D FindNearestHit(RaycastHit2D[] _hits)
+    {
         float minDisntance = 100;
         Rigidbody2D foundEnemy = null;
-        foreach (RaycastHit2D hit in hits)
+        foreach (RaycastHit2D hit in _hits)
         {
             if (!hit.rigidbody)
                 continue;
 
             float distance = Vector2.Distance(transform.position, hit.point);
-            float multuplyValue = (hit.rigidbody.transform.position - transform.position).magnitude;
-            Vector3 dir = (hit.rigidbody.transform.position - transform.position);
+            float multuplyValue = (hit.collider.transform.position - transform.position).magnitude;
+            Vector3 dir = (hit.collider.transform.position - transform.position).normalized;
 
-            if (minDisntance > distance && 
-                !Physics2D.Raycast(transform.position, dir.normalized, multuplyValue, mapLayer))
+            if (minDisntance > distance &&
+                !Physics2D.Raycast(transform.position, dir, multuplyValue, mapLayer))
             {
-                Debug.DrawLine(transform.position, transform.position + dir.normalized * multuplyValue, Color.green, 0.01f);
+                Debug.DrawLine(transform.position, transform.position + dir * multuplyValue, Color.green, 0.01f);
                 foundEnemy = hit.rigidbody;
                 minDisntance = distance;
             }
         }
 
-        nearestEnemy = foundEnemy;
+        return foundEnemy;
+    }
 
-        if (nearestEnemy)
+    private void SetAimTarget()
+    {
+        if (!nearestEnemy)
         {
-            Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
-            if (!currentEnemy) return;
-
-            if (!aimTarget.activeInHierarchy)
-            {
-                aimTarget.SetActive(true);
-            }
-
-            aimTarget.transform.position = nearestEnemy.transform.position;
-            
-            sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
-            
+            if (aimTarget.activeInHierarchy)
+                aimTarget.SetActive(false);
+            return;
         }
-        else if (aimTarget.activeInHierarchy)
-            aimTarget.SetActive(false);
+
+        Enemy currentEnemy = nearestEnemy.GetComponent<Enemy>();
+        if (!currentEnemy) return;
+
+        if (!aimTarget.activeInHierarchy)
+        {
+            aimTarget.SetActive(true);
+        }
+
+        aimTarget.transform.position = nearestEnemy.transform.position;
+
+        sliderHealthBar.value = currentEnemy.currentHealth / currentEnemy.maxHealth;
     }
     private void RotateCanon()
     {
@@ -130,12 +140,8 @@ public class CannonController : MonoBehaviour
             return;
 
         currentDelay += Time.fixedDeltaTime * TimeManager.Instance.timeParameter;
-        if (autoShoot)
-        {
-            isShooting = nearestEnemy;
-        }
 
-        if (currentDelay >= reloadDelay && isShooting && CheckPlayerState())
+        if (currentDelay >= reloadDelay && nearestEnemy && CheckPlayerState())
         {
             AudioManager.instance.Play2dOneShotSound(shootClip, "Laser");
 
@@ -162,12 +168,15 @@ public class CannonController : MonoBehaviour
 
     }
 
-    #region Input
-    private void ShootAction(InputAction.CallbackContext obj)
+    public void SetLongAttackShootRange()
     {
-        isShooting = obj.action.IsInProgress();
+        currentShootingRange = longShootingRange;
     }
-    #endregion
+
+    public void SetShortAttackShootRange()
+    {
+        currentShootingRange = shortShootingRange;
+    }
 
     private void OnDrawGizmosSelected()
     {
@@ -175,6 +184,6 @@ public class CannonController : MonoBehaviour
             return;
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, shootingRange);
+        Gizmos.DrawWireSphere(transform.position, currentShootingRange);
     }
 }

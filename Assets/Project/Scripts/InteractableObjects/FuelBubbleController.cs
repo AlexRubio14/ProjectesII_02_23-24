@@ -21,13 +21,13 @@ public class FuelBubbleController : FloatingItem
     protected override void ObtainAction()
     {
         //Sumar combustible
-        PlayerManager.Instance.player.SubstractFuel(-fuelRecover);
+        PlayerManager.Instance.player.SubstractFuelPercentage(-fuelRecover);
         //Spawnear Particulas que sean hijas del player
         PlayerManager.Instance.player.bubbleFuelParticles.Play();
 
 
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

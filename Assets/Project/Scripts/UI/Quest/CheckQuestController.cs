@@ -29,6 +29,8 @@ public class CheckQuestController : MonoBehaviour
     private Button completeButton;
     private TextMeshProUGUI completeText;
     [SerializeField]
+    private GameObject completeExclamation;
+    [SerializeField]
     private Button selectButton;
     [SerializeField]
     private Button backButton;
@@ -76,10 +78,13 @@ public class CheckQuestController : MonoBehaviour
         {
             bool canBuy = InventoryManager.Instance.CanBuy(_quest.neededItems);
             completeButton.interactable = canBuy;
+            completeExclamation.SetActive(canBuy);
+
             if (canBuy)
                 completeButton.Select();
-            //completeButtonFloatEffect.canFloat = canBuy;
-            completeText.text = "Completar";
+
+
+            completeText.text = "Complete";
 
 
             selectButton.gameObject.SetActive(true);
@@ -87,18 +92,18 @@ public class CheckQuestController : MonoBehaviour
             if (_quest == QuestManager.Instance.GetSelectedQuest())
             {
                 selectButton.interactable = false;
-                selectText.text = "Fijada";
+                selectText.text = "Selected";
             }
             else
             {
                 selectButton.interactable = true;
-                selectText.text = "Fijar";
+                selectText.text = "Select";
             }
         }
         else
         {
             completeButton.interactable = false;
-            completeText.text = "Completada";
+            completeText.text = "Completed";
 
             selectButton.gameObject.SetActive(false);
         }
@@ -166,6 +171,7 @@ public class CheckQuestController : MonoBehaviour
         dialogueController.StartDialogue();
 
         AudioManager.instance.Play2dOneShotSound(missionCompletedClip, "MissionCompleted", 1, 1, 1);
+        completeExclamation.SetActive(false);
     }
 
     private void SelectQuest()

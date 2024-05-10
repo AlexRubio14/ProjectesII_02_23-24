@@ -14,7 +14,7 @@ public abstract class BossController : MonoBehaviour
     [field: SerializeField]
     public float contactDamage {  get; private set; }
 
-    public enum Phase { PHASE_1, PHASE_2, DEAD};
+    public enum Phase { PHASE_1, DEAD};
     [Space, Header("Phases"), SerializeField]
     protected Phase currentPhase;
     [SerializedDictionary("Phase", "LastPercentage")]
@@ -30,7 +30,8 @@ public abstract class BossController : MonoBehaviour
     protected Action onDieUpdate;
 
     protected Rigidbody2D rb2d;
-
+    [SerializeField]
+    protected AudioClip victoryThemeClip;
 
     protected void Start()
     {

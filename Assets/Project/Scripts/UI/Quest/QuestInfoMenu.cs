@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Rendering;
 
 public class QuestInfoMenu : MonoBehaviour
 {
@@ -113,7 +111,7 @@ public class QuestInfoMenu : MonoBehaviour
             TextMeshProUGUI newText = newObj.AddComponent<TextMeshProUGUI>();
             newText.fontSize = rewardFontSize;
             newText.font = fontAsset;
-            newText.alignment = TextAlignmentOptions.Justified;
+            newText.alignment = TextAlignmentOptions.Left;
             switch (item.Value)
             {
                 case QuestObject.RewardType.UPGRADE:

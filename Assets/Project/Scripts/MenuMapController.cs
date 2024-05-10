@@ -6,10 +6,15 @@ using UnityEngine.UI;
 public class MenuMapController : MonoBehaviour
 {
     [SerializeField]
-    private List<Image> tpPosition = new List<Image>();
+    private List<GameObject> tpPosition = new List<GameObject>();
 
     [SerializeField]
-    private Image SelectedImage;
+    private Image selectedImage;
+
+    [SerializeField]
+    private Image spaceshipImage;
+    [SerializeField]
+    private float spaceshipOffset;
 
     private int currentSelectedTp = 0;
 
@@ -19,21 +24,35 @@ public class MenuMapController : MonoBehaviour
         SetSelectedTeleport(0);
     }
 
+    private void OnEnable()
+    {
+        InitializeTpImages();
+        StartCoroutine(SelectShipPosition());
+    }
     private void InitializeTpImages()
     {
         for (int i = 0; i < SelectTpsManager.instance.tpList.Count; i++)
         {
-            tpPosition[i].enabled = SelectTpsManager.instance.tpList[i].discovered;
+            tpPosition[i].SetActive(SelectTpsManager.instance.tpList[i].discovered);
         }
     }
 
     public void SetSelectedTeleport(int tpId)
     {
-        tpPosition[currentSelectedTp].enabled = true;
+        tpPosition[currentSelectedTp].SetActive(true);
 
-        tpPosition[tpId].enabled = false;
-        SelectedImage.transform.position = tpPosition[tpId].transform.position;
+        selectedImage.transform.position = tpPosition[tpId].transform.position;
 
         currentSelectedTp = tpId;
+    }
+
+    private IEnumerator SelectShipPosition()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if(spaceshipImage != null)
+            spaceshipImage.transform.position = 
+                tpPosition[SelectTpsManager.instance.GetIdToTeleport() - 1].transform.position + 
+                Vector3.up * spaceshipOffset;    
     }
 }

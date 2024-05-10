@@ -14,7 +14,7 @@ public class TpButton : MonoBehaviour
 
     private DisplayTps displayTps;
 
-
+    private Button button; 
     public void Initialize(MenuMapController currentMap, DisplayTps displayTps, MenuNavegation menuNavegation, TpObject tpObject)
     {
         menuMapController = currentMap;
@@ -25,19 +25,23 @@ public class TpButton : MonoBehaviour
         textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
         textMeshProUGUI.text = tpObject.zoneName;
 
-        Button bt = GetComponent<Button>();
-        bt.onClick.AddListener(() => SetTp());
+        button = GetComponent<Button>();
+        button.onClick.AddListener(() => SetTp());
     }
 
     public void SelectButton()
     {
-        Button bt = GetComponent<Button>();
-        bt.Select();
+        button.Select();
     }
 
     public void SetTp()
     {
         displayTps.OnButtonClick(tpObject.id);
+    }
+
+    public TpObject GetTp()
+    {
+        return tpObject;
     }
 
     public void BackToHub()

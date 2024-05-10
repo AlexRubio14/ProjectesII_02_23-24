@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 
-
 public class CoreController : InteractableObject
 {
     [Space, Header("Core Collector"), SerializeField]
@@ -15,6 +14,9 @@ public class CoreController : InteractableObject
     private Light2D coreLight;
 
     private Camera cam;
+
+    [Space, SerializeField]
+    private AudioClip collectCoreClip;
 
     private void Awake()
     {
@@ -39,14 +41,22 @@ public class CoreController : InteractableObject
         PlayerManager.Instance.player.GetComponent<PlayerMapInteraction>().showCanvas = false;
         glowUp = true;
         floatEffect.enabled = false;
-        Invoke("EndGame", timeToChangeScene);
+
+        Invoke("FadeIn", timeToChangeScene);
+
+        AudioManager.instance.Play2dOneShotSound(collectCoreClip, "SFX");
 
         cam = CameraController.Instance.GetComponent<Camera>();
     }
-
-    private void EndGame()
+    private void GoToCreditsScene() 
     {
-        SceneManager.LoadScene("TitleScreen");
+        TransitionCanvasManager.instance.onFadeIn -= GoToCreditsScene;
+        SceneManager.LoadScene("CreditsScene");
     }
 
+    private void FadeIn()
+    {
+        TransitionCanvasManager.instance.FadeIn();
+        TransitionCanvasManager.instance.onFadeIn += GoToCreditsScene;
+    }
 }

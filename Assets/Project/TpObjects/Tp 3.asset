@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tp 3
   m_EditorClassIdentifier: 
   <id>k__BackingField: 3
-  <zoneName>k__BackingField: "Monta\xF1as Rocosas"
-  discovered: 0
+  <zoneName>k__BackingField: Boss 1
+  discovered: 1

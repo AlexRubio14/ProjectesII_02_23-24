@@ -41,6 +41,8 @@ public abstract class Enemy : EnemyIA, IHealth
 
     [Header("--- DEATH"), SerializeField]
     protected AudioClip deathClip;
+    [SerializeField]
+    protected AudioClip damagedClip;
     private string enemyAudioSourceName = "Enemy";
 
     //DEBUG
@@ -136,6 +138,9 @@ public abstract class Enemy : EnemyIA, IHealth
         currentHealth -= _damageAmount;
         if (currentHealth <= 0)
             Die();
+        else
+            AudioManager.instance.Play2dOneShotSound(damagedClip, "Enemy", 0.8f, 0.6f, 1.4f);
+        
     }
     virtual public void Die()
     {

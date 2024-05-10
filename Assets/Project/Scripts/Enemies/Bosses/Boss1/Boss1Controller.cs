@@ -51,35 +51,34 @@ public class Boss1Controller : BossController
     private Action dashStart;
     private Action dashUpdate;
 
-    [SerializeField]
+    [Space, SerializeField]
     private AudioClip dashAudioClip;
 
     [Space, Header("Spin"), SerializeField]
     private float spinSpeed;
     [SerializeField]
-    private float spinRotationSpeed;
-    [SerializeField]
     private float spinHeadRotationSpeed;
     private Vector2 spinDirection;
-
     [SerializeField]
     private float spinDuration;
     private float spinTimeWaited;
-
     [SerializeField]
     private float spinStunDuration;
     private float spinStunTimeWaited;
+    [SerializeField]
+    private float spinBounceToPlayerDot;
+
 
     private Vector2 exitDirection;
 
-    [SerializeField]
+    [Space, SerializeField]
     private float bubbleSpinCD;
     private float bubbleSpinTimeWaited;
 
     private Action spinStart;
     private Action spinUpdate;
 
-    [SerializeField]
+    [Space, SerializeField]
     private AudioClip spinLoopAudioClip;
     private AudioSource spinAudioSource;
     [SerializeField]
@@ -104,21 +103,20 @@ public class Boss1Controller : BossController
     private float suctionBubbleSpawnTime;
     private float suctionBubbleTimeWatied;
 
-
     private Action suctionStart;
     private Action suctionUpdate;
 
-    [SerializeField]
+    [Space, SerializeField]
     private AudioClip suctionLoopAudioClip;
     private AudioSource suctionAudioSource;
 
     private Vector2 dieExitDirection;
+    [Space, SerializeField]
+    private AudioClip damageClip;
 
     private Vector2 pauseSpeed;
     private bool activeAnimatorOnPause;
     private Animator animator;
-
-
 
     protected void Awake()
     {
@@ -151,7 +149,11 @@ public class Boss1Controller : BossController
     {
         TimeManager.Instance.pauseAction -= OnPauseAction;
         TimeManager.Instance.resumeAction -= OnResumeAction;
+
+        AudioManager.instance.StopLoopSound(suctionAudioSource);
+        AudioManager.instance.StopLoopSound(spinAudioSource);
     }
+
 
 
     private void Update()
@@ -187,12 +189,6 @@ public class Boss1Controller : BossController
         onStartPhaseAttacks.Add(Phase.PHASE_1, startActions.ToArray());
         onUpdatePhaseAttacks.Add(Phase.PHASE_1, updateActions.ToArray());
 
-        //Fase 2
-        startActions = new List<Action>();
-        updateActions = new List<Action>();
-
-        onStartPhaseAttacks.Add(Phase.PHASE_2, startActions.ToArray());
-        onUpdatePhaseAttacks.Add(Phase.PHASE_2, updateActions.ToArray());
 
         //Cuando este muerto
         startActions = new List<Action>();
@@ -212,7 +208,7 @@ public class Boss1Controller : BossController
     public override void GetDamage(float _damage)
     {
         currentHealth -= _damage;
-
+        AudioManager.instance.Play2dOneShotSound(damageClip, "Boss1");
         UpdateHealthBar();
     }
 
@@ -397,14 +393,12 @@ public class Boss1Controller : BossController
 
     }
     public void ChangeSpinDirection(Collision2D _collision, Vector2 _currentPos)
-    {        
-        float minimumDot = 0.6f;
-
+    {
         Vector2 targetDirection = (spinDirection + _collision.contacts[0].normal).normalized;
 
         Vector2 playerDirection = (PlayerManager.Instance.player.transform.position - head.position).normalized;
         //Si el player no esta en otra direccion y esta suficientemente lejos de la pared
-        if (Vector2.Dot(playerDirection, targetDirection) > minimumDot)
+        if (Vector2.Dot(playerDirection, targetDirection) > spinBounceToPlayerDot)
             targetDirection = (targetDirection + playerDirection).normalized;
 
         spinDirection = targetDirection;
@@ -475,13 +469,13 @@ public class Boss1Controller : BossController
         rb2d.velocity = Vector2.zero;
 
         CheckIfActivateWindBlow();
-        InstantiateBubblesDuringSuction();
 
         if (suctionTimeWaited < suctionDuration)
         {
             Vector2 targetPosition = (Vector2)arenaMiddlePos.position + suctionDirection * maxSuctionPositionDistance;
             MoveHeadSuction(targetPosition, suctionMoveSpeed);
             CameraController.Instance.AddLowTrauma();
+            InstantiateBubblesDuringSuction();
         }
         else
         {
@@ -555,6 +549,11 @@ public class Boss1Controller : BossController
     #region Die
     protected override void StartDie()
     {
+        AudioManager.instance.Play2dOneShotSound(victoryThemeClip, "VictoryTheme", 1, 1, 1);
+
+        AudioManager.instance.StopLoopSound(suctionAudioSource);
+        AudioManager.instance.StopLoopSound(spinAudioSource);
+
         headSR.sprite = deadHeadSprite;
 
         head.GetComponent<CircleCollider2D>().enabled = false;
@@ -577,14 +576,7 @@ public class Boss1Controller : BossController
             dieExitDirection = rb2d.velocity.normalized;
 
         ShowTrackerPositionParticles(false, Vector2.zero, Vector2.zero);
-        if (suctionAudioSource)
-            AudioManager.instance.StopLoopSound(suctionAudioSource);
-        if (spinAudioSource)
-            AudioManager.instance.StopLoopSound(spinAudioSource);
-
-        suctionAudioSource = null;
-        spinAudioSource = null;
-
+        
     }
     protected override void UpdateDie()
     {

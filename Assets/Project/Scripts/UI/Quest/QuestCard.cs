@@ -23,6 +23,9 @@ public class QuestCard : MonoBehaviour
     [SerializeField]
     private Color completed;
 
+    [SerializeField]
+    private GameObject exclamationObject;
+
     [HideInInspector]
     public QuestObject currentQuest;
 
@@ -50,25 +53,28 @@ public class QuestCard : MonoBehaviour
             //Completada
             currentImage.color = completed; 
             questStateBackground.color = completeColor;
-            questStateText.text = "Completada";
+            questStateText.text = "Completed";
         }
         else if (QuestManager.Instance.GetSelectedQuest() == currentQuest)
         {
             //Seleccionada
             questStateBackground.color = selectedColor;
-            questStateText.text = "Seleccionado";
+            questStateText.text = "Selected";
         }
         else if (currentQuest.newQuest)
         {
             //Mision nueva
             questStateBackground.color = newQuestColor;
-            questStateText.text = "Nuevo";
+            questStateText.text = "New";
         }
         else
         {
             //Desactivarlo
             questStateBackground.gameObject.SetActive(false);
         }
+
+        if (currentQuest.completedQuest || !QuestManager.Instance.CanCompleteQuest(currentQuest))
+            exclamationObject.SetActive(false);
 
     }
 

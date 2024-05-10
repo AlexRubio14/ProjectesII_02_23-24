@@ -4,8 +4,6 @@ public class PlayerMineryController : MonoBehaviour
 {
     [SerializeField]
     private MineMinigameController miningMinigame;
-    [SerializeField]
-    private MineryMinigameController newMiningMinigame;
 
     private PlayerController playerController;
 
@@ -21,9 +19,4 @@ public class PlayerMineryController : MonoBehaviour
         miningMinigame.gameObject.SetActive(true);
     }
 
-    public void StartNewMinery(MineralController _mineral)
-    {
-        playerController.ChangeState(PlayerController.State.MINING);
-        newMiningMinigame.StartMining(_mineral);
-    }
 }

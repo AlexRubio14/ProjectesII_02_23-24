@@ -4947,7 +4947,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1249371403
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5110,7 +5110,7 @@ MonoBehaviour:
     m_Bits: 128
   collidersLayer:
     serializedVersion: 2
-    m_Bits: 4224
+    m_Bits: 5248
   spottedPlayerClip: {fileID: 8300000, guid: 8f5ba02680e9366449ec5ebb8f8fc6cc, type: 3}
   showGizmos: 1
 --- !u!1 &1302204989104934714
@@ -5373,7 +5373,7 @@ Transform:
   - {fileID: 8425547812211473044}
   - {fileID: 5184738072117709022}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4181270967838813588
 Rigidbody2D:
@@ -5491,12 +5491,13 @@ MonoBehaviour:
   bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
   maxThrowSpeed: 2
   deathClip: {fileID: 8300000, guid: f6f5e2b1a48a6cc42a2761062a0f47f5, type: 3}
+  damagedClip: {fileID: 8300000, guid: 43f3f1e6ce7942e47999ddc7ba18f7a1, type: 3}
   showGizmos: 1
   eatingDuration: 0.7
   eatingForce: 0
   eatingHeal: 140
   eatingParticles: {fileID: 45364015026190255}
-  impactPlayerClip: {fileID: 8300000, guid: a837ea935bdc4754ba3b49a8ade09e2a, type: 3}
+  impactPlayerClip: {fileID: 8300000, guid: 4a39aad7337b59240991ebf3572981c0, type: 3}
 --- !u!1 &9114009146373791086
 GameObject:
   m_ObjectHideFlags: 0

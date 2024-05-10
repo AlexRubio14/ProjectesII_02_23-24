@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d561ee839f2df74eb7681c7af6d4b1c, type: 3}
   m_Name: Boss2Drop
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Higado Radmiautivo
+  <ItemName>k__BackingField: Purradioctive Liber
   <BetaSprite>k__BackingField: {fileID: 0}
   <MapSprite>k__BackingField: {fileID: 0}
   <PickableSprite>k__BackingField: {fileID: 21300000, guid: 1d28e61a49ebc7348adeece8c07e8269, type: 3}
-  <EffectsColor>k__BackingField: {r: 0.019819856, g: 1, b: 0, a: 1}
+  <EffectsColor>k__BackingField: {r: 0.24705882, g: 1, b: 0.23137255, a: 1}
   <BaseMineralHealth>k__BackingField: 0
   <LeftEnergyLevelSize>k__BackingField: {x: 0, y: 0}
   <RightEnergyLevelSize>k__BackingField: {x: 0, y: 0}

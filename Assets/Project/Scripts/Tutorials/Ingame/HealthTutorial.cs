@@ -13,6 +13,7 @@ public class HealthTutorial : Tutorial
 
     [SerializeField]
     private MovementTutorial movementTutorial;
+
     protected override void TutorialMethod()
     {
         StartHealthTutorial();

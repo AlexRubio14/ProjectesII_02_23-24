@@ -289,7 +289,7 @@ MonoBehaviour:
       Value:
       - {fileID: 21300000, guid: a31452ea99e028e4b830f8fcba244f92, type: 3}
       - {fileID: 21300000, guid: 6f1b2ea0d163e49469ccb1e30493c2f4, type: 3}
-      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
+      - {fileID: 21300000, guid: faeafae63efbf1b40a4e7557e3be877f, type: 3}
     - Key: {fileID: 11400000, guid: 55ddf06fe89226849955f263073e8e31, type: 2}
       Value:
       - {fileID: 21300000, guid: c5e183deafb35bd47a74afe195dae972, type: 3}
@@ -299,17 +299,17 @@ MonoBehaviour:
       Value:
       - {fileID: 21300000, guid: d80fba0d6a630cf48bc78e0f30f11f73, type: 3}
       - {fileID: 21300000, guid: 03a200f30aeb07941b53050f9644dda4, type: 3}
-      - {fileID: 21300000, guid: faeafae63efbf1b40a4e7557e3be877f, type: 3}
+      - {fileID: 21300000, guid: d063df0f8c743b84b86a097a06ff6693, type: 3}
     - Key: {fileID: 11400000, guid: 2fcf23d42cac8564581f41bd0118b4d0, type: 2}
       Value:
       - {fileID: 21300000, guid: 164b7cf86f746de4c80dc84969aed9fa, type: 3}
-      - {fileID: 21300000, guid: fb7bfeaeae6e2484e8136c252827298d, type: 3}
+      - {fileID: 21300000, guid: 5878bf918b444034998c82f9b7b2e58d, type: 3}
       - {fileID: 21300000, guid: 101d2664033fafd48800a1d0ddc89af0, type: 3}
     - Key: {fileID: 11400000, guid: bd7761dca6c3a7a4989a9bb3585145de, type: 2}
       Value:
       - {fileID: 21300000, guid: c206b06a80031114abb9549162d62a95, type: 3}
       - {fileID: 21300000, guid: 2ac5cb48f28824f44b8681195e17570c, type: 3}
-      - {fileID: 21300000, guid: d063df0f8c743b84b86a097a06ff6693, type: 3}
+      - {fileID: 21300000, guid: 7035d529e75ec8f46b55522c4b5a1949, type: 3}
   actionsSprites:
     _serializedList:
     - Key: {fileID: 6550294187041026878}
@@ -436,7 +436,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 84.2525, y: 82.628}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8357727784413557760
 CanvasRenderer:
@@ -944,7 +944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -100, y: 60}
+  m_AnchoredPosition: {x: -118, y: 60}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1666420993604173301
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Obtener
+  m_text: Obtain
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -1709,8 +1709,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -51, y: 0}
-  m_SizeDelta: {x: 184.5563, y: 82.631}
+  m_AnchoredPosition: {x: -15.3, y: 0}
+  m_SizeDelta: {x: 138.9882, y: 82.631}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4341147852546238603
 CanvasRenderer:
@@ -1740,7 +1740,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Presiona
+  m_text: Press
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c4e769ebb45c1844fb9e5564f6cb8548, type: 2}
   m_sharedMaterial: {fileID: -8692987287924476269, guid: c4e769ebb45c1844fb9e5564f6cb8548, type: 2}
@@ -1844,7 +1844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -190, y: -154.60303}
+  m_AnchoredPosition: {x: -208, y: -154.60303}
   m_SizeDelta: {x: 129.9077, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2558799801858896059
@@ -1875,7 +1875,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Manten
+  m_text: Hold
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
   m_sharedMaterial: {fileID: -3618787364529717552, guid: 084c29b4348e6954cb02cd9acb235c88, type: 2}
@@ -1938,7 +1938,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 5.5515137, y: 0, z: 5.5515137, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

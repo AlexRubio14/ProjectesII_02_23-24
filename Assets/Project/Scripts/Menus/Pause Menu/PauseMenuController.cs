@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,6 @@ public class PauseMenuController : MonoBehaviour
 {
     [Header("Inputs"), SerializeField]
     private InputActionReference pauseAction;
-    [SerializeField]
-    private InputActionReference resumeAction;
     [SerializedDictionary("UI Image", "Input Sprites")]
     public SerializedDictionary<Image, Sprite[]> actionsSprites;
 
@@ -18,6 +17,8 @@ public class PauseMenuController : MonoBehaviour
     private Canvas pauseMenuCanvas;
     [SerializeField]
     private Button continueButton;
+    [SerializeField]
+    private Button firstButtonSelected;
 
     [Space, Header("Quest List"), SerializeField]
     private Transform cardLayout;
@@ -62,14 +63,12 @@ public class PauseMenuController : MonoBehaviour
     private void OnEnable()
     {
         pauseAction.action.started += PauseGame;
-        resumeAction.action.started += ResumeGame;
         InputSystem.onDeviceChange += UpdateInputImages;
         UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
     }
     private void OnDisable()
     {
         pauseAction.action.started -= PauseGame;
-        resumeAction.action.started -= ResumeGame;
         InputSystem.onDeviceChange -= UpdateInputImages;
     }
 
@@ -255,14 +254,27 @@ public class PauseMenuController : MonoBehaviour
 
     private void PauseGame(InputAction.CallbackContext obj)
     {
-        InputController.Instance.ChangeActionMap("Menu");
+        //Debug.Log("Menu Paused");
+        //Debug.Break();
+
         TimeManager.Instance.PauseGame();
+        MenuBackController.instance.canGoBack = false;
+        firstButtonSelected.Select();
+
         pauseMenuCanvas.gameObject.SetActive(true);
+
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        StartCoroutine(WaitToChangeMap());
+        InputController.Instance.ChangeActionMap("Menu");
 
-        SelectFirstQuestButon();
+        IEnumerator WaitToChangeMap()
+        {
+            yield return new WaitForSeconds(0.1f);
+            MenuBackController.instance.canGoBack = true;
+        }
+
     }
     public void SelectFirstQuestButon()
     {
@@ -306,7 +318,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void AbortMission()
     {
-        PlayerManager.Instance.player.SubstractFuel(1000);
+        PlayerManager.Instance.player.SubstractFuelPercentage(100);
         PlayerManager.Instance.player.fuelConsume = -10;
         ResumeGame(new InputAction.CallbackContext());
     }

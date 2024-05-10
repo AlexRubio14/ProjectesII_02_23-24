@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PickableItemController : FloatingItem
 {
@@ -8,7 +9,8 @@ public class PickableItemController : FloatingItem
 
     [HideInInspector]
     public bool followPlayer = true;
-
+    [SerializeField]
+    private GameObject pickParticles;
     public Action onItemPicked;
 
 
@@ -16,6 +18,8 @@ public class PickableItemController : FloatingItem
     {
         currentItem = _currentItem;
         spriteRenderer.sprite = currentItem.PickableSprite;
+        if (!light2D)
+            light2D = GetComponentInChildren<Light2D>();
         light2D.color = currentItem.EffectsColor;
     }
 
@@ -34,7 +38,8 @@ public class PickableItemController : FloatingItem
             onItemPicked();
         InventoryManager.Instance.ChangeRunItemAmount(currentItem, 1);
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
-        Destroy(gameObject);
+        Instantiate(pickParticles, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -43,7 +48,6 @@ public class PickableItemController : FloatingItem
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.CompareTag("Player"))
             canChase = true;
     }
