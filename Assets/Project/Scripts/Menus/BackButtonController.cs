@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,20 +5,17 @@ public class BackButtonController : MonoBehaviour
 {
     private Button backButton;
 
-    private void Start()
+    private void Awake()
     {
         backButton = GetComponent<Button>();
     }
 
     private void OnEnable()
     {
-        StartCoroutine(AddButton());
-    }
-
-
-    private IEnumerator AddButton()
-    {
-        yield return new WaitForEndOfFrame();
         MenuBackController.instance.backButton = backButton;
+
+        //Debug.Log("BackButtonEnable");
+        //Debug.Break();
     }
+
 }
