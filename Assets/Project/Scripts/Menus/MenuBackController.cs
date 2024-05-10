@@ -11,6 +11,8 @@ public class MenuBackController : MonoBehaviour
 
     public Button backButton;
 
+    public bool canGoBack = true;
+
     private void Awake()
     {
         if (instance != null)
@@ -39,10 +41,11 @@ public class MenuBackController : MonoBehaviour
     }
     private void BackAction(InputAction.CallbackContext obj)
     {
-        if (backButton && backButton.interactable && backButton.gameObject.activeInHierarchy)
+        if (canGoBack && backButton && backButton.interactable && backButton.gameObject.activeInHierarchy)
         {
-            backButton.onClick.Invoke();
+            Button currentButton = backButton;
             backButton = null;
+            currentButton.onClick.Invoke();
         }
     }
 }

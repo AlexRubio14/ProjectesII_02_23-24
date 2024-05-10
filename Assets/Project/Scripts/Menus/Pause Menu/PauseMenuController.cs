@@ -254,15 +254,27 @@ public class PauseMenuController : MonoBehaviour
 
     private void PauseGame(InputAction.CallbackContext obj)
     {
-        TimeManager.Instance.PauseGame();
-        pauseMenuCanvas.gameObject.SetActive(true);
+        //Debug.Log("Menu Paused");
+        //Debug.Break();
 
+        TimeManager.Instance.PauseGame();
+        MenuBackController.instance.canGoBack = false;
         firstButtonSelected.Select();
 
-        InputController.Instance.ChangeActionMap("Menu");
+        pauseMenuCanvas.gameObject.SetActive(true);
+
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        StartCoroutine(WaitToChangeMap());
+        InputController.Instance.ChangeActionMap("Menu");
+
+        IEnumerator WaitToChangeMap()
+        {
+            yield return new WaitForSeconds(0.1f);
+            MenuBackController.instance.canGoBack = true;
+        }
+
     }
     public void SelectFirstQuestButon()
     {
