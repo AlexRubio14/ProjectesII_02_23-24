@@ -6180,6 +6180,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437016985854638679, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 960
+      objectReference: {fileID: 0}
     - target: {fileID: 3143179838279309928, guid: 94cdaaaf07b113b40ad90306de41601c, type: 3}
       propertyPath: m_Name
       value: MenusInputsCanvas
