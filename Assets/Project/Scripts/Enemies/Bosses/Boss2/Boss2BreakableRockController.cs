@@ -38,6 +38,11 @@ public class Boss2BreakableRockController : MonoBehaviour
         startPos = transform.position;
         canThrowBubble = true;
     }
+
+    private void OnDisable()
+    {
+        canThrowBubble = true;
+    }
     private void FixedUpdate()
     {
         CheckIfThrowBubble();
@@ -71,7 +76,7 @@ public class Boss2BreakableRockController : MonoBehaviour
         {
             for (int j = -rockSize; j < rockSize + 1; j++)
             {
-                if (Mathf.Abs(i) + Mathf.Abs(j) < rockBorderValue)
+                if (Mathf.Abs(i) + Mathf.Abs(j) < rockBorderValue && tilemap.GetTile(new Vector3Int(i, j, 0)) == null)
                 {
                     //Puedo poner trozo de piedra
                     Vector3Int tilePos = new Vector3Int(i, j, 0);

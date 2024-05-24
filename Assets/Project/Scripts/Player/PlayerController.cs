@@ -255,10 +255,15 @@ public class PlayerController : MonoBehaviour
     }
     private void ExploteShip()
     {
-
+        int itemsSpawned = 0;
+        int maxItemsToSpawn = 10;
         foreach (KeyValuePair<ItemObject, short> item in InventoryManager.Instance.GetRunItems())
         {
             ThrowMinerals(item.Key, item.Value);
+            if (itemsSpawned >= maxItemsToSpawn)
+                return;
+
+            itemsSpawned++;
         }
 
         spriteRenderer.enabled = false;
