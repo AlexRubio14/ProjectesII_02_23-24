@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnerMineralsConroller : MonoBehaviour
@@ -7,7 +5,7 @@ public class SpawnerMineralsConroller : MonoBehaviour
     [SerializeField]
     private GameObject[] spawners;
 
-    void Awake()
+    void Start()
     {
         int currentSpawner;
         int lastSpawner = SpawnerMineralsManager.Instance.lastSpawner; 

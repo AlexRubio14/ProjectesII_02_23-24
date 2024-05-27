@@ -10,6 +10,12 @@ public class FuelBubbleController : FloatingItem
         animator.SetBool("IsAnimated", true);
     }
 
+    private void OnEnable()
+    {
+        canChase = false;
+        animator.SetTrigger("SpawnAnim");
+    }
+
     protected override void ChaseAction()
     {
         Vector2 dir = (PlayerManager.Instance.player.transform.position - transform.position).normalized;
@@ -34,16 +40,5 @@ public class FuelBubbleController : FloatingItem
     {
         if (collision.CompareTag("Player"))
             canChase = true;
-    }
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("BreakableWall"))
-        {
-            Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
-            return;
-        }
-        animator.SetTrigger("Collision");
     }
 }
