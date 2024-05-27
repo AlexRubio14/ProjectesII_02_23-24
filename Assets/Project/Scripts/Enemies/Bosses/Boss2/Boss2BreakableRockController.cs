@@ -70,6 +70,7 @@ public class Boss2BreakableRockController : MonoBehaviour
         if (distance >= maxDistanceFromStartPos)
             gameObject.SetActive(false);
     }
+
     public void ResetRockSize()
     {
         for (int i = -rockSize; i < rockSize + 1; i++)
