@@ -16,6 +16,9 @@ public class DrillController : MonoBehaviour
 
     [SerializeField]
     private LayerMask breakableWallLayer;
+    private Collider2D lastColliderHit;
+    private BreakableWallController currentBreakableWall;
+
 
     [Space, Header("Laser Line Renderers"), SerializeField]
     private Transform[] laserCannons; 
@@ -100,7 +103,7 @@ public class DrillController : MonoBehaviour
         sizeUpgrade = GetComponent<SizeUpgradeController>();    
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Drill();        
     }
@@ -140,30 +143,34 @@ public class DrillController : MonoBehaviour
         int totalHits = 0;
         foreach (RaycastHit2D hit in _hits)
         {
-            BreakableWallController breakableWall = hit.collider.GetComponent<BreakableWallController>();
-            if (breakableWall.isHide)
+            if (lastColliderHit == null || lastColliderHit != hit.collider)
             {
-                breakableWall = null;
+                lastColliderHit = hit.collider;
+                currentBreakableWall = hit.collider.GetComponent<BreakableWallController>();
+            }
+
+            if (currentBreakableWall.isHide)
+            {
+                currentBreakableWall = null;
                 return;
             }
 
-            breakableWall.ChangeTileContent(hit.centroid, null);
+            currentBreakableWall.ChangeTileContent(hit.centroid, null);
 
-            Vector2 gridOffset = breakableWall.GetGridOffset();
+            Vector2 gridOffset = currentBreakableWall.GetGridOffset();
             Vector2 tilePos = hit.centroid;
-            UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y), breakableWall);
-            UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y), breakableWall);
-            UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y), breakableWall);
-            UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y), breakableWall);
+            UpdateSideTile(new Vector2(tilePos.x + gridOffset.x, tilePos.y), currentBreakableWall);
+            UpdateSideTile(new Vector2(tilePos.x - gridOffset.x, tilePos.y), currentBreakableWall);
+            UpdateSideTile(new Vector2(tilePos.x, tilePos.y + gridOffset.y), currentBreakableWall);
+            UpdateSideTile(new Vector2(tilePos.x, tilePos.y - gridOffset.y), currentBreakableWall);
 
             totalHits++;
         }
         
 
         if (totalHits != 0)
-        {
-            CameraController.Instance.SetTrauma(0.5f);
-        }
+            CameraController.Instance.SetTrauma(0.4f);
+        
     }
 
     private void UpdateSideTile(Vector2 _tilePos, BreakableWallController _breakableWall)

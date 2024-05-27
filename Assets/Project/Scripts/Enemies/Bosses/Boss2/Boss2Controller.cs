@@ -15,9 +15,9 @@ public class Boss2Controller : BossController
     [SerializeField]
     private Tile defaultTile;
     private Animator animator;
-    [SerializeField]
-    private GameObject bubblePrefab;
     private SpritesColorLerpEffect spritesColorLerp;
+    [SerializeField]
+    private Rigidbody2D[] bubblesPool;
 
     [Space, Header("Rock Drop"), SerializeField]
     private Transform rockStarterPos;
@@ -67,7 +67,6 @@ public class Boss2Controller : BossController
     private float dashCollisionRotationAngle;
     private bool canTrack;
     private bool canLock;
-
 
     private Action startDashesAction;
     private Action updateDashesAction;
@@ -411,10 +410,15 @@ public class Boss2Controller : BossController
 
         for (int i = 0; i < bubblesPerDash; i++)
         {
-            Rigidbody2D bubbleRb2d = Instantiate(bubblePrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+            Rigidbody2D bubbleRb2d = GetUnusedBubble();
+            if (bubbleRb2d == null)
+                break;
+
+            bubbleRb2d.gameObject.SetActive(true);
+            bubbleRb2d.transform.position = transform.position;
             Vector2 randomDirection = -transform.right;
 
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 4; j++)
             {
                 float x = UnityEngine.Random.Range(-1f, 1f);
                 float y = UnityEngine.Random.Range(-1f, 1f);
@@ -433,7 +437,6 @@ public class Boss2Controller : BossController
             bubbleRb2d.AddForce(randomDirection * bubbleSpawnForce, ForceMode2D.Impulse);
         }
 
-
         animator.SetTrigger("Dash");
         canLock = true;
         canTrack = true;
@@ -441,6 +444,17 @@ public class Boss2Controller : BossController
 
         spritesColorLerp.canLerp = false;
         spritesColorLerp.enabled = false;
+    }
+
+    private Rigidbody2D GetUnusedBubble()
+    {
+        foreach (Rigidbody2D item in bubblesPool)
+        {
+            if (!item.gameObject.activeInHierarchy)
+                return item;
+        }
+
+        return null;
     }
 
     #endregion
@@ -459,7 +473,7 @@ public class Boss2Controller : BossController
     {
         //Mover
         LookForwardDirection(createBreakableWallDir, createBreakableWallRotationSpeed);
-        rb2d.velocity = createBreakableWallDir * createBreakableWallSpeed;
+        rb2d.velocity = createBreakableWallDir * createBreakableWallSpeed * TimeManager.Instance.timeParameter;
         //Crear el muro detras suyo
         CreateBreakableWall();
         //Comprobar si acaba el ataque
@@ -477,7 +491,7 @@ public class Boss2Controller : BossController
             int sign = i % 2 == 0 ? 1 : -1;
 
 
-            int totalTilesBetweenPositions = (int)(Vector2.Distance(transform.position, posToSpawnBreakableWall.position) / 0.25f);
+            int totalTilesBetweenPositions = (int)(Vector2.Distance(transform.position, posToSpawnBreakableWall.position) * 4f);
             //En este for rellenamos el medio de la poisicion del boss y la de en frente suya
             for (int j = 0; j < totalTilesBetweenPositions; j++)
             {
@@ -495,10 +509,10 @@ public class Boss2Controller : BossController
                 );
 
             //Ponemos un tile en la la posicion en la frente del boss
-            breakableWallCreate.ChangeTileContent(
-                (Vector2)posToSpawnBreakableWall.position + direction * offsetBetweenCreateBW * sign * multiplier,
-                defaultTile
-                );
+            //breakableWallCreate.ChangeTileContent(
+            //    (Vector2)posToSpawnBreakableWall.position + direction * offsetBetweenCreateBW * sign * multiplier,
+            //    defaultTile
+            //    );
         }
     }
 
