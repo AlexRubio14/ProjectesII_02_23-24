@@ -27,7 +27,7 @@ MonoBehaviour:
       Value: 20
     - Key: {fileID: 11400000, guid: c7aa3f4e2d558ae43b872ddf2f376b14, type: 2}
       Value: 12
-    - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
+    - Key: {fileID: 11400000, guid: c25088a504c4c6d4a98a6454e9a585b5, type: 2}
       Value: 5
     - Key: {fileID: 11400000, guid: 405565fce67da464ba33a387ac332ad5, type: 2}
       Value: 1
@@ -39,13 +39,13 @@ MonoBehaviour:
       Value: 1
   obtainedQuest: 0
   completedQuest: 0
-  newQuest: 0
+  newQuest: 1
   missionHintDictionary:
     _serializedList:
     - Key: 1
       Value: Defeat the boss
     - Key: 0
-      Value: Collect the minerals
+      Value: Collect the remaining minerals
     - Key: 2
       Value: Go base to complete the mission
   <neededMaterial>k__BackingField: {fileID: 11400000, guid: 405565fce67da464ba33a387ac332ad5, type: 2}

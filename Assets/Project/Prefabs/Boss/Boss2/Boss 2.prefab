@@ -3403,7 +3403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55661e4383beb304fb4c8518349e58bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2300
+  maxHealth: 2150
   healthBar: {fileID: 0}
   <contactDamage>k__BackingField: 30
   currentPhase: 0
@@ -3420,7 +3420,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   defaultTile: {fileID: 11400000, guid: 7c0343178b625dc40ad933d4df82b932, type: 2}
-  bubblePrefab: {fileID: 5831591206693089638, guid: 59afd86c334cae649b19c7abd4a524eb, type: 3}
+  bubblesPool: []
   rockStarterPos: {fileID: 0}
   rockStarterPosXOffset: 17
   breakableRocks:

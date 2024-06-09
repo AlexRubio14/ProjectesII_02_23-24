@@ -24,14 +24,14 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
       Value: 20
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-      Value: 10
+      Value: 7
   rewards:
     _serializedList:
     - Key: {fileID: 11400000, guid: d32714e89bf8bc642a345ee197efd096, type: 2}
       Value: 2
     - Key: {fileID: 11400000, guid: 3aa4b05bd98348d40b5ceeefeeac37b1, type: 2}
       Value: 1
-  obtainedQuest: 1
+  obtainedQuest: 0
   completedQuest: 0
   newQuest: 1
   missionHintDictionary:

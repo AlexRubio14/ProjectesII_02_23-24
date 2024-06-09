@@ -1,6 +1,9 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class BoostTutorial : Tutorial
 {
@@ -9,6 +12,21 @@ public class BoostTutorial : Tutorial
 
     [SerializeField]
     private UpgradeObject boost;
+
+
+    [Space, SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
+
+    private void OnEnable()
+    {
+        InputSystem.onDeviceChange += UpdateInputImages;
+        UpdateInputImages(new InputDevice(), InputDeviceChange.Added);
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onDeviceChange -= UpdateInputImages;
+    }
 
     protected override void TutorialMethod()
     {
@@ -49,4 +67,14 @@ public class BoostTutorial : Tutorial
 
         Destroy(this);
     }
+
+
+    private void UpdateInputImages(InputDevice arg1, InputDeviceChange arg2)
+    {
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)InputController.Instance.GetControllerType()];
+        }
+    }
+
 }

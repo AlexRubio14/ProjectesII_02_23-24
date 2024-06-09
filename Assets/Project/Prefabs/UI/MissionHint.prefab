@@ -293,6 +293,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 421d4d9ec1c62634db8c2e6d3bda2b31, type: 2}
   - {fileID: 11400000, guid: cb85d9b15bd1a1749a42d65350fac34a, type: 2}
   hintText: {fileID: 6119078175803619361}
+  allMissionsCompleteString: Collect the core
 --- !u!1 &8967506223044392259
 GameObject:
   m_ObjectHideFlags: 0

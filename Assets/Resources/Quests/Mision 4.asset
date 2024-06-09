@@ -25,7 +25,7 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: faedc6e7f7080ca43851722bc859fdfe, type: 2}
       Value: 15
     - Key: {fileID: 11400000, guid: 41029f7f72d7cc041a616cecb2477fd5, type: 2}
-      Value: 8
+      Value: 6
     - Key: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}
       Value: 1
   rewards:
@@ -42,7 +42,7 @@ MonoBehaviour:
     - Key: 1
       Value: Defeat the boss
     - Key: 0
-      Value: Collect the minerals
+      Value: Collect the remaining minerals
     - Key: 2
       Value: Go base to complete the mission
   <neededMaterial>k__BackingField: {fileID: 11400000, guid: f6e60470ccf728445b5a09fdb7aa9b8f, type: 2}
