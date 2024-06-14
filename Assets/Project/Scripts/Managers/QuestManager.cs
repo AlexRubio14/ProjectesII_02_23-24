@@ -100,6 +100,8 @@ public class QuestManager : MonoBehaviour
             item.newQuest = true;
         }
 
+        selectedQuestID = 0;
+
         SaveQuests();
     }
 

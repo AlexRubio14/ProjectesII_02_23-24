@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
 public class ShopTutorial : Tutorial
 {
     [Space, SerializeField]
     private GameObject shopTutorial;
+    [SerializeField]
+    private GameObject inventory;
+
 
     private void OnEnable()
     {
@@ -38,11 +38,14 @@ public class ShopTutorial : Tutorial
             return;
 
         shopTutorial.SetActive(true);
-
+        inventory.transform.SetParent(shopTutorial.transform);
+        inventory.transform.SetAsFirstSibling();
     }
 
     protected override void EndTutorial()
     {
+        inventory.transform.SetParent(transform.GetChild(0));
+
         shopTutorial.SetActive(false);
         dialogueController.onDialogueLineStart -= DisplayShopTutorial;
         dialogueController.onDialogueEnd -= EndTutorial;

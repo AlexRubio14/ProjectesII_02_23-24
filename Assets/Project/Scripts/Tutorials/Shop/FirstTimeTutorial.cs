@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FirstTimeTutorial : Tutorial
@@ -13,14 +14,21 @@ public class FirstTimeTutorial : Tutorial
     private GameObject shipTutorial;
     [SerializeField]
     private GameObject[] questTutorial;
-
     [SerializeField]
+    private GameObject questInfoParent;
+    [SerializeField]
+    private GameObject[] questInfo;
+
+
+    [Space, SerializeField]
     private GameObject shopButton;
     [SerializeField]
     private GameObject backButton;
 
     [SerializeField]
     private GameObject requirementsLayout;
+
+
     private void OnEnable()
     {
         if (PlayerPrefs.HasKey(tutorialkey) && PlayerPrefs.GetInt(tutorialkey) == 1)
@@ -54,6 +62,12 @@ public class FirstTimeTutorial : Tutorial
                 floatFX.canFloat = true;
             }
         }
+
+        foreach (GameObject item in questInfo)
+        {
+            item.transform.SetParent(questInfoParent.transform);
+        }
+
         dialogueController.onDialogueLineStart -= DisplayRequisitesTutorial;
         dialogueController.onDialogueEnd -= EndTutorial;
         firstTimeTutorial.SetActive(false);
@@ -71,10 +85,14 @@ public class FirstTimeTutorial : Tutorial
                 break; 
             case 2:
                 shipTutorial.SetActive(false);
-                foreach (GameObject item in questTutorial)
+
+                for (int i = 0; i < questTutorial.Length; i++)
                 {
-                    item.SetActive(true);
+                    questTutorial[i].SetActive(true);
+                    questInfo[i].transform.SetParent(questTutorial[i].transform);
+                    questInfo[i].transform.SetAsFirstSibling();
                 }
+
                 break; 
             default:
                 break;

@@ -2573,6 +2573,10 @@ PrefabInstance:
       propertyPath: m_UseGlobalAngle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6367322862775916959, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}
+      propertyPath: m_ColliderMask.m_Bits
+      value: 2944
+      objectReference: {fileID: 0}
     - target: {fileID: 7337086799209468008, guid: eb94f1180d51ec948a17d37df59d5ceb, type: 3}
       propertyPath: playOnAwake
       value: 0

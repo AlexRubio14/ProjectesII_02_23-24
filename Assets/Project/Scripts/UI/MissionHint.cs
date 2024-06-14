@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class MissionHint : MonoBehaviour
@@ -12,7 +9,8 @@ public class MissionHint : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI hintText;
-
+    [Space, SerializeField]
+    private string allMissionsCompleteString;
     private int currentMissionIndex;
 
     private ImageFloatEffect floatEffect;
@@ -49,6 +47,14 @@ public class MissionHint : MonoBehaviour
 
     private void CheckCurrentObjective(ItemObject _item, short _amount)
     {
+        if (missionsToHint[missionsToHint.Count - 1].completedQuest)
+        {
+            hintText.text = allMissionsCompleteString;
+            floatEffect.canFloat = true;
+            textColorEffect.canLerp = true;
+            return;
+        }
+
         foreach (KeyValuePair<QuestObject.QuestObjectives, string> item in missionsToHint[currentMissionIndex].missionHintDictionary)
         {
             switch (item.Key)

@@ -102,12 +102,14 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        TimeManager.Instance.ResumeGame();
         fuelConsume = -idleFuelConsume;
         currentState = State.IDLE;
 
         fuel = baseFuel + PowerUpManager.Instance.Fuel;
 
         invulnerabilityTimeWaited = invulnerabilityDuration;
+
     }
 
     private void OnEnable()
@@ -180,7 +182,9 @@ public class PlayerController : MonoBehaviour
                         Mathf.Clamp01(accelerationValue + Mathf.Clamp(externalMovementSpeed, 0, Mathf.Infinity)) * //Aceleracion y en caso de que una fuerza externa sea positiva tambien se sumara
                         Mathf.Clamp(movementSpeed + externalMovementSpeed, 0, Mathf.Infinity); //Velocidad de movimiento sumandole la externa
 
-        rb2d.AddForce(acceleration * TimeManager.Instance.timeParameter * sizeUpgrade.sizeMultiplyer, ForceMode2D.Force);
+        //Multiplicado por 2 el sizeMultiplier de forma provisional para que sea mejor en durante las boss fights
+        float sizeMultiplier = BossManager.Instance.onBoss ? Mathf.Clamp01(sizeUpgrade.sizeMultiplyer * 2) : sizeUpgrade.sizeMultiplyer;
+        rb2d.AddForce(acceleration * TimeManager.Instance.timeParameter * sizeMultiplier, ForceMode2D.Force);
     }
     private void Rotation()
     {
