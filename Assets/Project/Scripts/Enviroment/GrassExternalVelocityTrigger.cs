@@ -7,6 +7,9 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
     [SerializeField]
     private AudioClip leafCollisionClip;
 
+    [SerializeField]
+    private GamepadRumbleManager.Rumble touchGrassGamepadRumble;
+
     private GrassVelocityController grassVelocityController;
 
     private GameObject player;
@@ -43,6 +46,7 @@ public class GrassExternalVelocityTrigger : MonoBehaviour
             }
 
             AudioManager.instance.Play2dOneShotSound(leafCollisionClip, "Leafs", 1, 0.5f, 1.5f);
+            GamepadRumbleManager.Instance.AddRumble(touchGrassGamepadRumble);
         }
     }
 

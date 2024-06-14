@@ -36,7 +36,7 @@ Transform:
   - {fileID: 8220210334823721990}
   - {fileID: 4281942616738878090}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7745456955625772872
 SpriteRenderer:
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb1e9c97328df54c93b862ee615f2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <c_upgradeNeeded>k__BackingField: {fileID: 0}
+  <upgradeNeeded>k__BackingField: {fileID: 0}
   isInteractable: 1
   <isHide>k__BackingField: 0
   grid: {fileID: 0}
@@ -118,6 +118,14 @@ MonoBehaviour:
   controlHintPivot:
   - {fileID: 8220210334823721990}
   placeParticles: 1
+  unhideGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.5
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 1
   <currentItem>k__BackingField: {fileID: 0}
   <MaxItemsToReturn>k__BackingField: 0
   isBeta: 1
@@ -206,7 +214,7 @@ MonoBehaviour:
   - {x: 0.45841205, y: -0.2284627, z: 0}
   m_ShapePathHash: -1095257861
   m_Mesh: {fileID: 0}
-  m_InstanceId: 101562
+  m_InstanceId: 1040704
   m_LocalBounds:
     m_Center: {x: -0.0021694899, y: -0.011515856, z: 0}
     m_Extent: {x: 0.46058154, y: 0.21694684, z: 0}

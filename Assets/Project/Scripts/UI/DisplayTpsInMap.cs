@@ -20,6 +20,9 @@ public class DisplayTpsInMap : DisplayTps
     [SerializeField]
     private GameObject inputsObject;
 
+    [Space, SerializeField]
+    private GameObject backgroundPanel; 
+
     private void Start()
     {
         playerTpController = PlayerManager.Instance.player.GetComponent<PlayerTpController>();
@@ -40,6 +43,7 @@ public class DisplayTpsInMap : DisplayTps
         Cursor.visible = true;
 
         UpdateDiscoveredTpList();
+        backgroundPanel.SetActive(true);
         base.OnEnable();
 
     }
@@ -48,6 +52,7 @@ public class DisplayTpsInMap : DisplayTps
         resumeAction.action.started -= ResumeGame;
         InputSystem.onDeviceChange -= UpdateInputImages;
         inputsObject.SetActive(false);
+        backgroundPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -89,9 +94,8 @@ public class DisplayTpsInMap : DisplayTps
     public void OpenMenu()
     {
         InputController.Instance.ChangeActionMap("Menu");
+
         TimeManager.Instance.PauseGame();
-
-
     }
 
     public void ReturnToHub()

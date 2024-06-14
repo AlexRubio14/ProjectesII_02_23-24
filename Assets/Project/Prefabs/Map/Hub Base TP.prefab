@@ -147,6 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tp: {fileID: 0}
   tpPosition: {fileID: 1834752945236661296}
+  isDark: 0
+  minLightValue: 0
 --- !u!114 &7985123053697898261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +187,14 @@ MonoBehaviour:
   - {fileID: 7637926836442615933}
   timeToSpawnItem: 0.1
   dropItemClip: {fileID: 8300000, guid: 997076410a258004aac3ea09989d5e2a, type: 3}
+  dropItemGamepadRumble:
+    starterLowFrequency: 0.1
+    lowFrequency: 0
+    starterHighFrequency: 0.1
+    highFrequency: 0
+    starterDuration: 0.05
+    duration: 0
+    progresive: 0
 --- !u!114 &5971767064047036957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,7 +596,23 @@ MonoBehaviour:
   controlHintPivot:
   - {fileID: 2280407530471977184}
   placeParticles: 0
+  unhideGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.5
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 1
   fastTravelCanvas: {fileID: 0}
+  enterTPGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.05
+    highFrequency: 0
+    starterDuration: 0.1
+    duration: 0
+    progresive: 0
 --- !u!61 &6824204765675086956
 BoxCollider2D:
   m_ObjectHideFlags: 0

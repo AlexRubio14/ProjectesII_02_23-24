@@ -88,7 +88,12 @@ public class UpgradeSelector : MonoBehaviour
     [SerializeField]
     private AudioClip turnOffDrillClip;
 
-
+    [Space, Header("Gamepad Rumbling"), SerializeField]
+    private GamepadRumbleManager.Rumble toggleOnGamepadRumble;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble toggleOffGamepadRumble;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble turboGamepadRumble;
 
     private PlayerController playerController;
     private AutoHelpController autoHelpController;
@@ -225,7 +230,8 @@ public class UpgradeSelector : MonoBehaviour
             boostParticles.Play(true);
             AudioManager.instance.Play2dOneShotSound(startBoost, "Boost");
             boostSource = AudioManager.instance.Play2dLoop(boost, "Boost");
-
+            GamepadRumbleManager.Instance.AddRumble(toggleOnGamepadRumble);
+            GamepadRumbleManager.Instance.AddRumble(turboGamepadRumble);
         }
         else if(upgradesToggled[(int)UpgradeObject.UpgradeType.BOOST])
         {
@@ -238,6 +244,8 @@ public class UpgradeSelector : MonoBehaviour
             boostParticles.Stop(true);
             AudioManager.instance.StopLoopSound(boostSource);
             AudioManager.instance.Play2dOneShotSound(finishBoost, "Boost");
+            GamepadRumbleManager.Instance.AddRumble(toggleOffGamepadRumble);
+            GamepadRumbleManager.Instance.RemoveFromList(turboGamepadRumble);
         }
     }
 
@@ -253,6 +261,7 @@ public class UpgradeSelector : MonoBehaviour
 
             AudioManager.instance.Play2dOneShotSound(SwitchLightClip, "Light");
             loopLightSource = AudioManager.instance.Play2dLoop(loopLightClip, "Light");
+            GamepadRumbleManager.Instance.AddRumble(toggleOnGamepadRumble);
         }
         else
         {
@@ -265,6 +274,7 @@ public class UpgradeSelector : MonoBehaviour
             playerController.fuelConsume += lightConsume;
 
             AudioManager.instance.Play2dOneShotSound(SwitchLightClip, "Light");
+            GamepadRumbleManager.Instance.AddRumble(toggleOffGamepadRumble);
         }
     }
     private void ToggleDrill(Position _pos)
@@ -281,6 +291,7 @@ public class UpgradeSelector : MonoBehaviour
             playerController.fuelConsume -= drillConsume;
             autoHelpController.enabled = false;
             AudioManager.instance.Play2dOneShotSound(turnOnDrillClip, "Drill");
+            GamepadRumbleManager.Instance.AddRumble(toggleOnGamepadRumble);
         }
         else
         {
@@ -294,6 +305,7 @@ public class UpgradeSelector : MonoBehaviour
             playerController.fuelConsume += drillConsume;
             autoHelpController.enabled = true;
             AudioManager.instance.Play2dOneShotSound(turnOffDrillClip, "Drill");
+            GamepadRumbleManager.Instance.AddRumble(toggleOffGamepadRumble);
         }
     }
     private void ToggleSizeChanger(Position _pos)
@@ -314,6 +326,10 @@ public class UpgradeSelector : MonoBehaviour
             sizeAudioSource.clip = shrinkSizeAudioClip;
             sizeAudioSource.pitch = Random.Range(0.85f, 1.1f);
             sizeAudioSource.Play();
+            GamepadRumbleManager.Rumble toggleOnRumble = toggleOnGamepadRumble;
+            toggleOnRumble.starterDuration = 0.5f;
+            toggleOnRumble.progresive = true;
+            GamepadRumbleManager.Instance.AddRumble(toggleOnRumble);
         }
         else
         {
@@ -329,8 +345,12 @@ public class UpgradeSelector : MonoBehaviour
             sizeAudioSource.clip = growUpSizeAudioClip;
             sizeAudioSource.pitch = Random.Range(0.85f, 1.1f);
             sizeAudioSource.Play();
+            GamepadRumbleManager.Rumble toggleOffRumble = toggleOffGamepadRumble;
+            toggleOffRumble.starterDuration = 1f;
+            toggleOffRumble.progresive = true;
+            GamepadRumbleManager.Instance.AddRumble(toggleOffRumble);
         }
-        
+
     }
 
     private void ChangeBackground(Position _pos, bool _on)

@@ -10,9 +10,12 @@ public class ExplotionController : MonoBehaviour
     private float damageExplosion;
     [SerializeField]
     private LayerMask collideLayer;
-
+    [SerializeField]
+    private GamepadRumbleManager.Rumble explosionGamepadRumble;
     private void Start()
     {
+        GamepadRumbleManager.Instance.AddRumble(explosionGamepadRumble);
+
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, rangeExplosion, Vector2.zero, 0, collideLayer);
         foreach (RaycastHit2D hit in hits)
         {
@@ -28,6 +31,7 @@ public class ExplotionController : MonoBehaviour
                     break;
             }
         }
+
     }
 
     private void OnDrawGizmosSelected()

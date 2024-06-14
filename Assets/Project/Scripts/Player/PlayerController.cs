@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private float knockbackRotation;
     [SerializeField]
     private float knockbackTime;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble hitGamepadRumble;
 
     [Space, Header("Fuel"), SerializeField]
     private float baseFuel;
@@ -323,6 +325,8 @@ public class PlayerController : MonoBehaviour
     public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {
 
+        GamepadRumbleManager.Instance.AddRumble(new GamepadRumbleManager.Rumble(0.25f, 0.25f, knockbackTime, true));
+
         switch (currentState)
         {
             case State.MINING:
@@ -522,6 +526,7 @@ public class PlayerController : MonoBehaviour
         else if (collision.collider.CompareTag("Boss") || collision.collider.CompareTag("BossLaser"))
         {
             GetDamage(collision.gameObject.GetComponentInParent<BossController>().contactDamage, collision.GetContact(0).point);
+            AudioManager.instance.Play2dOneShotSound(collisionClip, "Player");
         }
     }
 }

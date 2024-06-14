@@ -39,12 +39,14 @@ abstract public class InteractableObject : MonoBehaviour
 
     [SerializeField]
     protected bool placeParticles = true;
+    [Space, SerializeField]
+    protected GamepadRumbleManager.Rumble unhideGamepadRumble;
     abstract public void Interact();
     virtual public void UnHide()
     {
         GameObject vfx = Instantiate(unhideVFX, unhidePivot.position, Quaternion.identity);
-
         Destroy(vfx, 3);
+        GamepadRumbleManager.Instance.AddRumble(unhideGamepadRumble);
     }
 
     protected void SetupParticles(Color _color)

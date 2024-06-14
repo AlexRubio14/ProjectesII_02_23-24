@@ -50,6 +50,14 @@ MonoBehaviour:
   collideLayer:
     serializedVersion: 2
     m_Bits: 640
+  explosionGamepadRumble:
+    starterLowFrequency: 0.65
+    lowFrequency: 0
+    starterHighFrequency: 0.5
+    highFrequency: 0
+    starterDuration: 0.3
+    duration: 0
+    progresive: 1
 --- !u!1001 &174285212253290335
 PrefabInstance:
   m_ObjectHideFlags: 0

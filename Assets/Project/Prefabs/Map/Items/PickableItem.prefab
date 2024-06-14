@@ -116,6 +116,14 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   followPlayer: 1
   pickParticles: {fileID: 4144012966540495878, guid: fb2a5543eea755041b62f13420c50eb9, type: 3}
+  pickItemGamepadRumble:
+    starterLowFrequency: 0.05
+    lowFrequency: 0
+    starterHighFrequency: 0.05
+    highFrequency: 0
+    starterDuration: 0.15
+    duration: 0
+    progresive: 0
 --- !u!95 &4893854165630699584
 Animator:
   serializedVersion: 5

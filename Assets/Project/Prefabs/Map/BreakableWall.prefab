@@ -65,7 +65,7 @@ Transform:
   - {fileID: 8523219347774161742}
   - {fileID: 8962179828395199701}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &4456195647066021353
 Grid:
@@ -422,6 +422,14 @@ MonoBehaviour:
   - {fileID: 6328979655142305000}
   - {fileID: 5983880535597071868}
   placeParticles: 0
+  unhideGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.5
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 1
 --- !u!114 &2288941836080915551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,7 +456,7 @@ MonoBehaviour:
   - {x: 26.25, y: -49.75, z: 0}
   m_ShapePathHash: 82441493
   m_Mesh: {fileID: 0}
-  m_InstanceId: 284522
+  m_InstanceId: 1040138
   m_LocalBounds:
     m_Center: {x: 10.5, y: -17.375, z: 0}
     m_Extent: {x: 15.75, y: 32.375, z: 0}

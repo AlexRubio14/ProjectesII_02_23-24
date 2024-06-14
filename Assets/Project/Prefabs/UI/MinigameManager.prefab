@@ -1053,6 +1053,46 @@ MonoBehaviour:
   leftLaserBreakSource: {fileID: 5776383970083095041}
   rightLaserSource: {fileID: 4308802670645886364}
   rightLaserBreakSource: {fileID: 7095189797108419807}
+  twoLasersGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.2
+    highFrequency: 0
+    starterDuration: 99999
+    duration: 0
+    progresive: 0
+  oneLasersGamepadRumble:
+    starterLowFrequency: 0.1
+    lowFrequency: 0
+    starterHighFrequency: 0.1
+    highFrequency: 0
+    starterDuration: 99999
+    duration: 0
+    progresive: 0
+  zeroLasersGamepadRumble:
+    starterLowFrequency: 0.2
+    lowFrequency: 0
+    starterHighFrequency: 0
+    highFrequency: 0
+    starterDuration: 99999
+    duration: 0
+    progresive: 0
+  endMiningGamepadRumble:
+    starterLowFrequency: 0.4
+    lowFrequency: 0
+    starterHighFrequency: 0
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 0
+  stopMiningGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.4
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 0
 --- !u!82 &4030455991053541539
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UiButtonHandler : MonoBehaviour
@@ -12,6 +10,7 @@ public class UiButtonHandler : MonoBehaviour
     public void PlayOnClickClip()
     {
         AudioManager.instance.Play2dOneShotSound(clickClip, "Button");
+        GamepadRumbleManager.Instance.AddRumble(new GamepadRumbleManager.Rumble(0f, 0.05f, 0.15f, false));
     }
 
     public void PlayOnHoverClip()

@@ -15125,7 +15125,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 6
   m_LinearDrag: 2
-  m_AngularDrag: 7
+  m_AngularDrag: 12
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -15331,10 +15331,18 @@ MonoBehaviour:
   accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   movementSpeed: 50
   externalMovementSpeed: 0
-  rotationSpeed: 0.55
+  rotationSpeed: 0.8
   knockbackScale: 10
   knockbackRotation: 1
   knockbackTime: 0.3
+  hitGamepadRumble:
+    starterLowFrequency: 0.1
+    lowFrequency: 0
+    starterHighFrequency: 0.2
+    highFrequency: 0
+    starterDuration: 0
+    duration: 0.3
+    progresive: 1
   baseFuel: 200
   fuelConsume: 0
   mapDamage: 25
@@ -15480,6 +15488,14 @@ MonoBehaviour:
   - {fileID: 4901250683723312212}
   - {fileID: 266019813600915403}
   - {fileID: 7958093267779124489}
+  laserDrillGamepadRumble:
+    starterLowFrequency: 0.1
+    lowFrequency: 0
+    starterHighFrequency: 0.1
+    highFrequency: 0
+    starterDuration: 0.1
+    duration: 0
+    progresive: 1
   baseTile: {fileID: 11400000, guid: 7c0343178b625dc40ad933d4df82b932, type: 2}
   aloneTile: {fileID: 11400000, guid: 3fe535b130327bf42a9d45eb23120fc1, type: 2}
   oneSideTileUp: {fileID: 11400000, guid: af8246b0cf75082468e58ba8d083b317, type: 2}
@@ -15597,6 +15613,30 @@ MonoBehaviour:
   loopLightClip: {fileID: 8300000, guid: 11c5188e3cdf1e74185ea628fe5af719, type: 3}
   turnOnDrillClip: {fileID: 8300000, guid: d3c61e593c7381049b20453b16f75cf9, type: 3}
   turnOffDrillClip: {fileID: 8300000, guid: 1b3b64f4132ef5a4eacfab44962b925e, type: 3}
+  toggleOnGamepadRumble:
+    starterLowFrequency: 0.1
+    lowFrequency: 0
+    starterHighFrequency: 0
+    highFrequency: 0
+    starterDuration: 0.15
+    duration: 0
+    progresive: 0
+  toggleOffGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.2
+    highFrequency: 0
+    starterDuration: 0.15
+    duration: 0
+    progresive: 0
+  turboGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.01
+    highFrequency: 0
+    starterDuration: 999999
+    duration: 0
+    progresive: 0
 --- !u!114 &670545847217739927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16219,6 +16259,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 266240
   shootParticles: {fileID: 4590653105361512190}
+  shootGamepadRumble:
+    starterLowFrequency: 0.15
+    lowFrequency: 0
+    starterHighFrequency: 0.1
+    highFrequency: 0
+    starterDuration: 0.15
+    duration: 0
+    progresive: 1
   aimTarget: {fileID: 0}
   shootClip: {fileID: 8300000, guid: c69f20320ecc8a342a4d44e87231d232, type: 3}
   showGizmos: 1
