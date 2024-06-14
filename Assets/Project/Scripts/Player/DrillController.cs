@@ -32,6 +32,9 @@ public class DrillController : MonoBehaviour
     [Space, Header("Particles"), SerializeField]
     private ParticleSystem[] laserParticles;
 
+    [Space, SerializeField]
+    private GamepadRumbleManager.Rumble laserDrillGamepadRumble;
+
     #region Tiles
 
     [Space, Header("Tiles"), SerializeField]
@@ -169,7 +172,10 @@ public class DrillController : MonoBehaviour
         
 
         if (totalHits != 0)
+        {
             CameraController.Instance.SetTrauma(0.4f);
+            GamepadRumbleManager.Instance.AddRumble(laserDrillGamepadRumble);
+        }
         
     }
 

@@ -12,7 +12,8 @@ public class PickableItemController : FloatingItem
     [SerializeField]
     private GameObject pickParticles;
     public Action onItemPicked;
-
+    [SerializeField]
+    private GamepadRumbleManager.Rumble pickItemGamepadRumble;
 
     public void InitializeItem(ItemObject _currentItem)
     {
@@ -39,6 +40,7 @@ public class PickableItemController : FloatingItem
         InventoryManager.Instance.ChangeRunItemAmount(currentItem, 1);
         AudioManager.instance.Play2dOneShotSound(collectClip, "Items");
         Instantiate(pickParticles, transform.position, Quaternion.identity);
+        GamepadRumbleManager.Instance.AddRumble(pickItemGamepadRumble);
         gameObject.SetActive(false);
     }
 

@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4544624943931152906
 SpriteRenderer:
@@ -144,3 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leafCollisionClip: {fileID: 8300000, guid: af69821e7b06bb140803f26ff389b71f, type: 3}
+  touchGrassGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.05
+    highFrequency: 0
+    starterDuration: 0.1
+    duration: 0
+    progresive: 0

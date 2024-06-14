@@ -15,7 +15,8 @@ public class FuelZoneSaveItemsController : MonoBehaviour
 
     [Space, SerializeField]
     private AudioClip dropItemClip;
-
+    [SerializeField]
+    private GamepadRumbleManager.Rumble dropItemGamepadRumble;
     private void OnEnable()
     {
         timeToSpawnWaited = 0;
@@ -50,6 +51,7 @@ public class FuelZoneSaveItemsController : MonoBehaviour
             {
                 fuelItem.gameObject.SetActive(true);
                 fuelItem.Initialize(PlayerManager.Instance.player.transform.position, transform.parent.position, curretItem.PickableSprite);
+                GamepadRumbleManager.Instance.AddRumble(dropItemGamepadRumble);
             }
 
             AudioManager.instance.Play2dOneShotSound(dropItemClip, "TpInteraction", 1.1f, 0.6f, 1.4f);

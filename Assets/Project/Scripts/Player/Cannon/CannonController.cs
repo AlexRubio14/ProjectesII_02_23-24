@@ -26,9 +26,10 @@ public class CannonController : MonoBehaviour
     [SerializeField]
     private ParticleSystem shootParticles;
     private Animator shootinAnim;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble shootGamepadRumble;
     [Space, SerializeField]
     private GameObject aimTarget;
-
     [Space, Header("Audio"), SerializeField]
     private AudioClip shootClip;
 
@@ -150,6 +151,8 @@ public class CannonController : MonoBehaviour
             CameraController.Instance.AddLowTrauma();
             shootinAnim.SetTrigger("Shoot");
             shootParticles.Play();
+            GamepadRumbleManager.Instance.AddRumble(shootGamepadRumble);
+
         }
     }
     private bool CheckPlayerState()

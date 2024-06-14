@@ -114,6 +114,17 @@ public class MineMinigameController : MonoBehaviour
     [SerializeField]
     private AudioSource rightLaserBreakSource;
 
+    [Space, SerializeField]
+    private GamepadRumbleManager.Rumble twoLasersGamepadRumble;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble oneLasersGamepadRumble;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble zeroLasersGamepadRumble;
+    [Space, SerializeField]
+    private GamepadRumbleManager.Rumble endMiningGamepadRumble;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble stopMiningGamepadRumble;
+
     private void Awake()
     {
         activeCanvas = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
@@ -166,6 +177,7 @@ public class MineMinigameController : MonoBehaviour
 
         DisplayCanvas(false);
 
+        GamepadRumbleManager.Instance.AddRumble(twoLasersGamepadRumble);
     }
 
     private void OnDisable()
@@ -181,6 +193,10 @@ public class MineMinigameController : MonoBehaviour
 
         TimeManager.Instance.ResumeGame();
         InputSystem.onDeviceChange -= UpdateInputImages;
+
+        GamepadRumbleManager.Instance.RemoveFromList(twoLasersGamepadRumble);
+        GamepadRumbleManager.Instance.RemoveFromList(oneLasersGamepadRumble);
+        GamepadRumbleManager.Instance.RemoveFromList(zeroLasersGamepadRumble);
 
         DisplayCanvas(true);
     }
@@ -291,6 +307,13 @@ public class MineMinigameController : MonoBehaviour
             currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
             progressValue += (progressSpeed * 2 * currentMultiplierSpeed) * Time.deltaTime;
 
+
+            if (GamepadRumbleManager.Instance.RemoveFromList(oneLasersGamepadRumble) ||
+                GamepadRumbleManager.Instance.RemoveFromList(zeroLasersGamepadRumble))
+            {
+                GamepadRumbleManager.Instance.AddRumble(twoLasersGamepadRumble);
+            }
+
         }
         else if(rightLaser.CorrectEnergy || leftLaser.CorrectEnergy)
         {
@@ -299,6 +322,12 @@ public class MineMinigameController : MonoBehaviour
             currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
             progressValue += (progressSpeed * currentMultiplierSpeed) * Time.deltaTime;
             integrityValue -= breakSpeed * Time.deltaTime;
+
+            if (GamepadRumbleManager.Instance.RemoveFromList(twoLasersGamepadRumble) ||
+                GamepadRumbleManager.Instance.RemoveFromList(zeroLasersGamepadRumble))
+            {
+                GamepadRumbleManager.Instance.AddRumble(oneLasersGamepadRumble);
+            }
         }
         else
         {
@@ -306,6 +335,12 @@ public class MineMinigameController : MonoBehaviour
             currentMultiplierSpeed -= multipliersDownSpeed * Time.deltaTime;
             currentMultiplierSpeed = Mathf.Clamp(currentMultiplierSpeed, 1, maxMultiplierSpeed);
             integrityValue -= (breakSpeed * 2) * Time.deltaTime;
+
+            if (GamepadRumbleManager.Instance.RemoveFromList(twoLasersGamepadRumble) ||
+                GamepadRumbleManager.Instance.RemoveFromList(oneLasersGamepadRumble))
+            {
+                GamepadRumbleManager.Instance.AddRumble(zeroLasersGamepadRumble);
+            }
         }
 
         progressBarSlider.value = progressValue;
@@ -358,6 +393,8 @@ public class MineMinigameController : MonoBehaviour
         integrityValue = 0;
 
         PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
+
+        GamepadRumbleManager.Instance.AddRumble(endMiningGamepadRumble);
 
         gameObject.SetActive(false);
 
@@ -470,6 +507,8 @@ public class MineMinigameController : MonoBehaviour
         integrityValue = 0;
 
         PlayerManager.Instance.player.ChangeState(PlayerController.State.MOVING);
+
+        GamepadRumbleManager.Instance.AddRumble(stopMiningGamepadRumble);
 
         gameObject.SetActive(false);
     }

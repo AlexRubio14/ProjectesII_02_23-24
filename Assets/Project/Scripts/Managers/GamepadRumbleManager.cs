@@ -29,15 +29,15 @@ public class GamepadRumbleManager : MonoBehaviour
 
         [Range(0, 1)]
         public float starterLowFrequency;
-        //[HideInInspector]
+        [HideInInspector]
         public float lowFrequency;
         [Range(0,1)]
         public float starterHighFrequency;
-        //[HideInInspector]
+        [HideInInspector]
         public float highFrequency;
 
         public float starterDuration;
-        //[HideInInspector]
+        [HideInInspector]
         public float duration;
 
         public bool progresive;
@@ -73,12 +73,37 @@ public class GamepadRumbleManager : MonoBehaviour
         ApplyRumble(frequencys[0], frequencys[1]);
     }
 
-    public int AddRumble(Rumble _rumble)
+    public void AddRumble(Rumble _rumble)
     {
-        rumbleList.Add(_rumble);
+        _rumble.duration = _rumble.starterDuration;
+        _rumble.lowFrequency = _rumble.starterLowFrequency;
+        _rumble.highFrequency = _rumble.starterHighFrequency;
 
-        return rumbleList.Count - 1;
+        rumbleList.Add(_rumble);
     }
+
+    public bool RemoveFromList(Rumble _currentRumble)
+    {
+
+        for (int i = 0; i < rumbleList.Count; i++)
+        {
+            if (rumbleList[i].starterLowFrequency == _currentRumble.starterLowFrequency &&
+                rumbleList[i].starterHighFrequency == _currentRumble.starterHighFrequency &&
+                rumbleList[i].starterDuration == _currentRumble.starterDuration)
+            {
+                rumbleList.RemoveAt(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private IEnumerable RemoveFromListCoroutine(int _currentId)
+    {
+        yield return new WaitForEndOfFrame();
+        rumbleList.RemoveAt(_currentId);
+    }
+
 
     private void ClearRumbleList()
     {
@@ -115,9 +140,10 @@ public class GamepadRumbleManager : MonoBehaviour
 
         foreach (Rumble item in rumbleList)
         {
-            if (item.lowFrequency > frequencys[0])
+            if (item.lowFrequency >= frequencys[0])
                 frequencys[0] = item.lowFrequency;
-            if (item.highFrequency > frequencys[1])
+
+            if (item.highFrequency >= frequencys[1])
                 frequencys[1] = item.highFrequency;
         }
 
@@ -130,12 +156,6 @@ public class GamepadRumbleManager : MonoBehaviour
             return;
 
         pad.SetMotorSpeeds(_lowFrequency, _highFrequency);
-    }
-
-    public IEnumerable RemoveFromList(int _rumbleId)
-    {
-        yield return new WaitForEndOfFrame();
-        rumbleList.RemoveAt(_rumbleId);
     }
 
     private void OnDisable()

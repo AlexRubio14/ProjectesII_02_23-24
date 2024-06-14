@@ -14113,6 +14113,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 226249114}
+    - target: {fileID: 654249439303737733, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1819140128}
     - target: {fileID: 941920544253546482, guid: 1d5a7f128e310f743aef3d2ef8adbf88, type: 3}
       propertyPath: m_Name
       value: SelectTpCanvas

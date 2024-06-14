@@ -1562,3 +1562,11 @@ MonoBehaviour:
   hitBorderEnableSpeed: {x: 6, y: 1}
   lowFuelBorder: {fileID: 0}
   lowFuelBeep: {fileID: 8300000, guid: c409386ab50aece42981375b154b3ea6, type: 3}
+  lowFuelGamepadRumble:
+    starterLowFrequency: 0.4
+    lowFrequency: 0
+    starterHighFrequency: 0
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 0

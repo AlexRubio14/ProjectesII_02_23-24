@@ -526,6 +526,7 @@ public class PlayerController : MonoBehaviour
         else if (collision.collider.CompareTag("Boss") || collision.collider.CompareTag("BossLaser"))
         {
             GetDamage(collision.gameObject.GetComponentInParent<BossController>().contactDamage, collision.GetContact(0).point);
+            AudioManager.instance.Play2dOneShotSound(collisionClip, "Player");
         }
     }
 }

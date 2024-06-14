@@ -166,6 +166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tp: {fileID: 0}
   tpPosition: {fileID: 1834752945236661296}
+  isDark: 0
+  minLightValue: 0
 --- !u!114 &7774468889187246587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,7 +534,23 @@ MonoBehaviour:
   controlHintPivot:
   - {fileID: 2280407530471977184}
   placeParticles: 0
+  unhideGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.5
+    highFrequency: 0
+    starterDuration: 0.2
+    duration: 0
+    progresive: 1
   fastTravelCanvas: {fileID: 0}
+  enterTPGamepadRumble:
+    starterLowFrequency: 0
+    lowFrequency: 0
+    starterHighFrequency: 0.05
+    highFrequency: 0
+    starterDuration: 0.1
+    duration: 0
+    progresive: 0
 --- !u!61 &6824204765675086956
 BoxCollider2D:
   m_ObjectHideFlags: 0

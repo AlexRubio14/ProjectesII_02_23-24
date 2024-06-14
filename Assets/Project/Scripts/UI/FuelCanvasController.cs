@@ -74,6 +74,8 @@ public class FuelCanvasController : MonoBehaviour
 
     [Space, SerializeField]
     private AudioClip lowFuelBeep;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble lowFuelGamepadRumble;
     private void Awake()
     {
         sliderFloatEffect = GetComponentInChildren<ImageFloatEffect>();
@@ -247,6 +249,7 @@ public class FuelCanvasController : MonoBehaviour
         {
             turningRedBorder = false;
             AudioManager.instance.Play2dOneShotSound(lowFuelBeep, "LowFuelBeep", 1, 1, 1.1f);
+            GamepadRumbleManager.Instance.AddRumble(lowFuelGamepadRumble);
         }
         else if (dangerBorderProcess <= dangerBorderAlpha[0])
             turningRedBorder = true;
