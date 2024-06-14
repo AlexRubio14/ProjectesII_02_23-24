@@ -15125,7 +15125,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 6
   m_LinearDrag: 2
-  m_AngularDrag: 7
+  m_AngularDrag: 12
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -15331,10 +15331,17 @@ MonoBehaviour:
   accelerateAction: {fileID: 3588447443719747383, guid: 247e06be4cacd6941a4030c80b86be96, type: 3}
   movementSpeed: 50
   externalMovementSpeed: 0
-  rotationSpeed: 0.55
+  rotationSpeed: 0.8
   knockbackScale: 10
   knockbackRotation: 1
   knockbackTime: 0.3
+  hitGamepadRumble:
+    starterLowFrequency: 0.1
+    lowFrequency: 0
+    starterHighFrequency: 0.2
+    highFrequency: 0
+    duration: 0.3
+    progresive: 1
   baseFuel: 200
   fuelConsume: 0
   mapDamage: 25

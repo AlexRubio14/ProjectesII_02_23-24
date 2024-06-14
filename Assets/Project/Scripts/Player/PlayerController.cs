@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private float knockbackRotation;
     [SerializeField]
     private float knockbackTime;
+    [SerializeField]
+    private GamepadRumbleManager.Rumble hitGamepadRumble;
 
     [Space, Header("Fuel"), SerializeField]
     private float baseFuel;
@@ -322,6 +324,8 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(float _damagePercentage, Vector2 damagePos)
     {
+
+        GamepadRumbleManager.Instance.AddRumble(new GamepadRumbleManager.Rumble(0.25f, 0.25f, knockbackTime, true));
 
         switch (currentState)
         {
